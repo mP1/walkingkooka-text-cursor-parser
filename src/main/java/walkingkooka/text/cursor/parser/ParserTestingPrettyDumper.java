@@ -20,9 +20,7 @@ package walkingkooka.text.cursor.parser;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
-import walkingkooka.text.printer.IndentingPrinters;
 import walkingkooka.text.printer.Printers;
-import walkingkooka.visit.VisitorPrettyPrinter;
 
 import java.util.Optional;
 
@@ -39,10 +37,8 @@ final class ParserTestingPrettyDumper {
     private static String dump0(final ParserToken token) {
         final StringBuilder b = new StringBuilder();
 
-        try (final IndentingPrinter printer = IndentingPrinters.printer(Printers.stringBuilder(b, LineEnding.NL), Indentation.with("  "))) {
-            dump(token,
-                    VisitorPrettyPrinter.with(printer,
-                            (t) -> VisitorPrettyPrinter.computeFromClassSimpleName(t, "", ParserToken.class.getSimpleName())));
+        try (final IndentingPrinter printer = Printers.stringBuilder(b, LineEnding.NL).indenting(Indentation.with("  "))) {
+            dump(token, printer);
             printer.flush();
         }
 
@@ -50,21 +46,39 @@ final class ParserTestingPrettyDumper {
     }
 
     private static void dump(final ParserToken token,
-                             final VisitorPrettyPrinter<ParserToken> printer) {
+                             final IndentingPrinter printer) {
         if (token instanceof LeafParserToken) {
-            printer.leaf(token);
+            dumpLeaf((LeafParserToken) token, printer);
         }
         if (token instanceof ParentParserToken) {
-            dumpParent(token.cast(ParentParserToken.class), printer);
+            dumpParent((ParentParserToken) token, printer);
         }
     }
 
-    private static void dumpParent(final ParentParserToken token,
-                                   final VisitorPrettyPrinter<ParserToken> printer) {
-        printer.enter(token);
-        token.value().forEach(t -> dump(t, printer));
-        printer.exit(token);
+    private static void dumpLeaf(final LeafParserToken token,
+                                 final IndentingPrinter printer) {
+        printer.print(typeName(token) + "=" + token);
+        printer.print(printer.lineEnding());
     }
+
+    private static void dumpParent(final ParentParserToken token,
+                                   final IndentingPrinter printer) {
+        printer.print(typeName(token));
+        printer.print(printer.lineEnding());
+        printer.indent();
+
+        token.value().forEach(t -> dump(t, printer));
+        printer.outdent();
+    }
+
+    private static String typeName(final ParserToken token) {
+        final String typeName = token.getClass().getSimpleName();
+        return typeName.endsWith(PARSER_TOKEN) ?
+                typeName.substring(0, typeName.length() - PARSER_TOKEN.length()) :
+                typeName;
+    }
+
+    private final static String PARSER_TOKEN = ParserToken.class.getSimpleName();
 
     private ParserTestingPrettyDumper() {
         throw new UnsupportedOperationException();
