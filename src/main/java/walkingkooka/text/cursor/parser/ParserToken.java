@@ -68,7 +68,6 @@ public interface ParserToken extends HasText {
      * Useful to get help reduce casting noise.
      */
     default <T extends ParserToken> T cast(final Class<T> type) {
-        //noinspection unchecked
-        return (T)this;
+        return type.cast(this);
     }
 }
