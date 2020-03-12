@@ -48,7 +48,7 @@ final class UnicodeEscapeCharacterParser<C extends ParserContext> extends Parser
 
         int value = 0;
         for (int i = 0; i < 6; i++) {
-            if (i < 0 || cursor.isEmpty()) {
+            if (cursor.isEmpty()) {
                 result = Optional.empty();
                 break;
             }
