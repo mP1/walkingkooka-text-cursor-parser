@@ -1278,7 +1278,7 @@ final public class CaseSensitivityTest implements ClassTesting2<CaseSensitivity>
     public void testWithoutSystemProperty() {
         CaseSensitivity.FILE_SYSTEM = null;
 
-        final String osName = SystemProperty.OS_NAME.propertyValue();
+        final String osName = SystemProperty.OS_NAME.requiredPropertyValue();
         if (osName.contains("OS X")) {
             assertEquals(CaseSensitivity.SENSITIVE, CaseSensitivity.fileSystem());
         }
