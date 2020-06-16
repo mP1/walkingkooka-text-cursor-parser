@@ -89,7 +89,9 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
 
     @Test
     public void testRequiredInvalidTypeFails() {
-        assertThrows(ClassCastException.class, () -> this.createToken().required(0, BigIntegerParserToken.class));
+        assertThrows(ClassCastException.class, () -> {
+            final BigIntegerParserToken token = this.createToken().required(0, BigIntegerParserToken.class);
+        });
     }
 
     @Test
