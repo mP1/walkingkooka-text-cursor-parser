@@ -48,10 +48,45 @@ The test package contains many tests that accompany each and every parser and ar
 all the moving parts work and interact with other components.
 
 
-## Dependencies
+## Maven POM
 
-- walkingkooka
-- junit
+```xml
+<dependency>
+    <groupId>walkingkooka</groupId>
+    <artifactId>walkingkooka-text-cursor-parser</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <exclusions>
+        <exclusion>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+        </exclusion>
+    </exclusions>
+</dependency>
+```      
+
+
+
+## Annotation processor arguments
+
+See [j2cl-java-time](https://github.com/mP1/j2cl-java-time/blob/master/README.md#annotation-processor-arguments) about
+required annotation processor arguments because of Parsers that return types such as `java.time.LocalDateTime`.
+
+
+
+## j2cl-maven-compiler
+
+Required `ignored-dependencies`.
+
+```xml
+<ignored-dependencies>
+    <param>org.junit.jupiter:junit-jupiter-api:*</param>
+    <param>org.junit.jupiter:junit-jupiter-engine:*</param>
+    <param>org.junit.platform:junit-platform-commons:*</param>
+    <param>org.junit.platform:junit-platform-engine:*</param>
+</ignored-dependencies>
+```
+
+
 
 ## Getting the source
 
