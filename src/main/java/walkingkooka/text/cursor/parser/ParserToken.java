@@ -66,8 +66,9 @@ public interface ParserToken extends HasText {
 
     /**
      * Useful to get help reduce casting noise.
+     * Note the type parameter {@link Class#cast} method is not invoked to keep this compatible with j2cl.
      */
     default <T extends ParserToken> T cast(final Class<T> type) {
-        return type.cast(this);
+        return (T)this;
     }
 }
