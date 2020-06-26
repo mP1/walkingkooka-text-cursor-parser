@@ -1,4 +1,5 @@
 *Testing.*
 *Testing2.*
+ParserTestingPrettyDumper.*
 **/*Testing.*
 **/*Testing2.*
