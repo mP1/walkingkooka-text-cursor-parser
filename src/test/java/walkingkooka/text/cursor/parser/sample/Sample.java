@@ -1,5 +1,5 @@
 /*
- * Copyright © 2020 Miroslav Pokorny
+ * Copyright 2019 Miroslav Pokorny (github.com/mP1)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -12,13 +12,11 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
-package test;
 
+package walkingkooka.text.cursor.parser.sample;
 
-import com.google.j2cl.junit.apt.J2clTestInput;
-import org.junit.Assert;
-import org.junit.Test;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.text.cursor.TextCursors;
@@ -31,14 +29,14 @@ import java.math.MathContext;
 import java.util.Locale;
 import java.util.Optional;
 
-@J2clTestInput(JunitTest.class)
-public class JunitTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    @Test
-    public void testBigIntegerParser() {
+public class Sample {
+
+    public static void main(final String[] args) {
         final String text = "123";
 
-        Assert.assertEquals(Optional.of(ParserTokens.bigInteger(BigInteger.valueOf(123), text)),
+        assertEquals(Optional.of(ParserTokens.bigInteger(BigInteger.valueOf(123), text)),
                 Parsers.bigInteger(10)
                         .parse(TextCursors.charSequence(text),
                                 ParserContexts.basic(DateTimeContexts.fake(), DecimalNumberContexts.basic("$", '.', 'E', ',', '-', '%', '+', Locale.forLanguageTag("en-AU"), MathContext.DECIMAL32))));
