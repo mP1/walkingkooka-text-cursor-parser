@@ -73,7 +73,7 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
     @Override
     public ParserContext createContext() {
         return ParserContexts.basic(DateTimeContexts.locale(LOCALE, 50),
-                DecimalNumberContexts.decimalFormatSymbols(new DecimalFormatSymbols(LOCALE), '^', '+', LOCALE, MathContext.UNLIMITED));
+                DecimalNumberContexts.decimalFormatSymbols(new DecimalFormatSymbols(LOCALE), '+', LOCALE, MathContext.UNLIMITED));
     }
 
     private final static Locale LOCALE = Locale.ENGLISH;

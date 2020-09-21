@@ -41,6 +41,6 @@ public class JunitTest {
         Assert.assertEquals(Optional.of(ParserTokens.bigInteger(BigInteger.valueOf(123), text)),
                 Parsers.bigInteger(10)
                         .parse(TextCursors.charSequence(text),
-                                ParserContexts.basic(DateTimeContexts.fake(), DecimalNumberContexts.basic("$", '.', 'E', ',', '-', '%', '+', Locale.forLanguageTag("en-AU"), MathContext.DECIMAL32))));
+                                ParserContexts.basic(DateTimeContexts.fake(), DecimalNumberContexts.basic("$", '.', "E", ',', '-', '%', '+', Locale.forLanguageTag("en-AU"), MathContext.DECIMAL32))));
     }
 }

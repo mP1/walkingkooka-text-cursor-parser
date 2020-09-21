@@ -16,6 +16,7 @@
  */
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 
@@ -82,8 +83,7 @@ final class DoubleParser<C extends ParserContext> extends Parser2<C> {
         final char decimalSeparator = context.decimalSeparator();
         final char negativeSign = context.negativeSign();
         final char positiveSign = context.positiveSign();
-        final char littleE = Character.toLowerCase(context.exponentSymbol());
-        final char bigE = Character.toUpperCase(littleE);
+        final String exponentSymbol = context.exponentSymbol();
 
         Optional<ParserToken> token = Optional.empty();
 
@@ -92,15 +92,18 @@ final class DoubleParser<C extends ParserContext> extends Parser2<C> {
         //      repeat(0-9)
         // if DECIMAL
         //    repeat(0-9)
-        // if E/e
+        // if EXPONENT
         //    optional(+/-)
         //    repeat(0-9)
 
         double number = 0;
         boolean numberNegative = false;
         double fractionFactor = 1;
+
+        int exponentSymbolIndex = 0;
         int exponent = 0;
         boolean exponentNegative = false;
+
         int mode = NAN_N | INFINITY_I | NUMBER_SIGN | NUMBER_ZERO | NUMBER_DIGIT;
         boolean empty = true;
 
@@ -184,9 +187,12 @@ final class DoubleParser<C extends ParserContext> extends Parser2<C> {
                     }
                 }
                 if ((EXPONENT & mode) != 0) {
-                    if (littleE == c || bigE == c) {
+                    if (0 == CaseSensitivity.INSENSITIVE.compare(exponentSymbol.charAt(exponentSymbolIndex), c)) {
                         cursor.next();
-                        mode = EXPONENT_SIGN | EXPONENT_ZERO | EXPONENT_DIGIT;
+                        exponentSymbolIndex++;
+                        if (exponentSymbol.length() == exponentSymbolIndex) {
+                            mode = EXPONENT_SIGN | EXPONENT_ZERO | EXPONENT_DIGIT;
+                        }
                         break;
                     }
                 }

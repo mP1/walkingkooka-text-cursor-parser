@@ -22,6 +22,8 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.FakeDecimalNumberContext;
 import walkingkooka.text.cursor.TextCursor;
 
+import java.math.BigDecimal;
+
 public final class DoubleParserTest extends Parser2TestCase<DoubleParser<ParserContext>, DoubleParserToken> {
 
     @Test
@@ -340,6 +342,26 @@ public final class DoubleParserTest extends Parser2TestCase<DoubleParser<ParserC
     }
 
     @Test
+    public void testNumberMultiCharacterExponent() {
+        this.parseAndCheck4("123XYZ45", 123E45);
+    }
+
+    @Test
+    public void testNumberMultiCharacterExponentPlus() {
+        this.parseAndCheck4("123XYZP45", 123E45);
+    }
+
+    @Test
+    public void testNumberMultiCharacterExponentMinus() {
+        this.parseAndCheck4("123XYZM45", 123E-45);
+    }
+
+    @Test
+    public void testNumberMultiCharacterExponentZero() {
+        this.parseAndCheck4("123XYZ0", 123E0);
+    }
+
+    @Test
     public void testNanFail() {
         this.parseFailAndCheck("N");
     }
@@ -470,8 +492,39 @@ public final class DoubleParserTest extends Parser2TestCase<DoubleParser<ParserC
                             }
 
                             @Override
-                            public char exponentSymbol() {
-                                return 'X';
+                            public String exponentSymbol() {
+                                return "X";
+                            }
+
+                            @Override
+                            public char negativeSign() {
+                                return 'M';
+                            }
+
+                            @Override
+                            public char positiveSign() {
+                                return 'P';
+                            }
+                        }),
+                text,
+                ParserTokens.doubleParserToken(value, text),
+                text,
+                "");
+    }
+
+    private TextCursor parseAndCheck4(final String text, final double value) {
+        return this.parseAndCheck(this.createParser(),
+                ParserContexts.basic(
+                        DateTimeContexts.fake(),
+                        new FakeDecimalNumberContext() {
+                            @Override
+                            public char decimalSeparator() {
+                                return '!';
+                            }
+
+                            @Override
+                            public String exponentSymbol() {
+                                return "XYZ";
                             }
 
                             @Override
