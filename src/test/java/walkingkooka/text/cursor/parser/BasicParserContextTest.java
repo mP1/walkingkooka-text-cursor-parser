@@ -35,7 +35,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
 
     private final static String CURRENCY = "$$";
     private final static char DECIMAL = 'D';
-    private final static char EXPONENT = 'X';
+    private final static String EXPONENT = "XX";
     private final static char GROUPING = 'G';
     private final static char MINUS = 'M';
     private final static char PERCENTAGE = 'R';
@@ -103,7 +103,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     }
 
     @Override
-    public char exponentSymbol() {
+    public String exponentSymbol() {
         return EXPONENT;
     }
 

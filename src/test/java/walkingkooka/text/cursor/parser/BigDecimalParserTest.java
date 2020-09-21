@@ -359,6 +359,26 @@ public final class BigDecimalParserTest extends Parser2TestCase<BigDecimalParser
     }
 
     @Test
+    public void testNumberMultiCharacterExponent() {
+        this.parseAndCheck4("123XYZ45", new BigDecimal("123E45"));
+    }
+
+    @Test
+    public void testNumberMultiCharacterExponentPlus() {
+        this.parseAndCheck4("123XYZP45", new BigDecimal("123E+45"));
+    }
+
+    @Test
+    public void testNumberMultiCharacterExponentMinus() {
+        this.parseAndCheck4("123XYZM45", new BigDecimal("123E-45"));
+    }
+
+    @Test
+    public void testNumberMultiCharacterExponentZero() {
+        this.parseAndCheck4("123XYZ0", new BigDecimal("123E0"));
+    }
+
+    @Test
     public void testNaNFails() {
         this.parseFailAndCheck("NaN");
     }
@@ -401,7 +421,17 @@ public final class BigDecimalParserTest extends Parser2TestCase<BigDecimalParser
     private TextCursor parseAndCheck3(final String text, final BigDecimal value) {
         return this.parseAndCheck(this.createParser(),
                 ParserContexts.basic(DateTimeContexts.fake(),
-                        DecimalNumberContexts.basic("C", 'D', 'X', 'G', 'M', 'R', 'P', Locale.ENGLISH, MathContext.DECIMAL32)),
+                        DecimalNumberContexts.basic("C", 'D', "X", 'G', 'M', 'R', 'P', Locale.ENGLISH, MathContext.DECIMAL32)),
+                text,
+                ParserTokens.bigDecimal(value, text),
+                text,
+                "");
+    }
+
+    private TextCursor parseAndCheck4(final String text, final BigDecimal value) {
+        return this.parseAndCheck(this.createParser(),
+                ParserContexts.basic(DateTimeContexts.fake(),
+                        DecimalNumberContexts.basic("C", 'D', "XYZ", 'G', 'M', 'R', 'P', Locale.ENGLISH, MathContext.DECIMAL32)),
                 text,
                 ParserTokens.bigDecimal(value, text),
                 text,

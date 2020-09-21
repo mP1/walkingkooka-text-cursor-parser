@@ -98,7 +98,7 @@ final class BasicParserContext implements ParserContext {
     }
 
     @Override
-    public char exponentSymbol() {
+    public String exponentSymbol() {
         return this.decimalNumberContext.exponentSymbol();
     }
 

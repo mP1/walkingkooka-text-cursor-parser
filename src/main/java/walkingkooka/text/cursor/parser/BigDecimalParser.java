@@ -16,6 +16,7 @@
  */
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 
@@ -70,8 +71,7 @@ final class BigDecimalParser<C extends ParserContext> extends Parser2<C> {
         final char decimalSeparator = context.decimalSeparator();
         final int negativeSign = context.negativeSign();
         final int positiveSign = context.positiveSign();
-        final char littleE = Character.toLowerCase(context.exponentSymbol());
-        final char bigE = Character.toUpperCase(littleE);
+        final String exponentSymbol = context.exponentSymbol();
 
         final MathContext mathContext = context.mathContext();
 
@@ -89,8 +89,11 @@ final class BigDecimalParser<C extends ParserContext> extends Parser2<C> {
         BigDecimal number = BigDecimal.ZERO;
         boolean numberNegative = false;
         int fractionFactor = 0;
+
+        int exponentSymbolIndex = 0;
         int exponent = 0;
         boolean exponentNegative = false;
+
         int mode = NUMBER_SIGN | NUMBER_ZERO | NUMBER_DIGIT;
         boolean empty = true;
 
@@ -146,9 +149,12 @@ final class BigDecimalParser<C extends ParserContext> extends Parser2<C> {
                     }
                 }
                 if ((EXPONENT & mode) != 0) {
-                    if (littleE == c || bigE == c) {
+                    if (0 == CaseSensitivity.INSENSITIVE.compare(exponentSymbol.charAt(exponentSymbolIndex), c)) {
                         cursor.next();
-                        mode = EXPONENT_SIGN | EXPONENT_ZERO | EXPONENT_DIGIT;
+                        exponentSymbolIndex++;
+                        if (exponentSymbol.length() == exponentSymbolIndex) {
+                            mode = EXPONENT_SIGN | EXPONENT_ZERO | EXPONENT_DIGIT;
+                        }
                         break;
                     }
                 }
