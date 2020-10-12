@@ -69,6 +69,9 @@ abstract class QuotedParser<C extends ParserContext> extends Parser2<C> {
                     case 'r':
                         raw.append('\r');
                         break;
+                    case '\\':
+                        raw.append('\\');
+                        break;
                     case '\'':
                         raw.append('\'');
                         break;

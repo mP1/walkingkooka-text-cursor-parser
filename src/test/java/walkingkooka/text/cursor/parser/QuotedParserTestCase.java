@@ -99,6 +99,11 @@ public abstract class QuotedParserTestCase<P extends QuotedParser<ParserContext>
     }
 
     @Test
+    public final void testIncludeBackslashEscapedBackslash() {
+        this.quoteParseAndCheck("abc\\\\def", "abc\\def", "abc\\\\def");
+    }
+
+    @Test
     public final void testIncludeBackslashEscapedSingleQuote() {
         this.quoteParseAndCheck("abc\\\'def", "abc\'def", "abc\\\'def");
     }
