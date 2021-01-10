@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * The parser token for a number with the value contained in a {@link Long}.
  */
-public final class LongParserToken extends ParserToken2<Long> implements LeafParserToken<Long> {
+public final class LongParserToken extends ValueParserToken<Long> implements LeafParserToken<Long> {
 
     public static LongParserToken with(final long value, final String text) {
         Objects.requireNonNull(text, "text");
@@ -44,7 +44,7 @@ public final class LongParserToken extends ParserToken2<Long> implements LeafPar
     }
 
     @Override
-    boolean equals1(final ParserToken2<?> other) {
+    boolean equals1(final ValueParserToken<?> other) {
         return true; // no extra properties to compare
     }
 }

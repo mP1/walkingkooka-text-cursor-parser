@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * The parser token representing the sign of a number. True means negative, false means positive
  */
-public final class SignParserToken extends ParserToken2<Boolean> implements LeafParserToken<Boolean> {
+public final class SignParserToken extends ValueParserToken<Boolean> implements LeafParserToken<Boolean> {
 
     static SignParserToken with(final boolean value, final String text) {
         Objects.requireNonNull(text, "text");
@@ -44,7 +44,7 @@ public final class SignParserToken extends ParserToken2<Boolean> implements Leaf
     }
 
     @Override
-    boolean equals1(final ParserToken2<?> other) {
+    boolean equals1(final ValueParserToken<?> other) {
         return true; // no extra properties to compare
     }
 }

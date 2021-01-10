@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * The parser token for a matched string.
  */
-public final class StringParserToken extends ParserToken2<String> implements LeafParserToken<String> {
+public final class StringParserToken extends ValueParserToken<String> implements LeafParserToken<String> {
 
     static StringParserToken with(final String value, final String text) {
         Objects.requireNonNull(value, "value");
@@ -45,7 +45,7 @@ public final class StringParserToken extends ParserToken2<String> implements Lea
     }
 
     @Override
-    boolean equals1(final ParserToken2<?> other) {
+    boolean equals1(final ValueParserToken<?> other) {
         return true; // no extra properties to compare
     }
 }
