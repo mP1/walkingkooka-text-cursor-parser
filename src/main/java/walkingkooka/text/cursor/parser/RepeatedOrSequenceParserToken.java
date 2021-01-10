@@ -24,7 +24,7 @@ import java.util.Objects;
 /**
  * A common base class for both {@link RepeatedParserToken} and {@link SequenceParserToken}.
  */
-abstract public class RepeatedOrSequenceParserToken extends ParserToken2<List<ParserToken>>
+abstract public class RepeatedOrSequenceParserToken extends ValueParserToken<List<ParserToken>>
         implements ParentParserToken {
 
     /**
@@ -41,7 +41,7 @@ abstract public class RepeatedOrSequenceParserToken extends ParserToken2<List<Pa
     /**
      * Sub classes must create a public setValue and call this method and cast this.
      */
-    final ParserToken2<List<ParserToken>> setValue(final List<ParserToken> value) {
+    final ValueParserToken<List<ParserToken>> setValue(final List<ParserToken> value) {
         Objects.requireNonNull(value, "values");
 
         final List<ParserToken> copy = Lists.immutable(value);
@@ -50,7 +50,7 @@ abstract public class RepeatedOrSequenceParserToken extends ParserToken2<List<Pa
                 this.replaceValue(copy);
     }
 
-    abstract ParserToken2<List<ParserToken>> replaceValue(final List<ParserToken> value);
+    abstract ValueParserToken<List<ParserToken>> replaceValue(final List<ParserToken> value);
 
     /**
      * Recursively flattens all embedded {@link RepeatedOrSequenceParserToken} into a single {@link RepeatedOrSequenceParserToken}.
@@ -68,7 +68,7 @@ abstract public class RepeatedOrSequenceParserToken extends ParserToken2<List<Pa
     // Object...........................................................................................................
 
     @Override
-    final boolean equals1(final ParserToken2<?> other) {
+    final boolean equals1(final ValueParserToken<?> other) {
         return true;
     }
 }

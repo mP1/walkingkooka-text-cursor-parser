@@ -22,7 +22,7 @@ import java.util.Objects;
 /**
  * The parser token for a date with the value contained in a {@link LocalDate}.
  */
-public final class LocalDateParserToken extends ParserToken2<LocalDate> implements LeafParserToken<LocalDate> {
+public final class LocalDateParserToken extends ValueParserToken<LocalDate> implements LeafParserToken<LocalDate> {
 
     public static LocalDateParserToken with(final LocalDate value, final String text) {
         Objects.requireNonNull(text, "text");
@@ -45,7 +45,7 @@ public final class LocalDateParserToken extends ParserToken2<LocalDate> implemen
     }
 
     @Override
-    boolean equals1(final ParserToken2<?> other) {
+    boolean equals1(final ValueParserToken<?> other) {
         return true; // no extra properties to compare
     }
 }

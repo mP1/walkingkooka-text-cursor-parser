@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * The parser token for a single character match.
  */
-public final class CharacterParserToken extends ParserToken2<Character> implements LeafParserToken<Character> {
+public final class CharacterParserToken extends ValueParserToken<Character> implements LeafParserToken<Character> {
 
     static CharacterParserToken with(final char value, final String text) {
         Objects.requireNonNull(text, "text");
@@ -44,7 +44,7 @@ public final class CharacterParserToken extends ParserToken2<Character> implemen
     }
 
     @Override
-    boolean equals1(final ParserToken2<?> other) {
+    boolean equals1(final ValueParserToken<?> other) {
         return true; // no extra properties to compare
     }
 }

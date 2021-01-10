@@ -22,7 +22,7 @@ import java.util.Objects;
 /**
  * The parser token for a number with the value contained within a {@link BigDecimal}
  */
-public final class BigDecimalParserToken extends ParserToken2<BigDecimal> implements LeafParserToken<BigDecimal> {
+public final class BigDecimalParserToken extends ValueParserToken<BigDecimal> implements LeafParserToken<BigDecimal> {
 
     public static BigDecimalParserToken with(final BigDecimal value, final String text) {
         Objects.requireNonNull(value, "value");
@@ -46,7 +46,7 @@ public final class BigDecimalParserToken extends ParserToken2<BigDecimal> implem
     }
 
     @Override
-    boolean equals1(final ParserToken2<?> other) {
+    boolean equals1(final ValueParserToken<?> other) {
         return true; // no extra properties to compare
     }
 }

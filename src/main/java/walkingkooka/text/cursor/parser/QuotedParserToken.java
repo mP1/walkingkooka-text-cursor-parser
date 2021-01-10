@@ -19,7 +19,7 @@ package walkingkooka.text.cursor.parser;
 /**
  * A {@link ParserToken} holding text surrounded by either single or double quotes.
  */
-public abstract class QuotedParserToken extends ParserToken2<String> implements LeafParserToken<String> {
+public abstract class QuotedParserToken extends ValueParserToken<String> implements LeafParserToken<String> {
 
     /**
      * Package private to limit sub classing.
@@ -29,7 +29,7 @@ public abstract class QuotedParserToken extends ParserToken2<String> implements 
     }
 
     @Override
-    final boolean equals1(final ParserToken2<?> other) {
+    final boolean equals1(final ValueParserToken<?> other) {
         return true; // no extra properties to compare
     }
 }
