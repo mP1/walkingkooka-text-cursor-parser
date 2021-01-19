@@ -8,11 +8,7 @@
 
 
 # [Parser](https://github.com/mP1/walkingkooka-text-cursor-parser/blob/master/src/main/java/walkingkooka/text/cursor/Parser.java)
-Parsers consume characters from a `TextCursor` source and creates tokens from chunks of text. There is one significant 
-difference in operation between these Parsers and the parse methods (eg Long.parse) found in the JDK. The later requires
-the boundaries of the token to be computed prior to parsing, with the source `String` extracted using some logic.
-
-The Parser interface below denotes the main collaborators in the parsing process.
+A Parser consume characters from a `TextCursor` source returning a `ParserToken`. 
 
 ```java
 public interface Parser<T extends ParserToken, C extends ParserContext> {
@@ -24,18 +20,14 @@ public interface Parser<T extends ParserToken, C extends ParserContext> {
 }
 ```
 
-The result of any parse attempt is an `Optional` because parsing often involves trying multiple alternatives until success.
-The `ParserContext` may hold parser request state, such as `Locale` information so that numbers that are parsed can use
-the correct decimal point character and more.
-
-
-
-## [ParserToken](https://github.com/mP1/walkingkooka-text-cursor-parser/blob/master/src/main/java/walkingkooka/text/cursor/ParserToken.java)
-Each `Parser` creates its own `ParserToken` sub class to hold the text consumed and the value it identified.
+If parsing is successful into a `Optional` wrapped `ParserToken` and the `TextCursor` is also advanced. This approach
+allows multiple alternatives to be tried until success. Complex compositions may be created with changing settings such
+as `Locale` aware values coming from a `ParserContext`.
 
 
 
 ## [Error reporting](https://github.com/mP1/walkingkooka-text-cursor-parser/blob/master/src/main/java/walkingkooka/text/cursor/parser/ReportingParser.java)
+
 In some cases a parse failure is an actual un-recoverable error, the most basic case is that all parsers have been tried
 but text remains. This of course means, the `TextCursor` is positioned at an unrecognized character and an error should
 be reported. A `ReportingParser` can be used to report an error in such cases. `TextCursor` and `TextCursorSavePoint`
@@ -43,9 +35,34 @@ also contain methods to return details of their respective positions, including 
 
 
 
-### [Tests](https://github.com/mP1/walkingkooka-text-cursor-parser/tree/master/src/test/java/walkingkooka/text/cursor/parser)
-The test package contains many tests that accompany each and every parser and are a good read to better understand how
+## [Tests](https://github.com/mP1/walkingkooka-text-cursor-parser/tree/master/src/test/java/walkingkooka/text/cursor/parser)
+
+The test source contains many tests that accompany each and every parser and are a good read to better understand how
 all the moving parts work and interact with other components.
+
+
+
+## JDK static parser replacements
+
+Parsers are available for the follow static methods:
+
+- Byte.parseByte
+- Double.parseDouble
+- Float.parseFloat
+- Integer.parseInt
+- LocalDate.parse
+- LocalDateTime.parse
+- LocalTime.parse
+- Long.parseLong
+- Short.parseShort
+
+
+
+## Related projects 
+
+- [Parser combinators](https://github.com/mP1/walkingkooka-text-cursor-parser-ebnf)
+- [EBNF -> CharPredicate](https://github.com/mP1/walkingkooka-text-cursor-parser-ebnf-charpredicate)
+
 
 
 ## Maven POM
