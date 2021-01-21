@@ -8,7 +8,7 @@
 
 
 # [Parser](https://github.com/mP1/walkingkooka-text-cursor-parser/blob/master/src/main/java/walkingkooka/text/cursor/Parser.java)
-A Parser consume characters from a `TextCursor` source returning a `ParserToken`. 
+A Parser consumes characters from a `TextCursor` source returning a `ParserToken` when successful. 
 
 ```java
 public interface Parser<T extends ParserToken, C extends ParserContext> {
