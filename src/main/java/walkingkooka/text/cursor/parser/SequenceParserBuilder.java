@@ -43,11 +43,16 @@ public final class SequenceParserBuilder<C extends ParserContext> implements Bui
         return this.add(SequenceParserRequiredComponent.with(parser));
     }
 
+    /**
+     * The build method will fail if no {@link Parsers} have been added.
+     */
     @Override
     public Parser<C> build() throws BuilderException {
-        if (this.components.size() < 2) {
-            throw new BuilderException("Sequence requires at least 2 parsers=" + this.components);
+        if (this.components.isEmpty()) {
+            throw new BuilderException("Sequence requires at least 1 parser");
         }
+
+        // no optimisation so results are always within a SequenceParserToken even with one child.
         return SequenceParser.with(this.components);
     }
 
