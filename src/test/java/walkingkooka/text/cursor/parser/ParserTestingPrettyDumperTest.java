@@ -32,9 +32,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public final class ParserTestingPrettyDumperTest implements ClassTesting2<ParserTestingPrettyDumper> {
 
     @Test
-    public void testDumpStringParserToken() {
-        this.dumpAndCheck(ParserTokens.string("abc123", "abc123"),
-                "String=abc123\n");
+    public void testDumpLeafParserTokenString() {
+        this.dumpAndCheck(
+                ParserTokens.string("abc123", "abc123"),
+                "String=\"abc123\" abc123 (java.lang.String)\n"
+        );
+    }
+
+    @Test
+    public void testDumpLeafParserTokenBigDecimal() {
+        this.dumpAndCheck(ParserTokens.bigDecimal(
+                BigDecimal.TEN, "different-text"),
+                "BigDecimal=\"different-text\" 10 (java.math.BigDecimal)\n"
+        );
     }
 
     @Test
@@ -46,9 +56,9 @@ public final class ParserTestingPrettyDumperTest implements ClassTesting2<Parser
         this.dumpAndCheck(
                 ParserTokens.sequence(tokens, ParserToken.text(tokens))
                 , "Sequence\n" +
-                        "  String=a1\n" +
-                        "  BigDecimal=1.5\n" +
-                        "  BigInteger=23\n");
+                        "  String=\"a1\" a1 (java.lang.String)\n" +
+                        "  BigDecimal=\"1.5\" 1.5 (java.math.BigDecimal)\n" +
+                        "  BigInteger=\"23\" 23 (java.math.BigInteger)\n");
     }
 
     private void dumpAndCheck(final ParserToken token,

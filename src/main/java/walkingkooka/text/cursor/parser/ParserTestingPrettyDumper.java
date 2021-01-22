@@ -17,6 +17,7 @@
 
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -26,6 +27,21 @@ import java.util.Optional;
 
 /**
  * Used by {@link ParserTesting} to create an indented tree like value of {@link ParserToken tokens} in a tree.
+ * <pre>
+ * @Test
+ * public void testDumpSequenceParserToken() {
+ *     final List<ParserToken> tokens = Lists.of(ParserTokens.string("a1", "a1"),
+ *             ParserTokens.bigDecimal(BigDecimal.valueOf(1.5), "1.5"),
+ *             ParserTokens.bigInteger(BigInteger.valueOf(23), "23"));
+ *
+ *     this.dumpAndCheck(
+ *             ParserTokens.sequence(tokens, ParserToken.text(tokens))
+ *             , "Sequence\n" +
+ *                     "  String=\"a1\" a1 (java.lang.String)\n" +
+ *                     "  BigDecimal=\"1.5\" 1.5 (java.math.BigDecimal)\n" +
+ *                     "  BigInteger=\"23\" 23 (java.math.BigInteger)\n");
+ * }
+ * </pre>
  */
 final class ParserTestingPrettyDumper {
 
@@ -57,7 +73,14 @@ final class ParserTestingPrettyDumper {
 
     private static void dumpLeaf(final LeafParserToken token,
                                  final IndentingPrinter printer) {
-        printer.print(typeName(token) + "=" + token);
+        final Object value = token.value();
+        printer.print(
+                typeName(token) + "=" +
+                        CharSequences.quoteIfChars(token.text()) + " " + value +
+                        (null != value ?
+                                (" (" + value.getClass().getName() + ")") :
+                                "")
+        );
         printer.print(printer.lineEnding());
     }
 
