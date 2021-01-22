@@ -124,7 +124,15 @@ public interface ParserTesting extends Testing {
                                                                     final TextCursor cursor) {
         final TextCursorSavePoint before = cursor.save();
         final Optional<ParserToken> result = this.parse(parser, cursor, context);
-        assertEquals(Optional.<ParserToken>empty(),
+        if(result.isPresent()) {
+            assertEquals(
+                    Optional.empty(),
+                    ParserTestingPrettyDumper.dump(result),
+                    () -> "text:\n" + before.textBetween()
+            );
+        }
+        assertEquals(
+                Optional.<ParserToken>empty(),
                 result,
                 "Incorrect result returned by " + parser + " from text " + CharSequences.quoteAndEscape(before.textBetween()));
         return cursor;
