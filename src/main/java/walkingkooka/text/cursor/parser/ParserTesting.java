@@ -130,13 +130,9 @@ public interface ParserTesting extends Testing {
             assertEquals(
                     Optional.empty(),
                     ParserTestingPrettyDumper.dump(result),
-                    () -> "text consumed:\n" + before.textBetween() + "\ntext left: " + after.textBetween()
+                    () -> "Expected no token from parsing text consumed:\n" + before.textBetween() + "\ntext left: " + after.textBetween()
             );
         }
-        assertEquals(
-                Optional.<ParserToken>empty(),
-                result,
-                "Incorrect result returned by " + parser + " from text " + CharSequences.quoteAndEscape(before.textBetween()));
         return cursor;
     }
 
