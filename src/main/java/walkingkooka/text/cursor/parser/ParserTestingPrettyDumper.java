@@ -23,6 +23,7 @@ import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.Printers;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
@@ -76,12 +77,18 @@ final class ParserTestingPrettyDumper {
         final Object value = token.value();
         printer.print(
                 typeName(token) + "=" +
-                        CharSequences.quoteIfChars(token.text()) + " " + value +
+                        CharSequences.quoteIfChars(token.text()) + " " + toString(value) +
                         (null != value ?
                                 (" (" + value.getClass().getName() + ")") :
                                 "")
         );
         printer.print(printer.lineEnding());
+    }
+
+    private static String toString(final Object value) {
+        return value instanceof BigDecimal ?
+                ((BigDecimal)value).toPlainString() : // want consistent printing of BigDecimals.
+                String.valueOf(value);
     }
 
     private static void dumpParent(final ParentParserToken token,
