@@ -48,6 +48,14 @@ public final class ParserTestingPrettyDumperTest implements ClassTesting2<Parser
     }
 
     @Test
+    public void testDumpLeafParserTokenBigDecimalExponent() {
+        this.dumpAndCheck(ParserTokens.bigDecimal(
+                new BigDecimal("1E2"), "different-text"),
+                "BigDecimal=\"different-text\" 100 (java.math.BigDecimal)\n"
+        );
+    }
+
+    @Test
     public void testDumpSequenceParserToken() {
         final List<ParserToken> tokens = Lists.of(ParserTokens.string("a1", "a1"),
                 ParserTokens.bigDecimal(BigDecimal.valueOf(1.5), "1.5"),
