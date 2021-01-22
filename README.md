@@ -35,6 +35,28 @@ also contain methods to return details of their respective positions, including 
 
 
 
+## [ParserTesting](https://github.com/mP1/walkingkooka-text-cursor-parser/blob/master/src/main/java/walkingkooka/text/cursor/parser/ParserTesting.java)
+
+This interface contains numerous default methods which may be mixed in to any TestCase wishing to test a `Parser`. Examine 
+the [test cases](https://github.com/mP1/walkingkooka-text-cursor-parser/tree/master/src/test/java/walkingkooka/text/cursor/parser) for a few more advanced examples 
+
+- Tests become very succinct with little boilerplate.
+- Numerous overloads, supporting tests with minimum parameters, other requirements are defaulted.
+- The defaults come from factory methods.
+- `parseAndCheck` includes numerous asserts including a handy tree dump view when the result `ParserToken` does not match the expected. This view becomes particularly helpful when the ParserToken graph has many tokens.
+
+The dump print out view below shows a `SequenceParserToken` with 3 children. Each parent has its children indented and nested.
+
+```
+Sequence
+  String="a1" a1 (java.lang.String)
+  BigDecimal="1.5" 1.5 (java.math.BigDecimal)
+  BigInteger="23" 23 (java.math.BigInteger)
+
+```
+
+
+
 ## [Tests](https://github.com/mP1/walkingkooka-text-cursor-parser/tree/master/src/test/java/walkingkooka/text/cursor/parser)
 
 The test source contains many tests that accompany each and every parser and are a good read to better understand how
