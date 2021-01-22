@@ -125,10 +125,12 @@ public interface ParserTesting extends Testing {
         final TextCursorSavePoint before = cursor.save();
         final Optional<ParserToken> result = this.parse(parser, cursor, context);
         if(result.isPresent()) {
+            final TextCursorSavePoint after = cursor.save();
+
             assertEquals(
                     Optional.empty(),
                     ParserTestingPrettyDumper.dump(result),
-                    () -> "text:\n" + before.textBetween()
+                    () -> "text consumed:\n" + before.textBetween() + "\ntext left: " + after.textBetween()
             );
         }
         assertEquals(
