@@ -87,22 +87,3 @@ Parsers are available for the follow static methods:
 
 
 
-## Maven POM
-
-```xml
-<dependency>
-    <groupId>walkingkooka</groupId>
-    <artifactId>walkingkooka-text-cursor-parser</artifactId>
-    <version>1.0-SNAPSHOT</version>
-</dependency>
-```
-
-
-## Getting the source
-
-You can either download the source using the "ZIP" button at the top
-of the github page, or you can make a clone using git:
-
-```
-git clone git://github.com/mP1/walkingkooka-text-cursor-parser.git
-```
