@@ -123,6 +123,13 @@ public final class Parsers implements PublicStaticHelper {
     }
 
     /**
+     * {@see NeverParser}
+     */
+    public static <C extends ParserContext> Parser<C> never() {
+        return NeverParser.instance();
+    }
+
+    /**
      * {@see DateTimeFormatterParserOffsetDateTime}
      */
     public static <C extends ParserContext> Parser<C> offsetDateTime(final Function<DateTimeContext, DateTimeFormatter> formatter) {
