@@ -28,10 +28,12 @@ import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
 
 import java.math.MathContext;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -147,6 +149,16 @@ public interface ParserTesting extends Testing {
         assertEquals(
                 ParserTestingPrettyDumper.dump(expected.orElse(null)),
                 ParserTestingPrettyDumper.dump(actual.orElse(null)),
+                message
+        );
+    }
+
+    default void checkEquals(final List<ParserToken> expected,
+                             final List<ParserToken> actual,
+                             final Supplier<String> message) {
+        assertEquals(
+                expected.stream().map(ParserTestingPrettyDumper::dump).collect(Collectors.joining()),
+                actual.stream().map(ParserTestingPrettyDumper::dump).collect(Collectors.joining()),
                 message
         );
     }
