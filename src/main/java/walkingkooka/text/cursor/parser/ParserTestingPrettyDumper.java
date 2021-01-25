@@ -46,9 +46,10 @@ import java.util.Optional;
  */
 final class ParserTestingPrettyDumper {
 
-    static String dump(final Optional<ParserToken> token) {
-        return token.map(ParserTestingPrettyDumper::dump0)
-                .orElse(null);
+    static String dump(final ParserToken token) {
+        return null != token ?
+                dump0(token) :
+                null;
     }
 
     private static String dump0(final ParserToken token) {
