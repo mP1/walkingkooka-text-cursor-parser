@@ -31,6 +31,7 @@ import java.math.MathContext;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -96,11 +97,13 @@ public interface ParserTesting extends Testing {
 
         final String textRemaining = after.textBetween().toString();
         if (false == token.equals(result)) {
-            assertEquals(ParserTestingPrettyDumper.dump(token),
-                    ParserTestingPrettyDumper.dump(result),
+            checkEquals(
+                    token,
+                    result,
                     () -> "text:\n" + CharSequences.quoteAndEscape(consumed.length() == 0 ?
                             after.textBetween() :
-                            consumed) + "\nunconsumed text:\n" + textRemaining);
+                            consumed) + "\nunconsumed text:\n" + textRemaining
+            );
         }
 
         assertEquals(text, consumed, "incorrect consumed text");
@@ -127,13 +130,35 @@ public interface ParserTesting extends Testing {
         if(result.isPresent()) {
             final TextCursorSavePoint after = cursor.save();
 
-            assertEquals(
-                    Optional.empty(),
-                    ParserTestingPrettyDumper.dump(result),
+            this.checkEquals(
+                    null,
+                    result.orElse(null),
                     () -> "Expected no token from parsing text consumed:\n" + before.textBetween() + "\ntext left: " + after.textBetween()
             );
         }
         return cursor;
+    }
+
+    // asserting ParserToken with pretty dump support...................................................................
+
+    default void checkEquals(final Optional<? extends ParserToken> expected,
+                             final Optional<? extends ParserToken> actual,
+                             final Supplier<String> message) {
+        assertEquals(
+                ParserTestingPrettyDumper.dump(expected.orElse(null)),
+                ParserTestingPrettyDumper.dump(actual.orElse(null)),
+                message
+        );
+    }
+
+    default void checkEquals(final ParserToken expected,
+                             final ParserToken actual,
+                             final Supplier<String> message) {
+        assertEquals(
+                ParserTestingPrettyDumper.dump(expected),
+                ParserTestingPrettyDumper.dump(actual),
+                message
+        );
     }
 
     // parseThrowsEndOfText.............................................................................................
