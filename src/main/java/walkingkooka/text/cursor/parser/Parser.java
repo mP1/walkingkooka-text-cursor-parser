@@ -36,6 +36,14 @@ public interface Parser<C extends ParserContext> {
      */
     Optional<ParserToken> parse(final TextCursor cursor, final C context);
 
+
+    /**
+     * Adds a post condition, namely this {@link Parser} when it returns a {@link ParserToken} must also be empty, otherwise the {@link TextCursor} is restored.
+     */
+    default Parser<C> andEmptyTextCursor() {
+        return Parsers.andEmptyTextCursor(this);
+    }
+
     /**
      * Creates a parser that matches this parser and fails the given parser.
      */
@@ -66,7 +74,6 @@ public interface Parser<C extends ParserContext> {
     default Parser<C> repeating() {
         return Parsers.repeated(this.cast());
     }
-
 
     default Parser<C> setToString(final String toString) {
         final Parser<C> toStringParser = Parsers.customToString(this, toString);
