@@ -28,14 +28,16 @@ import java.util.function.BiFunction;
  */
 final class TransformingParser<C extends ParserContext> implements Parser<C> {
 
-    static <C extends ParserContext> TransformingParser<C> with(Parser<C> parser, BiFunction<ParserToken, C, ParserToken> transformer) {
+    static <C extends ParserContext> TransformingParser<C> with(final Parser<C> parser,
+                                                                final BiFunction<ParserToken, C, ParserToken> transformer) {
         Objects.requireNonNull(parser, "parser");
         Objects.requireNonNull(transformer, "transformer");
 
         return new TransformingParser<>(parser, transformer);
     }
 
-    private TransformingParser(Parser<C> parser, BiFunction<ParserToken, C, ParserToken> transformer) {
+    private TransformingParser(final Parser<C> parser,
+                               final BiFunction<ParserToken, C, ParserToken> transformer) {
         this.parser = parser;
         this.transformer = transformer;
     }
