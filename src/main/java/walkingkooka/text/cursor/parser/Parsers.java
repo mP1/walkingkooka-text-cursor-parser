@@ -41,7 +41,7 @@ public final class Parsers implements PublicStaticHelper {
     /**
      * {@see AndNotParser}
      */
-    static <C extends ParserContext> Parser<C> andNot(final Parser<C> left, final Parser<C> right) {
+    public static <C extends ParserContext> Parser<C> andNot(final Parser<C> left, final Parser<C> right) {
         return AndNotParser.with(left, right);
     }
 
