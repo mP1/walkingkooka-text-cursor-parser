@@ -46,11 +46,6 @@ public final class StringInitialAndPartCharPredicateParserTest extends Parser2Te
     }
 
     @Test
-    public void testWithInvalidMaxLengthFails() {
-        assertThrows(IllegalArgumentException.class, () -> StringInitialAndPartCharPredicateParser.with(INITIAL, PART, MIN_LENGTH, MIN_LENGTH));
-    }
-
-    @Test
     public void testWithInvalidMaxLengthFails2() {
         assertThrows(IllegalArgumentException.class, () -> StringInitialAndPartCharPredicateParser.with(INITIAL, PART, MIN_LENGTH, MIN_LENGTH - 1));
     }
@@ -96,6 +91,40 @@ public final class StringInitialAndPartCharPredicateParserTest extends Parser2Te
 
     private void parseAndCheck2(final String text, final String expected, final String textAfter) {
         this.parseAndCheck(text, this.string(expected), expected, textAfter);
+    }
+
+    @Test
+    public void testMinAndMaxLengthEqual() {
+        final String text = "ab";
+
+        this.parseAndCheck(
+                StringInitialAndPartCharPredicateParser.with(
+                        CharPredicates.is('a'),
+                        CharPredicates.is('b'),
+                        2,
+                        2),
+                text,
+                string(text),
+                text
+        );
+    }
+
+    @Test
+    public void testMinAndMaxLengthEqual2() {
+        final String text = "ab";
+        final String after = "b";
+
+        this.parseAndCheck(
+                StringInitialAndPartCharPredicateParser.with(
+                        CharPredicates.is('a'),
+                        CharPredicates.is('b'),
+                        2,
+                        2),
+                text + after,
+                string(text),
+                text,
+                after
+        );
     }
 
     private StringParserToken string(final String text) {

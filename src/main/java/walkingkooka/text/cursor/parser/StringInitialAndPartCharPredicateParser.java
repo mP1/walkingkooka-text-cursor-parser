@@ -41,8 +41,8 @@ final class StringInitialAndPartCharPredicateParser<C extends ParserContext> ext
         if (minLength < 1) {
             throw new IllegalArgumentException("Min length " + minLength + " must be greater than 0");
         }
-        if (maxLength <= minLength) {
-            throw new IllegalArgumentException("Max length " + minLength + " must be greater than min length " + minLength);
+        if (minLength > maxLength) {
+            throw new IllegalArgumentException("Max length " + minLength + " must be greater than or equal min length " + minLength);
         }
 
         return new StringInitialAndPartCharPredicateParser<>(initial, part, minLength, maxLength);
