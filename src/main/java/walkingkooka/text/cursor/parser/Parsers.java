@@ -46,6 +46,13 @@ public final class Parsers implements PublicStaticHelper {
     }
 
     /**
+     * {@see AndEmptyTextCursorParser}
+     */
+    public static <C extends ParserContext> Parser<C> andEmptyTextCursor(final Parser<C> parser) {
+        return AndEmptyTextCursorParser.with(parser);
+    }
+
+    /**
      * {@see BigDecimalParser}
      */
     public static <C extends ParserContext> Parser<C> bigDecimal() {
