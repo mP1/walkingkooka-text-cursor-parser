@@ -211,7 +211,11 @@ public interface ParserTesting extends Testing {
     }
 
     default DateTimeContext dateTimeContext() {
-        return DateTimeContexts.locale(Locale.ENGLISH, 20);
+        return DateTimeContexts.locale(
+                Locale.ENGLISH,
+                1900,
+                20
+        );
     }
 
     default DecimalNumberContext decimalNumberContext() {
