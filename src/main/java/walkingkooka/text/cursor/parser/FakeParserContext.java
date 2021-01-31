@@ -34,6 +34,11 @@ public class FakeParserContext extends FakeDecimalNumberContext implements Parse
     }
 
     @Override
+    public int defaultYear() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public List<String> monthNames() {
         throw new UnsupportedOperationException();
     }

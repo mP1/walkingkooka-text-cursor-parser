@@ -77,7 +77,11 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     }
 
     private DateTimeContext dateTimeContext() {
-        return DateTimeContexts.locale(Locale.ENGLISH, 50);
+        return DateTimeContexts.locale(
+                Locale.ENGLISH,
+                1900,
+                50
+        );
     }
 
     private DecimalNumberContext decimalNumberContext() {
