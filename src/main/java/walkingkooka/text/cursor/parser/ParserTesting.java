@@ -21,17 +21,18 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
-import walkingkooka.test.Testing;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.math.MathContext;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -42,7 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * Mixin that includes numerous helpers to assist parsing and verifying the outcome for success and failures.
  */
-public interface ParserTesting extends Testing {
+public interface ParserTesting extends TreePrintableTesting {
 
     // parseAndCheck....................................................................................................
 
@@ -146,9 +147,9 @@ public interface ParserTesting extends Testing {
     default void checkEquals(final Optional<? extends ParserToken> expected,
                              final Optional<? extends ParserToken> actual,
                              final Supplier<String> message) {
-        assertEquals(
-                ParserTestingPrettyDumper.dump(expected.orElse(null)),
-                ParserTestingPrettyDumper.dump(actual.orElse(null)),
+        this.checkEquals(
+                expected.orElse(null),
+                actual.orElse(null),
                 message
         );
     }
@@ -156,19 +157,10 @@ public interface ParserTesting extends Testing {
     default void checkEquals(final List<ParserToken> expected,
                              final List<ParserToken> actual,
                              final Supplier<String> message) {
+        final Function<ParserToken, String> mapper = (t) -> t.treeToString(INDENTATION, EOL);
         assertEquals(
-                expected.stream().map(ParserTestingPrettyDumper::dump).collect(Collectors.joining()),
-                actual.stream().map(ParserTestingPrettyDumper::dump).collect(Collectors.joining()),
-                message
-        );
-    }
-
-    default void checkEquals(final ParserToken expected,
-                             final ParserToken actual,
-                             final Supplier<String> message) {
-        assertEquals(
-                ParserTestingPrettyDumper.dump(expected),
-                ParserTestingPrettyDumper.dump(actual),
+                expected.stream().map(mapper).collect(Collectors.joining()),
+                actual.stream().map(mapper).collect(Collectors.joining()),
                 message
         );
     }
