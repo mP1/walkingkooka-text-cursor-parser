@@ -79,7 +79,7 @@ public abstract class RepeatedOrSequenceParserTokenTestCase<T extends RepeatedOr
 
     @Test
     public final void testFlatRequired3() {
-        final ParserToken parserToken = new ParserToken() {
+        final ParserToken parserToken = new FakeParserToken() {
             @Override
             public boolean isSymbol() {
                 return false;

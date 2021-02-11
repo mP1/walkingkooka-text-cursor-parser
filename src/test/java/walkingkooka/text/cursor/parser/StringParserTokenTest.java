@@ -58,6 +58,11 @@ public final class StringParserTokenTest extends ValueParserTokenTestCase<String
         assertEquals("132", b.toString());
     }
 
+    @Test
+    public final void testPrintTree() {
+        this.treePrintAndCheck("String \"abc\" (java.lang.String)\n");
+    }
+
     @Override
     public StringParserToken createToken(final String text) {
         return StringParserToken.with(text, text);

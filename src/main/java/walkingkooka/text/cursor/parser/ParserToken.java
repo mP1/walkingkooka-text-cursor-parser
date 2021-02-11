@@ -18,6 +18,7 @@
 package walkingkooka.text.cursor.parser;
 
 import walkingkooka.text.HasText;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
 import java.util.Objects;
@@ -26,7 +27,8 @@ import java.util.stream.Collectors;
 /**
  * Represents a result of a parser attempt to consume a {@link walkingkooka.text.cursor.TextCursor}
  */
-public interface ParserToken extends HasText {
+public interface ParserToken extends HasText,
+        TreePrintable {
 
     /**
      * Concatenates the text from all given tokens into a single string.

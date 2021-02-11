@@ -116,6 +116,12 @@ public final class RepeatedParserTokenTest extends RepeatedOrSequenceParserToken
         assertEquals(Lists.of(token, token, token, token), visited, "visited tokens");
     }
 
+    @Test
+    public final void testPrintTree() {
+        this.treePrintAndCheck("Repeated\n" +
+                "  String \"abc\" (java.lang.String)\n");
+    }
+
     @Override
     public RepeatedParserToken createToken(final String text) {
         return createToken(text, string(text));
