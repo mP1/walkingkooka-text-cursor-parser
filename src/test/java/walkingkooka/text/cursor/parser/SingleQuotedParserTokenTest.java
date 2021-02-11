@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SingleQuotedParserTokenTest extends ParserTokenTestCase<SingleQuotedParserToken> {
+public final class SingleQuotedParserTokenTest extends ValueParserTokenTestCase<SingleQuotedParserToken> {
 
     @Test
     public void testWithNullContentFails() {

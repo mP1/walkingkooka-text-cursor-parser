@@ -24,7 +24,7 @@ import java.time.OffsetDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class OffsetDateTimeParserTokenTest extends ParserTokenTestCase<OffsetDateTimeParserToken> {
+public final class OffsetDateTimeParserTokenTest extends ValueParserTokenTestCase<OffsetDateTimeParserToken> {
 
     @Test
     public void testAccept() {

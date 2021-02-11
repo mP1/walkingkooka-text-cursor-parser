@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BigDecimalParserTokenTest extends ParserTokenTestCase<BigDecimalParserToken> {
+public final class BigDecimalParserTokenTest extends ValueParserTokenTestCase<BigDecimalParserToken> {
 
     @Test
     public void testWithNullValueFails() {
