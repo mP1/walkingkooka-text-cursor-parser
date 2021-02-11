@@ -70,6 +70,28 @@ public final class BigDecimalParserTokenTest extends ValueParserTokenTestCase<Bi
         BigDecimalParserToken.with(BigDecimal.valueOf(12.5), "12.5 nonsense");
     }
 
+    @Test
+    public void testTreePrint() {
+        this.treePrintAndCheck(
+                ParserTokens.bigDecimal(
+                        BigDecimal.TEN,
+                        "different-text"
+                ),
+                "BigDecimal \"different-text\" 10 (java.math.BigDecimal)\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintExponential() {
+        this.treePrintAndCheck(
+                BigDecimalParserToken.with(
+                        new BigDecimal("1E2"),
+                        "different-text"
+                ),
+                "BigDecimal \"different-text\" 100 (java.math.BigDecimal)\n"
+        );
+    }
+
     @Override
     public BigDecimalParserToken createToken(final String text) {
         return BigDecimalParserToken.with(new BigDecimal(text), text);
