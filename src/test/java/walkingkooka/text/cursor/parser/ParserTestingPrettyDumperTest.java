@@ -35,7 +35,7 @@ public final class ParserTestingPrettyDumperTest implements ClassTesting2<Parser
     public void testDumpLeafParserTokenString() {
         this.dumpAndCheck(
                 ParserTokens.string("abc123", "abc123"),
-                "String=\"abc123\" abc123 (java.lang.String)\n"
+                "String \"abc123\" \"abc123\" (java.lang.String)\n"
         );
     }
 
@@ -43,7 +43,7 @@ public final class ParserTestingPrettyDumperTest implements ClassTesting2<Parser
     public void testDumpLeafParserTokenBigDecimal() {
         this.dumpAndCheck(ParserTokens.bigDecimal(
                 BigDecimal.TEN, "different-text"),
-                "BigDecimal=\"different-text\" 10 (java.math.BigDecimal)\n"
+                "BigDecimal \"different-text\" 10 (java.math.BigDecimal)\n"
         );
     }
 
@@ -51,7 +51,7 @@ public final class ParserTestingPrettyDumperTest implements ClassTesting2<Parser
     public void testDumpLeafParserTokenBigDecimalExponent() {
         this.dumpAndCheck(ParserTokens.bigDecimal(
                 new BigDecimal("1E2"), "different-text"),
-                "BigDecimal=\"different-text\" 100 (java.math.BigDecimal)\n"
+                "BigDecimal \"different-text\" 100 (java.math.BigDecimal)\n"
         );
     }
 
@@ -64,9 +64,9 @@ public final class ParserTestingPrettyDumperTest implements ClassTesting2<Parser
         this.dumpAndCheck(
                 ParserTokens.sequence(tokens, ParserToken.text(tokens))
                 , "Sequence\n" +
-                        "  String=\"a1\" a1 (java.lang.String)\n" +
-                        "  BigDecimal=\"1.5\" 1.5 (java.math.BigDecimal)\n" +
-                        "  BigInteger=\"23\" 23 (java.math.BigInteger)\n");
+                        "  String \"a1\" \"a1\" (java.lang.String)\n" +
+                        "  BigDecimal \"1.5\" 1.5 (java.math.BigDecimal)\n" +
+                        "  BigInteger \"23\" 23 (java.math.BigInteger)\n");
     }
 
     private void dumpAndCheck(final ParserToken token,

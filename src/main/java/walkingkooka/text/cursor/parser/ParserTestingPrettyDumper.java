@@ -17,14 +17,8 @@
 
 package walkingkooka.text.cursor.parser;
 
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.Indentation;
 import walkingkooka.text.LineEnding;
-import walkingkooka.text.printer.IndentingPrinter;
-import walkingkooka.text.printer.Printers;
-
-import java.math.BigDecimal;
-import java.util.Optional;
 
 /**
  * Used by {@link ParserTesting} to create an indented tree like value of {@link ParserToken tokens} in a tree.
@@ -38,78 +32,22 @@ import java.util.Optional;
  *     this.dumpAndCheck(
  *             ParserTokens.sequence(tokens, ParserToken.text(tokens))
  *             , "Sequence\n" +
- *                     "  String=\"a1\" a1 (java.lang.String)\n" +
- *                     "  BigDecimal=\"1.5\" 1.5 (java.math.BigDecimal)\n" +
- *                     "  BigInteger=\"23\" 23 (java.math.BigInteger)\n");
+ *                     "  String \"a1\" \"a1\" (java.lang.String)\n" +
+ *                     "  BigDecimal \"1.5\" 1.5 (java.math.BigDecimal)\n" +
+ *                     "  BigInteger \"23\" 23 (java.math.BigInteger)\n");
  * }
  * </pre>
  */
 final class ParserTestingPrettyDumper {
 
+    private final static Indentation INDENTATION = Indentation.with("  ");
+    private final static LineEnding ENDING = LineEnding.NL;
+
     static String dump(final ParserToken token) {
         return null != token ?
-                dump0(token) :
+                token.treeToString(INDENTATION, ENDING) :
                 null;
     }
-
-    private static String dump0(final ParserToken token) {
-        final StringBuilder b = new StringBuilder();
-
-        try (final IndentingPrinter printer = Printers.stringBuilder(b, LineEnding.NL).indenting(Indentation.with("  "))) {
-            dump(token, printer);
-            printer.flush();
-        }
-
-        return b.toString();
-    }
-
-    private static void dump(final ParserToken token,
-                             final IndentingPrinter printer) {
-        if (token instanceof LeafParserToken) {
-            dumpLeaf((LeafParserToken) token, printer);
-        }
-        if (token instanceof ParentParserToken) {
-            dumpParent((ParentParserToken) token, printer);
-        }
-    }
-
-    private static void dumpLeaf(final LeafParserToken token,
-                                 final IndentingPrinter printer) {
-        final Object value = token.value();
-        printer.print(
-                typeName(token) + "=" +
-                        CharSequences.quoteIfChars(token.text()) + " " + toString(value) +
-                        (null != value ?
-                                (" (" + value.getClass().getName() + ")") :
-                                "")
-        );
-        printer.print(printer.lineEnding());
-    }
-
-    private static String toString(final Object value) {
-        return value instanceof BigDecimal ?
-                ((BigDecimal)value).toPlainString() : // want consistent printing of BigDecimals.
-                String.valueOf(value);
-    }
-
-    private static void dumpParent(final ParentParserToken token,
-                                   final IndentingPrinter printer) {
-        printer.print(typeName(token));
-        printer.print(printer.lineEnding());
-        printer.indent();
-
-        token.value().forEach(t -> dump(t, printer));
-        printer.outdent();
-    }
-
-    private static String typeName(final ParserToken token) {
-        final String typeName = token.getClass().getSimpleName();
-        return typeName.endsWith(PARSER_TOKEN) ?
-                typeName.substring(0, typeName.length() - PARSER_TOKEN.length()) :
-                typeName;
-    }
-
-    private final static String PARSER_TOKEN = ParserToken.class.getSimpleName();
 
     private ParserTestingPrettyDumper() {
         throw new UnsupportedOperationException();
