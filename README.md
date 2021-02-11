@@ -52,7 +52,7 @@ The dump print out view below shows a `SequenceParserToken` with 3 children. Eac
 
 ```
 Sequence
-  String="a1" a1 (java.lang.String)
+  String="a1" "a1" (java.lang.String)
   BigDecimal="1.5" 1.5 (java.math.BigDecimal)
   BigInteger="23" 23 (java.math.BigInteger)
 
