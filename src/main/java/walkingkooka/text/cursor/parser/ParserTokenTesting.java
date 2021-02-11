@@ -205,6 +205,13 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
         return this.createToken();
     }
 
+    // TreePrintingTesting..............................................................................................
+
+    @Override
+    default T createTreePrintable() {
+        return this.createToken();
+    }
+
     // TypeNameTesting .................................................................................................
 
     @Override

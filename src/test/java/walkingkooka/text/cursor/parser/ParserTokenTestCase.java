@@ -40,11 +40,4 @@ public abstract class ParserTokenTestCase<T extends ParserToken> implements Clas
     public final JavaVisibility typeVisibility() {
         return JavaVisibility.PUBLIC;
     }
-
-    // TreePrintableTesting.............................................................................................
-
-    @Override
-    public final T createTreePrintable() {
-        return this.createToken();
-    }
 }
