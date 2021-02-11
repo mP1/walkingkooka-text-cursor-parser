@@ -31,7 +31,7 @@ public interface LeafParserToken<T> extends ParserToken, Value<T> {
     @Override
     default void printTree(final IndentingPrinter printer) {
         final T value = this.value();
-        printer.print(ParserTokenTypeName.typeName(this) + " " + CharSequences.quoteIfChars(value) + " (" + value.getClass().getName() + ")");
+        printer.print(ParserTokenTypeName.typeName(this) + " " + CharSequences.quoteAndEscape(this.text()) + " " + CharSequences.quoteIfChars(value) + " (" + value.getClass().getName() + ")");
         printer.println();
     }
 }
