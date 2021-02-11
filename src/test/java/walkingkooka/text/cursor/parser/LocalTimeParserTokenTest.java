@@ -54,6 +54,11 @@ public final class LocalTimeParserTokenTest extends ValueParserTokenTestCase<Loc
         assertEquals("132", b.toString());
     }
 
+    @Test
+    public final void testPrintTree() {
+        this.treePrintAndCheck("LocalTime 12:58:59 (java.time.LocalTime)\n");
+    }
+
     @Override
     public LocalTimeParserToken createToken(final String text) {
         return LocalTimeParserToken.with(LocalTime.parse(text), text);

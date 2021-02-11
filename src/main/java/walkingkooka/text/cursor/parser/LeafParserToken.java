@@ -18,9 +18,20 @@
 package walkingkooka.text.cursor.parser;
 
 import walkingkooka.Value;
+import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.IndentingPrinter;
 
 /**
  * Interface that all leaf parser tokens must implement. A leaf must not have further children or a List value.
  */
 public interface LeafParserToken<T> extends ParserToken, Value<T> {
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    default void printTree(final IndentingPrinter printer) {
+        final T value = this.value();
+        printer.print(ParserTokenTypeName.typeName(this) + " " + CharSequences.quoteIfChars(value) + " (" + value.getClass().getName() + ")");
+        printer.println();
+    }
 }

@@ -26,6 +26,7 @@ import walkingkooka.reflect.BeanPropertiesTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasTextTesting;
+import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.visit.Visiting;
 
 import java.util.Collection;
@@ -46,6 +47,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public interface ParserTokenTesting<T extends ParserToken > extends BeanPropertiesTesting,
         HashCodeEqualsDefinedTesting2<T>,
         HasTextTesting,
+        TreePrintableTesting<T>,
         ToStringTesting<T>,
         TypeNameTesting<T> {
 

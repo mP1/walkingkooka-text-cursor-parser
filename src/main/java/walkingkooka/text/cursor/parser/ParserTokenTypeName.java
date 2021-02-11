@@ -17,27 +17,17 @@
 
 package walkingkooka.text.cursor.parser;
 
-import walkingkooka.test.Fake;
-import walkingkooka.text.printer.IndentingPrinter;
-
-public class FakeParserToken implements ParserToken, Fake {
-    @Override
-    public String text() {
-        throw new UnsupportedOperationException();
+final class ParserTokenTypeName {
+    static String typeName(final ParserToken token) {
+        final String typeName = token.getClass().getSimpleName();
+        return typeName.endsWith(PARSER_TOKEN) ?
+                typeName.substring(0, typeName.length() - PARSER_TOKEN.length()) :
+                typeName;
     }
 
-    @Override
-    public boolean isSymbol() {
-        throw new UnsupportedOperationException();
-    }
+    private final static String PARSER_TOKEN = ParserToken.class.getSimpleName();
 
-    @Override
-    public void accept(final ParserTokenVisitor visitor) {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void printTree(IndentingPrinter indentingPrinter) {
+    private ParserTokenTypeName() {
         throw new UnsupportedOperationException();
     }
 }
