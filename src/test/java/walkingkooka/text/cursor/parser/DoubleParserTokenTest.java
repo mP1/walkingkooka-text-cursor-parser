@@ -22,7 +22,7 @@ import walkingkooka.visit.Visiting;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class DoubleParserTokenTest extends ParserTokenTestCase<DoubleParserToken> {
+public final class DoubleParserTokenTest extends ValueParserTokenTestCase<DoubleParserToken> {
 
     @Test
     public void testAccept() {
