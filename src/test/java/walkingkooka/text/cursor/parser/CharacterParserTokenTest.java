@@ -54,7 +54,10 @@ public final class CharacterParserTokenTest extends ValueParserTokenTestCase<Cha
 
     @Test
     public final void testPrintTree() {
-        this.treePrintAndCheck("Character \"\\'A\\'\" 'A' (java.lang.Character)\n");
+        this.treePrintAndCheck(
+                this.createToken(),
+                "Character \"\\'A\\'\" 'A' (java.lang.Character)\n"
+        );
     }
 
     @Test

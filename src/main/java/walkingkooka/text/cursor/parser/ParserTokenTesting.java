@@ -47,7 +47,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public interface ParserTokenTesting<T extends ParserToken > extends BeanPropertiesTesting,
         HashCodeEqualsDefinedTesting2<T>,
         HasTextTesting,
-        TreePrintableTesting<T>,
+        TreePrintableTesting,
         ToStringTesting<T>,
         TypeNameTesting<T> {
 
@@ -202,13 +202,6 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
 
     @Override
     default T createObject() {
-        return this.createToken();
-    }
-
-    // TreePrintingTesting..............................................................................................
-
-    @Override
-    default T createTreePrintable() {
         return this.createToken();
     }
 

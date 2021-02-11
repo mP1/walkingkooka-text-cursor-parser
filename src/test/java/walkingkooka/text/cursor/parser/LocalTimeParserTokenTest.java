@@ -56,7 +56,10 @@ public final class LocalTimeParserTokenTest extends ValueParserTokenTestCase<Loc
 
     @Test
     public final void testPrintTree() {
-        this.treePrintAndCheck("LocalTime \"12:58:59\" 12:58:59 (java.time.LocalTime)\n");
+        this.treePrintAndCheck(
+                this.createToken(),
+                "LocalTime \"12:58:59\" 12:58:59 (java.time.LocalTime)\n"
+        );
     }
 
     @Override
