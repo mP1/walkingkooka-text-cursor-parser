@@ -16,6 +16,7 @@
  */
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.math.BigDecimal;
@@ -47,7 +48,7 @@ public final class BigDecimalParserToken extends ValueParserToken<BigDecimal> im
      */
     @Override
     public void printTree(final IndentingPrinter printer) {
-        printer.print(ParserTokenTypeName.typeName(this) + " " + this.value().toPlainString() + "(BigDecimal)");
+        printer.print(ParserTokenTypeName.typeName(this) + " " + CharSequences.quoteIfChars(this.text()) + " " + this.value().toPlainString() + " (java.math.BigDecimal)");
         printer.println();
     }
 
