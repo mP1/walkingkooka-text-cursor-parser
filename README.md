@@ -43,7 +43,10 @@ the [test cases](https://github.com/mP1/walkingkooka-text-cursor-parser/tree/mas
 - Tests become very succinct with little boilerplate.
 - Numerous overloads, supporting tests with minimum parameters, other requirements are defaulted.
 - The defaults come from factory methods.
-- `parseAndCheck` includes numerous asserts including a handy tree dump view when the result `ParserToken` does not match the expected. This view becomes particularly helpful when the ParserToken graph has many tokens.
+- `parseAndCheck` includes numerous asserts including a handy tree dump view when the result `ParserToken` does not
+  match the expected. This view becomes particularly helpful when the ParserToken graph has many tokens.
+- Each `ParserToken` also implements `TreePrintable.treePrint(IndentingPrinter)` which prints a detailed pretty tree
+  formatted showing all tokens and hierarchy as shown below.
 
 The dump print out view below shows a `SequenceParserToken` with 3 children. Each parent has its children indented and nested.
 
@@ -78,9 +81,15 @@ Parsers are available for the follow static methods:
 - Long.parseLong
 - Short.parseShort
 
+There are numerous advantages using these `Parser(s)` over the equivalent parse methods in the JDK
 
+- All instances are threadsafe and immutable.
+- Changing `Locale` or to use custom symbols a `NumberFormat` needs to be re-created, the `Parser` equivalent does not
+  need replacement, simply pass in a new `Context`.
+- These `Parser` do not require `CharSequence` or `String` but can find their respective text representations within a
+  stream of characters.
 
-## Related projects 
+## Related projects
 
 - [Parser combinators](https://github.com/mP1/walkingkooka-text-cursor-parser-ebnf)
 - [EBNF -> CharPredicate](https://github.com/mP1/walkingkooka-text-cursor-parser-ebnf-charpredicate)
