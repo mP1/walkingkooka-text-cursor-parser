@@ -99,15 +99,13 @@ public interface ParserTesting extends TreePrintableTesting {
         cursor.end();
 
         final String textRemaining = after.textBetween().toString();
-        if (false == token.equals(result)) {
-            checkEquals(
-                    token,
-                    result,
-                    () -> "text:\n" + CharSequences.quoteAndEscape(consumed.length() == 0 ?
-                            after.textBetween() :
-                            consumed) + "\nunconsumed text:\n" + textRemaining
-            );
-        }
+        this.checkEquals(
+                token,
+                result,
+                () -> "text:\n" + CharSequences.quoteAndEscape(consumed.length() == 0 ?
+                        after.textBetween() :
+                        consumed) + "\nunconsumed text:\n" + textRemaining
+        );
 
         assertEquals(text, consumed, "incorrect consumed text");
         assertEquals(text, result.map(ParserToken::text).orElse(""), "token consume text is incorrect");
