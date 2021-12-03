@@ -22,7 +22,6 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CaseSensitivity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -77,7 +76,7 @@ public final class CustomToStringParserTest extends ParserTestCase<CustomToStrin
     public void testDefaultMethodSetToString() {
         final Parser<?> parser = WRAPPED.setToString(CUSTOM_TO_STRING);
         assertNotSame(WRAPPED, parser);
-        assertEquals(CUSTOM_TO_STRING, parser.toString());
+        this.checkEquals(CUSTOM_TO_STRING, parser.toString());
     }
 
     @Test
@@ -91,7 +90,7 @@ public final class CustomToStringParserTest extends ParserTestCase<CustomToStrin
         final Parser<?> parser = this.createParser();
         final Parser<?> parser2 = parser.setToString(different);
         assertNotSame(parser, parser2);
-        assertEquals(different, parser2.toString());
+        this.checkEquals(different, parser2.toString());
     }
 
     @Test
@@ -99,7 +98,7 @@ public final class CustomToStringParserTest extends ParserTestCase<CustomToStrin
     public void testOr() {
         final CustomToStringParser<ParserContext> parser1 = this.createParser().cast();
         final CustomToStringParser<ParserContext> parser2 = this.createParser().cast();
-        assertEquals(Parsers.alternatives(Lists.of(parser1, parser2)), parser1.or(parser2));
+        this.checkEquals(Parsers.alternatives(Lists.of(parser1, parser2)), parser1.or(parser2));
     }
 
     @Test

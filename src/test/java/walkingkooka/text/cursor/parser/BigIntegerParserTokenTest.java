@@ -21,7 +21,6 @@ import walkingkooka.visit.Visiting;
 
 import java.math.BigInteger;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -57,7 +56,7 @@ public final class BigIntegerParserTokenTest extends ValueParserTokenTestCase<Bi
                 b.append("3");
             }
         }.accept(token);
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test

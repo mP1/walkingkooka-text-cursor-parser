@@ -24,7 +24,6 @@ import walkingkooka.text.cursor.TextCursorLineInfo;
 import walkingkooka.text.cursor.TextCursorLineInfos;
 import walkingkooka.text.cursor.TextCursors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ParserReporterExceptionTest implements ClassTesting2<ParserReporterException> {
@@ -57,7 +56,7 @@ public final class ParserReporterExceptionTest implements ClassTesting2<ParserRe
     public void testWith() {
         final TextCursorLineInfo info = TextCursors.charSequence("").lineInfo();
         final ParserReporterException exception = new ParserReporterException("message", info);
-        assertEquals(info, exception.lineInfo(), "lineInfo");
+        this.checkEquals(info, exception.lineInfo(), "lineInfo");
     }
 
     @Override

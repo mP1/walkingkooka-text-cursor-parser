@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -66,7 +65,7 @@ final public class RepeatingCharSequenceTest implements ClassTesting2<RepeatingC
                 CHAR,
                 LENGTH);
         final CharSequence sub = sequence.subSequence(1, 2);
-        assertEquals(RepeatingCharSequence.class, sub.getClass(), "class");
+        this.checkEquals(RepeatingCharSequence.class, sub.getClass(), "class");
         this.checkEquals2(sub, CHAR);
     }
 

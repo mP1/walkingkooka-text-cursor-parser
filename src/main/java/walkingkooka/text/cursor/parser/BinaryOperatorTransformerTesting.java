@@ -21,8 +21,6 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.test.Testing;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 /**
  * Mixing testing interface for {@link BinaryOperatorTransformer}
  */
@@ -35,7 +33,7 @@ public interface BinaryOperatorTransformerTesting<T extends BinaryOperatorTransf
         final T transformer = this.createBinaryOperatorTransformer();
         final int lowest = transformer.lowestPriority();
         final int highest = transformer.highestPriority();
-        assertEquals(true, lowest < highest, () -> transformer + " " + lowest + " < " + highest);
+        this.checkEquals(true, lowest < highest, () -> transformer + " " + lowest + " < " + highest);
     }
 
     T createBinaryOperatorTransformer();

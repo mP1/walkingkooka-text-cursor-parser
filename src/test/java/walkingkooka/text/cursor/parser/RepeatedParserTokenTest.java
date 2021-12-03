@@ -22,7 +22,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class RepeatedParserTokenTest extends RepeatedOrSequenceParserTokenTestCase<RepeatedParserToken> {
@@ -70,8 +69,8 @@ public final class RepeatedParserTokenTest extends RepeatedOrSequenceParserToken
                 visited.add(t);
             }
         }.accept(token);
-        assertEquals("1315242", b.toString());
-        assertEquals(Lists.<Object>of(token, token, string, string, string, token, token), visited, "visited tokens");
+        this.checkEquals("1315242", b.toString());
+        this.checkEquals(Lists.<Object>of(token, token, string, string, string, token, token), visited, "visited tokens");
     }
 
     @Test
@@ -112,8 +111,8 @@ public final class RepeatedParserTokenTest extends RepeatedOrSequenceParserToken
                 visited.add(t);
             }
         }.accept(token);
-        assertEquals("1342", b.toString());
-        assertEquals(Lists.of(token, token, token, token), visited, "visited tokens");
+        this.checkEquals("1342", b.toString());
+        this.checkEquals(Lists.of(token, token, token, token), visited, "visited tokens");
     }
 
     @Test

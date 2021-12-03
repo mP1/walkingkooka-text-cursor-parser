@@ -25,7 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -62,7 +61,7 @@ public abstract class RepeatedOrSequenceParserTokenTestCase<T extends RepeatedOr
         final T parent = this.createToken(STRING1, STRING2, child);
         final T flat = parent.flat().cast(this.type());
         assertNotSame(parent, flat);
-        assertEquals(Lists.of(STRING1, STRING2, STRING4, STRING5), flat.value(), "values after flattening");
+        this.checkEquals(Lists.of(STRING1, STRING2, STRING4, STRING5), flat.value(), "values after flattening");
         this.textAndCheck(flat, "a1b2d4e5");
     }
 
@@ -73,7 +72,7 @@ public abstract class RepeatedOrSequenceParserTokenTestCase<T extends RepeatedOr
         final T parent = this.createToken(STRING1, STRING2, child);
         final T flat = parent.flat().cast(this.type());
         assertNotSame(parent, flat);
-        assertEquals(Lists.of(STRING1, STRING2, STRING4, STRING5, STRING6), flat.value(), "values after flattening");
+        this.checkEquals(Lists.of(STRING1, STRING2, STRING4, STRING5, STRING6), flat.value(), "values after flattening");
         this.textAndCheck(flat, "a1b2d4e5f6");
     }
 
@@ -101,7 +100,7 @@ public abstract class RepeatedOrSequenceParserTokenTestCase<T extends RepeatedOr
         final T parent = this.createToken(STRING1, STRING2, child);
         final T flat = parent.flat().cast(this.type());
         assertNotSame(parent, flat);
-        assertEquals(Lists.of(STRING1, STRING2, STRING4, STRING5, STRING6, parserToken), flat.value(), "values after flattening");
+        this.checkEquals(Lists.of(STRING1, STRING2, STRING4, STRING5, STRING6, parserToken), flat.value(), "values after flattening");
         this.textAndCheck(flat, "a1b2d4e5f6!");
     }
 

@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 final public class CharacterConstantTest implements ClassTesting2<CharacterConstant>,
@@ -64,8 +63,8 @@ final public class CharacterConstantTest implements ClassTesting2<CharacterConst
     }
 
     private void check(final CharacterConstant constant, final char c) {
-        assertEquals(c, constant.character(), "character");
-        assertEquals(String.valueOf(c), constant.string(), "string");
+        this.checkEquals(c, constant.character(), "character");
+        this.checkEquals(String.valueOf(c), constant.string(), "string");
     }
 
     @Test

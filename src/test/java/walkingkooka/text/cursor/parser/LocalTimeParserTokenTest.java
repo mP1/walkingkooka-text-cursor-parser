@@ -21,7 +21,6 @@ import walkingkooka.visit.Visiting;
 
 import java.time.LocalTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class LocalTimeParserTokenTest extends ValueParserTokenTestCase<LocalTimeParserToken> {
@@ -51,7 +50,7 @@ public final class LocalTimeParserTokenTest extends ValueParserTokenTestCase<Loc
                 b.append("3");
             }
         }.accept(token);
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Test
