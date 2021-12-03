@@ -22,7 +22,6 @@ import walkingkooka.visit.Visiting;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class ZonedDateTimeParserTokenTest extends ValueParserTokenTestCase<ZonedDateTimeParserToken> {
@@ -52,7 +51,7 @@ public final class ZonedDateTimeParserTokenTest extends ValueParserTokenTestCase
                 b.append("3");
             }
         }.accept(token);
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Override

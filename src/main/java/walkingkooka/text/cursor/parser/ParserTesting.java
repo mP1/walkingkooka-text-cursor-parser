@@ -36,7 +36,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -107,9 +106,9 @@ public interface ParserTesting extends TreePrintableTesting {
                         consumed) + "\nunconsumed text:\n" + textRemaining
         );
 
-        assertEquals(text, consumed, "incorrect consumed text");
-        assertEquals(text, result.map(ParserToken::text).orElse(""), "token consume text is incorrect");
-        assertEquals(textAfter, textRemaining, "Incorrect text after match");
+        this.checkEquals(text, consumed, "incorrect consumed text");
+        this.checkEquals(text, result.map(ParserToken::text).orElse(""), "token consume text is incorrect");
+        this.checkEquals(textAfter, textRemaining, "Incorrect text after match");
 
         after.restore();
         return cursor;
@@ -156,7 +155,7 @@ public interface ParserTesting extends TreePrintableTesting {
                              final List<ParserToken> actual,
                              final Supplier<String> message) {
         final Function<ParserToken, String> mapper = (t) -> t.treeToString(INDENTATION, EOL);
-        assertEquals(
+        this.checkEquals(
                 expected.stream().map(mapper).collect(Collectors.joining()),
                 actual.stream().map(mapper).collect(Collectors.joining()),
                 message
@@ -183,7 +182,7 @@ public interface ParserTesting extends TreePrintableTesting {
         final ParserException expected = assertThrows(ParserException.class, () -> this.parse(parser, cursor, context));
 
         final String message = expected.getMessage();
-        assertEquals(true, message.contains(messagePart), () -> "Message: " + message + " missing " + messagePart);
+        this.checkEquals(true, message.contains(messagePart), () -> "Message: " + message + " missing " + messagePart);
     }
 
     // parse............................................................................................................

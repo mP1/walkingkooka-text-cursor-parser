@@ -19,17 +19,17 @@ package walkingkooka.text.cursor.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.test.Testing;
 import walkingkooka.text.CharSequences;
 import walkingkooka.visit.Visiting;
 
 import java.math.BigInteger;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class SequenceParserTokenTest extends RepeatedOrSequenceParserTokenTestCase<SequenceParserToken> {
+public final class SequenceParserTokenTest extends RepeatedOrSequenceParserTokenTestCase<SequenceParserToken> implements Testing {
 
     private final static StringParserToken STRING1 = ParserTokens.string("a1", "a1");
     private final static StringParserToken STRING2 = ParserTokens.string("b2", "b2");
@@ -106,7 +106,7 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
 
     private void requiredAndGet(final int index, final ParserToken result) {
         final SequenceParserToken sequence = this.createToken();
-        assertEquals(result,
+        this.checkEquals(result,
                 sequence.required(index, StringParserToken.class),
                 "failed to get required " + index + " from " + sequence);
     }
@@ -124,7 +124,7 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final SequenceParserToken token = createToken(STRING1, STRING2, NOISY3);
         final SequenceParserToken different = token.removeNoise();
 
-        assertEquals(Lists.of(STRING1, STRING2), different.value(), "value");
+        this.checkEquals(Lists.of(STRING1, STRING2), different.value(), "value");
         assertSame(different, different.removeNoise());
     }
 
@@ -133,7 +133,7 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final SequenceParserToken token = createToken(STRING1, STRING2, NOISY3, WHITESPACE);
         final SequenceParserToken different = token.removeNoise();
 
-        assertEquals(Lists.of(STRING1, STRING2, WHITESPACE), different.value(), "value");
+        this.checkEquals(Lists.of(STRING1, STRING2, WHITESPACE), different.value(), "value");
         assertSame(different, different.removeNoise());
     }
 
@@ -150,7 +150,7 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final SequenceParserToken token = createToken(STRING1, STRING2, WHITESPACE);
         final SequenceParserToken different = token.removeWhitespace();
 
-        assertEquals(Lists.of(STRING1, STRING2), different.value(), "value");
+        this.checkEquals(Lists.of(STRING1, STRING2), different.value(), "value");
         assertSame(different, different.removeWhitespace());
     }
 
@@ -159,7 +159,7 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final SequenceParserToken token = createToken(STRING1, STRING2, NOISY3, WHITESPACE);
         final SequenceParserToken different = token.removeWhitespace();
 
-        assertEquals(Lists.of(STRING1, STRING2, NOISY3), different.value(), "value");
+        this.checkEquals(Lists.of(STRING1, STRING2, NOISY3), different.value(), "value");
         assertSame(different, different.removeWhitespace());
     }
 
@@ -337,7 +337,7 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
 
     private void transformAndCheck(final SequenceParserToken token,
                                    final ParserToken expected) {
-        assertEquals(expected,
+        this.checkEquals(expected,
                 token.transform(new TestBinaryOperatorTransformer()),
                 token::toString);
     }
@@ -547,7 +547,7 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         public ParserToken binaryOperand(final List<ParserToken> tokens,
                                          final String text,
                                          final ParserToken symbol) {
-            assertEquals(true, symbol.isSymbol(), () -> "expected symbol but got " + symbol);
+            checkEquals(true, symbol.isSymbol(), () -> "expected symbol but got " + symbol);
             switch (symbol.text()) {
                 case "+":
                     return add(tokens, text);
@@ -605,8 +605,8 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
                 visited.add(t);
             }
         }.accept(token);
-        assertEquals("1316216242", b.toString());
-        assertEquals(Lists.<Object>of(token, token, STRING1, STRING1, STRING1, STRING2, STRING2, STRING2, token, token),
+        this.checkEquals("1316216242", b.toString());
+        this.checkEquals(Lists.<Object>of(token, token, STRING1, STRING1, STRING1, STRING2, STRING2, STRING2, token, token),
                 visited,
                 "visited tokens");
     }
@@ -647,8 +647,8 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
                 visited.add(t);
             }
         }.accept(token);
-        assertEquals("1342", b.toString());
-        assertEquals(Lists.of(token, token, token, token), visited, "visited tokens");
+        this.checkEquals("1342", b.toString());
+        this.checkEquals(Lists.of(token, token, token, token), visited, "visited tokens");
     }
 
     @Test

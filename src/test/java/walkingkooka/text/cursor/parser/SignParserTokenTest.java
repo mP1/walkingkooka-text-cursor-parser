@@ -19,7 +19,6 @@ package walkingkooka.text.cursor.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.visit.Visiting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class SignParserTokenTest extends ValueParserTokenTestCase<SignParserToken> {
@@ -49,7 +48,7 @@ public final class SignParserTokenTest extends ValueParserTokenTestCase<SignPars
                 b.append("2");
             }
         }.accept(token);
-        assertEquals("123", b.toString());
+        this.checkEquals("123", b.toString());
     }
 
     @Override

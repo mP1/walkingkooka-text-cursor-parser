@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -36,22 +35,22 @@ final public class LineEndingTest implements ClassTesting2<LineEnding>,
 
     @Test
     public void testCr() {
-        assertEquals("\r", LineEnding.CR.toString());
+        this.checkEquals("\r", LineEnding.CR.toString());
     }
 
     @Test
     public void testCrNl() {
-        assertEquals("\r\n", LineEnding.CRNL.toString());
+        this.checkEquals("\r\n", LineEnding.CRNL.toString());
     }
 
     @Test
     public void testNl() {
-        assertEquals("\n", LineEnding.NL.toString());
+        this.checkEquals("\n", LineEnding.NL.toString());
     }
 
     @Test
     public void testNone() {
-        assertEquals("", LineEnding.NONE.toString());
+        this.checkEquals("", LineEnding.NONE.toString());
     }
 
     @Test

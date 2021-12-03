@@ -24,7 +24,6 @@ import walkingkooka.text.cursor.TextCursors;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ReportingParserTest extends ParserTestCase<ReportingParser<ParserContext>> {
@@ -71,7 +70,7 @@ public final class ReportingParserTest extends ParserTestCase<ReportingParser<Pa
 
     @Test
     public void testNotEmptyConditionCursorEmpty() {
-        assertEquals(Optional.empty(), this.createParser(ParserReporterCondition.NOT_EMPTY).parse(TextCursors.charSequence(""), this.createContext()));
+        this.checkEquals(Optional.empty(), this.createParser(ParserReporterCondition.NOT_EMPTY).parse(TextCursors.charSequence(""), this.createContext()));
     }
 
     @Test

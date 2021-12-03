@@ -22,7 +22,6 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final public class CharSequenceTextCursorTest implements ClassTesting2<CharSequenceTextCursor>,
@@ -38,8 +37,8 @@ final public class CharSequenceTextCursorTest implements ClassTesting2<CharSeque
     public void testFrom() {
         final String text = "text";
         final CharSequenceTextCursor cursor = CharSequenceTextCursor.with(text);
-        assertEquals(0, cursor.position, "positon");
-        assertEquals(text, cursor.text, "text");
+        this.checkEquals(0, cursor.position, "positon");
+        this.checkEquals(text, cursor.text, "text");
     }
 
     @Test

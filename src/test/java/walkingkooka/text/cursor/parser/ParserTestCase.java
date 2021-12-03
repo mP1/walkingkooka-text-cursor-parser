@@ -24,7 +24,6 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.text.cursor.TextCursor;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -52,14 +51,14 @@ public abstract class ParserTestCase<P extends Parser<ParserContext>> implements
     @Test
     public final void testRepeating() {
         final Parser<ParserContext> parser = this.createParser().repeating();
-        assertEquals(RepeatedParser.class, parser.getClass(), parser::toString);
+        this.checkEquals(RepeatedParser.class, parser.getClass(), parser::toString);
     }
 
     @Test
     public void testOr() {
         final P parser = this.createParser();
         final P parser2 = this.createParser();
-        assertEquals(Parsers.alternatives(Lists.of(parser.cast(), parser2.cast())), parser.or(parser2));
+        this.checkEquals(Parsers.alternatives(Lists.of(parser.cast(), parser2.cast())), parser.or(parser2));
     }
 
     @Override

@@ -23,16 +23,21 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.BeanPropertiesTesting;
+import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.MethodAttributes;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasTextTesting;
+import walkingkooka.text.LineEnding;
 import walkingkooka.text.printer.TreePrintableTesting;
 import walkingkooka.visit.Visiting;
 
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -58,7 +63,10 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
             final boolean leaf = LeafParserToken.class.isAssignableFrom(type);
             final boolean parent = ParentParserToken.class.isAssignableFrom(type);
             if (leaf) {
-                assertFalse(parent, "Type " + type.getName() + " must implement either " + LeafParserToken.class.getName() + " or " + ParentParserToken.class.getName() + " but not both");
+                assertFalse(
+                        parent,
+                        () -> "Type " + type.getName() + " must implement either " + LeafParserToken.class.getName() + " or " + ParentParserToken.class.getName() + " but not both"
+                );
                 break;
             }
             if (parent) {
@@ -74,12 +82,18 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
             final T token = this.createToken();
             if (token instanceof LeafParserToken) {
                 final Object value = ((LeafParserToken) token).value();
-                assertFalse(value instanceof Collection, () -> token + " value must not be a Collection but was " + value.getClass() + "=" + value);
+                assertFalse(
+                        value instanceof Collection,
+                        () -> token + " value must not be a Collection but was " + value.getClass() + "=" + value
+                );
                 break;
             }
             if (token instanceof ParentParserToken) {
                 final Object value = ((ParentParserToken) token).value();
-                assertTrue(value instanceof Collection, () -> token + " value must be a Collection but was " + value.getClass() + "=" + value);
+                assertTrue(
+                        value instanceof Collection,
+                        () -> token + " value must be a Collection but was " + value.getClass() + "=" + value
+                );
                 break;
             }
             fail("ParserToken: " + token + " must implement either " + LeafParserToken.class.getName() + " or " + ParentParserToken.class.getName());
@@ -94,13 +108,17 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
         final T token = this.createToken();
 
         if (type.contains(WHITESPACE)) {
-            assertEquals(true,
+            this.checkEquals(
+                    true,
                     token.isSymbol(),
-                    () -> "Token " + token + " is whitespace=true so isSymbol must also be true");
+                    () -> "Token " + token + " is whitespace=true so isSymbol must also be true"
+            );
         } else {
-            assertEquals(symbol,
+            this.checkEquals(
+                    symbol,
                     token.isSymbol(),
-                    () -> "Token " + token + " name includes " + SYMBOL + " so isSymbol should be true");
+                    () -> "Token " + token + " name includes " + SYMBOL + " so isSymbol should be true"
+            );
         }
     }
 
@@ -115,13 +133,23 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
         final boolean whitespace = type.contains(WHITESPACE);
 
         final T token = this.createToken();
-        assertEquals(whitespace,
+        this.checkEquals(
+                whitespace,
                 token.isWhitespace(),
-                () -> token + " isWhitespace must be true if " + type + " contains " + CharSequences.quote(WHITESPACE));
+                () -> token + " isWhitespace must be true if " + type + " contains " + CharSequences.quote(WHITESPACE)
+        );
 
         if (whitespace) {
-            assertEquals(whitespace, token.isNoise(), () -> token + " isWhitespace==true, isNoise must also be true");
-            assertEquals(whitespace, token.isSymbol(), () -> token + " isWhitespace==true, isSymbol must also be true");
+            this.checkEquals(
+                    whitespace,
+                    token.isNoise(),
+                    () -> token + " isWhitespace==true, isNoise must also be true"
+            );
+            this.checkEquals(
+                    whitespace,
+                    token.isSymbol(),
+                    () -> token + " isWhitespace==true, isSymbol must also be true"
+            );
         }
     }
 
@@ -139,10 +167,40 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
 
     @Test
     default void testPublicStaticFactoryMethod() {
-        ParserTokenTesting2.publicStaticFactoryCheck(ParserTokens.class,
-                "",
-                ParserToken.class,
-                this.type());
+        final Class<?> type = this.type();
+        final String suffix = ParserToken.class.getSimpleName();
+
+        final String name = type.getSimpleName();
+        final String without = Character.toLowerCase(name.charAt("".length())) +
+                name.substring("".length() + 1, name.length() - suffix.length());
+
+        String factoryMethodName1 = without;
+        for (final String possible : new String[]{"boolean", "byte", "double", "equals", "int", "long", "null", "short"}) {
+            if (without.equals(possible)) {
+                factoryMethodName1 = without + suffix;
+                break;
+            }
+        }
+        final String factoryMethodName = factoryMethodName1;
+
+        final List<Method> publicStaticMethods = Arrays.stream(ParserTokens.class.getMethods())
+                .filter(m -> MethodAttributes.STATIC.is(m) && JavaVisibility.PUBLIC == JavaVisibility.of(m))
+                .collect(Collectors.toList());
+
+        final List<Method> factoryMethods = publicStaticMethods.stream()
+                .filter(m -> m.getName().equals(factoryMethodName) &&
+                        m.getReturnType().equals(type))
+                .collect(Collectors.toList());
+
+        final String publicStaticMethodsToString = publicStaticMethods.stream()
+                .map(Method::toGenericString)
+                .collect(Collectors.joining(LineEnding.SYSTEM.toString()));
+        this.checkEquals(
+                1,
+                factoryMethods.size(),
+                () -> "Expected only a single factory method called " + CharSequences.quote(factoryMethodName) +
+                        " for " + type + " on " + ParserTokens.class.getName() + " but got " + factoryMethods + "\n" + publicStaticMethodsToString
+        );
     }
 
     @Test
@@ -167,15 +225,18 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 visited.add(t);
             }
         }.accept(token);
-        assertEquals("12", b.toString());
-        assertEquals(Lists.<Object>of(token, token), visited, "visited tokens");
+        this.checkEquals("12", b.toString());
+        this.checkEquals(Lists.<Object>of(token, token), visited, "visited tokens");
     }
 
     @Test
     default void testIsNoisyGuess() {
         final T token = this.createToken();
         final String className = token.getClass().getSimpleName();
-        assertEquals(className.contains("Whitespace") | className.contains("Symbol") | className.contains("Comment"), token.isNoise());
+        this.checkEquals(
+                className.contains("Whitespace") | className.contains("Symbol") | className.contains("Comment"),
+                token.isNoise()
+        );
     }
 
     @Test

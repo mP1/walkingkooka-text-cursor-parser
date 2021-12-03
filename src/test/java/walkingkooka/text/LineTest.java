@@ -21,7 +21,6 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 final public class LineTest implements ClassTesting2<Line>,
@@ -64,7 +63,7 @@ final public class LineTest implements ClassTesting2<Line>,
 
     private void createAndCheck(final String text) {
         final Line line = Line.with(text);
-        assertEquals(text, line.value(), "text value");
+        this.checkEquals(text, line.value(), "text value");
     }
 
     @Test

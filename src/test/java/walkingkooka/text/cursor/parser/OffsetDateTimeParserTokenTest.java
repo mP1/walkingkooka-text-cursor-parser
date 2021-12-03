@@ -21,7 +21,6 @@ import walkingkooka.visit.Visiting;
 
 import java.time.OffsetDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class OffsetDateTimeParserTokenTest extends ValueParserTokenTestCase<OffsetDateTimeParserToken> {
@@ -51,7 +50,7 @@ public final class OffsetDateTimeParserTokenTest extends ValueParserTokenTestCas
                 b.append("3");
             }
         }.accept(token);
-        assertEquals("132", b.toString());
+        this.checkEquals("132", b.toString());
     }
 
     @Override
