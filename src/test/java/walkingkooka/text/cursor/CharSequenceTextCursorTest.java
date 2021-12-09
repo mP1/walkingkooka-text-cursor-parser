@@ -55,6 +55,7 @@ final public class CharSequenceTextCursorTest implements ClassTesting2<CharSeque
         this.atFails(cursor);
     }
 
+    @Test
     @Override
     public void testLineInfo() {
         final CharSequenceTextCursor cursor = CharSequenceTextCursor.with("text\nnext");
