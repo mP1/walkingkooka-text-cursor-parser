@@ -41,8 +41,7 @@ public final class SingleQuotedParserTest extends QuotedParserTestCase<SingleQuo
         return '"';
     }
 
-    @Override
-    final SingleQuotedParserToken createToken(final String content, final String text) {
+    @Override SingleQuotedParserToken createToken(final String content, final String text) {
         return SingleQuotedParserToken.with(content, text);
     }
 

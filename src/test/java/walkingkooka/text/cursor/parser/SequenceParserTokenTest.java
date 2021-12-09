@@ -652,7 +652,7 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
     }
 
     @Test
-    public final void testPrintTree() {
+    public void testPrintTree() {
         this.treePrintAndCheck(
                 this.createToken(),
                 "Sequence\n" +

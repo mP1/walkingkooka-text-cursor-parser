@@ -37,8 +37,7 @@ public final class RepeatedParserToken extends RepeatedOrSequenceParserToken {
         super(tokens, text);
     }
 
-    @Override
-    final RepeatedParserToken replaceValue(final List<ParserToken> value) {
+    @Override RepeatedParserToken replaceValue(final List<ParserToken> value) {
         return new RepeatedParserToken(value, this.text());
     }
 

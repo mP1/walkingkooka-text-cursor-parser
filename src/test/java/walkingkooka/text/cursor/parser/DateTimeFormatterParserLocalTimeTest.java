@@ -220,7 +220,7 @@ public final class DateTimeFormatterParserLocalTimeTest extends DateTimeFormatte
     // TypeNameTesting..................................................................................................
 
     @Override
-    public final String typeNameSuffix() {
+    public String typeNameSuffix() {
         return LocalTime.class.getSimpleName();
     }
 }

@@ -41,8 +41,7 @@ public final class DoubleQuotedParserTest extends QuotedParserTestCase<DoubleQuo
         return '\'';
     }
 
-    @Override
-    final DoubleQuotedParserToken createToken(final String content, final String text) {
+    @Override DoubleQuotedParserToken createToken(final String content, final String text) {
         return DoubleQuotedParserToken.with(content, text);
     }
 

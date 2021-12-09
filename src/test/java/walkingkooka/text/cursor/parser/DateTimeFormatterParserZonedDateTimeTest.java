@@ -210,7 +210,7 @@ public final class DateTimeFormatterParserZonedDateTimeTest extends DateTimeForm
     // TypeNameTesting..................................................................................................
 
     @Override
-    public final String typeNameSuffix() {
+    public String typeNameSuffix() {
         return ZonedDateTime.class.getSimpleName();
     }
 }
