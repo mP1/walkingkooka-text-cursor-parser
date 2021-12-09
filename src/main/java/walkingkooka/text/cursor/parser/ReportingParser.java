@@ -57,11 +57,11 @@ final class ReportingParser<C extends ParserContext> implements Parser<C> {
         return this.condition.parse(cursor, this, context);
     }
 
-    final Optional<ParserToken> report(final TextCursor cursor, final C context) {
+    Optional<ParserToken> report(final TextCursor cursor, final C context) {
         return this.reporter.report(cursor, context, this.parser);
     }
 
-    final Optional<ParserToken> reportIfNotEmpty(final TextCursor cursor, final C context) {
+    Optional<ParserToken> reportIfNotEmpty(final TextCursor cursor, final C context) {
         final Optional<ParserToken> result = this.parser.parse(cursor, context);
         return cursor.isEmpty() ?
                 result :

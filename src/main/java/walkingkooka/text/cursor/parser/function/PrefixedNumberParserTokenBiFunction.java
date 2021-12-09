@@ -47,7 +47,7 @@ final class PrefixedNumberParserTokenBiFunction<C extends ParserContext> impleme
     }
 
     @Override
-    public final BigIntegerParserToken apply(final SequenceParserToken token, final C c) {
+    public BigIntegerParserToken apply(final SequenceParserToken token, final C c) {
         try {
             return this.apply0(token);
         } catch (final ClassCastException | IllegalStateException | IndexOutOfBoundsException cause) {

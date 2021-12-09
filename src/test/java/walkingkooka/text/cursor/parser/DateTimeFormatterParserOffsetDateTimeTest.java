@@ -210,7 +210,7 @@ public final class DateTimeFormatterParserOffsetDateTimeTest extends DateTimeFor
     // TypeNameTesting..................................................................................................
 
     @Override
-    public final String typeNameSuffix() {
+    public String typeNameSuffix() {
         return OffsetDateTime.class.getSimpleName();
     }
 }
