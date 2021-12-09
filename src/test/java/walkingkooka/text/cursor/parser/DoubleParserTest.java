@@ -22,8 +22,6 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.FakeDecimalNumberContext;
 import walkingkooka.text.cursor.TextCursor;
 
-import java.math.BigDecimal;
-
 public final class DoubleParserTest extends Parser2TestCase<DoubleParser<ParserContext>, DoubleParserToken> {
 
     @Test
