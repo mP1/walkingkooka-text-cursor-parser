@@ -34,7 +34,7 @@ final class NeverParser<C extends ParserContext> implements Parser<C> {
     /**
      * Singleton
      */
-    private final static NeverParser INSTANCE = new NeverParser();
+    private final static NeverParser<?> INSTANCE = new NeverParser<>();
 
     private NeverParser() {
         super();

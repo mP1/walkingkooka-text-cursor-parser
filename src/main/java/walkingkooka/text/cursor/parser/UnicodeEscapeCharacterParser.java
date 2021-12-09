@@ -37,7 +37,7 @@ final class UnicodeEscapeCharacterParser<C extends ParserContext> extends Parser
     /**
      * Singleton
      */
-    private final static UnicodeEscapeCharacterParser INSTANCE = new UnicodeEscapeCharacterParser();
+    private final static UnicodeEscapeCharacterParser<?> INSTANCE = new UnicodeEscapeCharacterParser<>();
 
     private UnicodeEscapeCharacterParser() {
     }

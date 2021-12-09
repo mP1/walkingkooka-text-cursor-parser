@@ -35,7 +35,7 @@ final class DoubleParser<C extends ParserContext> extends Parser2<C> {
         return INSTANCE.cast();
     }
 
-    private final static DoubleParser<?> INSTANCE = new DoubleParser();
+    private final static DoubleParser<?> INSTANCE = new DoubleParser<>();
 
     /**
      * Private ctor to limit subclassing.

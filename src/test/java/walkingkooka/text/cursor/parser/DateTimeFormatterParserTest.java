@@ -17,14 +17,15 @@
 
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class DateTimeFormatterParserTest implements ClassTesting2<DateTimeFormatterParser> {
+public final class DateTimeFormatterParserTest implements ClassTesting2<DateTimeFormatterParser<?>> {
 
     @Override
-    public Class<DateTimeFormatterParser> type() {
-        return DateTimeFormatterParser.class;
+    public Class<DateTimeFormatterParser<?>> type() {
+        return Cast.to(DateTimeFormatterParser.class);
     }
 
     @Override

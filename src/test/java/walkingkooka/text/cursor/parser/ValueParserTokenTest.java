@@ -16,13 +16,14 @@
  */
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class ValueParserTokenTest implements ClassTesting2<ValueParserToken> {
+public final class ValueParserTokenTest implements ClassTesting2<ValueParserToken<?>> {
     @Override
-    public Class<ValueParserToken> type() {
-        return ValueParserToken.class;
+    public Class<ValueParserToken<?>> type() {
+        return Cast.to(ValueParserToken.class);
     }
 
     @Override

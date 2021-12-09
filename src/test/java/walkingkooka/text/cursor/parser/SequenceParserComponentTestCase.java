@@ -20,7 +20,7 @@ import walkingkooka.ToStringTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-public abstract class SequenceParserComponentTestCase<C extends SequenceParserComponent> implements ClassTesting2<C>,
+public abstract class SequenceParserComponentTestCase<C extends SequenceParserComponent<?>> implements ClassTesting2<C>,
         ToStringTesting<C> {
 
     SequenceParserComponentTestCase() {
