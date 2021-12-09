@@ -40,7 +40,7 @@ final class PrefixedNumberParserTokenBiFunction<C extends ParserContext> impleme
     /**
      * Singleton
      */
-    private final static PrefixedNumberParserTokenBiFunction INSTANCE = new PrefixedNumberParserTokenBiFunction();
+    private final static PrefixedNumberParserTokenBiFunction<?> INSTANCE = new PrefixedNumberParserTokenBiFunction<>();
 
     private PrefixedNumberParserTokenBiFunction() {
         super();

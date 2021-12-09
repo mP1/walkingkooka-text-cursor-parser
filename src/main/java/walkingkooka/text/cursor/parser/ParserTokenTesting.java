@@ -81,7 +81,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
         for (; ; ) {
             final T token = this.createToken();
             if (token instanceof LeafParserToken) {
-                final Object value = ((LeafParserToken) token).value();
+                final Object value = ((LeafParserToken<?>) token).value();
                 assertFalse(
                         value instanceof Collection,
                         () -> token + " value must not be a Collection but was " + value.getClass() + "=" + value

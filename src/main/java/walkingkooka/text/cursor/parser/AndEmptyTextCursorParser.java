@@ -34,7 +34,7 @@ final class AndEmptyTextCursorParser<C extends ParserContext> implements Parser<
 
         return parser instanceof AndEmptyTextCursorParser ?
                 parser.cast() :
-                new AndEmptyTextCursorParser(parser);
+                new AndEmptyTextCursorParser<>(parser);
     }
 
     private AndEmptyTextCursorParser(final Parser<C> parser) {

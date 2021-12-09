@@ -16,10 +16,12 @@
  */
 package walkingkooka.text.cursor.parser;
 
-public final class SequenceParserComponentTest extends SequenceParserComponentTestCase<SequenceParserComponent> {
+import walkingkooka.Cast;
+
+public final class SequenceParserComponentTest extends SequenceParserComponentTestCase<SequenceParserComponent<?>> {
 
     @Override
-    public Class<SequenceParserComponent> type() {
-        return SequenceParserComponent.class;
+    public Class<SequenceParserComponent<?>> type() {
+        return Cast.to(SequenceParserComponent.class);
     }
 }
