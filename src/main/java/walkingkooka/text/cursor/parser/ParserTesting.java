@@ -28,6 +28,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -203,7 +204,8 @@ public interface ParserTesting extends TreePrintableTesting {
         return DateTimeContexts.locale(
                 Locale.ENGLISH,
                 1900,
-                20
+                20,
+                LocalDateTime::now
         );
     }
 

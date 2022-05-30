@@ -26,6 +26,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
 import java.math.MathContext;
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -80,7 +81,8 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
         return DateTimeContexts.locale(
                 Locale.ENGLISH,
                 1900,
-                50
+                50,
+                LocalDateTime::now
         );
     }
 

@@ -26,6 +26,7 @@ import walkingkooka.text.cursor.TextCursors;
 
 import java.math.MathContext;
 import java.text.DecimalFormatSymbols;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.function.Function;
@@ -73,7 +74,12 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
     @Override
     public ParserContext createContext() {
         return ParserContexts.basic(
-                DateTimeContexts.locale(LOCALE, 1900, 50),
+                DateTimeContexts.locale(
+                        LOCALE,
+                        1900,
+                        50,
+                        LocalDateTime::now
+                ),
                 DecimalNumberContexts.decimalFormatSymbols(
                         new DecimalFormatSymbols(LOCALE),
                         '+',
