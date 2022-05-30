@@ -19,6 +19,7 @@ package walkingkooka.text.cursor.parser;
 
 import walkingkooka.math.FakeDecimalNumberContext;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class FakeParserContext extends FakeDecimalNumberContext implements ParserContext {
@@ -55,6 +56,11 @@ public class FakeParserContext extends FakeDecimalNumberContext implements Parse
 
     @Override
     public String monthNameAbbreviation(final int month) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public LocalDateTime now() {
         throw new UnsupportedOperationException();
     }
 
