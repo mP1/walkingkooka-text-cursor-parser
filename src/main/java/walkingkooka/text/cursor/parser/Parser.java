@@ -82,11 +82,10 @@ public interface Parser<C extends ParserContext> {
      * Returns a {@link Parser} that returns the given {@link String toString}.
      */
     default Parser<C> setToString(final String toString) {
-        final Parser<C> toStringParser = Parsers.customToString(this, toString);
-
-        return this.equals(toStringParser) ?
-                this :
-                toStringParser;
+        return Parsers.customToString(
+                this,
+                toString
+        );
     }
 
     /**
