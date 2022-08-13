@@ -11,12 +11,12 @@
 A Parser consumes characters from a `TextCursor` source returning a `ParserToken` when successful. 
 
 ```java
-public interface Parser<T extends ParserToken, C extends ParserContext> {
+public interface Parser<C extends ParserContext> {
 
-    /**
+  /**
      * Attempts to parse the text given by the `TextCursor`.
-     */
-    Optional<T> parse(final TextCursor cursor, final C context);
+   */
+  Optional<ParserToken> parse(final TextCursor cursor, final C context);
 }
 ```
 
