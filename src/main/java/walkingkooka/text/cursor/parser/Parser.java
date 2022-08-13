@@ -103,18 +103,13 @@ public interface Parser<C extends ParserContext> {
      * The {@link ParserReporter} will be triggered if this {@link Parser} failed and returned a {@link Optional#empty()}.
      */
     default Parser<C> orReport(final ParserReporter<C> reporter) {
-        final Parser<C> that = this.cast();
-
-        return Parsers.alternatives(
-                Lists.of(
-                        that,
-                        Parsers.report(
-                                ParserReporterCondition.ALWAYS,
-                                reporter,
-                                that
-                        )
+        return this.or(
+                Parsers.report(
+                        ParserReporterCondition.ALWAYS,
+                        reporter,
+                        this.cast()
                 )
-        ).cast();
+        );
     }
 
     /**
