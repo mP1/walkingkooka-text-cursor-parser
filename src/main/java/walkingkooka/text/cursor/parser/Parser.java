@@ -25,20 +25,18 @@ import java.util.Optional;
 import java.util.function.BiFunction;
 
 /**
- * A {@link Parser} consumes one or more characters from a {@link TextCursor} and gives a {@link ParserToken}.
- * The value (an {@link java.util.Optional} will contain the parsed value and text when successful or be empty when
- * not.
+ * A {@link Parser} that consumes characters or text from a {@link TextCursor} and returns a {@link ParserToken token}.
  */
 public interface Parser<C extends ParserContext> {
 
     /**
-     * Attempts to parse the text given by the {@link TextCursor}.
+     * Attempts to parse the text given by the {@link TextCursor}, only advancing if the required token was matched.
      */
     Optional<ParserToken> parse(final TextCursor cursor, final C context);
 
-
     /**
-     * Adds a post condition, namely this {@link Parser} when it returns a {@link ParserToken} must also be empty, otherwise the {@link TextCursor} is restored.
+     * Adds a post condition, namely this {@link Parser} when it returns a {@link ParserToken} must also be empty,
+     * otherwise the {@link TextCursor} is restored.
      */
     default Parser<C> andEmptyTextCursor() {
         return Parsers.andEmptyTextCursor(this);
@@ -60,23 +58,32 @@ public interface Parser<C extends ParserContext> {
     }
 
     /**
-     * Combines this parser with another.
+     * Returns a {@link Parser} that matches this OR the given {@link Parser} tokens.
      */
     default Parser<C> or(final Parser<C> parser) {
         Objects.requireNonNull(parser, "parser");
 
-        return Parsers.alternatives(Lists.of(this.cast(), parser.cast()));
+        return Parsers.alternatives(
+                Lists.of(
+                        this.cast(),
+                        parser.cast()
+                )
+        );
     }
 
     /**
-     * Makes this a repeating token.
+     * Returns a {@link Parser} that matches zero or more repetitions of the given tokens.
      */
     default Parser<C> repeating() {
         return Parsers.repeated(this.cast());
     }
 
+    /**
+     * Returns a {@link Parser} that returns the given {@link String toString}.
+     */
     default Parser<C> setToString(final String toString) {
         final Parser<C> toStringParser = Parsers.customToString(this, toString);
+
         return this.equals(toStringParser) ?
                 this :
                 toStringParser;
@@ -86,7 +93,10 @@ public interface Parser<C extends ParserContext> {
      * {@see TransformingParser}
      */
     default Parser<C> transform(final BiFunction<ParserToken, C, ParserToken> transformer) {
-        return TransformingParser.with(this, transformer);
+        return TransformingParser.with(
+                this,
+                transformer
+        );
     }
 
     /**
@@ -94,14 +104,28 @@ public interface Parser<C extends ParserContext> {
      */
     default Parser<C> orReport(final ParserReporter<C> reporter) {
         final Parser<C> that = this.cast();
-        return Parsers.alternatives(Lists.of(that, Parsers.report(ParserReporterCondition.ALWAYS, reporter, that))).cast();
+
+        return Parsers.alternatives(
+                Lists.of(
+                        that,
+                        Parsers.report(
+                                ParserReporterCondition.ALWAYS,
+                                reporter,
+                                that
+                        )
+                )
+        ).cast();
     }
 
     /**
      * Returns a {@link Parser} which will use the {@link ParserReporter} if the {@link TextCursor} is not empty.
      */
     default Parser<C> orFailIfCursorNotEmpty(final ParserReporter<C> reporter) {
-        return Parsers.report(ParserReporterCondition.NOT_EMPTY, reporter, this);
+        return Parsers.report(
+                ParserReporterCondition.NOT_EMPTY,
+                reporter,
+                this
+        );
     }
 
     /**
