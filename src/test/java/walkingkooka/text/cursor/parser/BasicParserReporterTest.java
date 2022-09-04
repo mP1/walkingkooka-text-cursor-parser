@@ -30,7 +30,7 @@ public final class BasicParserReporterTest implements ClassTesting2<BasicParserR
     @Test
     public void testReport() {
         // has a dependency on the results of TextCursorLineInfo methods...
-        this.reportAndCheck("abc def ghi", Parsers.fake().setToString("ABC").cast(), "Unrecognized character 'a' at (1,1) \"abc def ghi\" expected ABC");
+        this.reportAndCheck("abc def ghi", Parsers.fake().setToString("ABC").cast(), "Invalid character 'a' at (1,1) \"abc def ghi\" expected ABC");
     }
 
     @Test
@@ -40,7 +40,7 @@ public final class BasicParserReporterTest implements ClassTesting2<BasicParserR
         cursor.next();
         cursor.next();
 
-        this.reportAndCheck(cursor, Parsers.fake().setToString("ABC").cast(), "Unrecognized character 'c' at (3,1) \"abc def ghi\" expected ABC");
+        this.reportAndCheck(cursor, Parsers.fake().setToString("ABC").cast(), "Invalid character 'c' at (3,1) \"abc def ghi\" expected ABC");
     }
 
     @Test

@@ -47,17 +47,19 @@ public final class ReportingParserTest extends ParserTestCase<ReportingParser<Pa
 
     @Test
     public void testReportFails() {
-        this.parseThrows("!", "Unrecognized");
+        this.parseThrows(
+                "!",
+                "Invalid character \'!\' at (1,1)"
+        );
     }
 
     @Test
     public void testNotEmptyConditionCursorEmptyNotFails() {
-        this.parseThrows(this.createParser(ParserReporterCondition.NOT_EMPTY), "!", "Unrecognized");
-    }
-
-    @Test
-    public void testNotEmptyConditionCursorNotEmptyParserFail() {
-        this.parseThrows(this.createParser(ParserReporterCondition.NOT_EMPTY), "!", "Unrecognized");
+        this.parseThrows(
+                this.createParser(ParserReporterCondition.NOT_EMPTY),
+                "!",
+                "Invalid character \'!\' at (1,1)"
+        );
     }
 
     @Test
@@ -76,7 +78,10 @@ public final class ReportingParserTest extends ParserTestCase<ReportingParser<Pa
     @Test
     @Override
     public void testEmptyCursorFail() {
-        this.parseThrows("!", "Unrecognized");
+        this.parseThrows(
+                "!",
+                "Invalid character \'!\' at (1,1)"
+        );
     }
 
     @Test

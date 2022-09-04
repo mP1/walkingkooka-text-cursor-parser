@@ -28,7 +28,7 @@ import java.util.Optional;
 /**
  * A {@link ParserReporter} that builds an error message that looks something like:
  * <pre>
- * Unrecognized character 'X' at ... expected A | B | C
+ * Invalid character 'X' at ... expected A | B | C
  * </pre>
  */
 final class BasicParserReporter<C extends ParserContext> implements ParserReporter<C> {
@@ -62,7 +62,7 @@ final class BasicParserReporter<C extends ParserContext> implements ParserReport
         if (cursor.isEmpty()) {
             message.append("End of text");
         } else {
-            message.append("Unrecognized character ");
+            message.append("Invalid character ");
             message.append(CharSequences.quoteAndEscape(cursor.at()));
         }
         message.append(" at ");
