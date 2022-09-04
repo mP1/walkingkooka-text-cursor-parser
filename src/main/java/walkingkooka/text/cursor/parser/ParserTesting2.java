@@ -114,7 +114,7 @@ public interface ParserTesting2<P extends Parser<C>,
                              final int column,
                              final int row) {
         // Message format from BasicParserReporter
-        this.parseThrows(cursorText, "Unrecognized character " + CharSequences.quoteAndEscape(c) + " at (" + column + "," + row + ")");
+        this.parseThrows(cursorText, "Invalid character " + CharSequences.quoteAndEscape(c) + " at (" + column + "," + row + ")");
     }
 
     default void parseThrowsEndOfText(final String cursorText) {
