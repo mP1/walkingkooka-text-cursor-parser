@@ -28,10 +28,10 @@ import java.util.Optional;
 final class SurroundStringParser<C extends ParserContext> extends Parser2<C> {
 
     static <C extends ParserContext> SurroundStringParser<C> with(final String open, final String close) {
-        CharSequences.failIfNullOrEmpty(open, "open");
-        CharSequences.failIfNullOrEmpty(close, "close");
-
-        return new SurroundStringParser<>(open, close);
+        return new SurroundStringParser<>(
+                CharSequences.failIfNullOrEmpty(open, "open"),
+                CharSequences.failIfNullOrEmpty(close, "close")
+        );
     }
 
     private SurroundStringParser(final String open, final String close) {

@@ -30,10 +30,10 @@ import java.util.Optional;
 final class StringParser<C extends ParserContext> extends Parser2<C> {
 
     static <C extends ParserContext> StringParser<C> with(final String string, final CaseSensitivity caseSensitivity) {
-        CharSequences.failIfNullOrEmpty(string, "string");
-        Objects.requireNonNull(caseSensitivity, "caseSensitivity");
-
-        return new StringParser<>(string, caseSensitivity);
+        return new StringParser<>(
+                CharSequences.failIfNullOrEmpty(string, "string"),
+                Objects.requireNonNull(caseSensitivity, "caseSensitivity")
+        );
     }
 
     private StringParser(final String string, final CaseSensitivity caseSensitivity) {
