@@ -32,22 +32,49 @@ public class StringCharPredicateParserTest extends Parser2TestCase<StringCharPre
 
     @Test
     public void testWithNullCharPredicateFails() {
-        assertThrows(NullPointerException.class, () -> StringCharPredicateParser.with(null, MIN_LENGTH, MAX_LENGTH));
+        assertThrows(
+                NullPointerException.class,
+                () -> StringCharPredicateParser.with(null, MIN_LENGTH, MAX_LENGTH)
+        );
     }
 
     @Test
     public void testWithInvalidMinLengthFails() {
-        assertThrows(IllegalArgumentException.class, () -> StringCharPredicateParser.with(DIGITS, -1, MAX_LENGTH));
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> StringCharPredicateParser.with(DIGITS, -1, MAX_LENGTH)
+        );
+        this.checkEquals(
+                "Min length -1 must be greater than 0",
+                thrown.getMessage(),
+                "message"
+        );
     }
 
     @Test
     public void testWithInvalidMinLengthFails2() {
-        assertThrows(IllegalArgumentException.class, () -> StringCharPredicateParser.with(DIGITS, 0, MAX_LENGTH));
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> StringCharPredicateParser.with(DIGITS, 0, MAX_LENGTH)
+        );
+        this.checkEquals(
+                "Min length 0 must be greater than 0",
+                thrown.getMessage(),
+                "message"
+        );
     }
 
     @Test
     public void testWithInvalidMaxLengthFails2() {
-        assertThrows(IllegalArgumentException.class, () -> StringCharPredicateParser.with(DIGITS, MIN_LENGTH, MIN_LENGTH - 1));
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> StringCharPredicateParser.with(DIGITS, MIN_LENGTH, MIN_LENGTH - 1)
+        );
+        this.checkEquals(
+                "Maxlength 1 must be greater/equal than minLength: 2",
+                thrown.getMessage(),
+                "message"
+        );
     }
 
     @Test
