@@ -50,7 +50,7 @@ final class StringInitialAndPartCharPredicateParser<C extends ParserContext> ext
                 part,
                 minLength,
                 maxLength,
-                initial + " " + part
+                initial + " " + part + "{" + minLength + "," + maxLength + "}"
         );
     }
 

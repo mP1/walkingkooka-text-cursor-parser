@@ -133,7 +133,10 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createParser(), INITIAL + " " + PART);
+        this.toStringAndCheck(
+                this.createParser(),
+                INITIAL + " " + PART + "{4,6}"
+        );
     }
 
     @Override
