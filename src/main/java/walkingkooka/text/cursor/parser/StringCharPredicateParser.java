@@ -80,6 +80,11 @@ final class StringCharPredicateParser<C extends ParserContext> extends Parser2<C
 
     @Override
     public String toString() {
-        return this.predicate.toString();
+        return this.predicate.toString() +
+                '{' +
+                this.minLength +
+                ',' +
+                this.maxLength +
+                '}';
     }
 }
