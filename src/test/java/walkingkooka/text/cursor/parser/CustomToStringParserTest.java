@@ -26,17 +26,12 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class CustomToStringParserTest extends ParserTestCase<CustomToStringParser<ParserContext>>
+public final class CustomToStringParserTest extends ParserWrapperTestCase<CustomToStringParser<ParserContext>>
         implements HashCodeEqualsDefinedTesting2<CustomToStringParser<ParserContext>> {
 
     private final static String STRING = "abc";
     private final static Parser<ParserContext> WRAPPED = Parsers.string(STRING, CaseSensitivity.SENSITIVE);
     private final static String CUSTOM_TO_STRING = "!!abc!!";
-
-    @Test
-    public void testWrapNullParserFails() {
-        assertThrows(NullPointerException.class, () -> CustomToStringParser.wrap(null, CUSTOM_TO_STRING));
-    }
 
     @Test
     public void testWrapNullToStringFails() {
@@ -122,8 +117,16 @@ public final class CustomToStringParserTest extends ParserTestCase<CustomToStrin
     }
 
     @Override
-    public CustomToStringParser<ParserContext> createParser() {
-        return CustomToStringParser.wrap(WRAPPED, CUSTOM_TO_STRING).cast();
+    CustomToStringParser<ParserContext> createParser(final Parser<ParserContext> parser) {
+        return CustomToStringParser.wrap(
+                parser,
+                CUSTOM_TO_STRING
+        ).cast();
+    }
+
+    @Override
+    Parser<ParserContext> wrappedParser() {
+        return WRAPPED;
     }
 
     @Override

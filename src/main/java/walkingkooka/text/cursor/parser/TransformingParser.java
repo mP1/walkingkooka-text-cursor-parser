@@ -26,11 +26,11 @@ import java.util.function.BiFunction;
  * A {@link Parser} that delegates to another parser, and runs the given {@link BiFunction} on successful
  * tokens.
  */
-final class TransformingParser<C extends ParserContext> implements Parser<C> {
+final class TransformingParser<C extends ParserContext> extends ParserWrapper<C> {
 
     static <C extends ParserContext> TransformingParser<C> with(final Parser<C> parser,
                                                                 final BiFunction<ParserToken, C, ParserToken> transformer) {
-        Objects.requireNonNull(parser, "parser");
+        checkParser(parser);
         Objects.requireNonNull(transformer, "transformer");
 
         return new TransformingParser<>(parser, transformer);
@@ -38,7 +38,7 @@ final class TransformingParser<C extends ParserContext> implements Parser<C> {
 
     private TransformingParser(final Parser<C> parser,
                                final BiFunction<ParserToken, C, ParserToken> transformer) {
-        this.parser = parser;
+        super(parser);
         this.transformer = transformer;
     }
 
@@ -48,8 +48,6 @@ final class TransformingParser<C extends ParserContext> implements Parser<C> {
         return token.map(parserToken -> this.transformer.apply(parserToken, context));
 
     }
-
-    private final Parser<C> parser;
 
     /**
      * A {@link BiFunction} that transforms successful tokens into another.

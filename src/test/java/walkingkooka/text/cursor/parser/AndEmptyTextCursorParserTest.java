@@ -21,17 +21,11 @@ import walkingkooka.Cast;
 import walkingkooka.text.CaseSensitivity;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class AndEmptyTextCursorParserTest extends ParserTestCase<AndEmptyTextCursorParser<ParserContext>> {
+public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<AndEmptyTextCursorParser<ParserContext>> {
 
     private final static String STRING = "abc";
     private final static Parser<ParserContext> WRAPPED = Parsers.string(STRING, CaseSensitivity.SENSITIVE);
-
-    @Test
-    public void testWithNullParserFails() {
-        assertThrows(NullPointerException.class, () -> AndEmptyTextCursorParser.with(null));
-    }
 
     @Test
     public void testWithAndEmptyTextCursorParserSame() {
@@ -71,8 +65,13 @@ public final class AndEmptyTextCursorParserTest extends ParserTestCase<AndEmptyT
     }
 
     @Override
-    public AndEmptyTextCursorParser<ParserContext> createParser() {
-        return AndEmptyTextCursorParser.with(WRAPPED);
+    AndEmptyTextCursorParser<ParserContext> createParser(final Parser<ParserContext> parser) {
+        return AndEmptyTextCursorParser.with(parser);
+    }
+
+    @Override
+    Parser<ParserContext> wrappedParser() {
+        return WRAPPED;
     }
 
     @Override

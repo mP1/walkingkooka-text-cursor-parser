@@ -27,7 +27,7 @@ import java.util.Optional;
  * Decorates another {@link Parser} adding a post condition that the {@link ParserToken} is only returned if
  * the {@link TextCursor} is also empty.
  */
-final class AndEmptyTextCursorParser<C extends ParserContext> implements Parser<C> {
+final class AndEmptyTextCursorParser<C extends ParserContext> extends ParserWrapper<C> {
 
     static <C extends ParserContext> AndEmptyTextCursorParser<C> with(final Parser<C> parser) {
         Objects.requireNonNull(parser, "parser");
@@ -38,8 +38,7 @@ final class AndEmptyTextCursorParser<C extends ParserContext> implements Parser<
     }
 
     private AndEmptyTextCursorParser(final Parser<C> parser) {
-        super();
-        this.parser = parser;
+        super(parser);
     }
 
     @Override
@@ -53,9 +52,6 @@ final class AndEmptyTextCursorParser<C extends ParserContext> implements Parser<
         }
         return token;
     }
-
-    // @VisibleForTesting
-    final Parser<C> parser;
 
     @Override
     public Parser<C> andEmptyTextCursor() {
