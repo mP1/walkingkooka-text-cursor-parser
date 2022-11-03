@@ -21,6 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.test.Testing;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.visit.Visiting;
 
 import java.math.BigInteger;
@@ -43,6 +44,11 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         public String text() {
             return "";
         }
+
+        @Override
+        public void printTree(final IndentingPrinter printer) {
+            printer.println("");
+        }
     };
     private final static ParserToken WHITESPACE = new FakeParserToken() {
 
@@ -58,6 +64,11 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
 
         @Override
         public void accept(final ParserTokenVisitor visitor) {
+        }
+
+        @Override
+        public void printTree(final IndentingPrinter printer) {
+            printer.println(" ");
         }
 
         @Override
