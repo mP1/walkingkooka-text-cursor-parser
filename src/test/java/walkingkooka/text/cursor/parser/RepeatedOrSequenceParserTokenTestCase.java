@@ -20,6 +20,7 @@ package walkingkooka.text.cursor.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.HasText;
+import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -92,6 +93,11 @@ public abstract class RepeatedOrSequenceParserTokenTestCase<T extends RepeatedOr
             @Override
             public String text() {
                 return "!";
+            }
+
+            @Override
+            public void printTree(final IndentingPrinter printer) {
+                printer.println("!");
             }
         };
 
