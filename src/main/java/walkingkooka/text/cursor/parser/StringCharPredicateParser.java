@@ -34,7 +34,7 @@ final class StringCharPredicateParser<C extends ParserContext> extends Parser2<C
             throw new IllegalArgumentException("Min length " + minLength + " must be greater than 0");
         }
         if (maxLength < minLength) {
-            throw new IllegalArgumentException("Maxlength " + maxLength + " must be greater/equal than maxLength: " + minLength);
+            throw new IllegalArgumentException("Maxlength " + maxLength + " must be greater/equal than minLength: " + minLength);
         }
 
         return new StringCharPredicateParser<>(predicate, minLength, maxLength);
