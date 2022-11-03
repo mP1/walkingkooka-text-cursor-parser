@@ -27,7 +27,7 @@ import java.util.Optional;
  * A {@link Parser} that uses two {@link walkingkooka.predicate.character.CharPredicate}.
  * The final matched token must have a length between min and max.
  */
-final class StringInitialAndPartCharPredicateParser<C extends ParserContext> extends Parser2<C> {
+final class StringInitialAndPartCharPredicateParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     /**
      * Factory that creates a new {@link StringInitialAndPartCharPredicateParser}
@@ -62,7 +62,9 @@ final class StringInitialAndPartCharPredicateParser<C extends ParserContext> ext
     }
 
     @Override
-    Optional<ParserToken> tryParse0(final TextCursor cursor, final C context, final TextCursorSavePoint start) {
+    Optional<ParserToken> tryParse(final TextCursor cursor,
+                                   final C context,
+                                   final TextCursorSavePoint start) {
         StringParserToken result = null;
 
         if (!cursor.isEmpty()) {

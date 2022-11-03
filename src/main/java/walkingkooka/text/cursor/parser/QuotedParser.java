@@ -24,21 +24,22 @@ import java.util.Optional;
 /**
  * This parser matches quoted strings, with support backslash escaping and unicode sequences in the form of backlash-u-4-hex-digits
  */
-abstract class QuotedParser<C extends ParserContext> extends Parser2<C> {
+abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     QuotedParser() {
     }
 
     @Override
-    Optional<ParserToken> tryParse0(final TextCursor cursor, final C context, final TextCursorSavePoint start) {
+    Optional<ParserToken> tryParse(final TextCursor cursor, final C context, final TextCursorSavePoint start) {
         return this.quoteChar() == cursor.at() ?
                 this.tryParse1(cursor, start) :
-                this.fail();
+                this.empty();
     }
 
     abstract char quoteChar();
 
-    private Optional<ParserToken> tryParse1(final TextCursor cursor, final TextCursorSavePoint start) {
+    private Optional<ParserToken> tryParse1(final TextCursor cursor,
+                                            final TextCursorSavePoint start) {
         final char quote = this.quoteChar();
 
         cursor.next();

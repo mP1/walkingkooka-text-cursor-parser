@@ -22,7 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CaseSensitivity;
 
-public final class SequenceParserTest extends Parser2TestCase<SequenceParser<ParserContext>, SequenceParserToken>
+public final class SequenceParserTest extends NonEmptyParserTestCase<SequenceParser<ParserContext>, SequenceParserToken>
         implements HashCodeEqualsDefinedTesting2<SequenceParser<ParserContext>> {
 
     private final static String TEXT1 = "abc";

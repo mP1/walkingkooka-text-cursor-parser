@@ -26,7 +26,7 @@ import java.util.Optional;
  * A {@link Parser} that matches a long number using a given radix. Note it does not require or match a leading prefix.
  * Note this only parses numeric digits and not any leading minus sign.
  */
-final class LongParser<C extends ParserContext> extends Parser2<C> {
+final class LongParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     /**
      * Factory that creates a {@link LongParser}
@@ -50,7 +50,9 @@ final class LongParser<C extends ParserContext> extends Parser2<C> {
      * Reads character by character until a non digit is found, using a {@link Long} to hold the value.
      */
     @Override
-    Optional<ParserToken> tryParse0(final TextCursor cursor, final C context, final TextCursorSavePoint save) {
+    Optional<ParserToken> tryParse(final TextCursor cursor,
+                                   final C context,
+                                   final TextCursorSavePoint save) {
         final char negativeSign = context.negativeSign();
         final char positiveSign = context.positiveSign();
 

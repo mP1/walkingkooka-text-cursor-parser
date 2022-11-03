@@ -20,10 +20,10 @@ import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class Parser2Test implements ClassTesting2<Parser2<?>> {
+public final class NonEmptyParserTest implements ClassTesting2<NonEmptyParser<?>> {
     @Override
-    public Class<Parser2<?>> type() {
-        return Cast.to(Parser2.class);
+    public Class<NonEmptyParser<?>> type() {
+        return Cast.to(NonEmptyParser.class);
     }
 
     @Override

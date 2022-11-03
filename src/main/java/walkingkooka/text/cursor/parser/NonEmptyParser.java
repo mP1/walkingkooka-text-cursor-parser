@@ -26,30 +26,32 @@ import java.util.Optional;
  * A template parser that only calls the abstract method if the cursor is not empty and also restores the cursor position,
  * on failures.
  */
-abstract class Parser2<C extends ParserContext> implements Parser<C> {
+abstract class NonEmptyParser<C extends ParserContext> implements Parser<C> {
 
-    Parser2() {
+    NonEmptyParser() {
         super();
     }
 
     @Override
-    public final Optional<ParserToken> parse(final TextCursor cursor, final C context) {
+    public final Optional<ParserToken> parse(final TextCursor cursor,
+                                             final C context) {
         return cursor.isEmpty() ?
-                this.fail() :
-                this.tryParse(cursor, context);
+                this.empty() :
+                this.prepareNonEmpty(cursor, context);
     }
 
     /**
      * Returns an empty optional which matches an unsuccessful parser attempt.
      */
-    final Optional<ParserToken> fail() {
+    final Optional<ParserToken> empty() {
         return Optional.empty();
     }
 
-    private Optional<ParserToken> tryParse(final TextCursor cursor, final C context) {
+    private Optional<ParserToken> prepareNonEmpty(final TextCursor cursor,
+                                                  final C context) {
         final TextCursorSavePoint start = cursor.save();
 
-        final Optional<ParserToken> result = this.tryParse0(cursor, context, start);
+        final Optional<ParserToken> result = this.tryParse(cursor, context, start);
         if (!result.isPresent()) {
             // unsuccessful restore cursor to original position...
             start.restore();
@@ -60,5 +62,7 @@ abstract class Parser2<C extends ParserContext> implements Parser<C> {
     /**
      * This method is invoked with the first character and a {@link TextCursorSavePoint}.
      */
-    abstract Optional<ParserToken> tryParse0(final TextCursor cursor, final C context, final TextCursorSavePoint start);
+    abstract Optional<ParserToken> tryParse(final TextCursor cursor,
+                                            final C context,
+                                            final TextCursorSavePoint start);
 }

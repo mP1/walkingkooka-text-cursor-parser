@@ -25,7 +25,7 @@ import java.util.Optional;
 /**
  * A {@link Parser} that matches unicode escape sequences returning the decoded character.
  */
-final class UnicodeEscapeCharacterParser<C extends ParserContext> extends Parser2<C> {
+final class UnicodeEscapeCharacterParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     /**
      * Type safe singleton getter.
@@ -43,7 +43,9 @@ final class UnicodeEscapeCharacterParser<C extends ParserContext> extends Parser
     }
 
     @Override
-    Optional<ParserToken> tryParse0(final TextCursor cursor, final C context, final TextCursorSavePoint save) {
+    Optional<ParserToken> tryParse(final TextCursor cursor,
+                                   final C context,
+                                   final TextCursorSavePoint save) {
         Optional<ParserToken> result = null;
 
         int value = 0;

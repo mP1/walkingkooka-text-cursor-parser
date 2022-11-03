@@ -27,7 +27,7 @@ import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class BigIntegerParserTest extends Parser2TestCase<BigIntegerParser<ParserContext>, BigIntegerParserToken> {
+public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParser<ParserContext>, BigIntegerParserToken> {
 
     private final static int RADIX = 10;
 

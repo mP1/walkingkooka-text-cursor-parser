@@ -27,7 +27,7 @@ import java.util.Optional;
 /**
  * A {@link Parser} that only matches one or more tokens matched by a different provided {@link Parser}.
  */
-final class RepeatingParser<C extends ParserContext> extends Parser2<C> {
+final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     static <C extends ParserContext> RepeatingParser<C> with(final Parser<C> parser) {
         Objects.requireNonNull(parser, "parser");
@@ -42,7 +42,9 @@ final class RepeatingParser<C extends ParserContext> extends Parser2<C> {
     }
 
     @Override
-    Optional<ParserToken> tryParse0(final TextCursor cursor, final C context, final TextCursorSavePoint start) {
+    Optional<ParserToken> tryParse(final TextCursor cursor,
+                                   final C context,
+                                   final TextCursorSavePoint start) {
         final List<ParserToken> tokens = Lists.array();
 
         for (; ; ) {
@@ -54,7 +56,7 @@ final class RepeatingParser<C extends ParserContext> extends Parser2<C> {
         }
 
         return tokens.isEmpty() ?
-                this.fail() :
+                this.empty() :
                 Optional.of(RepeatedParserToken.with(tokens, start.textBetween().toString()));
     }
 
