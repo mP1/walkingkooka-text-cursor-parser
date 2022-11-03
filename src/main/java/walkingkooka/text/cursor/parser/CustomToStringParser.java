@@ -19,16 +19,15 @@ package walkingkooka.text.cursor.parser;
 import walkingkooka.text.Whitespace;
 import walkingkooka.text.cursor.TextCursor;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
  * Wraps another {@link Parser} replacing or ignoring its {@link Parser#toString()} with the provided {@link String}.
  */
-final class CustomToStringParser<C extends ParserContext> implements Parser<C> {
+final class CustomToStringParser<C extends ParserContext> extends ParserWrapper<C> {
 
     static <C extends ParserContext> Parser<C> wrap(final Parser<C> parser, final String toString) {
-        Objects.requireNonNull(parser, "parser");
+        checkParser(parser);
         Whitespace.failIfNullOrEmptyOrWhitespace(toString, "toString");
 
         Parser<C> result;
@@ -53,7 +52,7 @@ final class CustomToStringParser<C extends ParserContext> implements Parser<C> {
     }
 
     private CustomToStringParser(final Parser<C> parser, final String toString) {
-        this.parser = parser;
+        super(parser);
         this.toString = toString;
     }
 
@@ -68,9 +67,6 @@ final class CustomToStringParser<C extends ParserContext> implements Parser<C> {
                 this :
                 wrap(this.parser, toString);
     }
-
-    // @VisibleForTesting
-    final Parser<C> parser;
 
     // Object.................................................................................................
 

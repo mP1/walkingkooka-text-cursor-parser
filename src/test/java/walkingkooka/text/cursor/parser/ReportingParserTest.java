@@ -26,23 +26,32 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ReportingParserTest extends ParserTestCase<ReportingParser<ParserContext>> {
+public final class ReportingParserTest extends ParserWrapperTestCase<ReportingParser<ParserContext>> {
 
     private final static ParserReporterCondition CONDITION = ParserReporterCondition.ALWAYS;
 
     @Test
     public void testWithNullConditionFails() {
-        assertThrows(NullPointerException.class, () -> ReportingParser.with(null, this.reporter(), this.parser2()));
+        assertThrows(
+                NullPointerException.class,
+                () -> ReportingParser.with(
+                        null,
+                        this.reporter(),
+                        this.wrappedParser()
+                )
+        );
     }
 
     @Test
     public void testWithNullReporterFails() {
-        assertThrows(NullPointerException.class, () -> ReportingParser.with(CONDITION, null, this.parser2()));
-    }
-
-    @Test
-    public void testWithNullParserFails() {
-        assertThrows(NullPointerException.class, () -> ReportingParser.with(CONDITION, this.reporter(), null));
+        assertThrows(
+                NullPointerException.class,
+                () -> ReportingParser.with(
+                        CONDITION,
+                        null,
+                        this.wrappedParser()
+                )
+        );
     }
 
     @Test
@@ -89,21 +98,34 @@ public final class ReportingParserTest extends ParserTestCase<ReportingParser<Pa
         this.toStringAndCheck(this.createParser(), this.reporter().toString());
     }
 
+//    @Override
+//    public ReportingParser<ParserContext> createParser() {
+//        return this.createParser(ParserReporterCondition.ALWAYS);
+//    }
+
     @Override
-    public ReportingParser<ParserContext> createParser() {
-        return this.createParser(ParserReporterCondition.ALWAYS);
+    Parser<ParserContext> wrappedParser() {
+        return Parsers.character(CharPredicates.letter()).cast();
     }
 
     private ReportingParser<ParserContext> createParser(final ParserReporterCondition condition) {
-        return ReportingParser.with(condition, this.reporter(), this.parser2());
+        return ReportingParser.with(
+                condition,
+                this.reporter(),
+                this.wrappedParser()
+        );
+    }
+
+    ReportingParser<ParserContext> createParser(final Parser<ParserContext> parser) {
+        return ReportingParser.with(
+                ParserReporterCondition.ALWAYS,
+                this.reporter(),
+                parser
+        );
     }
 
     private ParserReporter<ParserContext> reporter() {
         return ParserReporters.basic();
-    }
-
-    private Parser<ParserContext> parser2() {
-        return Parsers.character(CharPredicates.letter()).cast();
     }
 
     @Override

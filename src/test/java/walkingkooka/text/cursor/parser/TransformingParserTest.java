@@ -27,20 +27,15 @@ import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TransformingParserTest extends ParserTestCase<TransformingParser<ParserContext>> {
+public class TransformingParserTest extends ParserWrapperTestCase<TransformingParser<ParserContext>> {
 
     private final static int RADIX = 10;
-    private final static Parser<ParserContext> PARSER = Parsers.stringCharPredicate(CharPredicates.digit(), 1, 10);
+    private final static Parser<ParserContext> WRAPPED_PARSER = Parsers.stringCharPredicate(CharPredicates.digit(), 1, 10);
     private final static BiFunction<ParserToken, ParserContext, ParserToken> TRANSFORMER = (t, c) -> ParserTokens.bigInteger(new BigInteger(((StringParserToken) t).value(), RADIX), t.text());
 
     @Test
-    public void testWithNullParserFails() {
-        assertThrows(NullPointerException.class, () -> TransformingParser.with(null, TRANSFORMER));
-    }
-
-    @Test
     public void testWithNullTransformerFails() {
-        assertThrows(NullPointerException.class, () -> TransformingParser.with(PARSER, null));
+        assertThrows(NullPointerException.class, () -> TransformingParser.with(WRAPPED_PARSER, null));
     }
 
     @Test
@@ -70,17 +65,25 @@ public class TransformingParserTest extends ParserTestCase<TransformingParser<Pa
 
     @Test
     public void testDefaultMethodTransform() {
-        this.parseAndCheck4(PARSER.transform(TRANSFORMER), "123abc", 123, "123", "abc");
+        this.parseAndCheck4(WRAPPED_PARSER.transform(TRANSFORMER), "123abc", 123, "123", "abc");
     }
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createParser(), PARSER.toString());
+        this.toStringAndCheck(this.createParser(), WRAPPED_PARSER.toString());
     }
 
     @Override
-    public TransformingParser<ParserContext> createParser() {
-        return TransformingParser.with(PARSER, TRANSFORMER);
+    TransformingParser<ParserContext> createParser(final Parser<ParserContext> parser) {
+        return TransformingParser.with(
+                parser,
+                TRANSFORMER
+        );
+    }
+
+    @Override
+    Parser<ParserContext> wrappedParser() {
+        return WRAPPED_PARSER;
     }
 
     private TextCursor parseAndCheck2(final String in, final long value, final String text, final String textAfter) {

@@ -26,7 +26,7 @@ import java.util.Optional;
  * A {@link Parser} that acts as a bridge invoking a {@link ParserReporter}. The reporter will
  * typically throw an exception with a message noting a parse failure of the parser in this instance.
  */
-final class ReportingParser<C extends ParserContext> implements Parser<C> {
+final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
 
     /**
      * Static factory
@@ -36,7 +36,7 @@ final class ReportingParser<C extends ParserContext> implements Parser<C> {
                                                              final Parser<C> parser) {
         Objects.requireNonNull(condition, "condition");
         Objects.requireNonNull(reporter, "reporter");
-        Objects.requireNonNull(parser, "parser");
+        checkParser(parser);
 
         return new ReportingParser<>(condition, reporter, parser);
     }
@@ -45,11 +45,10 @@ final class ReportingParser<C extends ParserContext> implements Parser<C> {
      * Private ctor
      */
     private ReportingParser(final ParserReporterCondition condition, final ParserReporter<C> reporter, final Parser<C> parser) {
-        super();
+        super(parser);
 
         this.condition = condition;
         this.reporter = reporter;
-        this.parser = parser;
     }
 
     @Override
@@ -71,8 +70,6 @@ final class ReportingParser<C extends ParserContext> implements Parser<C> {
     private final ParserReporterCondition condition;
 
     private final ParserReporter<C> reporter;
-
-    private final Parser<C> parser;
 
     @Override
     public String toString() {
