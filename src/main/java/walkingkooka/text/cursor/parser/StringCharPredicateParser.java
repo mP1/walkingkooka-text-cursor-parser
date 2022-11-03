@@ -24,7 +24,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A {@link Parser} that matches a one or more characters using the provided {@link CharPredicate}
+ * A {@link Parser} that continues to consume characters that are matched by a given {@link CharPredicate}.
  */
 final class StringCharPredicateParser<C extends ParserContext> extends Parser2<C> {
 
