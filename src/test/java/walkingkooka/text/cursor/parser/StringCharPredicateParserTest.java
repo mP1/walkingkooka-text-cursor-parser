@@ -103,7 +103,10 @@ public class StringCharPredicateParserTest extends Parser2TestCase<StringCharPre
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createParser(), DIGITS.toString());
+        this.toStringAndCheck(
+                this.createParser(),
+                DIGITS + "{2,4}"
+        );
     }
 
     @Override
