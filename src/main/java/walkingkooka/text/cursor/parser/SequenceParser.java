@@ -26,7 +26,7 @@ import java.util.Optional;
 /**
  * A {@link Parser} that requires all parsers are matched in order returning all tokens within a {@link SequenceParserToken}
  */
-final class SequenceParser<C extends ParserContext> extends Parser2<C> {
+final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     /**
      * Factory method only called by {@link SequenceParserBuilder#build()}
@@ -41,7 +41,9 @@ final class SequenceParser<C extends ParserContext> extends Parser2<C> {
     }
 
     @Override
-    Optional<ParserToken> tryParse0(final TextCursor cursor, final C context, final TextCursorSavePoint start) {
+    Optional<ParserToken> tryParse(final TextCursor cursor,
+                                   final C context,
+                                   final TextCursorSavePoint start) {
         Optional<ParserToken> result = Optional.empty();
 
         final List<ParserToken> tokens = Lists.array();

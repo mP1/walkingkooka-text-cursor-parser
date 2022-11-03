@@ -26,7 +26,7 @@ import java.util.Optional;
 /**
  * A {@link Parser} that matches a single character using the provided {@link CharPredicate}
  */
-final class CharacterCharPredicateParser<C extends ParserContext> extends Parser2<C> {
+final class CharacterCharPredicateParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     static <C extends ParserContext> CharacterCharPredicateParser<C> with(final CharPredicate predicate) {
         Objects.requireNonNull(predicate, "predicate");
@@ -39,11 +39,13 @@ final class CharacterCharPredicateParser<C extends ParserContext> extends Parser
     }
 
     @Override
-    Optional<ParserToken> tryParse0(final TextCursor cursor, final C context, final TextCursorSavePoint save) {
+    Optional<ParserToken> tryParse(final TextCursor cursor,
+                                   final C context,
+                                   final TextCursorSavePoint save) {
         final char first = cursor.at();
         return this.predicate.test(first) ?
                 this.makeSuccessfulResultAndAdvance(first, cursor) :
-                this.fail();
+                this.empty();
     }
 
     private final CharPredicate predicate;

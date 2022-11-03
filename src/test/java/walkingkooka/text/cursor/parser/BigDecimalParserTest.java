@@ -26,7 +26,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Locale;
 
-public final class BigDecimalParserTest extends Parser2TestCase<BigDecimalParser<ParserContext>, BigDecimalParserToken> {
+public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecimalParser<ParserContext>, BigDecimalParserToken> {
 
     @Test
     public void testFailure() {

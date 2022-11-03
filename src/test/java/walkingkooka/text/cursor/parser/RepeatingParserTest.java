@@ -25,7 +25,7 @@ import walkingkooka.text.cursor.TextCursors;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class RepeatingParserTest extends Parser2TestCase<RepeatingParser<ParserContext>,
+public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<ParserContext>,
         RepeatedParserToken> {
 
     private final static String TEXT = "abc";

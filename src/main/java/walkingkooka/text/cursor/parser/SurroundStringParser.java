@@ -25,7 +25,7 @@ import java.util.Optional;
 /**
  * A {@link Parser} that only requires an opening string and is terminated by another closing string.
  */
-final class SurroundStringParser<C extends ParserContext> extends Parser2<C> {
+final class SurroundStringParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     static <C extends ParserContext> SurroundStringParser<C> with(final String open, final String close) {
         return new SurroundStringParser<>(
@@ -40,7 +40,9 @@ final class SurroundStringParser<C extends ParserContext> extends Parser2<C> {
     }
 
     @Override
-    Optional<ParserToken> tryParse0(final TextCursor cursor, final C context, final TextCursorSavePoint start) {
+    Optional<ParserToken> tryParse(final TextCursor cursor,
+                                   final C context,
+                                   final TextCursorSavePoint start) {
         StringParserToken result = null;
 
         int matched = 0;

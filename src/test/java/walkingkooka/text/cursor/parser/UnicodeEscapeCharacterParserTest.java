@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.text.cursor.TextCursor;
 
-public final class UnicodeEscapeCharacterParserTest extends Parser2TestCase<UnicodeEscapeCharacterParser<ParserContext>, CharacterParserToken> {
+public final class UnicodeEscapeCharacterParserTest extends NonEmptyParserTestCase<UnicodeEscapeCharacterParser<ParserContext>, CharacterParserToken> {
 
     @Test
     public void testFailure() {

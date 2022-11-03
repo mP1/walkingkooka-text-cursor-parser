@@ -29,7 +29,7 @@ import java.util.Optional;
  * A {@link Parser} that parser that parsers {@link BigDecimal} numbers, including the sign, decimals and any exponent.
  * Note unlike {@link DoubleParser} which returns doubles, NAN and +/- INFINITY is not supported.
  */
-final class BigDecimalParser<C extends ParserContext> extends Parser2<C> {
+final class BigDecimalParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     /**
      * Factory that creates a {@link BigDecimalParser}
@@ -62,12 +62,14 @@ final class BigDecimalParser<C extends ParserContext> extends Parser2<C> {
 
     /**
      * Reads character by character until a non digit is found, using a {@link BigInteger} to hold the value.
-     * Basically a cut down version of {@link DoubleParser#tryParse0(TextCursor, ParserContext, TextCursorSavePoint)},
+     * Basically a cut down version of {@link DoubleParser#tryParse(TextCursor, ParserContext, TextCursorSavePoint)},
      * but with the NAN and INFINITY modes cut out and a {@link BigDecimal} instead of double.
      * Concepts such as negative zero which are not supported by bigdecimal natively end up being plain zero.
      */
     @Override
-    Optional<ParserToken> tryParse0(final TextCursor cursor, final C context, final TextCursorSavePoint save) {
+    Optional<ParserToken> tryParse(final TextCursor cursor,
+                                   final C context,
+                                   final TextCursorSavePoint save) {
         final char decimalSeparator = context.decimalSeparator();
         final int negativeSign = context.negativeSign();
         final int positiveSign = context.positiveSign();

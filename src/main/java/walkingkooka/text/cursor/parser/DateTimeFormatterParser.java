@@ -40,7 +40,7 @@ import java.util.function.Function;
  * The pattern that created the {@link DateTimeFormatter} must be given to the factory so the preliminary phase can
  * try its simple parsing.
  */
-abstract class DateTimeFormatterParser<C extends ParserContext> extends Parser2<C> {
+abstract class DateTimeFormatterParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     /**
      * Package private to limit subclassing.
@@ -54,9 +54,9 @@ abstract class DateTimeFormatterParser<C extends ParserContext> extends Parser2<
     final static int INITIAL_LENGTH_GUESS = 20;
 
     @Override
-    Optional<ParserToken> tryParse0(final TextCursor cursor,
-                                    final C context,
-                                    final TextCursorSavePoint save) {
+    Optional<ParserToken> tryParse(final TextCursor cursor,
+                                   final C context,
+                                   final TextCursorSavePoint save) {
         ParserToken token;
 
         final Locale locale = context.locale();

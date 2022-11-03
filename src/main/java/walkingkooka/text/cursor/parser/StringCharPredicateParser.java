@@ -26,7 +26,7 @@ import java.util.Optional;
 /**
  * A {@link Parser} that continues to consume characters that are matched by a given {@link CharPredicate}.
  */
-final class StringCharPredicateParser<C extends ParserContext> extends Parser2<C> {
+final class StringCharPredicateParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     static <C extends ParserContext> StringCharPredicateParser<C> with(final CharPredicate predicate, final int minLength, final int maxLength) {
         Objects.requireNonNull(predicate, "predicate");
@@ -47,10 +47,12 @@ final class StringCharPredicateParser<C extends ParserContext> extends Parser2<C
     }
 
     @Override
-    Optional<ParserToken> tryParse0(final TextCursor cursor, final C context, final TextCursorSavePoint start) {
+    Optional<ParserToken> tryParse(final TextCursor cursor,
+                                   final C context,
+                                   final TextCursorSavePoint start) {
         return this.predicate.test(cursor.at()) ?
                 this.consumeRemaining(cursor, start) :
-                this.fail();
+                this.empty();
     }
 
     private final CharPredicate predicate;
@@ -67,7 +69,7 @@ final class StringCharPredicateParser<C extends ParserContext> extends Parser2<C
 
         return i >= this.minLength ?
                 stringParserToken(start) :
-                this.fail();
+                this.empty();
     }
 
     private final int minLength;

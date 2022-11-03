@@ -26,7 +26,7 @@ import java.util.Optional;
 /**
  * A {@link Parser} that parser that parsers double numbers, including the sign, decimals and any exponent.
  */
-final class DoubleParser<C extends ParserContext> extends Parser2<C> {
+final class DoubleParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     /**
      * Factory that creates a {@link DoubleParser}
@@ -79,7 +79,9 @@ final class DoubleParser<C extends ParserContext> extends Parser2<C> {
      * Reads character by character until a non digit is found, using a {@link BigInteger} to hold the value.
      */
     @Override
-    Optional<ParserToken> tryParse0(final TextCursor cursor, final C context, final TextCursorSavePoint save) {
+    Optional<ParserToken> tryParse(final TextCursor cursor,
+                                   final C context,
+                                   final TextCursorSavePoint save) {
         final char decimalSeparator = context.decimalSeparator();
         final char negativeSign = context.negativeSign();
         final char positiveSign = context.positiveSign();
