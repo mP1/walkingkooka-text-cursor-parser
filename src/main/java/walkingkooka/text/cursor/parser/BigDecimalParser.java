@@ -35,14 +35,14 @@ final class BigDecimalParser<C extends ParserContext> extends NonEmptyParser<C> 
      * Factory that creates a {@link BigDecimalParser}
      */
     static <C extends ParserContext> BigDecimalParser<C> with() {
-        return new BigDecimalParser<>();
+        return new BigDecimalParser<>("Decimal");
     }
 
     /**
      * Private ctor to limit subclassing.
      */
-    private BigDecimalParser() {
-        super();
+    private BigDecimalParser(final String toString) {
+        super(toString);
     }
 
     private final static int RADIX = 10;
@@ -234,8 +234,12 @@ final class BigDecimalParser<C extends ParserContext> extends NonEmptyParser<C> 
                 save.textBetween().toString());
     }
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        return "Decimal";
+    BigDecimalParser<C> replaceToString(final String toString) {
+        return new BigDecimalParser<>(
+                toString
+        );
     }
 }

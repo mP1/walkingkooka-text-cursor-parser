@@ -17,12 +17,12 @@
 package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.Cast;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
-import walkingkooka.text.cursor.TextCursor;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -66,11 +66,28 @@ public abstract class ParserTestCase<P extends Parser<ParserContext>> implements
         return ParserContexts.fake();
     }
 
-    final TextCursor parseFailAndCheck(final Parser<ParserContext> parser, final TextCursor cursor) {
-        return this.parseFailAndCheck(parser, this.createContext(), cursor);
+    // setToString......................................................................................................
+
+    @Test
+    public final void testSetDifferentStringSameType() {
+        final P parser = this.createParser();
+
+        final String differentToString = "different123";
+        final Parser2<ParserContext> differentParser = Cast.to(
+                parser.setToString(differentToString)
+        );
+        this.checkEquals(
+                differentToString,
+                differentParser.toString
+        );
+
+        this.checkEquals(
+                differentToString,
+                differentParser.toString()
+        );
     }
 
-    // TypeNameTesting ........................................................................
+    // TypeNameTesting .................................................................................................
 
     @Override
     public final String typeNamePrefix() {

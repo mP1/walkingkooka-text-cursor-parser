@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 /**
  * A {@link Parser} that tries all parsers until one is matched and then ignores the remainder.
  */
-final class AlternativesParser<C extends ParserContext> implements Parser<C> {
+final class AlternativesParser<C extends ParserContext> extends Parser2<C> {
 
     /**
      * Factory that creates a {@link Parser} possibly simplifying things.
@@ -49,7 +49,7 @@ final class AlternativesParser<C extends ParserContext> implements Parser<C> {
                 copy);
 
         return allCustomToStringParsers ?
-                created.setToString(toString0(copy)) :
+                created.setToString(buildToString(copy)) :
                 created;
     }
 
@@ -91,7 +91,10 @@ final class AlternativesParser<C extends ParserContext> implements Parser<C> {
                 parser = parsers.get(0).cast();
                 break;
             default:
-                parser = new AlternativesParser<>(parsers);
+                parser = new AlternativesParser<>(
+                        parsers,
+                        buildToString(parsers)
+                );
                 break;
         }
 
@@ -101,8 +104,9 @@ final class AlternativesParser<C extends ParserContext> implements Parser<C> {
     /**
      * Private ctor
      */
-    private AlternativesParser(final List<Parser<C>> parsers) {
-        super();
+    private AlternativesParser(final List<Parser<C>> parsers,
+                               final String toString) {
+        super(toString);
         this.parsers = parsers;
     }
 
@@ -140,7 +144,17 @@ final class AlternativesParser<C extends ParserContext> implements Parser<C> {
     // @VisibleForTesting
     final List<Parser<C>> parsers;
 
-    // Object.................................................................................................
+    // Parser2..........................................................................................................
+
+    @Override
+    AlternativesParser<C> replaceToString(final String toString) {
+        return new AlternativesParser<>(
+                this.parsers,
+                toString
+        );
+    }
+
+    // Object...........................................................................................................
 
     @Override
     public int hashCode() {
@@ -157,12 +171,7 @@ final class AlternativesParser<C extends ParserContext> implements Parser<C> {
         return this.parsers.equals(other.parsers);
     }
 
-    @Override
-    public String toString() {
-        return toString0(this.parsers);
-    }
-
-    private static <CC extends ParserContext> String toString0(final List<Parser<CC>> parsers) {
+    private static <CC extends ParserContext> String buildToString(final List<Parser<CC>> parsers) {
         return parsers.stream()
                 .map(Object::toString)
                 .collect(Collectors.joining(" | ", "(", ")"));

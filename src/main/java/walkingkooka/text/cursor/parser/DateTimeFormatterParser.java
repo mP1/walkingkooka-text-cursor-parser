@@ -42,12 +42,16 @@ import java.util.function.Function;
  */
 abstract class DateTimeFormatterParser<C extends ParserContext> extends NonEmptyParser<C> {
 
+    static Function<DateTimeContext, DateTimeFormatter> check(final Function<DateTimeContext, DateTimeFormatter> formatter) {
+        return Objects.requireNonNull(formatter, "formatter");
+    }
+
     /**
      * Package private to limit subclassing.
      */
-    DateTimeFormatterParser(final Function<DateTimeContext, DateTimeFormatter> formatter) {
-        Objects.requireNonNull(formatter, "formatter");
-
+    DateTimeFormatterParser(final Function<DateTimeContext, DateTimeFormatter> formatter,
+                            final String toString) {
+        super(toString);
         this.formatter = formatter;
     }
 
@@ -144,11 +148,4 @@ abstract class DateTimeFormatterParser<C extends ParserContext> extends NonEmpty
      */
     abstract ParserToken createParserToken(final TemporalAccessor temporalAccessor,
                                            final String text);
-
-    // Object...........................................................................................................
-
-    @Override
-    public final String toString() {
-        return this.formatter.toString();
-    }
 }

@@ -30,13 +30,28 @@ import java.util.Optional;
 final class StringParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     static <C extends ParserContext> StringParser<C> with(final String string, final CaseSensitivity caseSensitivity) {
+        CharSequences.failIfNullOrEmpty(string, "string");
+        Objects.requireNonNull(caseSensitivity, "caseSensitivity");
+
+        final StringBuilder b = new StringBuilder();
+
+        b.append(CharSequences.quoteAndEscape(string));
+        if (CaseSensitivity.INSENSITIVE == caseSensitivity) {
+            b.append(" (CaseInsensitive)");
+        }
+
         return new StringParser<>(
-                CharSequences.failIfNullOrEmpty(string, "string"),
-                Objects.requireNonNull(caseSensitivity, "caseSensitivity")
+                string,
+                caseSensitivity,
+                b.toString()
         );
     }
 
-    private StringParser(final String string, final CaseSensitivity caseSensitivity) {
+    private StringParser(final String string,
+                         final CaseSensitivity caseSensitivity,
+                         final String toString) {
+        super(toString);
+
         this.string = string;
         this.caseSensitivity = caseSensitivity;
     }
@@ -81,7 +96,7 @@ final class StringParser<C extends ParserContext> extends NonEmptyParser<C> {
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof StringParser && this.equals0((StringParser<?>)other);
+                other instanceof StringParser && this.equals0((StringParser<?>) other);
     }
 
     private boolean equals0(final StringParser<?> other) {
@@ -89,15 +104,14 @@ final class StringParser<C extends ParserContext> extends NonEmptyParser<C> {
                 this.caseSensitivity.equals(other.caseSensitivity);
     }
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        final StringBuilder b = new StringBuilder();
-
-        b.append(CharSequences.quoteAndEscape(this.string));
-        if (CaseSensitivity.INSENSITIVE == this.caseSensitivity) {
-            b.append(" (CaseInsensitive)");
-        }
-
-        return b.toString();
+    StringParser<C> replaceToString(final String toString) {
+        return new StringParser<>(
+                this.string,
+                this.caseSensitivity,
+                toString
+        );
     }
 }

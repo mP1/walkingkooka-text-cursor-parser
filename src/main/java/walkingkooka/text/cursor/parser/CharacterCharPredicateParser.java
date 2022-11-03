@@ -31,10 +31,15 @@ final class CharacterCharPredicateParser<C extends ParserContext> extends NonEmp
     static <C extends ParserContext> CharacterCharPredicateParser<C> with(final CharPredicate predicate) {
         Objects.requireNonNull(predicate, "predicate");
 
-        return new CharacterCharPredicateParser<>(predicate);
+        return new CharacterCharPredicateParser<>(
+                predicate,
+                predicate.toString()
+        );
     }
 
-    private CharacterCharPredicateParser(final CharPredicate predicate) {
+    private CharacterCharPredicateParser(final CharPredicate predicate,
+                                         final String toString) {
+        super(toString);
         this.predicate = predicate;
     }
 
@@ -56,8 +61,13 @@ final class CharacterCharPredicateParser<C extends ParserContext> extends NonEmp
         return token;
     }
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        return this.predicate.toString();
+    CharacterCharPredicateParser<C> replaceToString(final String toString) {
+        return new CharacterCharPredicateParser<>(
+                this.predicate,
+                toString
+        );
     }
 }

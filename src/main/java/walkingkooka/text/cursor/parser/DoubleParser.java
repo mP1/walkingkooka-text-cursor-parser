@@ -35,13 +35,13 @@ final class DoubleParser<C extends ParserContext> extends NonEmptyParser<C> {
         return INSTANCE.cast();
     }
 
-    private final static DoubleParser<?> INSTANCE = new DoubleParser<>();
+    private final static DoubleParser<?> INSTANCE = new DoubleParser<>("Double");
 
     /**
      * Private ctor to limit subclassing.
      */
-    private DoubleParser() {
-        super();
+    private DoubleParser(final String toString) {
+        super(toString);
     }
 
     private final static int RADIX = 10;
@@ -343,8 +343,10 @@ final class DoubleParser<C extends ParserContext> extends NonEmptyParser<C> {
         return Optional.of(DoubleParserToken.with(value, save.textBetween().toString()));
     }
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        return "Double";
+    DoubleParser<C> replaceToString(final String toString) {
+        return new DoubleParser<>(toString);
     }
 }

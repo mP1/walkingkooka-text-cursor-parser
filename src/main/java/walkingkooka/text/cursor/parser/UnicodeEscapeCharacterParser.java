@@ -37,9 +37,12 @@ final class UnicodeEscapeCharacterParser<C extends ParserContext> extends NonEmp
     /**
      * Singleton
      */
-    private final static UnicodeEscapeCharacterParser<?> INSTANCE = new UnicodeEscapeCharacterParser<>();
+    private final static UnicodeEscapeCharacterParser<?> INSTANCE = new UnicodeEscapeCharacterParser<>(
+            "Unicode escape char sequence"
+    );
 
-    private UnicodeEscapeCharacterParser() {
+    private UnicodeEscapeCharacterParser(final String toString) {
+        super(toString);
     }
 
     @Override
@@ -86,8 +89,12 @@ final class UnicodeEscapeCharacterParser<C extends ParserContext> extends NonEmp
         return result;
     }
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        return "Unicode escape char sequence";
+    UnicodeEscapeCharacterParser<C> replaceToString(final String toString) {
+        return new UnicodeEscapeCharacterParser<>(
+                toString
+        );
     }
 }

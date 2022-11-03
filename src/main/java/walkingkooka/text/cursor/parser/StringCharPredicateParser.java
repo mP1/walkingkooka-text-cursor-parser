@@ -37,10 +37,25 @@ final class StringCharPredicateParser<C extends ParserContext> extends NonEmptyP
             throw new IllegalArgumentException("Maxlength " + maxLength + " must be greater/equal than minLength: " + minLength);
         }
 
-        return new StringCharPredicateParser<>(predicate, minLength, maxLength);
+        return new StringCharPredicateParser<>(
+                predicate,
+                minLength,
+                maxLength,
+                predicate.toString() +
+                        '{' +
+                        minLength +
+                        ',' +
+                        maxLength +
+                        '}'
+        );
     }
 
-    private StringCharPredicateParser(final CharPredicate predicate, final int minLength, final int maxLength) {
+    private StringCharPredicateParser(final CharPredicate predicate,
+                                      final int minLength,
+                                      final int maxLength,
+                                      final String toString) {
+        super(toString);
+
         this.predicate = predicate;
         this.minLength = minLength;
         this.maxLength = maxLength;
@@ -80,13 +95,15 @@ final class StringCharPredicateParser<C extends ParserContext> extends NonEmptyP
         return Optional.of(StringParserToken.with(text, text));
     }
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        return this.predicate.toString() +
-                '{' +
-                this.minLength +
-                ',' +
-                this.maxLength +
-                '}';
+    StringCharPredicateParser<C> replaceToString(final String toString) {
+        return new StringCharPredicateParser<>(
+                this.predicate,
+                this.minLength,
+                this.maxLength,
+                toString
+        );
     }
 }

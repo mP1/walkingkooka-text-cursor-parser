@@ -34,10 +34,16 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
 
         return parser instanceof RepeatingParser ?
                 parser.cast() :
-                new RepeatingParser<>(parser);
+                new RepeatingParser<>(
+                        parser,
+                        "{" + parser.toString() + "}"
+                );
     }
 
-    private RepeatingParser(final Parser<C> parser) {
+    private RepeatingParser(final Parser<C> parser,
+                            final String toString) {
+        super(toString);
+
         this.parser = parser;
     }
 
@@ -62,8 +68,13 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     private final Parser<C> parser;
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        return "{" + parser.toString() + "}";
+    RepeatingParser<C> replaceToString(final String toString) {
+        return new RepeatingParser<>(
+                this.parser,
+                toString
+        );
     }
 }

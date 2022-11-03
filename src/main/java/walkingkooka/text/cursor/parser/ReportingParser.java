@@ -38,14 +38,22 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
         Objects.requireNonNull(reporter, "reporter");
         checkParser(parser);
 
-        return new ReportingParser<>(condition, reporter, parser);
+        return new ReportingParser<>(
+                condition,
+                reporter,
+                parser,
+                reporter.toString()
+        );
     }
 
     /**
      * Private ctor
      */
-    private ReportingParser(final ParserReporterCondition condition, final ParserReporter<C> reporter, final Parser<C> parser) {
-        super(parser);
+    private ReportingParser(final ParserReporterCondition condition,
+                            final ParserReporter<C> reporter,
+                            final Parser<C> parser,
+                            final String toString) {
+        super(parser, toString);
 
         this.condition = condition;
         this.reporter = reporter;
@@ -71,8 +79,15 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
 
     private final ParserReporter<C> reporter;
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        return this.reporter.toString();
+    ReportingParser<C> replaceToString(final String toString) {
+        return new ReportingParser(
+                this.condition,
+                this.reporter,
+                this.parser,
+                toString
+        );
     }
 }
