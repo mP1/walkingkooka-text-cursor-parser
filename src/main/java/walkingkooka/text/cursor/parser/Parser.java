@@ -75,7 +75,7 @@ public interface Parser<C extends ParserContext> {
      * Returns a {@link Parser} that matches zero or more repetitions of the given tokens.
      */
     default Parser<C> repeating() {
-        return Parsers.repeated(this.cast());
+        return Parsers.repeating(this.cast());
     }
 
     /**

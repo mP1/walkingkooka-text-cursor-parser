@@ -51,7 +51,7 @@ public abstract class ParserTestCase<P extends Parser<ParserContext>> implements
     @Test
     public final void testRepeating() {
         final Parser<ParserContext> parser = this.createParser().repeating();
-        this.checkEquals(RepeatedParser.class, parser.getClass(), parser::toString);
+        this.checkEquals(RepeatingParser.class, parser.getClass(), parser::toString);
     }
 
     @Test
