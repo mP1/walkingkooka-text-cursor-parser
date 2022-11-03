@@ -25,7 +25,7 @@ import java.util.Optional;
 /**
  * A {@link Parser} that always returns {@link Optional#empty() nothing}
  */
-final class NeverParser<C extends ParserContext> implements Parser<C> {
+final class NeverParser<C extends ParserContext> extends Parser2<C> {
 
     static <C extends ParserContext> NeverParser<C> instance() {
         return Cast.to(INSTANCE);
@@ -34,10 +34,10 @@ final class NeverParser<C extends ParserContext> implements Parser<C> {
     /**
      * Singleton
      */
-    private final static NeverParser<?> INSTANCE = new NeverParser<>();
+    private final static NeverParser<?> INSTANCE = new NeverParser<>("");
 
-    private NeverParser() {
-        super();
+    private NeverParser(final String toString) {
+        super(toString);
     }
 
     @Override
@@ -46,8 +46,10 @@ final class NeverParser<C extends ParserContext> implements Parser<C> {
         return Optional.empty();
     }
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        return "";
+    Parser<C> replaceToString(final String toString) {
+        return new NeverParser<>(toString);
     }
 }

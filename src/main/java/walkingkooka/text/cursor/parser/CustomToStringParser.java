@@ -52,23 +52,27 @@ final class CustomToStringParser<C extends ParserContext> extends ParserWrapper<
     }
 
     private CustomToStringParser(final Parser<C> parser, final String toString) {
-        super(parser);
-        this.toString = toString;
+        super(parser, toString);
     }
+
+    // Parser..........................................................................................................
 
     @Override
     public Optional<ParserToken> parse(final TextCursor cursor, final C context) {
         return this.parser.parse(cursor, context);
     }
 
+    // Parser2..........................................................................................................
+
     @Override
-    public Parser<C> setToString(final String toString) {
-        return this.toString.equals(toString) ?
-                this :
-                wrap(this.parser, toString);
+    Parser<C> replaceToString(final String toString) {
+        return wrap(
+                this.parser,
+                toString
+        );
     }
 
-    // Object.................................................................................................
+    // Object..........................................................................................................
 
     @Override
     public int hashCode() {
@@ -85,12 +89,4 @@ final class CustomToStringParser<C extends ParserContext> extends ParserWrapper<
         return this.parser.equals(other.parser) &&
                 this.toString.equals(other.toString);
     }
-
-    @Override
-    public String toString() {
-        return toString;
-    }
-
-    // @VisibleForTesting
-    final String toString;
 }

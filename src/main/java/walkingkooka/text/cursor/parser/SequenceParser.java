@@ -32,11 +32,15 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C> {
      * Factory method only called by {@link SequenceParserBuilder#build()}
      */
     static <C extends ParserContext> SequenceParser<C> with(final List<SequenceParserComponent<C>> components) {
-        return new SequenceParser<>(components);
+        return new SequenceParser<>(
+                components,
+                SequenceParserComponent.toString(components)
+        );
     }
 
-    private SequenceParser(final List<SequenceParserComponent<C>> components) {
-        super();
+    private SequenceParser(final List<SequenceParserComponent<C>> components,
+                           final String toString) {
+        super(toString);
         this.components = components;
     }
 
@@ -77,15 +81,20 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     @Override
     public boolean equals(final Object other) {
-        return this == other || other instanceof SequenceParser && this.equals0((SequenceParser<?>)other);
+        return this == other || other instanceof SequenceParser && this.equals0((SequenceParser<?>) other);
     }
 
     private boolean equals0(final SequenceParser<?> other) {
         return this.components.equals(other.components);
     }
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        return SequenceParserComponent.toString(this.components);
+    SequenceParser<C> replaceToString(final String toString) {
+        return new SequenceParser<>(
+                this.components,
+                toString
+        );
     }
 }

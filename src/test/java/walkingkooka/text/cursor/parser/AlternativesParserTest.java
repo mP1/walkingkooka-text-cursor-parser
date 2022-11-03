@@ -61,9 +61,8 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
     @Test
     public void testWithAllCustomToStringParsers() {
         final List<Parser<ParserContext>> parsers = Lists.of(PARSER1.setToString("1"), PARSER2.setToString("2"));
-        final CustomToStringParser<ParserContext> custom = AlternativesParser.with(parsers).cast();
-        final AlternativesParser<ParserContext> alt = custom.parser.cast();
-        this.checkEquals(Lists.of(PARSER1, PARSER2), alt.parsers, "parsers");
+        final AlternativesParser<ParserContext> custom = AlternativesParser.with(parsers).cast();
+        this.checkEquals(Lists.of(PARSER1, PARSER2), custom.parsers, "parsers");
         this.checkEquals("(1 | 2)", custom.toString(), "custom toString");
     }
 

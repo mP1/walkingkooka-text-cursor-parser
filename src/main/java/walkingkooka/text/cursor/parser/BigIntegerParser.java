@@ -36,13 +36,19 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C> 
             throw new IllegalArgumentException("Radix " + radix + " must be > 0");
         }
 
-        return new BigIntegerParser<>(radix);
+        return new BigIntegerParser<>(
+                radix,
+                10 == radix ? "BigInteger" : "BigInteger(base=" + radix + ")"
+        );
     }
 
     /**
      * Private ctor to limit subclassing.
      */
-    private BigIntegerParser(final int radix) {
+    private BigIntegerParser(final int radix,
+                             final String toString) {
+        super(toString);
+
         this.radix = radix;
         this.radixBigInteger = BigInteger.valueOf(radix);
     }
@@ -120,9 +126,13 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C> 
     private final int radix;
     private final BigInteger radixBigInteger;
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        final int radix = this.radix;
-        return 10 == radix ? "BigInteger" : "BigInteger(base=" + radix + ")";
+    BigIntegerParser<C> replaceToString(final String toString) {
+        return new BigIntegerParser<>(
+                this.radix,
+                toString
+        );
     }
 }

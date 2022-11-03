@@ -27,9 +27,10 @@ final class DoubleQuotedParser<C extends ParserContext> extends QuotedParser<C> 
         return INSTANCE.cast();
     }
 
-    private final static DoubleQuotedParser<?> INSTANCE = new DoubleQuotedParser<>();
+    private final static DoubleQuotedParser<?> INSTANCE = new DoubleQuotedParser<>("double quoted string");
 
-    private DoubleQuotedParser() {
+    private DoubleQuotedParser(final String toString) {
+        super(toString);
     }
 
     @Override
@@ -42,9 +43,12 @@ final class DoubleQuotedParser<C extends ParserContext> extends QuotedParser<C> 
         return DoubleQuotedParserToken.with(content, rawText);
     }
 
-    @Override
-    public String toString() {
-        return "double quoted string";
-    }
+    // Parser2..........................................................................................................
 
+    @Override
+    DoubleQuotedParser<C> replaceToString(final String toString) {
+        return new DoubleQuotedParser<>(
+                toString
+        );
+    }
 }

@@ -33,14 +33,21 @@ final class TransformingParser<C extends ParserContext> extends ParserWrapper<C>
         checkParser(parser);
         Objects.requireNonNull(transformer, "transformer");
 
-        return new TransformingParser<>(parser, transformer);
+        return new TransformingParser<>(
+                parser,
+                transformer,
+                parser.toString()
+        );
     }
 
     private TransformingParser(final Parser<C> parser,
-                               final BiFunction<ParserToken, C, ParserToken> transformer) {
-        super(parser);
+                               final BiFunction<ParserToken, C, ParserToken> transformer,
+                               final String toString) {
+        super(parser, toString);
         this.transformer = transformer;
     }
+
+    // Parser..........................................................................................................
 
     @Override
     public Optional<ParserToken> parse(final TextCursor cursor, final C context) {
@@ -54,8 +61,14 @@ final class TransformingParser<C extends ParserContext> extends ParserWrapper<C>
      */
     private final BiFunction<ParserToken, C, ParserToken> transformer;
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        return this.parser.toString();
+    TransformingParser<C> replaceToString(final String toString) {
+        return new TransformingParser(
+                this.parser,
+                this.transformer,
+                toString
+        );
     }
 }

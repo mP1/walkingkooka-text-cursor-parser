@@ -26,7 +26,8 @@ import java.util.Optional;
  */
 abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C> {
 
-    QuotedParser() {
+    QuotedParser(final String toString) {
+        super(toString);
     }
 
     @Override
@@ -140,7 +141,5 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C> {
     static String invalidUnicodeEscapeChar(final char c) {
         return "Expected hex character in unicode escape but got '" + c + "'";
     }
-
-    public abstract String toString();
 }
 

@@ -36,13 +36,18 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> {
             throw new IllegalArgumentException("Radix " + radix + " must be > 0");
         }
 
-        return new LongParser<>(radix);
+        return new LongParser<>(
+                radix,
+                10 == radix ? "Long" : "Long(base=" + radix + ")"
+        );
     }
 
     /**
      * Private ctor to limit subclassing.
      */
-    private LongParser(final int radix) {
+    private LongParser(final int radix,
+                       final String toString) {
+        super(toString);
         this.radix = radix;
     }
 
@@ -119,9 +124,13 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     private final int radix;
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        final int radix = this.radix;
-        return 10 == radix ? "Long" : "Long(base=" + radix + ")";
+    LongParser<C> replaceToString(final String toString) {
+        return new LongParser<>(
+                this.radix,
+                toString
+        );
     }
 }

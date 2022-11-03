@@ -34,11 +34,15 @@ final class AndEmptyTextCursorParser<C extends ParserContext> extends ParserWrap
 
         return parser instanceof AndEmptyTextCursorParser ?
                 parser.cast() :
-                new AndEmptyTextCursorParser<>(parser);
+                new AndEmptyTextCursorParser<>(
+                        parser,
+                        parser.toString()
+                );
     }
 
-    private AndEmptyTextCursorParser(final Parser<C> parser) {
-        super(parser);
+    private AndEmptyTextCursorParser(final Parser<C> parser,
+                                     final String toString) {
+        super(parser, toString);
     }
 
     @Override
@@ -58,8 +62,13 @@ final class AndEmptyTextCursorParser<C extends ParserContext> extends ParserWrap
         return this;
     }
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        return this.parser.toString();
+    AndEmptyTextCursorParser<C> replaceToString(final String toString) {
+        return new AndEmptyTextCursorParser(
+                this.parser,
+                toString
+        );
     }
 }

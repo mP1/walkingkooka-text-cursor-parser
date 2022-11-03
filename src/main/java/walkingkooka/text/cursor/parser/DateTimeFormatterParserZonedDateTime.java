@@ -30,15 +30,29 @@ import java.util.function.Function;
 final class DateTimeFormatterParserZonedDateTime<C extends ParserContext> extends DateTimeFormatterParser<C> {
 
     static <C extends ParserContext> DateTimeFormatterParserZonedDateTime<C> with(final Function<DateTimeContext, DateTimeFormatter> formatter) {
-        return new DateTimeFormatterParserZonedDateTime<>(formatter);
+        return new DateTimeFormatterParserZonedDateTime<>(
+                check(formatter),
+                formatter.toString()
+        );
     }
 
-    private DateTimeFormatterParserZonedDateTime(final Function<DateTimeContext, DateTimeFormatter> formatter) {
-        super(formatter);
+    private DateTimeFormatterParserZonedDateTime(final Function<DateTimeContext, DateTimeFormatter> formatter,
+                                                 final String toString) {
+        super(formatter, toString);
     }
 
     @Override
     ZonedDateTimeParserToken createParserToken(final TemporalAccessor value, final String text) {
         return ParserTokens.zonedDateTime(ZonedDateTime.from(value), text);
+    }
+
+    // Parser2..........................................................................................................
+
+    @Override
+    DateTimeFormatterParserZonedDateTime<C> replaceToString(final String toString) {
+        return new DateTimeFormatterParserZonedDateTime<>(
+                this.formatter,
+                toString
+        );
     }
 }

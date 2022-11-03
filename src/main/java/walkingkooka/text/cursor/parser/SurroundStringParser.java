@@ -30,11 +30,18 @@ final class SurroundStringParser<C extends ParserContext> extends NonEmptyParser
     static <C extends ParserContext> SurroundStringParser<C> with(final String open, final String close) {
         return new SurroundStringParser<>(
                 CharSequences.failIfNullOrEmpty(open, "open"),
-                CharSequences.failIfNullOrEmpty(close, "close")
+                CharSequences.failIfNullOrEmpty(close, "close"),
+                CharSequences.quoteAndEscape(open) +
+                        "*" +
+                        CharSequences.quoteAndEscape(close)
         );
     }
 
-    private SurroundStringParser(final String open, final String close) {
+    private SurroundStringParser(final String open,
+                                 final String close,
+                                 final String toString) {
+        super(toString);
+
         this.open = open;
         this.close = close;
     }
@@ -103,8 +110,14 @@ final class SurroundStringParser<C extends ParserContext> extends NonEmptyParser
 
     private final String close;
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        return CharSequences.quoteAndEscape(this.open) + "*" + CharSequences.quoteAndEscape(this.close);
+    SurroundStringParser<C> replaceToString(final String toString) {
+        return new SurroundStringParser<>(
+                this.open,
+                this.close,
+                toString
+        );
     }
 }

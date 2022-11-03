@@ -45,7 +45,13 @@ final class StringInitialAndPartCharPredicateParser<C extends ParserContext> ext
             throw new IllegalArgumentException("Max length " + minLength + " must be greater than or equal min length " + minLength);
         }
 
-        return new StringInitialAndPartCharPredicateParser<>(initial, part, minLength, maxLength);
+        return new StringInitialAndPartCharPredicateParser<>(
+                initial,
+                part,
+                minLength,
+                maxLength,
+                initial + " " + part
+        );
     }
 
     /**
@@ -54,7 +60,10 @@ final class StringInitialAndPartCharPredicateParser<C extends ParserContext> ext
     private StringInitialAndPartCharPredicateParser(final CharPredicate initial,
                                                     final CharPredicate part,
                                                     final int minLength,
-                                                    final int maxLength) {
+                                                    final int maxLength,
+                                                    final String toString) {
+        super(toString);
+
         this.initial = initial;
         this.part = part;
         this.minLength = minLength;
@@ -119,8 +128,17 @@ final class StringInitialAndPartCharPredicateParser<C extends ParserContext> ext
     private final int minLength;
     private final int maxLength;
 
+
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        return this.initial + " " + this.part;
+    StringInitialAndPartCharPredicateParser<C> replaceToString(final String toString) {
+        return new StringInitialAndPartCharPredicateParser<>(
+                this.initial,
+                this.part,
+                this.minLength,
+                this.maxLength,
+                toString
+        );
     }
 }

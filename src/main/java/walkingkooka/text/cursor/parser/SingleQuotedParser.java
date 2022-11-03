@@ -27,9 +27,10 @@ final class SingleQuotedParser<C extends ParserContext> extends QuotedParser<C> 
         return INSTANCE.cast();
     }
 
-    private final static SingleQuotedParser<?> INSTANCE = new SingleQuotedParser<>();
+    private final static SingleQuotedParser<?> INSTANCE = new SingleQuotedParser<>("single quoted string");
 
-    private SingleQuotedParser() {
+    private SingleQuotedParser(final String toString) {
+        super(toString);
     }
 
     @Override
@@ -42,8 +43,12 @@ final class SingleQuotedParser<C extends ParserContext> extends QuotedParser<C> 
         return SingleQuotedParserToken.with(content, rawText);
     }
 
+    // Parser2..........................................................................................................
+
     @Override
-    public String toString() {
-        return "single quoted string";
+    SingleQuotedParser<C> replaceToString(final String toString) {
+        return new SingleQuotedParser<>(
+                toString
+        );
     }
 }

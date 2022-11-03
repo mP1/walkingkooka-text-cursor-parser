@@ -30,15 +30,29 @@ import java.util.function.Function;
 final class DateTimeFormatterParserOffsetTime<C extends ParserContext> extends DateTimeFormatterParser<C> {
 
     static <C extends ParserContext> DateTimeFormatterParserOffsetTime<C> with(final Function<DateTimeContext, DateTimeFormatter> formatter) {
-        return new DateTimeFormatterParserOffsetTime<>(formatter);
+        return new DateTimeFormatterParserOffsetTime<>(
+                check(formatter),
+                formatter.toString()
+        );
     }
 
-    private DateTimeFormatterParserOffsetTime(final Function<DateTimeContext, DateTimeFormatter> formatter) {
-        super(formatter);
+    private DateTimeFormatterParserOffsetTime(final Function<DateTimeContext, DateTimeFormatter> formatter,
+                                              final String toString) {
+        super(formatter, toString);
     }
 
     @Override
     OffsetTimeParserToken createParserToken(final TemporalAccessor value, final String text) {
         return ParserTokens.offsetTime(OffsetTime.from(value), text);
+    }
+
+    // Parser2..........................................................................................................
+
+    @Override
+    DateTimeFormatterParserOffsetTime<C> replaceToString(final String toString) {
+        return new DateTimeFormatterParserOffsetTime<>(
+                this.formatter,
+                toString
+        );
     }
 }
