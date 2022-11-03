@@ -25,7 +25,7 @@ import walkingkooka.text.cursor.TextCursors;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class RepeatedParserTest extends Parser2TestCase<RepeatedParser<ParserContext>,
+public class RepeatingParserTest extends Parser2TestCase<RepeatingParser<ParserContext>,
         RepeatedParserToken> {
 
     private final static String TEXT = "abc";
@@ -33,13 +33,13 @@ public class RepeatedParserTest extends Parser2TestCase<RepeatedParser<ParserCon
 
     @Test
     public void testWithNullParserFails() {
-        assertThrows(NullPointerException.class, () -> RepeatedParser.with(null));
+        assertThrows(NullPointerException.class, () -> RepeatingParser.with(null));
     }
 
     @Test
     public void testWrapAnotherRepeatedParser() {
-        final RepeatedParser<ParserContext> parser = this.createParser();
-        assertSame(parser, Parsers.repeated(parser.cast()));
+        final RepeatingParser<ParserContext> parser = this.createParser();
+        assertSame(parser, Parsers.repeating(parser.cast()));
     }
 
     @Test
@@ -67,7 +67,7 @@ public class RepeatedParserTest extends Parser2TestCase<RepeatedParser<ParserCon
         final String all = text1 + text2;
 
         this.parseAndCheck(
-                RepeatedParser.with(Parsers.singleQuoted().cast()),
+                RepeatingParser.with(Parsers.singleQuoted().cast()),
                 this.createContext(),
                 TextCursors.charSequence(all),
                 RepeatedParserToken.with(Lists.of(quoted(text1), quoted(text2)), all),
@@ -83,7 +83,7 @@ public class RepeatedParserTest extends Parser2TestCase<RepeatedParser<ParserCon
         final String after = "!!!";
 
         this.parseAndCheck(
-                RepeatedParser.with(Parsers.singleQuoted().cast()),
+                RepeatingParser.with(Parsers.singleQuoted().cast()),
                 this.createContext(),
                 TextCursors.charSequence(all + after),
                 RepeatedParserToken.with(Lists.of(quoted(text1), quoted(text2)), all),
@@ -105,7 +105,7 @@ public class RepeatedParserTest extends Parser2TestCase<RepeatedParser<ParserCon
 
     @Test
     public void testRepeating2() {
-        final RepeatedParser<ParserContext> parser = this.createParser();
+        final RepeatingParser<ParserContext> parser = this.createParser();
         assertSame(parser, parser.repeating());
     }
 
@@ -115,8 +115,8 @@ public class RepeatedParserTest extends Parser2TestCase<RepeatedParser<ParserCon
     }
 
     @Override
-    public RepeatedParser<ParserContext> createParser() {
-        return RepeatedParser.with(PARSER);
+    public RepeatingParser<ParserContext> createParser() {
+        return RepeatingParser.with(PARSER);
     }
 
     private static StringParserToken string(final String s) {
@@ -124,7 +124,7 @@ public class RepeatedParserTest extends Parser2TestCase<RepeatedParser<ParserCon
     }
 
     @Override
-    public Class<RepeatedParser<ParserContext>> type() {
-        return Cast.to(RepeatedParser.class);
+    public Class<RepeatingParser<ParserContext>> type() {
+        return Cast.to(RepeatingParser.class);
     }
 }

@@ -27,17 +27,17 @@ import java.util.Optional;
 /**
  * A {@link Parser} that only matches one or more tokens matched by a different provided {@link Parser}.
  */
-final class RepeatedParser<C extends ParserContext> extends Parser2<C> {
+final class RepeatingParser<C extends ParserContext> extends Parser2<C> {
 
-    static <C extends ParserContext> RepeatedParser<C> with(final Parser<C> parser) {
+    static <C extends ParserContext> RepeatingParser<C> with(final Parser<C> parser) {
         Objects.requireNonNull(parser, "parser");
 
-        return parser instanceof RepeatedParser ?
+        return parser instanceof RepeatingParser ?
                 parser.cast() :
-                new RepeatedParser<>(parser);
+                new RepeatingParser<>(parser);
     }
 
-    private RepeatedParser(final Parser<C> parser) {
+    private RepeatingParser(final Parser<C> parser) {
         this.parser = parser;
     }
 
