@@ -1,0 +1,3 @@
+**/ParserTestingPrettyDumper.*
+**/*Testing.*
+**/*Testing2.*
