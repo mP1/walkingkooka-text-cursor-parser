@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+    <inherits name="walkingkooka.datetime.DateTime"/>
+    <inherits name="walkingkooka.math.Math"/>
+    <inherits name="walkingkooka.text.printer.Printer"/>
+
+    <source path=""/>
+</module>
