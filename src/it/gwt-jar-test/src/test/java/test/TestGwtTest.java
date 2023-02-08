@@ -1,8 +1,8 @@
 package test;
 
 import com.google.gwt.junit.client.GWTTestCase;
-
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.j2cl.locale.LocaleAware;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.ParserContexts;
@@ -14,6 +14,7 @@ import java.math.MathContext;
 import java.util.Locale;
 import java.util.Optional;
 
+@LocaleAware
 public class TestGwtTest extends GWTTestCase {
 
     @Override
