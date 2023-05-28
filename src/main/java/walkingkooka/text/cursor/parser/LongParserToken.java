@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * The parser token for a number with the value contained in a {@link Long}.
  */
-public final class LongParserToken extends ValueParserToken<Long> implements LeafParserToken<Long> {
+public final class LongParserToken extends ValueParserToken<Long> {
 
     public static LongParserToken with(final long value, final String text) {
         Objects.requireNonNull(text, "text");

@@ -23,7 +23,7 @@ import java.time.OffsetTime;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class OffsetTimeParserTokenTest extends ValueParserTokenTestCase<OffsetTimeParserToken> {
+public final class OffsetTimeParserTokenTest extends ValueParserTokenTestCase<OffsetTimeParserToken, OffsetTime> {
 
     @Test
     public void testAccept() {

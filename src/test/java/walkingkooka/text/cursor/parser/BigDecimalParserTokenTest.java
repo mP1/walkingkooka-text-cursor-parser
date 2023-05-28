@@ -24,7 +24,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BigDecimalParserTokenTest extends ValueParserTokenTestCase<BigDecimalParserToken> {
+public final class BigDecimalParserTokenTest extends ValueParserTokenTestCase<BigDecimalParserToken, BigDecimal> {
 
     @Test
     public void testWithNullValueFails() {

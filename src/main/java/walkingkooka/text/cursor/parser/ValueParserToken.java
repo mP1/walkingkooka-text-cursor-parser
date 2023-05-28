@@ -48,6 +48,16 @@ abstract class ValueParserToken<V> implements ParserToken, Value<V> {
 
     private final String text;
 
+    @Override
+    public final boolean isLeaf() {
+        return false == this.isParent();
+    }
+
+    @Override
+    public final boolean isParent() {
+        return this instanceof RepeatedOrSequenceParserToken;
+    }
+
     /**
      * Sub classes have a value, so cant be symbols.
      */

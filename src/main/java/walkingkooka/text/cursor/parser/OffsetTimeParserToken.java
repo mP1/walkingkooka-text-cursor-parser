@@ -22,7 +22,7 @@ import java.util.Objects;
 /**
  * The parser token for a time with the value contained in a {@link OffsetTime}.
  */
-public final class OffsetTimeParserToken extends ValueParserToken<OffsetTime> implements LeafParserToken<OffsetTime> {
+public final class OffsetTimeParserToken extends ValueParserToken<OffsetTime> implements ParserToken {
 
     public static OffsetTimeParserToken with(final OffsetTime value, final String text) {
         Objects.requireNonNull(text, "text");
