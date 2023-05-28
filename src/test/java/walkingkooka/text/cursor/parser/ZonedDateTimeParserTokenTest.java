@@ -24,7 +24,7 @@ import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class ZonedDateTimeParserTokenTest extends ValueParserTokenTestCase<ZonedDateTimeParserToken> {
+public final class ZonedDateTimeParserTokenTest extends ValueParserTokenTestCase<ZonedDateTimeParserToken, ZonedDateTime> {
 
     @Test
     public void testAccept() {

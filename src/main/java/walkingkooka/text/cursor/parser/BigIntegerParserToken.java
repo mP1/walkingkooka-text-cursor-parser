@@ -22,7 +22,7 @@ import java.util.Objects;
 /**
  * The parser token for a number with the value contained in a {@link BigInteger}.
  */
-public final class BigIntegerParserToken extends ValueParserToken<BigInteger> implements LeafParserToken<BigInteger> {
+public final class BigIntegerParserToken extends ValueParserToken<BigInteger> {
 
     public static BigIntegerParserToken with(final BigInteger value, final String text) {
         Objects.requireNonNull(value, "value");

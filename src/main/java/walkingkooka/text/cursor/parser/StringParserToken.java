@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * The parser token for a matched string.
  */
-public final class StringParserToken extends ValueParserToken<String> implements LeafParserToken<String> {
+public final class StringParserToken extends ValueParserToken<String> {
 
     static StringParserToken with(final String value, final String text) {
         Objects.requireNonNull(value, "value");

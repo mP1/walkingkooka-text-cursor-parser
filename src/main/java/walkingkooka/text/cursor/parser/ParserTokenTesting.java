@@ -20,6 +20,7 @@ package walkingkooka.text.cursor.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
+import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.BeanPropertiesTesting;
@@ -57,46 +58,40 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
         TypeNameTesting<T> {
 
     @Test
-    default void testImplementsEitherParentParserTokenOrLeafParserToken() {
-        for (; ; ) {
-            final Class<T> type = this.type();
-            final boolean leaf = LeafParserToken.class.isAssignableFrom(type);
-            final boolean parent = ParentParserToken.class.isAssignableFrom(type);
-            if (leaf) {
-                assertFalse(
-                        parent,
-                        () -> "Type " + type.getName() + " must implement either " + LeafParserToken.class.getName() + " or " + ParentParserToken.class.getName() + " but not both"
-                );
-                break;
-            }
-            if (parent) {
-                break;
-            }
-            fail("Type " + type.getName() + " must implement either " + LeafParserToken.class.getName() + " or " + ParentParserToken.class.getName());
-        }
+    default void testIsLeafDifferentIsParent() {
+        final ParserToken token = this.createToken();
+
+        final boolean leaf = token.isLeaf();
+        final boolean parent = token.isParent();
+
+        this.checkNotEquals(
+                leaf,
+                parent,
+                () -> token + " isLeaf should be different from isParent"
+        );
     }
 
     @Test
     default void testValueType() {
         for (; ; ) {
             final T token = this.createToken();
-            if (token instanceof LeafParserToken) {
-                final Object value = ((LeafParserToken<?>) token).value();
+            if (token.isLeaf()) {
+                final Object value = ((Value<?>) token).value();
                 assertFalse(
                         value instanceof Collection,
                         () -> token + " value must not be a Collection but was " + value.getClass() + "=" + value
                 );
                 break;
             }
-            if (token instanceof ParentParserToken) {
-                final Object value = ((ParentParserToken) token).value();
+            if (token.isParent()) {
+                final Object value = ((Value<?>) token).value();
                 assertTrue(
                         value instanceof Collection,
                         () -> token + " value must be a Collection but was " + value.getClass() + "=" + value
                 );
                 break;
             }
-            fail("ParserToken: " + token + " must implement either " + LeafParserToken.class.getName() + " or " + ParentParserToken.class.getName());
+            fail("ParserToken: " + token + " must implement either " + Value.class.getName());
         }
     }
 

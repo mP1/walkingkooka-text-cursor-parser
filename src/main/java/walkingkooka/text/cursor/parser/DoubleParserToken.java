@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * The parser token for a number with the value contained in a {@link Double}.
  */
-public final class DoubleParserToken extends ValueParserToken<Double> implements LeafParserToken<Double> {
+public final class DoubleParserToken extends ValueParserToken<Double> {
 
     public static DoubleParserToken with(final double value, final String text) {
         Objects.requireNonNull(text, "text");

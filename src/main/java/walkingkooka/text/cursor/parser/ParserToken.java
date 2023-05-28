@@ -17,7 +17,10 @@
 
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.Value;
+import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
+import walkingkooka.text.printer.IndentingPrinter;
 import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
@@ -31,6 +34,15 @@ public interface ParserToken extends HasText,
         TreePrintable {
 
     /**
+     * Returns a {@link List} without any {@link ParserToken tokens} that return true for {@link #isNoise()}.
+     */
+    static List<ParserToken> filterWithoutNoise(final List<ParserToken> value) {
+        return value.stream()
+                .filter(t -> !t.isNoise())
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Concatenates the text from all given tokens into a single string.
      */
     static String text(final List<? extends ParserToken> tokens) {
@@ -40,6 +52,16 @@ public interface ParserToken extends HasText,
                 .map(HasText::text)
                 .collect(Collectors.joining());
     }
+
+    /**
+     * Returns true for leaf {@link ParserToken}. A leaf must implement {@link Value}
+     */
+    boolean isLeaf();
+
+    /**
+     * Returns true for parent {@link ParserToken} which will also implement {@link Value} which returns a {@link List} of child {@link ParserToken}
+     */
+    boolean isParent();
 
     /**
      * Only returns true for noise tokens like whitespace.
@@ -71,6 +93,42 @@ public interface ParserToken extends HasText,
      * Note the type parameter {@link Class#cast} method is not invoked to keep this compatible with j2cl.
      */
     default <T extends ParserToken> T cast(final Class<T> type) {
-        return (T)this;
+        return (T) this;
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    default void printTree(final IndentingPrinter printer) {
+        final Object value = ((Value<?>) this).value();
+
+        if (this.isLeaf()) {
+            printer.print(
+                    ParserTokenTypeName.typeName(this) +
+                            " " +
+                            CharSequences.quoteAndEscape(this.text()) +
+                            " " +
+                            (null == value ?
+                                    null :
+                                    CharSequences.quoteIfChars(value) +
+                                            " (" +
+                                            value.getClass().getName() +
+                                            ")"
+                            )
+            );
+            printer.println();
+        }
+        if (this.isParent()) {
+            printer.print(ParserTokenTypeName.typeName(this));
+            printer.println();
+
+            printer.indent();
+
+            for (final ParserToken child : (List<ParserToken>) value) {
+                child.printTree(printer);
+            }
+
+            printer.outdent();
+        }
     }
 }

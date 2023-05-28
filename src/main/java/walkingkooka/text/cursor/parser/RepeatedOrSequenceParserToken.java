@@ -16,6 +16,7 @@
  */
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
 
 import java.util.List;
@@ -25,7 +26,8 @@ import java.util.Objects;
  * A common base class for both {@link RepeatedParserToken} and {@link SequenceParserToken}.
  */
 abstract public class RepeatedOrSequenceParserToken extends ValueParserToken<List<ParserToken>>
-        implements ParentParserToken {
+        implements ParserToken,
+        Value<List<ParserToken>> {
 
     /**
      * Private ctor to limit subclassing.
@@ -39,7 +41,7 @@ abstract public class RepeatedOrSequenceParserToken extends ValueParserToken<Lis
     }
 
     /**
-     * Sub classes must create a public setValue and call this method and cast this.
+     * Sub-classes must create a public setValue and call this method and cast this.
      */
     final ValueParserToken<List<ParserToken>> setValue(final List<ParserToken> value) {
         Objects.requireNonNull(value, "values");
@@ -57,7 +59,7 @@ abstract public class RepeatedOrSequenceParserToken extends ValueParserToken<Lis
      */
     public abstract RepeatedOrSequenceParserToken flat();
 
-    // ParserTokenVisitor...............................................................................................
+// ParserTokenVisitor...............................................................................................
 
     final void acceptValues(final ParserTokenVisitor visitor) {
         for (ParserToken token : this.value()) {

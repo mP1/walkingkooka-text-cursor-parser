@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class LocalDateTimeParserTokenTest extends ValueParserTokenTestCase<LocalDateTimeParserToken> {
+public final class LocalDateTimeParserTokenTest extends ValueParserTokenTestCase<LocalDateTimeParserToken, LocalDateTime> {
 
     @Test
     public void testAccept() {

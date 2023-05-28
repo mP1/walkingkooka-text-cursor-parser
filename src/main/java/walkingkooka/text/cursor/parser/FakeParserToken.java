@@ -27,6 +27,16 @@ public class FakeParserToken implements ParserToken, Fake {
     }
 
     @Override
+    public boolean isLeaf() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isParent() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public boolean isSymbol() {
         throw new UnsupportedOperationException();
     }
