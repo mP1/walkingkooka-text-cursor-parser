@@ -49,7 +49,7 @@ final class DateTimeFormatterParserLocalDate<C extends ParserContext> extends Da
         return ParserTokens.localDate(LocalDate.from(value), text);
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     DateTimeFormatterParserLocalDate<C> replaceToString(final String toString) {

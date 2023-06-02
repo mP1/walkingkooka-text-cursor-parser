@@ -19,9 +19,13 @@ package walkingkooka.text.cursor.parser;
 
 import java.util.Objects;
 
-abstract class Parser2<C extends ParserContext> implements Parser<C> {
+/**
+ * A {@link Parser} that includes a {@link #toString} property and adds a guard within {@link #setToString(String)}
+ * only calling a package private {@link #replaceToString(String)} if the new string is different.
+ */
+abstract class ParserSetToString<C extends ParserContext> implements Parser<C> {
 
-    Parser2(final String toString) {
+    ParserSetToString(final String toString) {
         this.toString = toString;
     }
 
@@ -35,7 +39,7 @@ abstract class Parser2<C extends ParserContext> implements Parser<C> {
     }
 
     /**
-     * Requests the sub class to create a new instance passing the given {@link String} to the ctor which will
+     * Requests the sub-class to create a new instance passing the given {@link String} to the ctor which will
      * become the new {@link #toString}.
      */
     abstract Parser<C> replaceToString(final String toString);
@@ -47,5 +51,8 @@ abstract class Parser2<C extends ParserContext> implements Parser<C> {
         return this.toString;
     }
 
+    /**
+     * The actual returned {@link #toString}.
+     */
     final String toString;
 }

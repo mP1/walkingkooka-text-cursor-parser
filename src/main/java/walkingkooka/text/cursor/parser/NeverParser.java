@@ -25,7 +25,7 @@ import java.util.Optional;
 /**
  * A {@link Parser} that always returns {@link Optional#empty() nothing}
  */
-final class NeverParser<C extends ParserContext> extends Parser2<C> {
+final class NeverParser<C extends ParserContext> extends ParserSetToString<C> {
 
     static <C extends ParserContext> NeverParser<C> instance() {
         return Cast.to(INSTANCE);
@@ -46,7 +46,7 @@ final class NeverParser<C extends ParserContext> extends Parser2<C> {
         return Optional.empty();
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     Parser<C> replaceToString(final String toString) {

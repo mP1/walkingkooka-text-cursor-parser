@@ -79,7 +79,7 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
 
     private final ParserReporter<C> reporter;
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     ReportingParser<C> replaceToString(final String toString) {

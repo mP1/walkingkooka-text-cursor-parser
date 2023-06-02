@@ -62,7 +62,7 @@ final class CustomToStringParser<C extends ParserContext> extends ParserWrapper<
         return this.parser.parse(cursor, context);
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     Parser<C> replaceToString(final String toString) {

@@ -104,7 +104,7 @@ final class StringParser<C extends ParserContext> extends NonEmptyParser<C> {
                 this.caseSensitivity.equals(other.caseSensitivity);
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     StringParser<C> replaceToString(final String toString) {

@@ -43,7 +43,7 @@ final class SingleQuotedParser<C extends ParserContext> extends QuotedParser<C> 
         return SingleQuotedParserToken.with(content, rawText);
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     SingleQuotedParser<C> replaceToString(final String toString) {

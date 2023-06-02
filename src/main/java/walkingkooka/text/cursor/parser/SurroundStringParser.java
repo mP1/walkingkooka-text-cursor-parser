@@ -110,7 +110,7 @@ final class SurroundStringParser<C extends ParserContext> extends NonEmptyParser
 
     private final String close;
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     SurroundStringParser<C> replaceToString(final String toString) {

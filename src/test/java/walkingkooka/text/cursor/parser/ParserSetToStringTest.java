@@ -22,7 +22,7 @@ import walkingkooka.Cast;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 
-public final class Parser2Test implements ClassTesting<Parser2<FakeParserContext>> {
+public final class ParserSetToStringTest implements ClassTesting<ParserSetToString<FakeParserContext>> {
 
     @Test
     public void testSetToString() {
@@ -43,8 +43,8 @@ public final class Parser2Test implements ClassTesting<Parser2<FakeParserContext
     // ClassTesting.....................................................................................................
 
     @Override
-    public Class<Parser2<FakeParserContext>> type() {
-        return Cast.to(Parser2.class);
+    public Class<ParserSetToString<FakeParserContext>> type() {
+        return Cast.to(ParserSetToString.class);
     }
 
     @Override

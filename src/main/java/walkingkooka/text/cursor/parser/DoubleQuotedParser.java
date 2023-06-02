@@ -43,7 +43,7 @@ final class DoubleQuotedParser<C extends ParserContext> extends QuotedParser<C> 
         return DoubleQuotedParserToken.with(content, rawText);
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     DoubleQuotedParser<C> replaceToString(final String toString) {

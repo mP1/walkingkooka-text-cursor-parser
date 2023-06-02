@@ -61,7 +61,7 @@ final class CharacterCharPredicateParser<C extends ParserContext> extends NonEmp
         return token;
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     CharacterCharPredicateParser<C> replaceToString(final String toString) {

@@ -89,7 +89,7 @@ final class UnicodeEscapeCharacterParser<C extends ParserContext> extends NonEmp
         return result;
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     UnicodeEscapeCharacterParser<C> replaceToString(final String toString) {

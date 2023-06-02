@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 /**
  * A {@link Parser} that tries all parsers until one is matched and then ignores the remainder.
  */
-final class AlternativesParser<C extends ParserContext> extends Parser2<C> {
+final class AlternativesParser<C extends ParserContext> extends ParserSetToString<C> {
 
     /**
      * Factory that creates a {@link Parser} possibly simplifying things.
@@ -144,7 +144,7 @@ final class AlternativesParser<C extends ParserContext> extends Parser2<C> {
     // @VisibleForTesting
     final List<Parser<C>> parsers;
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     AlternativesParser<C> replaceToString(final String toString) {

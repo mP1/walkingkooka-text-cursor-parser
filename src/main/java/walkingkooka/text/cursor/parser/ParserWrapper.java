@@ -19,7 +19,7 @@ package walkingkooka.text.cursor.parser;
 
 import java.util.Objects;
 
-abstract class ParserWrapper<C extends ParserContext> extends Parser2<C> {
+abstract class ParserWrapper<C extends ParserContext> extends ParserSetToString<C> {
 
     static void checkParser(final Parser<?> parser) {
         Objects.requireNonNull(parser, "parser");

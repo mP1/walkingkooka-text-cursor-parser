@@ -46,7 +46,7 @@ final class DateTimeFormatterParserOffsetDateTime<C extends ParserContext> exten
         return ParserTokens.offsetDateTime(OffsetDateTime.from(value), text);
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     DateTimeFormatterParserOffsetDateTime<C> replaceToString(final String toString) {

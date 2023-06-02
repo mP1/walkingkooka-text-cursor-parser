@@ -88,7 +88,7 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C> {
         return this.components.equals(other.components);
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     SequenceParser<C> replaceToString(final String toString) {

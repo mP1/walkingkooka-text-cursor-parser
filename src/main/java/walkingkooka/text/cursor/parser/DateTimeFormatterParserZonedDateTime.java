@@ -46,7 +46,7 @@ final class DateTimeFormatterParserZonedDateTime<C extends ParserContext> extend
         return ParserTokens.zonedDateTime(ZonedDateTime.from(value), text);
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     DateTimeFormatterParserZonedDateTime<C> replaceToString(final String toString) {
