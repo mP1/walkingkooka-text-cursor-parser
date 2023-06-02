@@ -40,7 +40,7 @@ public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<An
     }
 
     @Test
-    public void testAndEmptyTextCursorDefaultMethod() {
+    public void testAndEmptyTextCursorParserDefaultMethod() {
         final Parser<ParserContext> parser = WRAPPED.andEmptyTextCursor();
         assertSame(AndEmptyTextCursorParser.class.getName(), parser.getClass().getName(), () -> "" + parser);
     }
