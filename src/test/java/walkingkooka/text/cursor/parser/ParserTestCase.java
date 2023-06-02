@@ -73,7 +73,7 @@ public abstract class ParserTestCase<P extends Parser<ParserContext>> implements
         final P parser = this.createParser();
 
         final String differentToString = "different123";
-        final Parser2<ParserContext> differentParser = Cast.to(
+        final ParserSetToString<ParserContext> differentParser = Cast.to(
                 parser.setToString(differentToString)
         );
         this.checkEquals(

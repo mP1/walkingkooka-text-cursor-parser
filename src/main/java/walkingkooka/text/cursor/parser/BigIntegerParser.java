@@ -126,7 +126,7 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C> 
     private final int radix;
     private final BigInteger radixBigInteger;
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     BigIntegerParser<C> replaceToString(final String toString) {

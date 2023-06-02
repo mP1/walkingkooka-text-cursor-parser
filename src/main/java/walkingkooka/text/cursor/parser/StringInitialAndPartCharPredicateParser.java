@@ -129,7 +129,7 @@ final class StringInitialAndPartCharPredicateParser<C extends ParserContext> ext
     private final int maxLength;
 
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     StringInitialAndPartCharPredicateParser<C> replaceToString(final String toString) {

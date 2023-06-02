@@ -95,7 +95,7 @@ final class StringCharPredicateParser<C extends ParserContext> extends NonEmptyP
         return Optional.of(StringParserToken.with(text, text));
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     StringCharPredicateParser<C> replaceToString(final String toString) {

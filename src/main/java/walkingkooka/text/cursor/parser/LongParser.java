@@ -124,7 +124,7 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     private final int radix;
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     LongParser<C> replaceToString(final String toString) {

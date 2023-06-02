@@ -343,7 +343,7 @@ final class DoubleParser<C extends ParserContext> extends NonEmptyParser<C> {
         return Optional.of(DoubleParserToken.with(value, save.textBetween().toString()));
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     DoubleParser<C> replaceToString(final String toString) {

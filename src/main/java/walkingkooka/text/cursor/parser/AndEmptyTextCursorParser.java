@@ -62,7 +62,7 @@ final class AndEmptyTextCursorParser<C extends ParserContext> extends ParserWrap
         return this;
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     AndEmptyTextCursorParser<C> replaceToString(final String toString) {

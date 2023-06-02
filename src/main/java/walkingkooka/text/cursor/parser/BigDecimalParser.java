@@ -234,7 +234,7 @@ final class BigDecimalParser<C extends ParserContext> extends NonEmptyParser<C> 
                 save.textBetween().toString());
     }
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     BigDecimalParser<C> replaceToString(final String toString) {

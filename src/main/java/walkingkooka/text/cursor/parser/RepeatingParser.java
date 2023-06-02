@@ -68,7 +68,7 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     private final Parser<C> parser;
 
-    // Parser2..........................................................................................................
+    // ParserSetToString..........................................................................................................
 
     @Override
     RepeatingParser<C> replaceToString(final String toString) {
