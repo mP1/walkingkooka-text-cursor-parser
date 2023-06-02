@@ -666,7 +666,7 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
     public void testPrintTree() {
         this.treePrintAndCheck(
                 this.createToken(),
-                "Sequence\n" +
+                "Sequence \"a1b2\"\n" +
                         "  String \"a1\" \"a1\" (java.lang.String)\n" +
                         "  String \"b2\" \"b2\" (java.lang.String)\n"
         );

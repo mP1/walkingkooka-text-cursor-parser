@@ -119,7 +119,7 @@ public final class RepeatedParserTokenTest extends RepeatedOrSequenceParserToken
     public void testPrintTree() {
         this.treePrintAndCheck(
                 this.createToken(),
-                "Repeated\n" +
+                "Repeated \"abc\"\n" +
                         "  String \"abc\" \"abc\" (java.lang.String)\n"
         );
     }
