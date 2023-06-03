@@ -114,7 +114,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     }
 
     @Override
-    public char groupingSeparator() {
+    public char groupSeparator() {
         return GROUPING;
     }
 
