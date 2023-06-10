@@ -18,6 +18,7 @@
 package walkingkooka.text.cursor.parser;
 
 import walkingkooka.Value;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -32,6 +33,11 @@ import java.util.stream.Collectors;
  */
 public interface ParserToken extends HasText,
         TreePrintable {
+
+    /**
+     * A empty list, useful for parent {@link ParserToken} without children.
+     */
+    List<ParserToken> EMPTY = Lists.empty();
 
     /**
      * Returns a {@link List} without any {@link ParserToken tokens} that return true for {@link #isNoise()}.
