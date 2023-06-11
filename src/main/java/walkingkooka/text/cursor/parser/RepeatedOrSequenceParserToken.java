@@ -59,18 +59,7 @@ abstract public class RepeatedOrSequenceParserToken extends ValueParserToken<Lis
      */
     public abstract RepeatedOrSequenceParserToken flat();
 
-    final <T extends RepeatedOrSequenceParserToken> T flat0(final Class<T> type) {
-        final List<ParserToken> flat = Lists.array();
-        this.collect(t -> {
-            if (false == t instanceof RepeatedOrSequenceParserToken) {
-                flat.add(t);
-            }
-        });
-        return this.setValue(flat)
-                .cast(type);
-    }
-
-    // ParserTokenVisitor...............................................................................................
+// ParserTokenVisitor...............................................................................................
 
     final void acceptValues(final ParserTokenVisitor visitor) {
         for (ParserToken token : this.value()) {
