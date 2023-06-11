@@ -26,6 +26,7 @@ import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -100,6 +101,23 @@ public interface ParserToken extends HasText,
      */
     default <T extends ParserToken> T cast(final Class<T> type) {
         return (T) this;
+    }
+
+    /**
+     * Recursively visits all {@link ParserToken} in this graph, passing each one to the {@link Consumer} for filtering / collecting
+     * aka usage.
+     */
+    default void collect(final Consumer<ParserToken> consumer) {
+        Objects.requireNonNull(consumer, "consumer");
+
+        consumer.accept(this);
+
+
+        if (this.isParent()) {
+            for (final ParserToken child : (List<ParserToken>) ((Value<?>) this).value()) {
+                child.collect(consumer);
+            }
+        }
     }
 
     // TreePrintable....................................................................................................
