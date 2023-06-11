@@ -43,7 +43,8 @@ public final class RepeatedParserToken extends RepeatedOrSequenceParserToken {
 
     @Override
     public RepeatedParserToken flat() {
-        return this.flat0(RepeatedParserToken.class);
+        return this.setValue(RepeatedOrSequenceParserTokenFlatParserTokenVisitor.flat(this))
+                .cast(RepeatedParserToken.class);
     }
 
     // ParserTokenVisitor...............................................................................................
