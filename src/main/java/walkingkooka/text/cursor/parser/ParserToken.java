@@ -124,7 +124,7 @@ public interface ParserToken extends HasText,
 
 
         if (this.isParent()) {
-            for (final ParserToken child : (List<ParserToken>) ((Value<?>) this).value()) {
+            for (final ParserToken child : this.children()) {
                 child.collect(consumer);
             }
         }
