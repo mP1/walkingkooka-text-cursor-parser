@@ -48,6 +48,21 @@ public abstract class RepeatedOrSequenceParserTokenTestCase<T extends RepeatedOr
         assertThrows(IllegalArgumentException.class, () -> this.createToken(Lists.empty(), "abc"));
     }
 
+    // children.........................................................................................................
+
+    @Test
+    public final void testChildren() {
+        final T token = this.createToken(STRING1, STRING2, STRING4);
+        this.checkEquals(
+                Lists.of(
+                        STRING1,
+                        STRING2,
+                        STRING4
+                ),
+                token.children()
+        );
+    }
+
     // flat............................................................................................................
 
     @Test

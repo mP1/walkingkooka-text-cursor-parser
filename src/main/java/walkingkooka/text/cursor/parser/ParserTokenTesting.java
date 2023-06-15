@@ -199,6 +199,24 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
     }
 
     @Test
+    default void testChildren() {
+        final T token = this.createToken();
+        if (token.isLeaf()) {
+            this.checkEquals(
+                    Lists.empty(),
+                    token.children(),
+                    token + " children"
+            );
+        } else {
+            this.checkEquals(
+                    ((Value<List<ParserToken>>) token).value(),
+                    token.children(),
+                    token + " children"
+            );
+        }
+    }
+
+    @Test
     default void testAcceptStartParserTokenSkip() {
         final StringBuilder b = new StringBuilder();
         final List<ParserToken> visited = Lists.array();

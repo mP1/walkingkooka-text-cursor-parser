@@ -90,6 +90,16 @@ public interface ParserToken extends HasText,
     }
 
     /**
+     * Returns a {@link List} view of any children. Leaf {@link ParserToken} those that return true for {@link #isLeaf()} will return an empty {@link List}.
+     * Note this is not recursively it only returns the immediate children and NOT descendants.
+     */
+    default List<ParserToken> children() {
+        return this.isLeaf() ?
+                Lists.empty() :
+                ((Value<List<ParserToken>>) this).value();
+    }
+
+    /**
      * Called by the visitor responsible for this group of tokens, which typically resides in the same package.
      * The token must then call the appropriate visit or start/end visit and also visit any child token values as appropriate.
      */
