@@ -24,6 +24,7 @@ import walkingkooka.text.cursor.TextCursors;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ReportingParserTest extends ParserWrapperTestCase<ReportingParser<ParserContext>> {
@@ -51,6 +52,49 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
                         null,
                         this.wrappedParser()
                 )
+        );
+    }
+
+    @Test
+    public void testWrapReportingParser() {
+        final Parser<FakeParserContext> parser = Parsers.fake();
+        final ParserReporter<FakeParserContext> reporter = ParserReporters.fake();
+
+        final ReportingParser<FakeParserContext> reportingParser = ReportingParser.with(
+                ParserReporterCondition.ALWAYS,
+                reporter,
+                parser
+        );
+
+        final ParserReporterCondition condition = ParserReporterCondition.NOT_EMPTY;
+
+        final ReportingParser<FakeParserContext> reportingParser2 = ReportingParser.with(
+                condition,
+                reporter,
+                reportingParser
+        );
+
+        assertNotSame(
+                reportingParser,
+                reportingParser2
+        );
+
+        this.checkEquals(
+                parser,
+                reportingParser2.parser,
+                "parser"
+        );
+
+        this.checkEquals(
+                condition,
+                reportingParser2.condition,
+                "condition"
+        );
+
+        this.checkEquals(
+                reporter,
+                reportingParser2.reporter,
+                "reporter"
         );
     }
 
