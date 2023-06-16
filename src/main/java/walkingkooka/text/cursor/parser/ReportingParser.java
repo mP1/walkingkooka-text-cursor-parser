@@ -17,6 +17,7 @@
 
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.Cast;
 import walkingkooka.text.cursor.TextCursor;
 
 import java.util.Objects;
@@ -25,6 +26,9 @@ import java.util.Optional;
 /**
  * A {@link Parser} that acts as a bridge invoking a {@link ParserReporter}. The reporter will
  * typically throw an exception with a message noting a parse failure of the parser in this instance.
+ * <br>
+ * Note if the given {@link Parser} is also a {@link ReportingParser}, the wrapped {@link Parser} will be wrapped instead,
+ * ignoring that {@link ParserReporterCondition} and {@link ParserReporter}.
  */
 final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
 
@@ -38,11 +42,17 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
         Objects.requireNonNull(reporter, "reporter");
         checkParser(parser);
 
+        Parser<C> wrapped = parser;
+        if (parser instanceof ReportingParser) {
+            final ReportingParser<C> reportingParser = Cast.to(parser);
+            wrapped = reportingParser.parser;
+        }
+
         return new ReportingParser<>(
                 condition,
                 reporter,
-                parser,
-                parser + " | " + reporter
+                wrapped,
+                wrapped + " | " + reporter
         );
     }
 
@@ -75,9 +85,11 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
                 this.report(cursor, context);
     }
 
-    private final ParserReporterCondition condition;
+    // @VisibleForTesting
+    final ParserReporterCondition condition;
 
-    private final ParserReporter<C> reporter;
+    // @VisibleForTesting
+    final ParserReporter<C> reporter;
 
     // ParserSetToString..........................................................................................................
 
