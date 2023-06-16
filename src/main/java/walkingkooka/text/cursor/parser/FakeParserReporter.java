@@ -17,28 +17,16 @@
 
 package walkingkooka.text.cursor.parser;
 
-import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.test.Fake;
+import walkingkooka.text.cursor.TextCursor;
 
-public final class ParserReporters implements PublicStaticHelper {
+import java.util.Optional;
 
-    /**
-     * {@see BasicParserReporter}
-     */
-    public static <C extends ParserContext> ParserReporter<C> basic() {
-        return BasicParserReporter.get();
-    }
-
-    /**
-     * {@see FakeParserReporter}
-     */
-    public static <C extends ParserContext> ParserReporter<C> fake() {
-        return new FakeParserReporter();
-    }
-
-    /**
-     * Stop creation.
-     */
-    private ParserReporters() {
+public class FakeParserReporter<C extends ParserContext> implements ParserReporter<C>, Fake {
+    @Override
+    public Optional<ParserToken> report(final TextCursor cursor,
+                                        final C context,
+                                        final Parser<C> parser) throws ParserReporterException {
         throw new UnsupportedOperationException();
     }
 }
