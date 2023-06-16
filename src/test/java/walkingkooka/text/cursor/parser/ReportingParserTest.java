@@ -97,7 +97,7 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
     public void testToString() {
         this.toStringAndCheck(
                 this.createParser(),
-                "letter | BasicParserReporter"
+                "letter | Fail"
         );
     }
 
