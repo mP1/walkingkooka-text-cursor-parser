@@ -83,6 +83,6 @@ final class BasicParserReporter<C extends ParserContext> implements ParserReport
 
     @Override
     public String toString() {
-        return this.getClass().getSimpleName();
+        return "Fail";
     }
 }
