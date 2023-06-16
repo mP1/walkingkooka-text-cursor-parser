@@ -95,7 +95,10 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createParser(), this.reporter().toString());
+        this.toStringAndCheck(
+                this.createParser(),
+                "letter | BasicParserReporter"
+        );
     }
 
 //    @Override
