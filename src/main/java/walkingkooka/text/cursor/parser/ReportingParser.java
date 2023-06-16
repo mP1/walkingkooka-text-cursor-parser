@@ -42,7 +42,7 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
                 condition,
                 reporter,
                 parser,
-                reporter.toString()
+                parser + " | " + reporter
         );
     }
 
