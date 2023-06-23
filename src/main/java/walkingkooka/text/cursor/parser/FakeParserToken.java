@@ -20,6 +20,8 @@ package walkingkooka.text.cursor.parser;
 import walkingkooka.test.Fake;
 import walkingkooka.text.printer.IndentingPrinter;
 
+import java.util.List;
+
 public class FakeParserToken implements ParserToken, Fake {
     @Override
     public String text() {
@@ -38,6 +40,11 @@ public class FakeParserToken implements ParserToken, Fake {
 
     @Override
     public boolean isSymbol() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ParserToken setChildren(final List<ParserToken> children) {
         throw new UnsupportedOperationException();
     }
 

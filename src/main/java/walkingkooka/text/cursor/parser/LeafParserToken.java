@@ -14,22 +14,28 @@
  * limitations under the License.
  *
  */
+
 package walkingkooka.text.cursor.parser;
 
+import java.util.List;
+
 /**
- * A {@link ParserToken} holding text surrounded by either single or double quotes.
+ * Convenient sub class for all leaf value types in this package.
  */
-public abstract class QuotedParserToken extends LeafParserToken<String> {
+abstract class LeafParserToken<V> extends ValueParserToken<V> {
 
     /**
-     * Package private to limit sub classing.
+     * Package private ctor to limit subclassing.
      */
-    QuotedParserToken(final String value, final String text) {
+    LeafParserToken(final V value, final String text) {
         super(value, text);
     }
 
-    @Override final boolean equals1(final ValueParserToken<?> other) {
-        return true; // no extra properties to compare
+    @Override
+    public ParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.leafSetChildren(
+                this,
+                children
+        );
     }
 }
-

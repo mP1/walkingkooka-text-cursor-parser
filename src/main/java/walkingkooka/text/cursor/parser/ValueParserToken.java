@@ -25,7 +25,7 @@ import walkingkooka.Value;
 abstract class ValueParserToken<V> implements ParserToken, Value<V> {
 
     /**
-     * Private ctor to limit subclassing.
+     * Package private ctor to limit subclassing.
      */
     ValueParserToken(final V value, final String text) {
         this.value = value;

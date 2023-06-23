@@ -25,7 +25,7 @@ import java.util.Objects;
 /**
  * The parser token for a number with the value contained within a {@link BigDecimal}
  */
-public final class BigDecimalParserToken extends ValueParserToken<BigDecimal> implements ParserToken {
+public final class BigDecimalParserToken extends LeafParserToken<BigDecimal> {
 
     public static BigDecimalParserToken with(final BigDecimal value, final String text) {
         Objects.requireNonNull(value, "value");
