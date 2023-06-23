@@ -122,58 +122,6 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
                 "failed to get required " + index + " from " + sequence);
     }
 
-    // removeNoise...........................................................................................................
-
-    @Test
-    public void testRemovingNoiseNone() {
-        final SequenceParserToken token = createToken(STRING1, STRING2);
-        assertSame(token, token.removeNoise());
-    }
-
-    @Test
-    public void testRemovingNoiseSome() {
-        final SequenceParserToken token = createToken(STRING1, STRING2, NOISY3);
-        final SequenceParserToken different = token.removeNoise();
-
-        this.checkEquals(Lists.of(STRING1, STRING2), different.value(), "value");
-        assertSame(different, different.removeNoise());
-    }
-
-    @Test
-    public void testRemovingNoiseSomeIgnoresWhitespace() {
-        final SequenceParserToken token = createToken(STRING1, STRING2, NOISY3, WHITESPACE);
-        final SequenceParserToken different = token.removeNoise();
-
-        this.checkEquals(Lists.of(STRING1, STRING2, WHITESPACE), different.value(), "value");
-        assertSame(different, different.removeNoise());
-    }
-
-    // removeWhitespace...........................................................................................................
-
-    @Test
-    public void testRemovingWhitespaceNone() {
-        final SequenceParserToken token = createToken(STRING1, STRING2);
-        assertSame(token, token.removeWhitespace());
-    }
-
-    @Test
-    public void testRemovingWhitespaceSome() {
-        final SequenceParserToken token = createToken(STRING1, STRING2, WHITESPACE);
-        final SequenceParserToken different = token.removeWhitespace();
-
-        this.checkEquals(Lists.of(STRING1, STRING2), different.value(), "value");
-        assertSame(different, different.removeWhitespace());
-    }
-
-    @Test
-    public void testRemovingWhitespaceSomeIgnoresMissing() {
-        final SequenceParserToken token = createToken(STRING1, STRING2, NOISY3, WHITESPACE);
-        final SequenceParserToken different = token.removeWhitespace();
-
-        this.checkEquals(Lists.of(STRING1, STRING2, NOISY3), different.value(), "value");
-        assertSame(different, different.removeWhitespace());
-    }
-
     // BinaryOperatorTransformer......................................................................................
 
     @Test

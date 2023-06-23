@@ -21,8 +21,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * This {@link ParserToken} holds a sequence in order of tokens.
@@ -45,32 +43,6 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
 
     @Override SequenceParserToken replaceValue(final List<ParserToken> value) {
         return new SequenceParserToken(value, this.text());
-    }
-
-    /**
-     * Removes any noisy token values, returning a new instance if necessary.
-     */
-    public SequenceParserToken removeNoise() {
-        return this.removeIf(ParserToken::isNoise);
-    }
-
-    /**
-     * Removes any whitespace token values, returning a new instance if necessary.
-     */
-    public SequenceParserToken removeWhitespace() {
-        return this.removeIf(ParserToken::isWhitespace);
-    }
-
-    /**
-     * Removes any tokens that are matched by the {@link Predicate}.
-     */
-    private SequenceParserToken removeIf(final Predicate<ParserToken> removeIf) {
-        final Predicate<ParserToken> keep = removeIf.negate();
-
-        return this.setValue(this.value().stream()
-                .filter(keep)
-                .collect(Collectors.toList()))
-                .cast(SequenceParserToken.class);
     }
 
     @Override
