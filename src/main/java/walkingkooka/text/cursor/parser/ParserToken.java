@@ -134,11 +134,11 @@ public interface ParserToken extends HasText,
 
     @Override
     default void printTree(final IndentingPrinter printer) {
-        final Object value = ((Value<?>) this).value();
-
         final CharSequence quotedText = CharSequences.quoteAndEscape(this.text());
 
         if (this.isLeaf()) {
+            final Object value = ((Value<?>) this).value();
+
             printer.println(
                     ParserTokenTypeName.typeName(this) +
                             " " +
@@ -154,9 +154,13 @@ public interface ParserToken extends HasText,
             );
         }
         if (this.isParent()) {
-            final List<ParserToken> children = (List<ParserToken>) value;
+            final List<ParserToken> children = this.children();
 
-            printer.println(ParserTokenTypeName.typeName(this) + " " + quotedText);
+            printer.println(
+                    ParserTokenTypeName.typeName(this) +
+                            " " +
+                            quotedText
+            );
 
             printer.indent();
 
