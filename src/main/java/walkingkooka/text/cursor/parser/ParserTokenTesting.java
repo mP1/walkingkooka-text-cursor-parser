@@ -37,6 +37,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -265,6 +266,132 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                     )
             );
         }
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Test
+    default void testParentRemoveFirstIfNullTokenFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserToken.parentRemoveFirstIf(
+                        null,
+                        Predicates.fake(),
+                        ParserToken.class
+                )
+        );
+    }
+
+    @Test
+    default void testParentRemoveFirstIfNullPredicateFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserToken.parentRemoveFirstIf(
+                        this.createToken(),
+                        null,
+                        ParserToken.class
+                )
+        );
+    }
+
+    @Test
+    default void testParentRemoveFirstIfNullTypeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserToken.parentRemoveFirstIf(
+                        this.createToken(),
+                        Predicates.fake(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    default void testRemoveFirstIfLeaf() {
+        final T token = this.createToken();
+        if (token.isLeaf()) {
+            assertSame(
+                    token,
+                    token.removeFirstIf(Predicates.always())
+            );
+        }
+    }
+
+    @Test
+    default void testRemoveFirstIfParentFirstChild() {
+        final T token = this.createToken();
+        if (token.isParent()) {
+            final List<ParserToken> children = token.children();
+            if (children.size() > 0) {
+                final int index = 0;
+                final ParserToken removed = children.get(index);
+
+                final List<ParserToken> without = Lists.array();
+                without.addAll(children);
+                without.remove(index);
+
+                this.checkEquals(
+                        token.setChildren(without),
+                        token.removeFirstIf(
+                                (t) -> t == removed
+                        )
+                );
+            }
+        }
+    }
+
+    @Test
+    default void testRemoveFirstIfParentMiddleChild() {
+        final T token = this.createToken();
+        if (token.isParent()) {
+            final List<ParserToken> children = token.children();
+            if (children.size() > 3) {
+                final int index = 1;
+                final ParserToken removed = children.get(index);
+
+                final List<ParserToken> without = Lists.array();
+                without.addAll(children);
+                without.remove(index);
+
+                this.removeFirstIfAndCheck(
+                        token,
+                        (t) -> t == removed,
+                        token.setChildren(without)
+                );
+            }
+        }
+    }
+
+    @Test
+    default void testRemoveFirstIfParentLastChild() {
+        final T token = this.createToken();
+        if (token.isParent()) {
+            final List<ParserToken> children = token.children();
+            if (children.size() > 2) {
+                final int index = children.size() - 1;
+                final ParserToken removed = children.get(index);
+
+                final List<ParserToken> without = Lists.array();
+                without.addAll(children);
+                without.remove(index);
+
+                this.removeFirstIfAndCheck(
+                        token,
+                        (t) -> t == removed,
+                        token.setChildren(without)
+                );
+            }
+        }
+    }
+
+    default void removeFirstIfAndCheck(final ParserToken token,
+                                       final Predicate<ParserToken> predicate,
+                                       final ParserToken expected) {
+        this.checkEquals(
+                expected,
+                token.removeFirstIf(predicate),
+                () -> token + " removeFirstIf " + predicate
+        );
     }
 
     // Visitor..........................................................................................................

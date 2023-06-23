@@ -17,6 +17,7 @@
 
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.PublicStaticHelper;
 
 import java.math.BigDecimal;
@@ -28,6 +29,7 @@ import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.function.Predicate;
 
 public final class ParserTokens implements PublicStaticHelper {
 
@@ -155,6 +157,50 @@ public final class ParserTokens implements PublicStaticHelper {
      */
     public static ZonedDateTimeParserToken zonedDateTime(final ZonedDateTime value, final String text) {
         return ZonedDateTimeParserToken.with(value, text);
+    }
+
+    // ParserToken.parentRemoveFirstIf...unfortunately GWT does not support private default methods on an interface (J2CL doesnt complain).
+
+    static ParserToken parentRemoveFirstIf(final ParserToken parent,
+                                           final Predicate<ParserToken> predicate,
+                                           final boolean[] removed) {
+        ParserToken result = parent;
+        int i = 0;
+
+        final List<ParserToken> children = parent.children();
+        for (final ParserToken child : children) {
+            if (predicate.test(child)) {
+                final List<ParserToken> without = Lists.array();
+                without.addAll(children.subList(0, i));
+                without.addAll(children.subList(i + 1, children.size()));
+
+                result = parent.setChildren(without);
+                removed[0] = true;
+                break;
+            }
+
+            if (child.isParent()) {
+                final ParserToken childResult = parentRemoveFirstIf(
+                        child,
+                        predicate,
+                        removed
+                );
+
+                if (removed[0]) {
+                    final List<ParserToken> without = Lists.array();
+                    without.addAll(children.subList(0, i));
+                    without.add(childResult);
+                    without.addAll(children.subList(i + 1, children.size()));
+
+                    result = parent.setChildren(without);
+                    break;
+                }
+            }
+
+            i++;
+        }
+
+        return result;
     }
 
     /**

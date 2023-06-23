@@ -19,6 +19,7 @@ package walkingkooka.text.cursor.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
+import walkingkooka.predicate.Predicates;
 import walkingkooka.test.Testing;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.printer.IndentingPrinter;
@@ -518,6 +519,23 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
                     throw new UnsupportedOperationException("Bad symbol " + symbol);
             }
         }
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Test
+    @Override
+    public void testRemoveFirstIfParentFirstChild() {
+        this.removeFirstIfAndCheck(
+                this.createToken(
+                        STRING1,
+                        STRING2
+                ),
+                Predicates.is(STRING1),
+                this.createToken(
+                        STRING2
+                )
+        );
     }
 
     // accept...........................................................................................................
