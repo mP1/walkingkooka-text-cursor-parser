@@ -26,6 +26,7 @@ import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -97,6 +98,53 @@ public interface ParserToken extends HasText,
         return this.isLeaf() ?
                 Lists.empty() :
                 ((Value<List<ParserToken>>) this).value();
+    }
+
+    /**
+     * Setter which returns a new {@link ParserToken} with the given children. Leaf tokens will fail if the new children
+     * is not empty.
+     */
+    ParserToken setChildren(final List<ParserToken> children);
+
+    /**
+     * Helper that should be called by all {@link ParserToken#isLeaf()} that return true.
+     */
+    static <T extends ParserToken> T leafSetChildren(final T token,
+                                                     final List<ParserToken> children) {
+        Objects.requireNonNull(token, "token");
+        Objects.requireNonNull(children, "children");
+
+        if (false == children.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "Expected zero children for leaf parser token but got " +
+                            children.size() +
+                            " children=" +
+                            children
+            );
+        }
+
+        return token;
+    }
+
+    /**
+     * Helper that should be called by all parent {@link ParserToken#setChildren(List)}.
+     * It first takes a defensive copy of the given children, tests if these are different from the current,
+     * and returns this or the factory as necessary.
+     */
+    static <T extends ParserToken> T parentSetChildren(final T token,
+                                                       final List<ParserToken> children,
+                                                       final BiFunction<List<ParserToken>, String, T> factory) {
+        Objects.requireNonNull(token, "token");
+        Objects.requireNonNull(children, "children");
+        final List<ParserToken> copy = Lists.immutable(children);
+        Objects.requireNonNull(factory, "factory");
+
+        return token.children().equals(copy) ?
+                token :
+                factory.apply(
+                        copy,
+                        ParserToken.text(copy)
+                );
     }
 
     /**

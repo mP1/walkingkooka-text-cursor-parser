@@ -63,6 +63,22 @@ public abstract class RepeatedOrSequenceParserTokenTestCase<T extends RepeatedOr
         );
     }
 
+    @Test
+    public final void testSetChildrenDifferent() {
+        final T token = this.createToken();
+        final List<ParserToken> different = Lists.of(
+                STRING5,
+                STRING6
+        );
+
+        this.checkEquals(
+                this.createToken(
+                        different.toArray(new ParserToken[0])
+                ),
+                token.setChildren(different)
+        );
+    }
+
     // flat............................................................................................................
 
     @Test

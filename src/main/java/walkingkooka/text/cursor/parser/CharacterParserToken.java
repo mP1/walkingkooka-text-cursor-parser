@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * The parser token for a single character match.
  */
-public final class CharacterParserToken extends ValueParserToken<Character> implements ParserToken {
+public final class CharacterParserToken extends LeafParserToken<Character> {
 
     static CharacterParserToken with(final char value, final String text) {
         Objects.requireNonNull(text, "text");

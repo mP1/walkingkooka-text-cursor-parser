@@ -198,6 +198,8 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
         );
     }
 
+    // children.........................................................................................................
+
     @Test
     default void testChildren() {
         final T token = this.createToken();
@@ -215,6 +217,57 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
             );
         }
     }
+
+    @Test
+    default void testSetChildrenNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createToken().setChildren(null)
+        );
+    }
+
+    @Test
+    default void testSetChildrenWithSame() {
+        final T token = this.createToken();
+
+        assertSame(
+                token,
+                token.setChildren(token.children())
+        );
+    }
+
+    @Test
+    default void testSetChildrenWithSame2() {
+        final T token = this.createToken();
+
+        final List<ParserToken> children = Lists.array();
+        children.addAll(token.children());
+
+        assertSame(
+                token,
+                token.setChildren(children)
+        );
+    }
+
+    @Test
+    default void testSetChildrenNotEmptyIfLeafFails() {
+        final T token = this.createToken();
+        if (token.isLeaf()) {
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> token.setChildren(
+                            Lists.of(
+                                    ParserTokens.string(
+                                            "Hello",
+                                            "123"
+                                    )
+                            )
+                    )
+            );
+        }
+    }
+
+    // Visitor..........................................................................................................
 
     @Test
     default void testAcceptStartParserTokenSkip() {

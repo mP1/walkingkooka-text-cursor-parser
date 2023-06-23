@@ -180,6 +180,17 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
     // ParserTokenVisitor...............................................................................................
 
     @Override
+    public SequenceParserToken setChildren(final List<ParserToken> children) {
+        return ParserToken.parentSetChildren(
+                this,
+                children,
+                SequenceParserToken::new
+        );
+    }
+
+    // ParserTokenVisitor...............................................................................................
+
+    @Override
     public void accept(final ParserTokenVisitor visitor) {
         if (Visiting.CONTINUE == visitor.startVisit(this)) {
             this.acceptValues(visitor);
