@@ -26,12 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class RepeatedParserTokenTest extends RepeatedOrSequenceParserTokenTestCase<RepeatedParserToken> {
 
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public void testRemoveFirstIfParentFirstChild() {
-        throw new UnsupportedOperationException();
-    }
+    // visitor..........................................................................................................
 
     @Test
     public void testAccept() {
