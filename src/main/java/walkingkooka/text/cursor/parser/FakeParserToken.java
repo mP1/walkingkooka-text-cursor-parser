@@ -21,6 +21,7 @@ import walkingkooka.test.Fake;
 import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public class FakeParserToken implements ParserToken, Fake {
     @Override
@@ -45,6 +46,11 @@ public class FakeParserToken implements ParserToken, Fake {
 
     @Override
     public ParserToken setChildren(final List<ParserToken> children) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
         throw new UnsupportedOperationException();
     }
 

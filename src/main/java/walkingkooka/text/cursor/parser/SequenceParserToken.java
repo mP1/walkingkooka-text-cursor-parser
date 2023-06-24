@@ -21,6 +21,7 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * This {@link ParserToken} holds a sequence in order of tokens.
@@ -157,6 +158,17 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
                 this,
                 children,
                 SequenceParserToken::new
+        );
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public SequenceParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.parentRemoveFirstIf(
+                this,
+                predicate,
+                SequenceParserToken.class
         );
     }
 

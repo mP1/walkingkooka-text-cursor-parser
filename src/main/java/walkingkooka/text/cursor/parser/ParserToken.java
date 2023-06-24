@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -146,6 +147,34 @@ public interface ParserToken extends HasText,
                         ParserToken.text(copy)
                 );
     }
+
+    // removeFirstIf....................................................................................................
+
+    /**
+     * Removes the first {@link ParserToken} that is matched by the {@link Predicate}. Leaf tokens will always return
+     * this, while parents will search all descendants starting with their children. If a parent requires at least one child
+     * and that child is removed then any thrown {@link Throwable} will still happen.
+     */
+    ParserToken removeFirstIf(final Predicate<ParserToken> predicate);
+
+    /**
+     * Walks a graph of {@link ParserToken} attempting to find and then removing a matching child from its parent.
+     */
+    static <T extends ParserToken> T parentRemoveFirstIf(final ParserToken token,
+                                                         final Predicate<ParserToken> predicate,
+                                                         final Class<T> type) {
+        Objects.requireNonNull(token, "token");
+        Objects.requireNonNull(predicate, "predicate");
+        Objects.requireNonNull(type, "type");
+
+        return ParserTokens.parentRemoveFirstIf(
+                token,
+                predicate,
+                new boolean[1]
+        ).cast(type);
+    }
+
+    // ParserTokenVisitor...............................................................................................
 
     /**
      * Called by the visitor responsible for this group of tokens, which typically resides in the same package.
