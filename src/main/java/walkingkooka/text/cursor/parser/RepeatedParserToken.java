@@ -47,6 +47,8 @@ public final class RepeatedParserToken extends RepeatedOrSequenceParserToken {
                 .cast(RepeatedParserToken.class);
     }
 
+    // children.........................................................................................................
+
     @Override
     public RepeatedParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(

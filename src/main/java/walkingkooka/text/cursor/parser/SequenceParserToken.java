@@ -149,7 +149,7 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
         return i;
     }
 
-    // ParserTokenVisitor...............................................................................................
+    // children.........................................................................................................
 
     @Override
     public SequenceParserToken setChildren(final List<ParserToken> children) {
