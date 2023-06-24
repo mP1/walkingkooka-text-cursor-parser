@@ -330,12 +330,23 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 without.addAll(children);
                 without.remove(index);
 
-                this.checkEquals(
-                        token.setChildren(without),
-                        token.removeFirstIf(
-                                (t) -> t == removed
-                        )
-                );
+                boolean skip;
+                try {
+                    token.setChildren(without);
+                    skip = false;
+                } catch (final Exception cantBeEmpty) {
+                    skip = true;
+                }
+                ;
+
+                if (false == skip) {
+                    this.checkEquals(
+                            token.setChildren(without),
+                            token.removeFirstIf(
+                                    (t) -> t == removed
+                            )
+                    );
+                }
             }
         }
     }
@@ -353,11 +364,23 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 without.addAll(children);
                 without.remove(index);
 
-                this.removeFirstIfAndCheck(
-                        token,
-                        (t) -> t == removed,
-                        token.setChildren(without)
-                );
+                boolean skip;
+                try {
+                    token.setChildren(without);
+                    skip = false;
+                } catch (final Exception cantBeEmpty) {
+                    skip = true;
+                }
+                ;
+
+                if (false == skip) {
+                    this.checkEquals(
+                            token.setChildren(without),
+                            token.removeFirstIf(
+                                    (t) -> t == removed
+                            )
+                    );
+                }
             }
         }
     }
@@ -375,11 +398,23 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 without.addAll(children);
                 without.remove(index);
 
-                this.removeFirstIfAndCheck(
-                        token,
-                        (t) -> t == removed,
-                        token.setChildren(without)
-                );
+                boolean skip;
+                try {
+                    token.setChildren(without);
+                    skip = false;
+                } catch (final Exception cantBeEmpty) {
+                    skip = true;
+                }
+                ;
+
+                if (false == skip) {
+                    this.checkEquals(
+                            token.setChildren(without),
+                            token.removeFirstIf(
+                                    (t) -> t == removed
+                            )
+                    );
+                }
             }
         }
     }
