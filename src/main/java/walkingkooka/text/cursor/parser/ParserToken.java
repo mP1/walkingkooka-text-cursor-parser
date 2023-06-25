@@ -174,6 +174,31 @@ public interface ParserToken extends HasText,
         ).cast(type);
     }
 
+    // removeFirstIf....................................................................................................
+
+    /**
+     * Removes all {@link ParserToken} that is matched by the {@link Predicate}. Leaf tokens will always return
+     * this, while parents will search all descendants starting with their children. If a parent requires at least one child
+     * and that child is removed then any thrown {@link Throwable} will still happen.
+     */
+    ParserToken removeIf(final Predicate<ParserToken> predicate);
+
+    /**
+     * Walks a graph of {@link ParserToken} attempting to find and then removing all matching tokens within the graph..
+     */
+    static <T extends ParserToken> T parentRemoveIf(final ParserToken token,
+                                                    final Predicate<ParserToken> predicate,
+                                                    final Class<T> type) {
+        Objects.requireNonNull(token, "token");
+        Objects.requireNonNull(predicate, "predicate");
+        Objects.requireNonNull(type, "type");
+
+        return ParserTokens.parentRemoveIf(
+                token,
+                predicate.negate()
+        ).cast(type);
+    }
+
     // ParserTokenVisitor...............................................................................................
 
     /**
