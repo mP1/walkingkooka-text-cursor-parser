@@ -17,6 +17,7 @@
 package walkingkooka.text.cursor.parser;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * The parser token representing the sign of a number. True means negative, false means positive
@@ -32,6 +33,21 @@ public final class SignParserToken extends LeafParserToken<Boolean> {
     private SignParserToken(final boolean value, final String text) {
         super(value, text);
     }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SignParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                          final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SignParserToken.class
+        );
+    }
+
+    // visitor..........................................................................................................
 
     @Override
     public void accept(final ParserTokenVisitor visitor) {

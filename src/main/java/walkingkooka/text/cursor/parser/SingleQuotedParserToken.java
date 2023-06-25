@@ -17,6 +17,7 @@
 package walkingkooka.text.cursor.parser;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * A {@link ParserToken} with text surrounded by single quotes.
@@ -37,6 +38,21 @@ public final class SingleQuotedParserToken extends QuotedParserToken {
     private SingleQuotedParserToken(final String value, final String text) {
         super(value, text);
     }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public SingleQuotedParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                  final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                SingleQuotedParserToken.class
+        );
+    }
+
+    // visitor..........................................................................................................
 
     @Override
     public void accept(final ParserTokenVisitor visitor) {

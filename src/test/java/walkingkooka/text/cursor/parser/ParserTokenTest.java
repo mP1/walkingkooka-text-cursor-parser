@@ -324,6 +324,271 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         );
     }
 
+    // replaceFirstIf...................................................................................................
+
+    @Test
+    public void testReplaceFirstIfChild() {
+        final StringParserToken child1 = stringParserToken("child-1");
+        final StringParserToken child2 = stringParserToken("child-2");
+
+        final StringParserToken replacement = stringParserToken("REPLACEMENT");
+
+        this.replaceFirstIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2
+                ),
+                Predicates.is(child1),
+                replacement,
+                sequenceParserToken(
+                        replacement,
+                        child2
+                )
+        );
+    }
+
+    @Test
+    public void testReplaceFirstIfChild2() {
+        final StringParserToken child1 = stringParserToken("child-1");
+        final StringParserToken child2 = stringParserToken("child-2");
+
+        final StringParserToken replacement = stringParserToken("REPLACEMENT");
+
+        this.replaceFirstIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2
+                ),
+                Predicates.is(child2),
+                replacement,
+                sequenceParserToken(
+                        child1,
+                        replacement
+                )
+        );
+    }
+
+    @Test
+    public void testReplaceFirstIfParent() {
+        final StringParserToken child1 = stringParserToken("child-1");
+        final StringParserToken grandChild1 = stringParserToken("grand-child-1");
+        final StringParserToken grandChild2 = stringParserToken("grand-child-2");
+        final SequenceParserToken child2 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        final StringParserToken replacement = stringParserToken("REPLACEMENT");
+
+        this.replaceFirstIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2
+                ),
+                Predicates.is(child2),
+                replacement,
+                sequenceParserToken(
+                        child1,
+                        replacement
+                )
+        );
+    }
+
+    @Test
+    public void testReplaceFirstIfGrandChild() {
+        final StringParserToken child1 = stringParserToken("child-1");
+        final StringParserToken grandChild1 = stringParserToken("grand-child-1");
+        final StringParserToken grandChild2 = stringParserToken("grand-child-2");
+        final SequenceParserToken child2 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        final StringParserToken replacement = stringParserToken("REPLACEMENT");
+
+        this.replaceFirstIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2
+                ),
+                Predicates.is(grandChild1),
+                replacement,
+                sequenceParserToken(
+                        child1,
+                        child2.setChildren(
+                                Lists.of(
+                                        replacement,
+                                        grandChild2
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testReplaceFirstIfGrandChild2() {
+        final StringParserToken child1 = stringParserToken("child-1");
+        final StringParserToken grandChild1 = stringParserToken("grand-child-1");
+        final StringParserToken grandChild2 = stringParserToken("grand-child-2");
+        final SequenceParserToken child2 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        final StringParserToken replacement = stringParserToken("REPLACEMENT");
+
+        this.replaceFirstIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2
+                ),
+                Predicates.is(grandChild2),
+                replacement,
+                sequenceParserToken(
+                        child1,
+                        child2.setChildren(
+                                Lists.of(
+                                        grandChild1,
+                                        replacement
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testReplaceFirstIfGreatGrandChild() {
+        final StringParserToken child1 = stringParserToken("child-1");
+
+        final StringParserToken greatGrandChild1 = stringParserToken("great-grand-child-1");
+        final StringParserToken greatGrandChild2 = stringParserToken("great-grand-child-2");
+        final StringParserToken greatGrandChild3 = stringParserToken("great-grand-child-3");
+
+        final SequenceParserToken grandChild1 = sequenceParserToken(
+                greatGrandChild1,
+                greatGrandChild2,
+                greatGrandChild3
+        );
+        final StringParserToken grandChild2 = stringParserToken("grand-child-2");
+
+        final SequenceParserToken child2 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        final StringParserToken replacement = stringParserToken("REPLACEMENT");
+
+        this.replaceFirstIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2
+                ),
+                Predicates.is(greatGrandChild2),
+                replacement,
+                sequenceParserToken(
+                        child1,
+                        child2.setChildren(
+                                Lists.of(
+                                        grandChild1.setChildren(
+                                                Lists.of(
+                                                        greatGrandChild1,
+                                                        replacement,
+                                                        greatGrandChild3
+                                                )
+                                        ),
+                                        grandChild2
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testReplaceFirstIfMany() {
+        final StringParserToken child1 = stringParserToken("child-1");
+        final StringParserToken grandChild1 = stringParserToken("grand-child-1");
+        final StringParserToken grandChild2 = stringParserToken("grand-child-2");
+        final SequenceParserToken child2 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        final StringParserToken replacement = stringParserToken("REPLACEMENT");
+
+        this.replaceFirstIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2
+                ),
+                t -> t == child1 || t == grandChild2,
+                replacement,
+                sequenceParserToken(
+                        replacement,
+                        child2.setChildren(
+                                Lists.of(
+                                        grandChild1,
+                                        grandChild2
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testReplaceFirstIfMany2() {
+        final StringParserToken child1 = stringParserToken("child-1");
+
+        final StringParserToken grandChild1 = stringParserToken("grand-child-1");
+        final StringParserToken grandChild2 = stringParserToken("grand-child-2");
+        final SequenceParserToken child2 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        final StringParserToken grandChild3 = stringParserToken("grand-child-3");
+        final StringParserToken grandChild4 = stringParserToken("grand-child-4");
+        final SequenceParserToken child3 = sequenceParserToken(
+                grandChild3,
+                grandChild4
+        );
+
+        final StringParserToken replacement = stringParserToken("REPLACEMENT");
+
+        this.replaceFirstIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2,
+                        child3
+                ),
+                t -> t == grandChild2 || t == child3,
+                replacement,
+                sequenceParserToken(
+                        child1,
+                        child2.setChildren(
+                                Lists.of(
+                                        grandChild1,
+                                        replacement
+                                )
+                        ),
+                        child3
+                )
+        );
+    }
+
+    private void replaceFirstIfAndCheck(final ParserToken token,
+                                        final Predicate<ParserToken> predicate,
+                                        final ParserToken replacement,
+                                        final ParserToken expected) {
+        this.checkEquals(
+                expected,
+                token.replaceFirstIf(
+                        predicate,
+                        replacement
+                ),
+                () -> token + " replaceFirstIf " + predicate + "," + replacement
+        );
+    }
+
     // removeFirstIf & removeIf helpers.................................................................................
 
     private StringParserToken stringParserToken(final String text) {

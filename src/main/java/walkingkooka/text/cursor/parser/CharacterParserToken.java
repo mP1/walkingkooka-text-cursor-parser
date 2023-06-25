@@ -17,6 +17,7 @@
 package walkingkooka.text.cursor.parser;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * The parser token for a single character match.
@@ -32,6 +33,21 @@ public final class CharacterParserToken extends LeafParserToken<Character> {
     private CharacterParserToken(final char value, final String text) {
         super(value, text);
     }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public CharacterParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                               final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                CharacterParserToken.class
+        );
+    }
+
+    // visitor..........................................................................................................
 
     @Override
     public void accept(final ParserTokenVisitor visitor) {

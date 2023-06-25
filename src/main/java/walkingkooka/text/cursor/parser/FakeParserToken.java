@@ -60,6 +60,12 @@ public class FakeParserToken implements ParserToken, Fake {
     }
 
     @Override
+    public ParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                      final ParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void accept(final ParserTokenVisitor visitor) {
         throw new UnsupportedOperationException();
     }

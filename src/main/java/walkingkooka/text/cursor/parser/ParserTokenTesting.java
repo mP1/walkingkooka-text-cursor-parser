@@ -626,6 +626,201 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
         );
     }
 
+    // replaceFirstIf...................................................................................................
+
+    @Test
+    default void testReplaceFirstIfNullTokenFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserToken.replaceFirstIf(
+                        null,
+                        Predicates.fake(),
+                        ParserTokens.string("with", "with"),
+                        ParserToken.class
+                )
+        );
+    }
+
+    @Test
+    default void testReplaceFirstIfNullPredicateFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserToken.replaceFirstIf(
+                        this.createToken(),
+                        null,
+                        ParserTokens.string("with", "with"),
+                        ParserToken.class
+                )
+        );
+    }
+
+    @Test
+    default void testReplaceFirstIfNullWithFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserToken.replaceFirstIf(
+                        this.createToken(),
+                        Predicates.fake(),
+                        null,
+                        ParserToken.class
+                )
+        );
+    }
+
+    @Test
+    default void testReplaceFirstIfNullTypeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserToken.replaceFirstIf(
+                        this.createToken(),
+                        Predicates.fake(),
+                        ParserTokens.string("with", "with"),
+                        null
+                )
+        );
+    }
+
+    @Test
+    default void testReplaceFirstIfLeaf() {
+        final T token = this.createToken();
+        if (token.isLeaf()) {
+            assertSame(
+                    token,
+                    token.replaceFirstIf(
+                            Predicates.always(),
+                            token
+                    )
+            );
+        }
+    }
+
+    @Test
+    default void testReplaceFirstIfParentFirstChild() {
+        final T token = this.createToken();
+        if (token.isParent()) {
+            final List<ParserToken> children = token.children();
+            if (children.size() > 0) {
+                final int index = 0;
+
+                final ParserToken replaced = children.get(index);
+                final ParserToken with = ParserTokens.string("with", "with");
+
+                final List<ParserToken> newChildren = Lists.array();
+                newChildren.addAll(children);
+                newChildren.set(
+                        index,
+                        with
+                );
+
+                boolean skip;
+                try {
+                    token.setChildren(newChildren);
+                    skip = false;
+                } catch (final Exception cantBeEmpty) {
+                    skip = true;
+                }
+                ;
+
+                if (false == skip) {
+                    this.replaceFirstIfAndCheck(
+                            token,
+                            (t) -> t == replaced,
+                            with,
+                            token.setChildren(newChildren)
+                    );
+                }
+            }
+        }
+    }
+
+    @Test
+    default void testReplaceFirstIfParentMiddleChild() {
+        final T token = this.createToken();
+        if (token.isParent()) {
+            final List<ParserToken> children = token.children();
+            if (children.size() > 3) {
+                final int index = 1;
+                final ParserToken replaced = children.get(index);
+                final ParserToken with = ParserTokens.string("with", "with");
+
+                final List<ParserToken> newChildren = Lists.array();
+                newChildren.addAll(children);
+                newChildren.set(
+                        index,
+                        with
+                );
+
+                boolean skip;
+                try {
+                    token.setChildren(newChildren);
+                    skip = false;
+                } catch (final Exception cantBeEmpty) {
+                    skip = true;
+                }
+
+                if (false == skip) {
+                    this.replaceFirstIfAndCheck(
+                            token,
+                            (t) -> t == replaced,
+                            with,
+                            token.setChildren(newChildren)
+                    );
+                }
+            }
+        }
+    }
+
+    @Test
+    default void testReplaceFirstIfParentLastChild() {
+        final T token = this.createToken();
+        if (token.isParent()) {
+            final List<ParserToken> children = token.children();
+            if (children.size() > 2) {
+                final int index = children.size() - 1;
+                final ParserToken replaced = children.get(index);
+                final ParserToken with = ParserTokens.string("with", "with");
+
+                final List<ParserToken> newChildren = Lists.array();
+                newChildren.addAll(children);
+                newChildren.set(
+                        index,
+                        with
+                );
+
+                boolean skip;
+                try {
+                    token.setChildren(newChildren);
+                    skip = false;
+                } catch (final Exception cantBeEmpty) {
+                    skip = true;
+                }
+
+                if (false == skip) {
+                    this.replaceFirstIfAndCheck(
+                            token,
+                            (t) -> t == replaced,
+                            with,
+                            token.setChildren(newChildren)
+                    );
+                }
+            }
+        }
+    }
+
+    default void replaceFirstIfAndCheck(final ParserToken token,
+                                        final Predicate<ParserToken> predicate,
+                                        final ParserToken replacement,
+                                        final ParserToken expected) {
+        this.checkEquals(
+                expected,
+                token.replaceFirstIf(
+                        predicate,
+                        replacement
+                ),
+                () -> token + " replaceFirstIf " + predicate + "," + replacement
+        );
+    }
+
     // Visitor..........................................................................................................
 
     @Test
