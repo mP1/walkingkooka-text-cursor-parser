@@ -146,6 +146,185 @@ public final class ParserTokenTest implements ClassTesting<ParserToken> {
         );
     }
 
+    private void removeFirstIfAndCheck(final ParserToken token,
+                                       final Predicate<ParserToken> predicate,
+                                       final ParserToken expected) {
+        this.checkEquals(
+                expected,
+                token.removeFirstIf(predicate),
+                () -> token + " removeFirstIf " + predicate
+        );
+    }
+
+    // removeIf.........................................................................................................
+
+    @Test
+    public void testRemoveIfGrandChild() {
+        final StringParserToken child1 = stringParserToken("child-1");
+        final StringParserToken grandChild1 = stringParserToken("grand-child-1");
+        final StringParserToken grandChild2 = stringParserToken("grand-child-2");
+        final SequenceParserToken child2 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        this.removeIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2
+                ),
+                Predicates.is(grandChild1),
+                sequenceParserToken(
+                        child1,
+                        child2.setChildren(
+                                Lists.of(grandChild2)
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testRemoveIfGrandChild2() {
+        final StringParserToken child1 = stringParserToken("child-1");
+        final StringParserToken grandChild1 = stringParserToken("grand-child-1");
+        final StringParserToken grandChild2 = stringParserToken("grand-child-2");
+        final SequenceParserToken child2 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        this.removeIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2
+                ),
+                Predicates.is(grandChild2),
+                sequenceParserToken(
+                        child1,
+                        child2.setChildren(
+                                Lists.of(grandChild1)
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testRemoveIfGreatGrandChild() {
+        final StringParserToken child1 = stringParserToken("child-1");
+
+        final StringParserToken greatGrandChild1 = stringParserToken("great-grand-child-1");
+        final StringParserToken greatGrandChild2 = stringParserToken("great-grand-child-2");
+        final StringParserToken greatGrandChild3 = stringParserToken("great-grand-child-3");
+
+        final SequenceParserToken grandChild1 = sequenceParserToken(
+                greatGrandChild1,
+                greatGrandChild2,
+                greatGrandChild3
+        );
+        final StringParserToken grandChild2 = stringParserToken("grand-child-2");
+
+        final SequenceParserToken child2 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        this.removeIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2
+                ),
+                Predicates.is(greatGrandChild2),
+                sequenceParserToken(
+                        child1,
+                        child2.setChildren(
+                                Lists.of(
+                                        grandChild1.setChildren(
+                                                Lists.of(
+                                                        greatGrandChild1,
+                                                        greatGrandChild3
+                                                )
+                                        ),
+                                        grandChild2
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testRemoveIfMany() {
+        final StringParserToken child1 = stringParserToken("child-1");
+        final StringParserToken grandChild1 = stringParserToken("grand-child-1");
+        final StringParserToken grandChild2 = stringParserToken("grand-child-2");
+        final SequenceParserToken child2 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        this.removeIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2
+                ),
+                t -> t == child1 || t == grandChild2,
+                sequenceParserToken(
+                        child2.setChildren(
+                                Lists.of(
+                                        grandChild1
+                                )
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testRemoveIfMany2() {
+        final StringParserToken child1 = stringParserToken("child-1");
+
+        final StringParserToken grandChild1 = stringParserToken("grand-child-1");
+        final StringParserToken grandChild2 = stringParserToken("grand-child-2");
+        final SequenceParserToken child2 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        final StringParserToken grandChild3 = stringParserToken("grand-child-3");
+        final StringParserToken grandChild4 = stringParserToken("grand-child-4");
+        final SequenceParserToken child3 = sequenceParserToken(
+                grandChild3,
+                grandChild4
+        );
+
+        this.removeIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2,
+                        child3
+                ),
+                t -> t == grandChild2 || t == child3,
+                sequenceParserToken(
+                        child1,
+                        child2.setChildren(
+                                Lists.of(
+                                        grandChild1
+                                )
+                        )
+                )
+        );
+    }
+
+    private void removeIfAndCheck(final ParserToken token,
+                                  final Predicate<ParserToken> predicate,
+                                  final ParserToken expected) {
+        this.checkEquals(
+                expected,
+                token.removeIf(predicate),
+                () -> token + " removeIf " + predicate
+        );
+    }
+
+    // removeFirstIf & removeIf helpers.................................................................................
+
     private StringParserToken stringParserToken(final String text) {
         return ParserTokens.string(text, text);
     }
@@ -160,16 +339,6 @@ public final class ParserTokenTest implements ClassTesting<ParserToken> {
         return ParserTokens.sequence(
                 children,
                 ParserToken.text(children)
-        );
-    }
-
-    private void removeFirstIfAndCheck(final ParserToken token,
-                                       final Predicate<ParserToken> predicate,
-                                       final ParserToken expected) {
-        this.checkEquals(
-                expected,
-                token.removeFirstIf(predicate),
-                () -> token + " removeFirstIf " + predicate
         );
     }
 

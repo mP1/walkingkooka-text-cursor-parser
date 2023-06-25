@@ -429,6 +429,196 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
         );
     }
 
+    // removeIf....................................................................................................
+
+    @Test
+    default void testParentRemoveIfNullTokenFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserToken.parentRemoveIf(
+                        null,
+                        Predicates.fake(),
+                        ParserToken.class
+                )
+        );
+    }
+
+    @Test
+    default void testParentRemoveIfNullPredicateFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserToken.parentRemoveIf(
+                        this.createToken(),
+                        null,
+                        ParserToken.class
+                )
+        );
+    }
+
+    @Test
+    default void testParentRemoveIfNullTypeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserToken.parentRemoveIf(
+                        this.createToken(),
+                        Predicates.fake(),
+                        null
+                )
+        );
+    }
+
+    @Test
+    default void testRemoveIfLeaf() {
+        final T token = this.createToken();
+        if (token.isLeaf()) {
+            assertSame(
+                    token,
+                    token.removeIf(Predicates.always())
+            );
+        }
+    }
+
+    @Test
+    default void testRemoveIfParentFirstChild() {
+        final T token = this.createToken();
+        if (token.isParent()) {
+            final List<ParserToken> children = token.children();
+            if (children.size() > 0) {
+                final int index = 0;
+                final ParserToken removed = children.get(index);
+
+                final List<ParserToken> without = Lists.array();
+                without.addAll(children);
+                without.remove(index);
+
+                boolean skip;
+                try {
+                    token.setChildren(without);
+                    skip = false;
+                } catch (final Exception cantBeEmpty) {
+                    skip = true;
+                }
+                ;
+
+                if (false == skip) {
+                    this.checkEquals(
+                            token.setChildren(without),
+                            token.removeIf(
+                                    (t) -> t == removed
+                            )
+                    );
+                }
+            }
+        }
+    }
+
+    @Test
+    default void testRemoveIfParentMiddleChild() {
+        final T token = this.createToken();
+        if (token.isParent()) {
+            final List<ParserToken> children = token.children();
+            if (children.size() > 3) {
+                final int index = 1;
+                final ParserToken removed = children.get(index);
+
+                final List<ParserToken> without = Lists.array();
+                without.addAll(children);
+                without.remove(index);
+
+                boolean skip;
+                try {
+                    token.setChildren(without);
+                    skip = false;
+                } catch (final Exception cantBeEmpty) {
+                    skip = true;
+                }
+                ;
+
+                if (false == skip) {
+                    this.checkEquals(
+                            token.setChildren(without),
+                            token.removeIf(
+                                    (t) -> t == removed
+                            )
+                    );
+                }
+            }
+        }
+    }
+
+    @Test
+    default void testRemoveIfParentLastChild() {
+        final T token = this.createToken();
+        if (token.isParent()) {
+            final List<ParserToken> children = token.children();
+            if (children.size() > 2) {
+                final int index = children.size() - 1;
+                final ParserToken removed = children.get(index);
+
+                final List<ParserToken> without = Lists.array();
+                without.addAll(children);
+                without.remove(index);
+
+                boolean skip;
+                try {
+                    token.setChildren(without);
+                    skip = false;
+                } catch (final Exception cantBeEmpty) {
+                    skip = true;
+                }
+                ;
+
+                if (false == skip) {
+                    this.checkEquals(
+                            token.setChildren(without),
+                            token.removeIf(
+                                    (t) -> t == removed
+                            )
+                    );
+                }
+            }
+        }
+    }
+
+    @Test
+    default void testRemoveIfParentAllChildren() {
+        final T token = this.createToken();
+        if (token.isParent()) {
+            final List<ParserToken> children = token.children();
+            if (children.size() > 2) {
+                final List<ParserToken> without = Lists.empty();
+
+                boolean skip;
+                try {
+                    token.setChildren(without);
+                    skip = false;
+                } catch (final Exception cantBeEmpty) {
+                    skip = true;
+                }
+                ;
+
+                if (false == skip) {
+                    this.checkEquals(
+                            token.setChildren(without),
+                            token.removeIf(
+                                    Predicates.always()
+                            )
+                    );
+                }
+            }
+        }
+    }
+
+    default void removeIfAndCheck(final ParserToken token,
+                                  final Predicate<ParserToken> predicate,
+                                  final ParserToken expected) {
+        this.checkEquals(
+                expected,
+                token.removeIf(predicate),
+                () -> token + " removeIf " + predicate
+        );
+    }
+
     // Visitor..........................................................................................................
 
     @Test

@@ -30,6 +30,7 @@ import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public final class ParserTokens implements PublicStaticHelper {
 
@@ -201,6 +202,25 @@ public final class ParserTokens implements PublicStaticHelper {
         }
 
         return result;
+    }
+
+    // ParserToken.parentRemoveIf...unfortunately GWT does not support private default methods on an interface (J2CL doesnt complain).
+
+    static ParserToken parentRemoveIf(final ParserToken parent,
+                                      final Predicate<ParserToken> filter) {
+        return parent.setChildren(
+                parent.children()
+                        .stream()
+                        .filter(filter)
+                        .map(
+                                c -> c.isParent() ?
+                                        parentRemoveIf(
+                                                c,
+                                                filter
+                                        ) :
+                                        c
+                        ).collect(Collectors.toList())
+        );
     }
 
     /**
