@@ -307,6 +307,18 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
     }
 
     @Test
+    default void testRemoveFirstIfNone() {
+        final T token = this.createToken();
+
+        assertSame(
+                token,
+                token.removeFirstIf(
+                        Predicates.never()
+                )
+        );
+    }
+
+    @Test
     default void testRemoveFirstIfLeaf() {
         final T token = this.createToken();
         if (token.isLeaf()) {
@@ -464,6 +476,15 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                         Predicates.fake(),
                         null
                 )
+        );
+    }
+
+    @Test
+    default void testRemoveIfNone() {
+        final T token = this.createToken();
+        assertSame(
+                token,
+                token.removeIf(Predicates.never())
         );
     }
 
