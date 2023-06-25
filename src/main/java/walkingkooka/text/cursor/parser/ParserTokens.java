@@ -223,6 +223,54 @@ public final class ParserTokens implements PublicStaticHelper {
         );
     }
 
+    // replaceFirstIf...................................................................................................
+
+    static ParserToken replaceFirstIf(final ParserToken token,
+                                      final Predicate<ParserToken> predicate,
+                                      final ParserToken with,
+                                      final boolean[] stop) {
+        ParserToken result = token;
+
+        if (predicate.test(token)) {
+            result = with;
+            stop[0] = true;
+        } else {
+            final List<ParserToken> children = token.children();
+            int i = 0;
+
+            for (final ParserToken child : children) {
+                final ParserToken childAfter = replaceFirstIf(
+                        child,
+                        predicate,
+                        with,
+                        stop
+                );
+                if (stop[0]) {
+                    final List<ParserToken> newChildren = Lists.array();
+                    newChildren.addAll(
+                            children.subList(
+                                    0,
+                                    i
+                            )
+                    );
+                    newChildren.add(childAfter);
+                    newChildren.addAll(
+                            children.subList(
+                                    i + 1,
+                                    children.size()
+                            )
+                    );
+                    result = token.setChildren(newChildren);
+                    break;
+                }
+
+                i++;
+            }
+        }
+
+        return result;
+    }
+
     /**
      * Stop creation
      */

@@ -18,6 +18,7 @@ package walkingkooka.text.cursor.parser;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * The parser token for a date+time with the value contained in a {@link LocalDateTime}.
@@ -33,6 +34,21 @@ public final class LocalDateTimeParserToken extends LeafParserToken<LocalDateTim
     private LocalDateTimeParserToken(final LocalDateTime value, final String text) {
         super(value, text);
     }
+
+    // replaceFirstIf...................................................................................................
+
+    @Override
+    public LocalDateTimeParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                                   final ParserToken token) {
+        return ParserToken.replaceFirstIf(
+                this,
+                predicate,
+                token,
+                LocalDateTimeParserToken.class
+        );
+    }
+
+    // visitor..........................................................................................................
 
     @Override
     public void accept(final ParserTokenVisitor visitor) {
