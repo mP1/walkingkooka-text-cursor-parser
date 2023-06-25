@@ -351,11 +351,10 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 }
 
                 if (false == skip) {
-                    this.checkEquals(
-                            token.setChildren(without),
-                            token.removeFirstIf(
-                                    (t) -> t == removed
-                            )
+                    this.removeFirstIfAndCheck(
+                            token,
+                            (t) -> t == removed,
+                            token.setChildren(without)
                     );
                 }
             }
@@ -384,11 +383,10 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 }
 
                 if (false == skip) {
-                    this.checkEquals(
-                            token.setChildren(without),
-                            token.removeFirstIf(
-                                    (t) -> t == removed
-                            )
+                    this.removeFirstIfAndCheck(
+                            token,
+                            (t) -> t == removed,
+                            token.setChildren(without)
                     );
                 }
             }
@@ -417,11 +415,10 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 }
 
                 if (false == skip) {
-                    this.checkEquals(
-                            token.setChildren(without),
-                            token.removeFirstIf(
-                                    (t) -> t == removed
-                            )
+                    this.removeFirstIfAndCheck(
+                            token,
+                            (t) -> t == removed,
+                            token.setChildren(without)
                     );
                 }
             }
@@ -518,11 +515,10 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 }
 
                 if (false == skip) {
-                    this.checkEquals(
-                            token.setChildren(without),
-                            token.removeIf(
-                                    (t) -> t == removed
-                            )
+                    this.removeIfAndCheck(
+                            token,
+                            (t) -> t == removed,
+                            token.setChildren(without)
                     );
                 }
             }
@@ -551,11 +547,10 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 }
 
                 if (false == skip) {
-                    this.checkEquals(
-                            token.setChildren(without),
-                            token.removeIf(
-                                    (t) -> t == removed
-                            )
+                    this.removeIfAndCheck(
+                            token,
+                            (t) -> t == removed,
+                            token.setChildren(without)
                     );
                 }
             }
@@ -584,11 +579,10 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 }
 
                 if (false == skip) {
-                    this.checkEquals(
-                            token.setChildren(without),
-                            token.removeIf(
-                                    (t) -> t == removed
-                            )
+                    this.removeIfAndCheck(
+                            token,
+                            (t) -> t == removed,
+                            token.setChildren(without)
                     );
                 }
             }
@@ -612,11 +606,10 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 }
 
                 if (false == skip) {
-                    this.checkEquals(
-                            token.setChildren(without),
-                            token.removeIf(
-                                    Predicates.always()
-                            )
+                    this.removeIfAndCheck(
+                            token,
+                            Predicates.always(),
+                            token.setChildren(without)
                     );
                 }
             }
