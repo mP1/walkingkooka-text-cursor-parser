@@ -349,7 +349,6 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 } catch (final Exception cantBeEmpty) {
                     skip = true;
                 }
-                ;
 
                 if (false == skip) {
                     this.checkEquals(
@@ -383,7 +382,6 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 } catch (final Exception cantBeEmpty) {
                     skip = true;
                 }
-                ;
 
                 if (false == skip) {
                     this.checkEquals(
@@ -417,7 +415,6 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 } catch (final Exception cantBeEmpty) {
                     skip = true;
                 }
-                ;
 
                 if (false == skip) {
                     this.checkEquals(
@@ -519,7 +516,6 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 } catch (final Exception cantBeEmpty) {
                     skip = true;
                 }
-                ;
 
                 if (false == skip) {
                     this.checkEquals(
@@ -553,7 +549,6 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 } catch (final Exception cantBeEmpty) {
                     skip = true;
                 }
-                ;
 
                 if (false == skip) {
                     this.checkEquals(
@@ -587,7 +582,6 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 } catch (final Exception cantBeEmpty) {
                     skip = true;
                 }
-                ;
 
                 if (false == skip) {
                     this.checkEquals(
@@ -616,7 +610,6 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 } catch (final Exception cantBeEmpty) {
                     skip = true;
                 }
-                ;
 
                 if (false == skip) {
                     this.checkEquals(
