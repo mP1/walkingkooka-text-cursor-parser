@@ -22,12 +22,13 @@ import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.function.Predicate;
 
-public final class ParserTokenTest implements ClassTesting<ParserToken> {
+public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePrintableTesting {
 
     // removeFirstIf....................................................................................................
 
