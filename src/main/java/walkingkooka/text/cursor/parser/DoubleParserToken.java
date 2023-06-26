@@ -47,6 +47,19 @@ public final class DoubleParserToken extends LeafParserToken<Double> {
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public DoubleParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                       final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                DoubleParserToken.class
+        );
+    }
+
     // visitor..........................................................................................................
 
     @Override

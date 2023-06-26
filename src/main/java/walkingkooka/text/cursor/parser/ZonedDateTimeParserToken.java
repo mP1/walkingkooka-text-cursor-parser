@@ -48,6 +48,19 @@ public final class ZonedDateTimeParserToken extends LeafParserToken<ZonedDateTim
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public ZonedDateTimeParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                              final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                ZonedDateTimeParserToken.class
+        );
+    }
+
     // visitor..........................................................................................................
 
     @Override

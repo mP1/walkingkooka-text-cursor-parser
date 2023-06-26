@@ -48,6 +48,19 @@ public final class OffsetTimeParserToken extends LeafParserToken<OffsetTime> {
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public OffsetTimeParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                           final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                OffsetTimeParserToken.class
+        );
+    }
+
     // visitor..........................................................................................................
 
     @Override

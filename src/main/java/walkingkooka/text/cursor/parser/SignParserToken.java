@@ -47,6 +47,19 @@ public final class SignParserToken extends LeafParserToken<Boolean> {
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SignParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                     final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SignParserToken.class
+        );
+    }
+
     // visitor..........................................................................................................
 
     @Override

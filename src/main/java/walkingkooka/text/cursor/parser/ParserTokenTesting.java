@@ -36,6 +36,7 @@ import walkingkooka.visit.Visiting;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -818,6 +819,237 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                         replacement
                 ),
                 () -> token + " replaceFirstIf " + predicate + "," + replacement
+        );
+    }
+
+    // replaceIf........................................................................................................
+
+    @Test
+    default void testReplaceIfNullTokenFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserToken.replaceIf(
+                        null,
+                        Predicates.fake(),
+                        ParserTokens.string("with", "with"),
+                        ParserToken.class
+                )
+        );
+    }
+
+    @Test
+    default void testReplaceIfNullPredicateFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserToken.replaceIf(
+                        this.createToken(),
+                        null,
+                        ParserTokens.string("with", "with"),
+                        ParserToken.class
+                )
+        );
+    }
+
+    @Test
+    default void testReplaceIfNullWithFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserToken.replaceIf(
+                        this.createToken(),
+                        Predicates.fake(),
+                        null,
+                        ParserToken.class
+                )
+        );
+    }
+
+    @Test
+    default void testReplaceIfNullTypeFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> ParserToken.replaceIf(
+                        this.createToken(),
+                        Predicates.fake(),
+                        ParserTokens.string("with", "with"),
+                        null
+                )
+        );
+    }
+
+    @Test
+    default void testReplaceIfLeaf() {
+        final T token = this.createToken();
+        if (token.isLeaf()) {
+            assertSame(
+                    token,
+                    token.replaceIf(
+                            Predicates.always(),
+                            token
+                    )
+            );
+        }
+    }
+
+    @Test
+    default void testReplaceIfParentFirstChild() {
+        final T token = this.createToken();
+        if (token.isParent()) {
+            final List<ParserToken> children = token.children();
+            if (children.size() > 0) {
+                final int index = 0;
+
+                final ParserToken replaced = children.get(index);
+                final ParserToken with = ParserTokens.string("with", "with");
+
+                final List<ParserToken> newChildren = Lists.array();
+                newChildren.addAll(children);
+                newChildren.set(
+                        index,
+                        with
+                );
+
+                boolean skip;
+                try {
+                    token.setChildren(newChildren);
+                    skip = false;
+                } catch (final Exception cantBeEmpty) {
+                    skip = true;
+                }
+                ;
+
+                if (false == skip) {
+                    this.replaceIfAndCheck(
+                            token,
+                            (t) -> t == replaced,
+                            with,
+                            token.setChildren(newChildren)
+                    );
+                }
+            }
+        }
+    }
+
+    @Test
+    default void testReplaceIfParentMiddleChild() {
+        final T token = this.createToken();
+        if (token.isParent()) {
+            final List<ParserToken> children = token.children();
+            if (children.size() > 3) {
+                final int index = 1;
+                final ParserToken replaced = children.get(index);
+                final ParserToken with = ParserTokens.string("with", "with");
+
+                final List<ParserToken> newChildren = Lists.array();
+                newChildren.addAll(children);
+                newChildren.set(
+                        index,
+                        with
+                );
+
+                boolean skip;
+                try {
+                    token.setChildren(newChildren);
+                    skip = false;
+                } catch (final Exception cantBeEmpty) {
+                    skip = true;
+                }
+
+                if (false == skip) {
+                    this.replaceIfAndCheck(
+                            token,
+                            (t) -> t == replaced,
+                            with,
+                            token.setChildren(newChildren)
+                    );
+                }
+            }
+        }
+    }
+
+    @Test
+    default void testReplaceIfParentLastChild() {
+        final T token = this.createToken();
+        if (token.isParent()) {
+            final List<ParserToken> children = token.children();
+            if (children.size() > 2) {
+                final int index = children.size() - 1;
+                final ParserToken replaced = children.get(index);
+                final ParserToken with = ParserTokens.string("with", "with");
+
+                final List<ParserToken> newChildren = Lists.array();
+                newChildren.addAll(children);
+                newChildren.set(
+                        index,
+                        with
+                );
+
+                boolean skip;
+                try {
+                    token.setChildren(newChildren);
+                    skip = false;
+                } catch (final Exception cantBeEmpty) {
+                    skip = true;
+                }
+
+                if (false == skip) {
+                    this.replaceIfAndCheck(
+                            token,
+                            (t) -> t == replaced,
+                            with,
+                            token.setChildren(newChildren)
+                    );
+                }
+            }
+        }
+    }
+
+    @Test
+    default void testReplaceIfParentAllChildren() {
+        final T token = this.createToken();
+        if (token.isParent()) {
+            final List<ParserToken> children = token.children();
+            if (children.size() > 2) {
+                final int count = children.size();
+                final ParserToken replacement = ParserTokens.string(
+                        "replacement",
+                        "replacement"
+                );
+                final List<ParserToken> newChildren = Collections.nCopies(
+                        count,
+                        replacement
+                );
+
+                boolean skip;
+                try {
+                    token.setChildren(newChildren);
+                    skip = false;
+                } catch (final Exception cantBeEmpty) {
+                    skip = true;
+                }
+
+                if (false == skip) {
+                    this.replaceIfAndCheck(
+                            token,
+                            children::contains,
+                            replacement,
+                            token.setChildren(newChildren)
+                    );
+                }
+            }
+        }
+    }
+
+    default void replaceIfAndCheck(final ParserToken token,
+                                   final Predicate<ParserToken> predicate,
+                                   final ParserToken replacement,
+                                   final ParserToken expected) {
+        this.checkEquals(
+                expected,
+                token.replaceIf(
+                        predicate,
+                        replacement
+                ),
+                () -> token + " replaceIf " + predicate + "," + replacement
         );
     }
 

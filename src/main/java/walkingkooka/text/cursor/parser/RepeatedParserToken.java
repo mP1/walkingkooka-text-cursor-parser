@@ -94,6 +94,19 @@ public final class RepeatedParserToken extends RepeatedOrSequenceParserToken {
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public RepeatedParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                         final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                RepeatedParserToken.class
+        );
+    }
+
     // ParserTokenVisitor...............................................................................................
 
     @Override

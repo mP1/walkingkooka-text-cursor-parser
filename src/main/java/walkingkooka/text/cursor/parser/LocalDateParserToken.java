@@ -48,6 +48,19 @@ public final class LocalDateParserToken extends LeafParserToken<LocalDate> {
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public LocalDateParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                          final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                LocalDateParserToken.class
+        );
+    }
+
     // visitor..........................................................................................................
 
     @Override
