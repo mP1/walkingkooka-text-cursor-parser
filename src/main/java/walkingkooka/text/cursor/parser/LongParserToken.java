@@ -47,6 +47,19 @@ public final class LongParserToken extends LeafParserToken<Long> {
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public LongParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                     final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                LongParserToken.class
+        );
+    }
+
     // visitor..........................................................................................................
 
     @Override

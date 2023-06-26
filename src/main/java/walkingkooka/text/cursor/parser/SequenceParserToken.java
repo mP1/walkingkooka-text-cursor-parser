@@ -196,6 +196,19 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SequenceParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                         final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SequenceParserToken.class
+        );
+    }
+
     // ParserTokenVisitor...............................................................................................
 
     @Override

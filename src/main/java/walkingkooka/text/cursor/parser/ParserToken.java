@@ -229,6 +229,34 @@ public interface ParserToken extends HasText,
         ).cast(type);
     }
 
+    // replaceIf....................................................................................................
+
+    /**
+     * Walks the token graph starting at this token, using the {@link Predicate} to find a match and when found replaces
+     * the match with the given {@link ParserToken}. Unlike {@link #removeFirstIf(Predicate)} this works on leaf tokens.
+     */
+    ParserToken replaceIf(final Predicate<ParserToken> predicate,
+                          final ParserToken replacement);
+
+    /**
+     * Helper invoked by {@link ParserToken#replaceIf(Predicate, ParserToken)}.
+     */
+    static <T extends ParserToken> T replaceIf(final ParserToken token,
+                                               final Predicate<ParserToken> predicate,
+                                               final ParserToken replacement,
+                                               final Class<T> type) {
+        Objects.requireNonNull(token, "token");
+        Objects.requireNonNull(predicate, "predicate");
+        Objects.requireNonNull(replacement, "replacement");
+        Objects.requireNonNull(type, "type");
+
+        return ParserTokens.replaceIf(
+                token,
+                predicate,
+                replacement
+        ).cast(type);
+    }
+
     // ParserTokenVisitor...............................................................................................
 
     /**

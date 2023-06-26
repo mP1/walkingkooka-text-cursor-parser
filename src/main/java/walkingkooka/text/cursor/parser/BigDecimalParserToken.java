@@ -52,6 +52,19 @@ public final class BigDecimalParserToken extends LeafParserToken<BigDecimal> {
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public BigDecimalParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                           final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                BigDecimalParserToken.class
+        );
+    }
+
     // visitor..........................................................................................................
 
     @Override

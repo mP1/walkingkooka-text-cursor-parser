@@ -47,6 +47,19 @@ public final class CharacterParserToken extends LeafParserToken<Character> {
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public CharacterParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                          final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                CharacterParserToken.class
+        );
+    }
+
     // visitor..........................................................................................................
 
     @Override

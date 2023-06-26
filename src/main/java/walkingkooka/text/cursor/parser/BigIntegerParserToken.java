@@ -49,6 +49,19 @@ public final class BigIntegerParserToken extends LeafParserToken<BigInteger> {
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public BigIntegerParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                           final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                BigIntegerParserToken.class
+        );
+    }
+
     // visitor..........................................................................................................
 
     @Override

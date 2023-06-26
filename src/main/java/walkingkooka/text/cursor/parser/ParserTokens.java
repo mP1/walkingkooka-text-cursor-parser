@@ -271,6 +271,33 @@ public final class ParserTokens implements PublicStaticHelper {
         return result;
     }
 
+    // replaceIf........................................................................................................
+
+    // called only by ParserToken.replaceIf
+    static ParserToken replaceIf(final ParserToken token,
+                                 final Predicate<ParserToken> predicate,
+                                 final ParserToken replacement) {
+        final ParserToken result;
+
+        if (predicate.test(token)) {
+            result = replacement;
+        } else {
+            result = token.setChildren(
+                    token.children()
+                            .stream()
+                            .map(
+                                    t -> replaceIf(
+                                            t,
+                                            predicate,
+                                            replacement
+                                    )
+                            ).collect(Collectors.toList())
+            );
+        }
+
+        return result;
+    }
+
     /**
      * Stop creation
      */

@@ -52,6 +52,19 @@ public final class DoubleQuotedParserToken extends QuotedParserToken {
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public DoubleQuotedParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                             final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                DoubleQuotedParserToken.class
+        );
+    }
+
     // visitor..........................................................................................................
 
     @Override

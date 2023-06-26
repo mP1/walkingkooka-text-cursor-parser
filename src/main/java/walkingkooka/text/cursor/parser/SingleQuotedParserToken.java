@@ -52,6 +52,19 @@ public final class SingleQuotedParserToken extends QuotedParserToken {
         );
     }
 
+    // replaceIf........................................................................................................
+
+    @Override
+    public SingleQuotedParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                             final ParserToken token) {
+        return ParserToken.replaceIf(
+                this,
+                predicate,
+                token,
+                SingleQuotedParserToken.class
+        );
+    }
+
     // visitor..........................................................................................................
 
     @Override
