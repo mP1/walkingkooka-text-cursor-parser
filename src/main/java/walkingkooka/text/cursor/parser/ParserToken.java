@@ -26,6 +26,7 @@ import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -146,6 +147,30 @@ public interface ParserToken extends HasText,
                         copy,
                         ParserToken.text(copy)
                 );
+    }
+
+    // findFirst........................................................................................................
+
+    /**
+     * Walks the graph starting at this {@link ParserToken} until the {@link Predicate} returns true.
+     */
+    default Optional<ParserToken> findFirst(final Predicate<ParserToken> predicate) {
+        Objects.requireNonNull(predicate, "predicate");
+
+        Optional<ParserToken> result = Optional.empty();
+
+        if (predicate.test(this)) {
+            result = Optional.of(this);
+        } else {
+            for (final ParserToken child : this.children()) {
+                result = child.findFirst(predicate);
+                if (result.isPresent()) {
+                    break;
+                }
+            }
+        }
+
+        return result;
     }
 
     // removeFirstIf....................................................................................................

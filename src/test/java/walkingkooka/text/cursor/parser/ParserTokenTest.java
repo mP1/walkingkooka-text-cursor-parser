@@ -26,9 +26,163 @@ import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePrintableTesting {
+
+    // findFirst........................................................................................................
+
+    @Test
+    public void testFindFirstWithNullPredicateFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> stringParserToken("Hello")
+                        .findFirst(null)
+        );
+    }
+
+    @Test
+    public void testFindFirstNever() {
+        this.findFirstAndCheck(
+                stringParserToken("Hello"),
+                Predicates.never()
+        );
+    }
+
+    @Test
+    public void testFindFirstThis() {
+        final StringParserToken token = stringParserToken("Hello");
+        this.findFirstAndCheck(
+                token,
+                Predicates.always(),
+                token
+        );
+    }
+
+    @Test
+    public void testFindFirstSkipsRemaining() {
+        final StringParserToken matched = stringParserToken("Hello");
+        final ParserToken fake = new FakeParserToken() {
+            @Override
+            public Optional<ParserToken> findFirst(final Predicate<ParserToken> predicate) {
+                throw new UnsupportedOperationException();
+            }
+
+            @Override
+            public String text() {
+                return "fake";
+            }
+        };
+
+        this.findFirstAndCheck(
+                sequenceParserToken(
+                        matched,
+                        fake
+                ),
+                Predicates.is(matched),
+                matched
+        );
+    }
+
+    @Test
+    public void testFindFirstGraphNever() {
+        final ParserToken child1 = stringParserToken("child-1");
+        final ParserToken child2 = stringParserToken("child-2");
+
+        final ParserToken grandChild1 = stringParserToken("grand-child-1");
+        final ParserToken grandChild2 = stringParserToken("grand-child-2");
+        final ParserToken child3 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        this.findFirstAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2,
+                        child3
+                ),
+                Predicates.never()
+        );
+    }
+
+    @Test
+    public void testFindFirstGraph() {
+        final ParserToken child1 = stringParserToken("child-1");
+        final ParserToken child2 = stringParserToken("child-2");
+
+        final ParserToken grandChild1 = stringParserToken("grand-child-1");
+        final ParserToken grandChild2 = stringParserToken("grand-child-2");
+        final ParserToken child3 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        this.findFirstAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2,
+                        child3
+                ),
+                Predicates.is(grandChild1),
+                grandChild1
+        );
+    }
+
+    @Test
+    public void testFindFirstGraph2() {
+        final ParserToken child1 = stringParserToken("child-1");
+        final ParserToken child2 = stringParserToken("child-2");
+
+        final ParserToken grandChild1 = stringParserToken("grand-child-1");
+        final ParserToken grandChild2 = stringParserToken("grand-child-2");
+        final ParserToken child3 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        this.findFirstAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2,
+                        child3
+                ),
+                (t) -> t.isLeaf() && t.text().contains("grand"),
+                grandChild1
+        );
+    }
+
+    private void findFirstAndCheck(final ParserToken start,
+                                   final Predicate<ParserToken> predicate) {
+        this.findFirstAndCheck(
+                start,
+                predicate,
+                Optional.empty()
+        );
+    }
+
+    private void findFirstAndCheck(final ParserToken start,
+                                   final Predicate<ParserToken> predicate,
+                                   final ParserToken expected) {
+        this.findFirstAndCheck(
+                start,
+                predicate,
+                Optional.of(expected)
+        );
+    }
+
+    private void findFirstAndCheck(final ParserToken start,
+                                   final Predicate<ParserToken> predicate,
+                                   final Optional<ParserToken> expected) {
+        this.checkEquals(
+                expected,
+                start.findFirst(predicate),
+                () -> start + " findFirst " + predicate
+        );
+    }
 
     // removeFirstIf....................................................................................................
 
