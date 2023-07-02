@@ -176,7 +176,7 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
     // removeIf.........................................................................................................
 
     @Override
-    public SequenceParserToken removeIf(final Predicate<ParserToken> predicate) {
+    public Optional<SequenceParserToken> removeIf(final Predicate<ParserToken> predicate) {
         return ParserToken.removeIfParent(
                 this,
                 predicate,

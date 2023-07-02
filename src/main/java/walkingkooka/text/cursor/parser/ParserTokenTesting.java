@@ -452,7 +452,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
         );
     }
 
-    // removeIf....................................................................................................
+    // removeIf.........................................................................................................
 
     @Test
     default void testRemoveIfParentNullTokenFails() {
@@ -493,21 +493,20 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
     @Test
     default void testRemoveIfNone() {
         final T token = this.createToken();
-        assertSame(
+        this.removeIfAndCheck(
                 token,
-                token.removeIf(Predicates.never())
+                Predicates.never(),
+                token
         );
     }
 
     @Test
-    default void testRemoveIfLeaf() {
+    default void testRemoveIfMatched() {
         final T token = this.createToken();
-        if (token.isLeaf()) {
-            assertSame(
-                    token,
-                    token.removeIf(Predicates.always())
-            );
-        }
+        this.removeIfAndCheck(
+                token,
+                Predicates.always()
+        );
     }
 
     @Test
@@ -634,8 +633,27 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
     }
 
     default void removeIfAndCheck(final ParserToken token,
+                                  final Predicate<ParserToken> predicate) {
+        this.removeIfAndCheck(
+                token,
+                predicate,
+                Optional.empty()
+        );
+    }
+
+    default void removeIfAndCheck(final ParserToken token,
                                   final Predicate<ParserToken> predicate,
                                   final ParserToken expected) {
+        this.removeIfAndCheck(
+                token,
+                predicate,
+                Optional.of(expected)
+        );
+    }
+
+    default void removeIfAndCheck(final ParserToken token,
+                                  final Predicate<ParserToken> predicate,
+                                  final Optional<ParserToken> expected) {
         this.checkEquals(
                 expected,
                 token.removeIf(predicate),

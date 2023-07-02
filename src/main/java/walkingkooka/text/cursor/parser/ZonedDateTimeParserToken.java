@@ -47,6 +47,17 @@ public final class ZonedDateTimeParserToken extends LeafParserToken<ZonedDateTim
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<ZonedDateTimeParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                ZonedDateTimeParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

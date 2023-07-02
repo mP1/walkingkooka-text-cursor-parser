@@ -56,7 +56,7 @@ public class FakeParserToken implements ParserToken, Fake {
     }
 
     @Override
-    public ParserToken removeIf(final Predicate<ParserToken> predicate) {
+    public Optional<ParserToken> removeIf(final Predicate<ParserToken> predicate) {
         throw new UnsupportedOperationException();
     }
 

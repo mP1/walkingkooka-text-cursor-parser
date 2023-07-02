@@ -51,6 +51,17 @@ public final class DoubleQuotedParserToken extends QuotedParserToken {
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<DoubleQuotedParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                DoubleQuotedParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

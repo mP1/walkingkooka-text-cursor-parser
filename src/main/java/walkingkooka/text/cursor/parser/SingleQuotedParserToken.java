@@ -51,6 +51,17 @@ public final class SingleQuotedParserToken extends QuotedParserToken {
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<SingleQuotedParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SingleQuotedParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

@@ -48,6 +48,17 @@ public final class BigIntegerParserToken extends LeafParserToken<BigInteger> {
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<BigIntegerParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                BigIntegerParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override
