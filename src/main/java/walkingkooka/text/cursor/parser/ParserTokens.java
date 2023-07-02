@@ -29,6 +29,7 @@ import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -162,46 +163,50 @@ public final class ParserTokens implements PublicStaticHelper {
 
     // ParserToken.removeFirstIfParent...unfortunately GWT does not support private default methods on an interface (J2CL doesnt complain).
 
-    static ParserToken parentRemoveFirstIf(final ParserToken parent,
-                                           final Predicate<ParserToken> predicate,
-                                           final boolean[] removed) {
-        ParserToken result = parent;
+    static <T extends ParserToken> Optional<T> removeFirstIfParent(final T parent,
+                                                                   final Predicate<ParserToken> predicate) {
+        Optional<T> result = null;
         int i = 0;
 
         final List<ParserToken> children = parent.children();
         for (final ParserToken child : children) {
-            if (predicate.test(child)) {
-                final List<ParserToken> without = Lists.array();
-                without.addAll(children.subList(0, i));
-                without.addAll(children.subList(i + 1, children.size()));
+            final Optional<ParserToken> childResult = (Optional<ParserToken>) child.removeFirstIf(predicate);
+            final int count = children.size();
 
-                result = parent.setChildren(without);
-                removed[0] = true;
-                break;
-            }
+            if (childResult.isPresent()) {
+                final ParserToken childResultParserToken = childResult.get();
+                if (false == child.equals(childResultParserToken)) {
+                    final List<ParserToken> newChildren = Lists.array();
+                    newChildren.addAll(children.subList(0, i));
+                    newChildren.add(childResultParserToken);
+                    newChildren.addAll(children.subList(i + 1, count));
 
-            if (child.isParent()) {
-                final ParserToken childResult = parentRemoveFirstIf(
-                        child,
-                        predicate,
-                        removed
-                );
+                    result = Optional.of(parent);
+                    break; // child changed, must have been a remove so stop
+                }
 
-                if (removed[0]) {
+                // continue;
+            } else {
+                if (1 == count) {
+                    result = Optional.empty();
+                } else {
                     final List<ParserToken> without = Lists.array();
                     without.addAll(children.subList(0, i));
-                    without.add(childResult);
-                    without.addAll(children.subList(i + 1, children.size()));
+                    without.addAll(children.subList(i + 1, count));
 
-                    result = parent.setChildren(without);
-                    break;
+                    result = Optional.of(
+                            (T) parent.setChildren(without)
+                    );
                 }
+                break;
             }
 
             i++;
         }
 
-        return result;
+        return null != result ?
+                result :
+                Optional.of(parent);
     }
 
     // ParserToken.parentRemoveIf...unfortunately GWT does not support private default methods on an interface (J2CL doesnt complain).

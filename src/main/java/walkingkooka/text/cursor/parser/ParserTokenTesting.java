@@ -38,6 +38,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -311,23 +312,19 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
     default void testRemoveFirstIfNone() {
         final T token = this.createToken();
 
-        assertSame(
+        this.removeFirstIfAndCheck(
                 token,
-                token.removeFirstIf(
-                        Predicates.never()
-                )
+                Predicates.never(),
+                token
         );
     }
 
     @Test
-    default void testRemoveFirstIfLeaf() {
-        final T token = this.createToken();
-        if (token.isLeaf()) {
-            assertSame(
-                    token,
-                    token.removeFirstIf(Predicates.always())
-            );
-        }
+    default void testRemoveFirstIfSelf() {
+        this.removeFirstIfAndCheck(
+                this.createToken(),
+                Predicates.always()
+        );
     }
 
     @Test
@@ -427,8 +424,27 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
     }
 
     default void removeFirstIfAndCheck(final ParserToken token,
+                                       final Predicate<ParserToken> predicate) {
+        this.removeFirstIfAndCheck(
+                token,
+                predicate,
+                Optional.empty()
+        );
+    }
+
+    default void removeFirstIfAndCheck(final ParserToken token,
                                        final Predicate<ParserToken> predicate,
                                        final ParserToken expected) {
+        this.removeFirstIfAndCheck(
+                token,
+                predicate,
+                Optional.of(expected)
+        );
+    }
+
+    default void removeFirstIfAndCheck(final ParserToken token,
+                                       final Predicate<ParserToken> predicate,
+                                       final Optional<ParserToken> expected) {
         this.checkEquals(
                 expected,
                 token.removeFirstIf(predicate),

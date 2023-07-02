@@ -18,6 +18,7 @@ package walkingkooka.text.cursor.parser;
 
 import java.math.BigInteger;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -34,6 +35,17 @@ public final class BigIntegerParserToken extends LeafParserToken<BigInteger> {
 
     private BigIntegerParserToken(final BigInteger value, final String text) {
         super(value, text);
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<BigIntegerParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                BigIntegerParserToken.class
+        );
     }
 
     // replaceFirstIf...................................................................................................
