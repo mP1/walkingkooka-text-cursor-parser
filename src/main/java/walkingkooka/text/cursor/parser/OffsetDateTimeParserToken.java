@@ -47,6 +47,17 @@ public final class OffsetDateTimeParserToken extends LeafParserToken<OffsetDateT
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<OffsetDateTimeParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                OffsetDateTimeParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

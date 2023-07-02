@@ -263,29 +263,66 @@ public interface ParserToken extends HasText,
         return result;
     }
 
-    // removeFirstIf....................................................................................................
+    // removeIf.........................................................................................................
 
     /**
      * Removes all {@link ParserToken} that is matched by the {@link Predicate}. Leaf tokens will always return
      * this, while parents will search all descendants starting with their children. If a parent requires at least one child
      * and that child is removed then any thrown {@link Throwable} will still happen.
      */
-    ParserToken removeIf(final Predicate<ParserToken> predicate);
+    Optional<? extends ParserToken> removeIf(final Predicate<ParserToken> predicate);
 
     /**
      * Walks a graph of {@link ParserToken} attempting to find and then removing all matching tokens within the graph..
      */
-    static <T extends ParserToken> T removeIfParent(final ParserToken token,
-                                                    final Predicate<ParserToken> predicate,
-                                                    final Class<T> type) {
+    static <T extends ParserToken> Optional<T> removeIfLeaf(final T token,
+                                                            final Predicate<ParserToken> predicate,
+                                                            final Class<T> type) {
         Objects.requireNonNull(token, "token");
         Objects.requireNonNull(predicate, "predicate");
         Objects.requireNonNull(type, "type");
 
-        return ParserTokens.parentRemoveIf(
-                token,
-                predicate.negate()
-        ).cast(type);
+        return predicate.test(token) ?
+                Optional.empty() :
+                Optional.of(token);
+    }
+
+    /**
+     * Walks a graph of {@link ParserToken} attempting to find and then removing all matching tokens within the graph.
+     */
+    static <T extends ParserToken> Optional<T> removeIfParent(final T parent,
+                                                              final Predicate<ParserToken> predicate,
+                                                              final Class<T> type) {
+        Objects.requireNonNull(parent, "parent");
+        Objects.requireNonNull(predicate, "predicate");
+        Objects.requireNonNull(type, "type");
+
+        Optional<T> result;
+
+        if (predicate.test(parent)) {
+            result = Optional.empty();
+        } else {
+
+            final List<ParserToken> children = parent.children();
+            final List<ParserToken> newChildren = Lists.array();
+
+            for (final ParserToken child : children) {
+                final Optional<ParserToken> childResult = (Optional<ParserToken>) child.removeIf(predicate);
+                if (childResult.isPresent()) {
+                    newChildren.add(childResult.get());
+                }
+            }
+
+            if (newChildren.isEmpty()) {
+                result = Optional.empty();
+            } else {
+                result = Optional.of(
+                        (T) parent.setChildren(newChildren)
+                );
+            }
+        }
+
+        return result;
     }
 
     // replaceFirstIf....................................................................................................

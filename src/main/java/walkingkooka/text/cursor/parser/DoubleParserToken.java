@@ -46,6 +46,17 @@ public final class DoubleParserToken extends LeafParserToken<Double> {
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<DoubleParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                DoubleParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

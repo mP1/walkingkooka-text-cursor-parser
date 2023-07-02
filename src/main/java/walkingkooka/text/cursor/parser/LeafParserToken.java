@@ -18,8 +18,6 @@
 package walkingkooka.text.cursor.parser;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.function.Predicate;
 
 /**
  * Convenient sub class for all leaf value types in this package.
@@ -39,13 +37,5 @@ abstract class LeafParserToken<V> extends ValueParserToken<V> {
                 this,
                 children
         );
-    }
-
-    // removeIf....................................................................................................
-
-    @Override
-    public final ParserToken removeIf(final Predicate<ParserToken> predicate) {
-        Objects.requireNonNull(predicate, "predicate");
-        return this;
     }
 }

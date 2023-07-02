@@ -46,6 +46,17 @@ public final class LongParserToken extends LeafParserToken<Long> {
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<LongParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                LongParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

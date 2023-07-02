@@ -47,6 +47,17 @@ public final class LocalDateTimeParserToken extends LeafParserToken<LocalDateTim
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<LocalDateTimeParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                LocalDateTimeParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

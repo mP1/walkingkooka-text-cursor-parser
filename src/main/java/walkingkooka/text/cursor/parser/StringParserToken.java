@@ -47,6 +47,17 @@ public final class StringParserToken extends LeafParserToken<String> {
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<StringParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                StringParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

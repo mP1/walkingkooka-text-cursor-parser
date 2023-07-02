@@ -46,6 +46,17 @@ public final class SignParserToken extends LeafParserToken<Boolean> {
         );
     }
 
+    // removeIf........................................................................................................
+
+    @Override
+    public Optional<SignParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                SignParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override

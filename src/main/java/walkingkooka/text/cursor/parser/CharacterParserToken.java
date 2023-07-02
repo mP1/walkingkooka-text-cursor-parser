@@ -46,6 +46,17 @@ public final class CharacterParserToken extends LeafParserToken<Character> {
         );
     }
 
+    // removeIf.........................................................................................................
+
+    @Override
+    public Optional<CharacterParserToken> removeIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeIfLeaf(
+                this,
+                predicate,
+                CharacterParserToken.class
+        );
+    }
+
     // replaceFirstIf...................................................................................................
 
     @Override
