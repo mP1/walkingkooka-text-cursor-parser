@@ -17,6 +17,7 @@
 package walkingkooka.text.cursor.parser;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -32,6 +33,17 @@ public final class CharacterParserToken extends LeafParserToken<Character> {
 
     private CharacterParserToken(final char value, final String text) {
         super(value, text);
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<CharacterParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                CharacterParserToken.class
+        );
     }
 
     // replaceFirstIf...................................................................................................

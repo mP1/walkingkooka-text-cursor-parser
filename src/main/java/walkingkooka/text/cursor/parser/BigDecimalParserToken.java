@@ -21,6 +21,7 @@ import walkingkooka.text.printer.IndentingPrinter;
 
 import java.math.BigDecimal;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -37,6 +38,17 @@ public final class BigDecimalParserToken extends LeafParserToken<BigDecimal> {
 
     private BigDecimalParserToken(final BigDecimal value, final String text) {
         super(value, text);
+    }
+
+    // removeFirstIf....................................................................................................
+
+    @Override
+    public Optional<BigDecimalParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
+        return ParserToken.removeFirstIfLeaf(
+                this,
+                predicate,
+                BigDecimalParserToken.class
+        );
     }
 
     // replaceFirstIf...................................................................................................

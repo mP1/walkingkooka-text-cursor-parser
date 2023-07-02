@@ -21,6 +21,7 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Predicate;
 
 /**
@@ -164,7 +165,7 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
     // removeFirstIf....................................................................................................
 
     @Override
-    public SequenceParserToken removeFirstIf(final Predicate<ParserToken> predicate) {
+    public Optional<SequenceParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
         return ParserToken.removeFirstIfParent(
                 this,
                 predicate,
