@@ -185,7 +185,7 @@ public interface ParserToken extends HasText,
     /**
      * Walks a graph of {@link ParserToken} attempting to find and then removing a matching child from its parent.
      */
-    static <T extends ParserToken> T parentRemoveFirstIf(final ParserToken token,
+    static <T extends ParserToken> T removeFirstIfParent(final ParserToken token,
                                                          final Predicate<ParserToken> predicate,
                                                          final Class<T> type) {
         Objects.requireNonNull(token, "token");

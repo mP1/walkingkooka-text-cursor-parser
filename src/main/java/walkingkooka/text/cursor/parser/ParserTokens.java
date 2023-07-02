@@ -160,7 +160,7 @@ public final class ParserTokens implements PublicStaticHelper {
         return ZonedDateTimeParserToken.with(value, text);
     }
 
-    // ParserToken.parentRemoveFirstIf...unfortunately GWT does not support private default methods on an interface (J2CL doesnt complain).
+    // ParserToken.removeFirstIfParent...unfortunately GWT does not support private default methods on an interface (J2CL doesnt complain).
 
     static ParserToken parentRemoveFirstIf(final ParserToken parent,
                                            final Predicate<ParserToken> predicate,
