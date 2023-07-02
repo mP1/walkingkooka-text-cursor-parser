@@ -272,10 +272,10 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
     // removeFirstIf....................................................................................................
 
     @Test
-    default void testParentRemoveFirstIfNullTokenFails() {
+    default void testRemoveFirstIfParentNullTokenFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> ParserToken.parentRemoveFirstIf(
+                () -> ParserToken.removeFirstIfParent(
                         null,
                         Predicates.fake(),
                         ParserToken.class
@@ -284,10 +284,10 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
     }
 
     @Test
-    default void testParentRemoveFirstIfNullPredicateFails() {
+    default void testRemoveFirstIfParentNullPredicateFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> ParserToken.parentRemoveFirstIf(
+                () -> ParserToken.removeFirstIfParent(
                         this.createToken(),
                         null,
                         ParserToken.class
@@ -296,10 +296,10 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
     }
 
     @Test
-    default void testParentRemoveFirstIfNullTypeFails() {
+    default void testRemoveFirstIfParentNullTypeFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> ParserToken.parentRemoveFirstIf(
+                () -> ParserToken.removeFirstIfParent(
                         this.createToken(),
                         Predicates.fake(),
                         null
