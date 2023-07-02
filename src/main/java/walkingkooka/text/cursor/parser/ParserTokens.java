@@ -209,7 +209,7 @@ public final class ParserTokens implements PublicStaticHelper {
                 Optional.of(parent);
     }
 
-    // ParserToken.parentRemoveIf...unfortunately GWT does not support private default methods on an interface (J2CL doesnt complain).
+    // ParserToken.removeIfParent...unfortunately GWT does not support private default methods on an interface (J2CL doesnt complain).
 
     static ParserToken parentRemoveIf(final ParserToken parent,
                                       final Predicate<ParserToken> filter) {
