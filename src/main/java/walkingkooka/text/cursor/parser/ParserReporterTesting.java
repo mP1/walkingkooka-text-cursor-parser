@@ -30,8 +30,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public interface ParserReporterTesting<R extends ParserReporter<C>, T extends ParserToken, C extends ParserContext>
-        extends ToStringTesting<R>, TypeNameTesting<R> {
+public interface ParserReporterTesting<R extends ParserReporter<C>, C extends ParserContext>
+        extends ToStringTesting<R>,
+        TypeNameTesting<R> {
 
     @Test
     default void testNullTextCursorFails() {
