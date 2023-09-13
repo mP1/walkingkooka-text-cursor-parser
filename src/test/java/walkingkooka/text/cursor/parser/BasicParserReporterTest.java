@@ -25,7 +25,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 
 public final class BasicParserReporterTest implements ClassTesting2<BasicParserReporter<FakeParserContext>>,
-        ParserReporterTesting<BasicParserReporter<FakeParserContext>, StringParserToken, FakeParserContext> {
+        ParserReporterTesting<BasicParserReporter<FakeParserContext>, FakeParserContext> {
 
     @Test
     public void testReport() {
