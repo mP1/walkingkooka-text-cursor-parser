@@ -155,7 +155,7 @@ public interface ParserToken extends HasText,
      * Walks the graph starting at this {@link ParserToken} until the {@link Predicate} returns true.
      */
     default Optional<ParserToken> findFirst(final Predicate<ParserToken> predicate) {
-        Objects.requireNonNull(predicate, "predicate");
+        checkPredicate(predicate);
 
         Optional<ParserToken> result = Optional.empty();
 
@@ -181,7 +181,7 @@ public interface ParserToken extends HasText,
      */
     default void findIf(final Predicate<ParserToken> predicate,
                         final Consumer<ParserToken> consumer) {
-        Objects.requireNonNull(predicate, "predicate");
+        checkPredicate(predicate);
         Objects.requireNonNull(consumer, "consumer");
 
         if (predicate.test(this)) {
@@ -209,7 +209,7 @@ public interface ParserToken extends HasText,
                                                                  final Predicate<ParserToken> predicate,
                                                                  final Class<T> type) {
         Objects.requireNonNull(token, "token");
-        Objects.requireNonNull(predicate, "predicate");
+        checkPredicate(predicate);
         Objects.requireNonNull(type, "type");
 
         return predicate.test(token) ?
@@ -224,7 +224,7 @@ public interface ParserToken extends HasText,
                                                                    final Predicate<ParserToken> predicate,
                                                                    final Class<T> type) {
         Objects.requireNonNull(parent, "parent");
-        Objects.requireNonNull(predicate, "predicate");
+        checkPredicate(predicate);
         Objects.requireNonNull(type, "type");
 
         Optional<T> result = null;
@@ -299,7 +299,7 @@ public interface ParserToken extends HasText,
                                                             final Predicate<ParserToken> predicate,
                                                             final Class<T> type) {
         Objects.requireNonNull(token, "token");
-        Objects.requireNonNull(predicate, "predicate");
+        checkPredicate(predicate);
         Objects.requireNonNull(type, "type");
 
         return predicate.test(token) ?
@@ -314,7 +314,7 @@ public interface ParserToken extends HasText,
                                                               final Predicate<ParserToken> predicate,
                                                               final Class<T> type) {
         Objects.requireNonNull(parent, "parent");
-        Objects.requireNonNull(predicate, "predicate");
+        checkPredicate(predicate);
         Objects.requireNonNull(type, "type");
 
         Optional<T> result;
@@ -362,7 +362,7 @@ public interface ParserToken extends HasText,
                                                     final ParserToken with,
                                                     final Class<T> type) {
         Objects.requireNonNull(token, "token");
-        Objects.requireNonNull(predicate, "predicate");
+        checkPredicate(predicate);
         Objects.requireNonNull(with, "with");
         Objects.requireNonNull(type, "type");
 
@@ -392,7 +392,7 @@ public interface ParserToken extends HasText,
                                                final ParserToken replacement,
                                                final Class<T> type) {
         Objects.requireNonNull(token, "token");
-        Objects.requireNonNull(predicate, "predicate");
+        checkPredicate(predicate);
         Objects.requireNonNull(replacement, "replacement");
         Objects.requireNonNull(type, "type");
 
@@ -401,6 +401,10 @@ public interface ParserToken extends HasText,
                 predicate,
                 replacement
         ).cast(type);
+    }
+
+    private static Predicate<ParserToken> checkPredicate(final Predicate<ParserToken> predicate) {
+        return Objects.requireNonNull(predicate, "predicate");
     }
 
     // ParserTokenVisitor...............................................................................................
