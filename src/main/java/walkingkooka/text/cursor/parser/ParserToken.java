@@ -407,7 +407,7 @@ public interface ParserToken extends HasText,
         return Objects.requireNonNull(predicate, "predicate");
     }
 
-    private static ParserToken checkToken(ParserToken token) {
+    private static ParserToken checkToken(final ParserToken token) {
         return Objects.requireNonNull(token, "token");
     }
 
