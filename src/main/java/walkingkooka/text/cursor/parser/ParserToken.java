@@ -113,7 +113,7 @@ public interface ParserToken extends HasText,
      */
     static <T extends ParserToken> T leafSetChildren(final T token,
                                                      final List<ParserToken> children) {
-        Objects.requireNonNull(token, "token");
+        checkToken(token);
         Objects.requireNonNull(children, "children");
 
         if (false == children.isEmpty()) {
@@ -136,7 +136,7 @@ public interface ParserToken extends HasText,
     static <T extends ParserToken> T parentSetChildren(final T token,
                                                        final List<ParserToken> children,
                                                        final BiFunction<List<ParserToken>, String, T> factory) {
-        Objects.requireNonNull(token, "token");
+        checkToken(token);
         Objects.requireNonNull(children, "children");
         final List<ParserToken> copy = Lists.immutable(children);
         Objects.requireNonNull(factory, "factory");
@@ -208,7 +208,7 @@ public interface ParserToken extends HasText,
     static <T extends ParserToken> Optional<T> removeFirstIfLeaf(final T token,
                                                                  final Predicate<ParserToken> predicate,
                                                                  final Class<T> type) {
-        Objects.requireNonNull(token, "token");
+        checkToken(token);
         checkPredicate(predicate);
         Objects.requireNonNull(type, "type");
 
@@ -298,7 +298,7 @@ public interface ParserToken extends HasText,
     static <T extends ParserToken> Optional<T> removeIfLeaf(final T token,
                                                             final Predicate<ParserToken> predicate,
                                                             final Class<T> type) {
-        Objects.requireNonNull(token, "token");
+        checkToken(token);
         checkPredicate(predicate);
         Objects.requireNonNull(type, "type");
 
@@ -361,7 +361,7 @@ public interface ParserToken extends HasText,
                                                     final Predicate<ParserToken> predicate,
                                                     final ParserToken with,
                                                     final Class<T> type) {
-        Objects.requireNonNull(token, "token");
+        checkToken(token);
         checkPredicate(predicate);
         Objects.requireNonNull(with, "with");
         Objects.requireNonNull(type, "type");
@@ -391,7 +391,7 @@ public interface ParserToken extends HasText,
                                                final Predicate<ParserToken> predicate,
                                                final ParserToken replacement,
                                                final Class<T> type) {
-        Objects.requireNonNull(token, "token");
+        checkToken(token);
         checkPredicate(predicate);
         Objects.requireNonNull(replacement, "replacement");
         Objects.requireNonNull(type, "type");
@@ -405,6 +405,10 @@ public interface ParserToken extends HasText,
 
     private static Predicate<ParserToken> checkPredicate(final Predicate<ParserToken> predicate) {
         return Objects.requireNonNull(predicate, "predicate");
+    }
+
+    private static ParserToken checkToken(ParserToken token) {
+        return Objects.requireNonNull(token, "token");
     }
 
     // ParserTokenVisitor...............................................................................................
