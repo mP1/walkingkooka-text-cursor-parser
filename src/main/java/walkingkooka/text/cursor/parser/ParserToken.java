@@ -300,7 +300,7 @@ public interface ParserToken extends HasText,
                                                             final Class<T> type) {
         checkToken(token);
         checkPredicate(predicate);
-        Objects.requireNonNull(type, "type");
+        checkType(type);
 
         return predicate.test(token) ?
                 Optional.empty() :
@@ -409,6 +409,10 @@ public interface ParserToken extends HasText,
 
     private static ParserToken checkToken(ParserToken token) {
         return Objects.requireNonNull(token, "token");
+    }
+
+    private static <T extends ParserToken> Class<T> checkType(final Class<T> type) {
+        return Objects.requireNonNull(type, "type");
     }
 
     // ParserTokenVisitor...............................................................................................
