@@ -210,7 +210,7 @@ public interface ParserToken extends HasText,
                                                                  final Class<T> type) {
         checkToken(token);
         checkPredicate(predicate);
-        Objects.requireNonNull(type, "type");
+        checkType(type);
 
         return predicate.test(token) ?
                 Optional.empty() :
@@ -225,7 +225,7 @@ public interface ParserToken extends HasText,
                                                                    final Class<T> type) {
         Objects.requireNonNull(parent, "parent");
         checkPredicate(predicate);
-        Objects.requireNonNull(type, "type");
+        checkType(type);
 
         Optional<T> result = null;
 
@@ -315,7 +315,7 @@ public interface ParserToken extends HasText,
                                                               final Class<T> type) {
         Objects.requireNonNull(parent, "parent");
         checkPredicate(predicate);
-        Objects.requireNonNull(type, "type");
+        checkType(type);
 
         Optional<T> result;
 
@@ -364,7 +364,7 @@ public interface ParserToken extends HasText,
         checkToken(token);
         checkPredicate(predicate);
         Objects.requireNonNull(with, "with");
-        Objects.requireNonNull(type, "type");
+        checkType(type);
 
         final boolean[] stop = new boolean[1];
         return ParserTokens.replaceFirstIf(
@@ -394,7 +394,7 @@ public interface ParserToken extends HasText,
         checkToken(token);
         checkPredicate(predicate);
         Objects.requireNonNull(replacement, "replacement");
-        Objects.requireNonNull(type, "type");
+        checkType(type);
 
         return ParserTokens.replaceIf(
                 token,
