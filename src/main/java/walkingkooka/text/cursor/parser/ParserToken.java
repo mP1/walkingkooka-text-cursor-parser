@@ -173,6 +173,26 @@ public interface ParserToken extends HasText,
         return result;
     }
 
+    // findFirst........................................................................................................
+
+    /**
+     * Walks the graph starting at this {@link ParserToken} passing all tokens that match the given {@link Predicate}
+     * to the provided {@link Consumer}.
+     */
+    default void findIf(final Predicate<ParserToken> predicate,
+                        final Consumer<ParserToken> consumer) {
+        Objects.requireNonNull(predicate, "predicate");
+        Objects.requireNonNull(consumer, "consumer");
+
+        if (predicate.test(this)) {
+            consumer.accept(this);
+        }
+
+        for (final ParserToken child : this.children()) {
+            child.findIf(predicate, consumer);
+        }
+    }
+
     // removeFirstIf....................................................................................................
 
     /**

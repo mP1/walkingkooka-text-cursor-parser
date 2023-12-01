@@ -184,6 +184,149 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         );
     }
 
+    // findIf.............................................................................................................
+
+    @Test
+    public void testFindIfWithNullPredicateFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> stringParserToken("Hello")
+                        .findIf(
+                                null,
+                                (t) -> {
+                                }
+                        )
+        );
+    }
+
+    @Test
+    public void testFindIfWithNullConsumerFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> stringParserToken("Hello")
+                        .findIf(
+                                Predicates.fake(),
+                                null
+                        )
+        );
+    }
+
+    @Test
+    public void testFindIfNever() {
+        this.findIfAndCheck(
+                stringParserToken("Hello"),
+                Predicates.never()
+        );
+    }
+
+    @Test
+    public void testFindIfGraphNever() {
+        final ParserToken child1 = stringParserToken("child-1");
+        final ParserToken child2 = stringParserToken("child-2");
+
+        final ParserToken grandChild1 = stringParserToken("grand-child-1");
+        final ParserToken grandChild2 = stringParserToken("grand-child-2");
+        final ParserToken child3 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        this.findIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2,
+                        child3
+                ),
+                Predicates.never()
+        );
+    }
+
+    @Test
+    public void testFindIfGraph() {
+        final ParserToken child1 = stringParserToken("child-1");
+        final ParserToken child2 = stringParserToken("child-2");
+
+        final ParserToken grandChild1 = stringParserToken("grand-child-1");
+        final ParserToken grandChild2 = stringParserToken("grand-child-2");
+        final ParserToken child3 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        this.findIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2,
+                        child3
+                ),
+                Predicates.is(grandChild1),
+                grandChild1
+        );
+    }
+
+    @Test
+    public void testFindIfGraph2() {
+        final ParserToken child1 = stringParserToken("child-1");
+        final ParserToken child2 = stringParserToken("child-2");
+
+        final ParserToken grandChild1 = stringParserToken("grand-child-1");
+        final ParserToken grandChild2 = stringParserToken("grand-child-2");
+        final ParserToken child3 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        this.findIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2,
+                        child3
+                ),
+                (t) -> t.isLeaf() && t.text().contains("grand"),
+                grandChild1,
+                grandChild2
+        );
+    }
+
+    @Test
+    public void testFindIfGraph3() {
+        final ParserToken child1 = stringParserToken("child-1");
+        final ParserToken child2 = stringParserToken("child-2");
+
+        final ParserToken grandChild1 = stringParserToken("grand-child-1");
+        final ParserToken grandChild2 = stringParserToken("grand-child-2");
+        final ParserToken child3 = sequenceParserToken(
+                grandChild1,
+                grandChild2
+        );
+
+        this.findIfAndCheck(
+                sequenceParserToken(
+                        child1,
+                        child2,
+                        child3
+                ),
+                (t) -> t.isLeaf() && t.text().contains("1"),
+                child1,
+                grandChild1
+        );
+    }
+
+    private void findIfAndCheck(final ParserToken start,
+                                final Predicate<ParserToken> predicate,
+                                final ParserToken... expected) {
+        final List<ParserToken> consumer = Lists.array();
+        start.findIf(
+                predicate,
+                consumer::add
+        );
+        this.checkEquals(
+                Lists.of(expected),
+                consumer,
+                () -> start + " findIf " + predicate
+        );
+    }
+
     // removeFirstIf....................................................................................................
 
     @Test
