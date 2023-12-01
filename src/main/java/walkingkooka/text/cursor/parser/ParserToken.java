@@ -223,7 +223,7 @@ public interface ParserToken extends HasText,
     static <T extends ParserToken> Optional<T> removeFirstIfParent(final T parent,
                                                                    final Predicate<ParserToken> predicate,
                                                                    final Class<T> type) {
-        Objects.requireNonNull(parent, "parent");
+        checkParent(parent);
         checkPredicate(predicate);
         checkType(type);
 
@@ -313,7 +313,7 @@ public interface ParserToken extends HasText,
     static <T extends ParserToken> Optional<T> removeIfParent(final T parent,
                                                               final Predicate<ParserToken> predicate,
                                                               final Class<T> type) {
-        Objects.requireNonNull(parent, "parent");
+        checkParent(parent);
         checkPredicate(predicate);
         checkType(type);
 
@@ -401,6 +401,10 @@ public interface ParserToken extends HasText,
                 predicate,
                 replacement
         ).cast(type);
+    }
+
+    private static <T extends ParserToken> T checkParent(final T parent) {
+        return Objects.requireNonNull(parent, "parent");
     }
 
     private static Predicate<ParserToken> checkPredicate(final Predicate<ParserToken> predicate) {
