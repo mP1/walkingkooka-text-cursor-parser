@@ -100,7 +100,7 @@ public final class RepeatedParserToken extends RepeatedOrSequenceParserToken {
 
     @Override
     public RepeatedParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                         final ParserToken token) {
+                                         final Function<ParserToken, ParserToken> token) {
         return ParserToken.replaceIf(
                 this,
                 predicate,

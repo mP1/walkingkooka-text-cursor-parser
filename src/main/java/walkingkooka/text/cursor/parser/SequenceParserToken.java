@@ -202,7 +202,7 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
 
     @Override
     public SequenceParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                         final ParserToken token) {
+                                         final Function<ParserToken, ParserToken> token) {
         return ParserToken.replaceIf(
                 this,
                 predicate,

@@ -214,11 +214,11 @@ public final class ParserTokens implements PublicStaticHelper {
     // called only by ParserToken.replaceIf
     static ParserToken replaceIf(final ParserToken token,
                                  final Predicate<ParserToken> predicate,
-                                 final ParserToken replacement) {
+                                 final Function<ParserToken, ParserToken> mapper) {
         final ParserToken result;
 
         if (predicate.test(token)) {
-            result = replacement;
+            result = mapper.apply(token);
         } else {
             result = token.setChildren(
                     token.children()
@@ -227,7 +227,7 @@ public final class ParserTokens implements PublicStaticHelper {
                                     t -> replaceIf(
                                             t,
                                             predicate,
-                                            replacement
+                                            mapper
                                     )
                             ).collect(Collectors.toList())
             );

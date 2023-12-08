@@ -75,7 +75,7 @@ public final class CharacterParserToken extends LeafParserToken<Character> {
 
     @Override
     public CharacterParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                          final ParserToken token) {
+                                          final Function<ParserToken, ParserToken> token) {
         return ParserToken.replaceIf(
                 this,
                 predicate,

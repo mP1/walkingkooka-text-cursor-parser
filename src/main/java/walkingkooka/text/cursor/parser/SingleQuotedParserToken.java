@@ -80,7 +80,7 @@ public final class SingleQuotedParserToken extends QuotedParserToken {
 
     @Override
     public SingleQuotedParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                             final ParserToken token) {
+                                             final Function<ParserToken, ParserToken> token) {
         return ParserToken.replaceIf(
                 this,
                 predicate,

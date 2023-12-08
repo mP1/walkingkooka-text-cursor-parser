@@ -383,24 +383,24 @@ public interface ParserToken extends HasText,
      * the match with the given {@link ParserToken}. Unlike {@link #removeFirstIf(Predicate)} this works on leaf tokens.
      */
     ParserToken replaceIf(final Predicate<ParserToken> predicate,
-                          final ParserToken replacement);
+                          final Function<ParserToken, ParserToken> mapper);
 
     /**
-     * Helper invoked by {@link ParserToken#replaceIf(Predicate, ParserToken)}.
+     * Helper invoked by {@link ParserToken#replaceIf(Predicate, Function)}.
      */
     static <T extends ParserToken> T replaceIf(final ParserToken token,
                                                final Predicate<ParserToken> predicate,
-                                               final ParserToken replacement,
+                                               final Function<ParserToken, ParserToken> mapper,
                                                final Class<T> type) {
         checkToken(token);
         checkPredicate(predicate);
-        Objects.requireNonNull(replacement, "replacement");
+        Objects.requireNonNull(mapper, "replacement");
         checkType(type);
 
         return ParserTokens.replaceIf(
                 token,
                 predicate,
-                replacement
+                mapper
         ).cast(type);
     }
 
