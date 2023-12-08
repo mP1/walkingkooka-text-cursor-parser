@@ -27,6 +27,7 @@ import walkingkooka.text.printer.TreePrintableTesting;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -999,7 +1000,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child2
                 ),
                 Predicates.is(child1),
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         replacement,
                         child2
@@ -1020,7 +1021,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child2
                 ),
                 Predicates.is(child2),
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         child1,
                         replacement
@@ -1046,7 +1047,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child2
                 ),
                 Predicates.is(child2),
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         child1,
                         replacement
@@ -1072,7 +1073,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child2
                 ),
                 Predicates.is(grandChild1),
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         child1,
                         child2.setChildren(
@@ -1103,7 +1104,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child2
                 ),
                 Predicates.is(grandChild2),
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         child1,
                         child2.setChildren(
@@ -1144,7 +1145,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child2
                 ),
                 Predicates.is(greatGrandChild2),
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         child1,
                         child2.setChildren(
@@ -1181,7 +1182,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child2
                 ),
                 t -> t == child1 || t == grandChild2,
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         replacement,
                         child2.setChildren(
@@ -1221,7 +1222,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child3
                 ),
                 t -> t == grandChild2 || t == child3,
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         child1,
                         child2.setChildren(
@@ -1237,15 +1238,15 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
 
     private void replaceFirstIfAndCheck(final ParserToken token,
                                         final Predicate<ParserToken> predicate,
-                                        final ParserToken replacement,
+                                        final Function<ParserToken, ParserToken> mapper,
                                         final ParserToken expected) {
         this.checkEquals(
                 expected,
                 token.replaceFirstIf(
                         predicate,
-                        replacement
+                        mapper
                 ),
-                () -> token + " replaceFirstIf " + predicate + "," + replacement
+                () -> token + " replaceFirstIf " + predicate + "," + mapper
         );
     }
 
@@ -1264,7 +1265,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child2
                 ),
                 Predicates.is(child1),
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         replacement,
                         child2
@@ -1285,7 +1286,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child2
                 ),
                 Predicates.is(child2),
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         child1,
                         replacement
@@ -1311,7 +1312,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child2
                 ),
                 Predicates.is(child2),
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         child1,
                         replacement
@@ -1337,7 +1338,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child2
                 ),
                 Predicates.is(grandChild1),
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         child1,
                         child2.setChildren(
@@ -1368,7 +1369,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child2
                 ),
                 Predicates.is(grandChild2),
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         child1,
                         child2.setChildren(
@@ -1409,7 +1410,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child2
                 ),
                 Predicates.is(greatGrandChild2),
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         child1,
                         child2.setChildren(
@@ -1446,7 +1447,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child2
                 ),
                 t -> t == child1 || t == grandChild2,
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         replacement,
                         child2.setChildren(
@@ -1486,7 +1487,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                         child3
                 ),
                 t -> t == grandChild2 || t == child3,
-                replacement,
+                (t) -> replacement, // mapper
                 sequenceParserToken(
                         child1,
                         child2.setChildren(

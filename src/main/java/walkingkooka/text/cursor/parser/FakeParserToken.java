@@ -22,6 +22,7 @@ import walkingkooka.text.printer.IndentingPrinter;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class FakeParserToken implements ParserToken, Fake {
@@ -62,7 +63,7 @@ public class FakeParserToken implements ParserToken, Fake {
 
     @Override
     public ParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                      final ParserToken token) {
+                                      final Function<ParserToken, ParserToken> mapper) {
         throw new UnsupportedOperationException();
     }
 
