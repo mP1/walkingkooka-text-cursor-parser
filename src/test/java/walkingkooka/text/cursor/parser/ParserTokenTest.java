@@ -1503,15 +1503,15 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
 
     private void replaceIfAndCheck(final ParserToken token,
                                    final Predicate<ParserToken> predicate,
-                                   final ParserToken replacement,
+                                   final Function<ParserToken, ParserToken> mapper,
                                    final ParserToken expected) {
         this.checkEquals(
                 expected,
                 token.replaceIf(
                         predicate,
-                        replacement
+                        mapper
                 ),
-                () -> token + " replaceIf " + predicate + "," + replacement
+                () -> token + " replaceIf " + predicate + "," + mapper
         );
     }
     // removeFirstIf & removeIf helpers.................................................................................

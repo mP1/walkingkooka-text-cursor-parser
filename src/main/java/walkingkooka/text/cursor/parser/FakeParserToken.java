@@ -69,7 +69,7 @@ public class FakeParserToken implements ParserToken, Fake {
 
     @Override
     public ParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                 final ParserToken token) {
+                                 final Function<ParserToken, ParserToken> token) {
         throw new UnsupportedOperationException();
     }
 

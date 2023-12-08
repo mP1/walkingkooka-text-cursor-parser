@@ -866,7 +866,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 () -> ParserToken.replaceIf(
                         null,
                         Predicates.fake(),
-                        ParserTokens.string("with", "with"),
+                        Function.identity(), // mapper
                         ParserToken.class
                 )
         );
@@ -879,14 +879,14 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 () -> ParserToken.replaceIf(
                         this.createToken(),
                         null,
-                        ParserTokens.string("with", "with"),
+                        Function.identity(), // mapper
                         ParserToken.class
                 )
         );
     }
 
     @Test
-    default void testReplaceIfNullWithFails() {
+    default void testReplaceIfNullMapperFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> ParserToken.replaceIf(
@@ -905,7 +905,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 () -> ParserToken.replaceIf(
                         this.createToken(),
                         Predicates.fake(),
-                        ParserTokens.string("with", "with"),
+                        Function.identity(), // mapper
                         null
                 )
         );
@@ -919,7 +919,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                     token,
                     token.replaceIf(
                             Predicates.always(),
-                            token
+                            Function.identity() // mapper
                     )
             );
         }
@@ -956,7 +956,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                     this.replaceIfAndCheck(
                             token,
                             (t) -> t == replaced,
-                            with,
+                            (t) -> with,
                             token.setChildren(newChildren)
                     );
                 }
@@ -993,7 +993,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                     this.replaceIfAndCheck(
                             token,
                             (t) -> t == replaced,
-                            with,
+                            (t) -> with,
                             token.setChildren(newChildren)
                     );
                 }
@@ -1030,7 +1030,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                     this.replaceIfAndCheck(
                             token,
                             (t) -> t == replaced,
-                            with,
+                            (t) -> with,
                             token.setChildren(newChildren)
                     );
                 }
@@ -1066,7 +1066,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                     this.replaceIfAndCheck(
                             token,
                             children::contains,
-                            replacement,
+                            (t) -> replacement,
                             token.setChildren(newChildren)
                     );
                 }
@@ -1076,15 +1076,15 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
 
     default void replaceIfAndCheck(final ParserToken token,
                                    final Predicate<ParserToken> predicate,
-                                   final ParserToken replacement,
+                                   final Function<ParserToken, ParserToken> mapper,
                                    final ParserToken expected) {
         this.checkEquals(
                 expected,
                 token.replaceIf(
                         predicate,
-                        replacement
+                        mapper
                 ),
-                () -> token + " replaceIf " + predicate + "," + replacement
+                () -> token + " replaceIf " + predicate + "," + mapper
         );
     }
 

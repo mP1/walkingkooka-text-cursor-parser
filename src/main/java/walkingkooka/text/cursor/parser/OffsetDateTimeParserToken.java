@@ -76,7 +76,7 @@ public final class OffsetDateTimeParserToken extends LeafParserToken<OffsetDateT
 
     @Override
     public OffsetDateTimeParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                               final ParserToken token) {
+                                               final Function<ParserToken, ParserToken> token) {
         return ParserToken.replaceIf(
                 this,
                 predicate,

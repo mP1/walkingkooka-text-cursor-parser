@@ -75,7 +75,7 @@ public final class SignParserToken extends LeafParserToken<Boolean> {
 
     @Override
     public SignParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                     final ParserToken token) {
+                                     final Function<ParserToken, ParserToken> token) {
         return ParserToken.replaceIf(
                 this,
                 predicate,

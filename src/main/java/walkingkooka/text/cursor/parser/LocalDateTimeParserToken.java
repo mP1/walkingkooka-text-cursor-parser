@@ -76,7 +76,7 @@ public final class LocalDateTimeParserToken extends LeafParserToken<LocalDateTim
 
     @Override
     public LocalDateTimeParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                              final ParserToken token) {
+                                              final Function<ParserToken, ParserToken> token) {
         return ParserToken.replaceIf(
                 this,
                 predicate,
