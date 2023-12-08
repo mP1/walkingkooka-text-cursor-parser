@@ -39,6 +39,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -670,7 +671,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 () -> ParserToken.replaceFirstIf(
                         null,
                         Predicates.fake(),
-                        ParserTokens.string("with", "with"),
+                        Function.identity(),
                         ParserToken.class
                 )
         );
@@ -683,20 +684,20 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 () -> ParserToken.replaceFirstIf(
                         this.createToken(),
                         null,
-                        ParserTokens.string("with", "with"),
+                        Function.identity(),
                         ParserToken.class
                 )
         );
     }
 
     @Test
-    default void testReplaceFirstIfNullWithFails() {
+    default void testReplaceFirstIfNullMapperFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> ParserToken.replaceFirstIf(
                         this.createToken(),
                         Predicates.fake(),
-                        null,
+                        null, // mapper
                         ParserToken.class
                 )
         );
@@ -709,7 +710,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                 () -> ParserToken.replaceFirstIf(
                         this.createToken(),
                         Predicates.fake(),
-                        ParserTokens.string("with", "with"),
+                        Function.identity(), // mapper
                         null
                 )
         );
@@ -723,7 +724,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                     token,
                     token.replaceFirstIf(
                             Predicates.always(),
-                            token
+                            Function.identity() // mapper
                     )
             );
         }
@@ -760,7 +761,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                     this.replaceFirstIfAndCheck(
                             token,
                             (t) -> t == replaced,
-                            with,
+                            (t) -> with, // mapper
                             token.setChildren(newChildren)
                     );
                 }
@@ -797,7 +798,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                     this.replaceFirstIfAndCheck(
                             token,
                             (t) -> t == replaced,
-                            with,
+                            (t) -> with,
                             token.setChildren(newChildren)
                     );
                 }
@@ -834,7 +835,7 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
                     this.replaceFirstIfAndCheck(
                             token,
                             (t) -> t == replaced,
-                            with,
+                            (t) -> with,
                             token.setChildren(newChildren)
                     );
                 }
@@ -844,15 +845,15 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
 
     default void replaceFirstIfAndCheck(final ParserToken token,
                                         final Predicate<ParserToken> predicate,
-                                        final ParserToken replacement,
+                                        final Function<ParserToken, ParserToken> mapper,
                                         final ParserToken expected) {
         this.checkEquals(
                 expected,
                 token.replaceFirstIf(
                         predicate,
-                        replacement
+                        mapper
                 ),
-                () -> token + " replaceFirstIf " + predicate + "," + replacement
+                () -> token + " replaceFirstIf " + predicate + "," + mapper
         );
     }
 

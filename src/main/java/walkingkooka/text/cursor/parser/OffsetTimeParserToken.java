@@ -19,6 +19,7 @@ package walkingkooka.text.cursor.parser;
 import java.time.OffsetTime;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -62,11 +63,11 @@ public final class OffsetTimeParserToken extends LeafParserToken<OffsetTime> {
 
     @Override
     public OffsetTimeParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                final ParserToken token) {
+                                                final Function<ParserToken, ParserToken> mapper) {
         return ParserToken.replaceFirstIf(
                 this,
                 predicate,
-                token,
+                mapper,
                 OffsetTimeParserToken.class
         );
     }

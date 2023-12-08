@@ -29,6 +29,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -348,29 +349,29 @@ public interface ParserToken extends HasText,
     // replaceFirstIf....................................................................................................
 
     /**
-     * Walks the token graph starting at this token, using the {@link Predicate} to find a match and when found replaces
-     * the match with the given {@link ParserToken}. Unlike {@link #removeFirstIf(Predicate)} this works on leaf tokens.
+     * Walks the token graph starting at this token, using the {@link Predicate} to find a match using the {@link Function}
+     * to supply the replacement.
      */
     ParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                               final ParserToken token);
+                               final Function<ParserToken, ParserToken> mapper);
 
     /**
-     * Helper invoked by {@link ParserToken#replaceFirstIf(Predicate, ParserToken)}.
+     * Helper invoked by {@link ParserToken#replaceFirstIf(Predicate, Function)}.
      */
     static <T extends ParserToken> T replaceFirstIf(final ParserToken token,
                                                     final Predicate<ParserToken> predicate,
-                                                    final ParserToken with,
+                                                    final Function<ParserToken, ParserToken> mapper,
                                                     final Class<T> type) {
         checkToken(token);
         checkPredicate(predicate);
-        Objects.requireNonNull(with, "with");
+        Objects.requireNonNull(mapper, "mapper");
         checkType(type);
 
         final boolean[] stop = new boolean[1];
         return ParserTokens.replaceFirstIf(
                 token,
                 predicate,
-                with,
+                mapper,
                 stop
         ).cast(type);
     }

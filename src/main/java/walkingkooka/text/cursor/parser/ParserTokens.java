@@ -29,7 +29,7 @@ import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -165,12 +165,12 @@ public final class ParserTokens implements PublicStaticHelper {
 
     static ParserToken replaceFirstIf(final ParserToken token,
                                       final Predicate<ParserToken> predicate,
-                                      final ParserToken with,
+                                      final Function<ParserToken, ParserToken> mapper,
                                       final boolean[] stop) {
         ParserToken result = token;
 
         if (predicate.test(token)) {
-            result = with;
+            result = mapper.apply(token);
             stop[0] = true;
         } else {
             final List<ParserToken> children = token.children();
@@ -180,7 +180,7 @@ public final class ParserTokens implements PublicStaticHelper {
                 final ParserToken childAfter = replaceFirstIf(
                         child,
                         predicate,
-                        with,
+                        mapper,
                         stop
                 );
                 if (stop[0]) {
