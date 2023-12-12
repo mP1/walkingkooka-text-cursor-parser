@@ -286,12 +286,29 @@ public final class ParserTokens implements PublicStaticHelper {
         return result;
     }
 
-    // replaceFirstIf...................................................................................................
-
+    /**
+     * Helper invoked by {@link ParserToken#replaceFirstIf(Predicate, Function)}.
+     */
     static ParserToken replaceFirstIf(final ParserToken token,
                                       final Predicate<ParserToken> predicate,
-                                      final Function<ParserToken, ParserToken> mapper,
-                                      final boolean[] stop) {
+                                      final Function<ParserToken, ParserToken> mapper) {
+        checkPredicate(predicate);
+        checkMapper(mapper);
+
+        return ParserTokens.replaceFirstIf0(
+                token,
+                predicate,
+                mapper,
+                new boolean[1]
+        );
+    }
+
+    // replaceFirstIf...................................................................................................
+
+    private static ParserToken replaceFirstIf0(final ParserToken token,
+                                               final Predicate<ParserToken> predicate,
+                                               final Function<ParserToken, ParserToken> mapper,
+                                               final boolean[] stop) {
         ParserToken result = token;
 
         if (predicate.test(token)) {
@@ -302,7 +319,7 @@ public final class ParserTokens implements PublicStaticHelper {
             int i = 0;
 
             for (final ParserToken child : children) {
-                final ParserToken childAfter = replaceFirstIf(
+                final ParserToken childAfter = replaceFirstIf0(
                         child,
                         predicate,
                         mapper,
@@ -336,10 +353,25 @@ public final class ParserTokens implements PublicStaticHelper {
 
     // replaceIf........................................................................................................
 
-    // called only by ParserToken.replaceIf
+    /**
+     * Helper invoked by {@link ParserToken#replaceIf(Predicate, Function)}.
+     */
     static ParserToken replaceIf(final ParserToken token,
                                  final Predicate<ParserToken> predicate,
                                  final Function<ParserToken, ParserToken> mapper) {
+        checkPredicate(predicate);
+        checkMapper(mapper);
+
+        return replaceIf0(
+                token,
+                predicate,
+                mapper
+        );
+    }
+
+    private static ParserToken replaceIf0(final ParserToken token,
+                                          final Predicate<ParserToken> predicate,
+                                          final Function<ParserToken, ParserToken> mapper) {
         final ParserToken result;
 
         if (predicate.test(token)) {
@@ -349,7 +381,7 @@ public final class ParserTokens implements PublicStaticHelper {
                     token.children()
                             .stream()
                             .map(
-                                    t -> replaceIf(
+                                    t -> replaceIf0(
                                             t,
                                             predicate,
                                             mapper
@@ -367,6 +399,10 @@ public final class ParserTokens implements PublicStaticHelper {
 
     private static Predicate<ParserToken> checkPredicate(final Predicate<ParserToken> predicate) {
         return Objects.requireNonNull(predicate, "predicate");
+    }
+
+    private static Function<ParserToken, ParserToken> checkMapper(final Function<ParserToken, ParserToken> mapper) {
+        return Objects.requireNonNull(mapper, "mapper");
     }
 
     /**

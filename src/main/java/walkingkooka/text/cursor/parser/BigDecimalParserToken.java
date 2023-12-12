@@ -21,8 +21,6 @@ import walkingkooka.text.printer.IndentingPrinter;
 
 import java.math.BigDecimal;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * The parser token for a number with the value contained within a {@link BigDecimal}
@@ -38,32 +36,6 @@ public final class BigDecimalParserToken extends LeafParserToken<BigDecimal> {
 
     private BigDecimalParserToken(final BigDecimal value, final String text) {
         super(value, text);
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public BigDecimalParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                BigDecimalParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public BigDecimalParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                           final Function<ParserToken, ParserToken> token) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                token,
-                BigDecimalParserToken.class
-        );
     }
 
     // visitor..........................................................................................................

@@ -20,8 +20,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * This {@link ParserToken} holds one or more of the tokens of the same type but not equal.
@@ -57,32 +55,6 @@ public final class RepeatedParserToken extends RepeatedOrSequenceParserToken {
                 this,
                 children,
                 RepeatedParserToken::new
-        );
-    }
-
-    // replaceFirstIf..................................................................................................
-
-    @Override
-    public RepeatedParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                              final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                RepeatedParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public RepeatedParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                         final Function<ParserToken, ParserToken> token) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                token,
-                RepeatedParserToken.class
         );
     }
 
