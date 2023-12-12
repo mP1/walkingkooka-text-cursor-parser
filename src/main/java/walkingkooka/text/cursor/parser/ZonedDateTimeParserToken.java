@@ -18,7 +18,6 @@ package walkingkooka.text.cursor.parser;
 
 import java.time.ZonedDateTime;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -35,28 +34,6 @@ public final class ZonedDateTimeParserToken extends LeafParserToken<ZonedDateTim
 
     private ZonedDateTimeParserToken(final ZonedDateTime value, final String text) {
         super(value, text);
-    }
-
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<ZonedDateTimeParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                ZonedDateTimeParserToken.class
-        );
-    }
-
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<ZonedDateTimeParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                ZonedDateTimeParserToken.class
-        );
     }
 
     // replaceFirstIf...................................................................................................

@@ -29,6 +29,8 @@ import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -161,6 +163,129 @@ public final class ParserTokens implements PublicStaticHelper {
         return ZonedDateTimeParserToken.with(value, text);
     }
 
+    /**
+     * Walks a graph of {@link ParserToken} attempting to find and then removing a matching child from its parent.
+     */
+    static Optional<ParserToken> removeFirstIfLeaf(final ParserToken token,
+                                                   final Predicate<ParserToken> predicate) {
+        checkPredicate(predicate);
+
+        return predicate.test(token) ?
+                Optional.empty() :
+                Optional.of(token);
+    }
+
+    /**
+     * Walks a graph of {@link ParserToken} attempting to find and then removing a matching child from its parent.
+     */
+    static Optional<ParserToken> removeFirstIfParent(final ParserToken parent,
+                                                     final Predicate<ParserToken> predicate) {
+        checkPredicate(predicate);
+
+        Optional<ParserToken> result = null;
+
+        if (predicate.test(parent)) {
+            result = Optional.empty();
+        } else {
+            int i = 0;
+
+            final List<ParserToken> children = parent.children();
+            for (final ParserToken child : children) {
+                final Optional<ParserToken> childResult = child.removeFirstIf(predicate);
+                final int count = children.size();
+
+                if (childResult.isPresent()) {
+                    final ParserToken childResultParserToken = childResult.get();
+                    if (false == child.equals(childResultParserToken)) {
+                        final List<ParserToken> newChildren = Lists.array();
+
+                        newChildren.addAll(children.subList(0, i));
+                        newChildren.add(childResultParserToken);
+                        newChildren.addAll(children.subList(i + 1, count));
+
+                        result = Optional.of(
+                                parent.setChildren(newChildren)
+                        );
+                        break; // child changed, must have been a remove so stop
+                    }
+
+                    // continue;
+                } else {
+                    if (1 == count) {
+                        result = Optional.empty();
+                    } else {
+                        final List<ParserToken> without = Lists.array();
+
+                        without.addAll(children.subList(0, i));
+                        // i = removed, skip adding.
+                        without.addAll(children.subList(i + 1, count));
+
+                        result = Optional.of(
+                                parent.setChildren(without)
+                        );
+                    }
+                    break;
+                }
+
+                i++;
+            }
+
+            if (null == result) {
+                result = Optional.of(parent);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Walks a graph of {@link ParserToken} attempting to find and then removing all matching tokens within the graph..
+     */
+    static <T extends ParserToken> Optional<T> removeIfLeaf(final T token,
+                                                            final Predicate<ParserToken> predicate) {
+        checkPredicate(predicate);
+
+        return predicate.test(token) ?
+                Optional.empty() :
+                Optional.of(token);
+    }
+
+    /**
+     * Walks a graph of {@link ParserToken} attempting to find and then removing all matching tokens within the graph.
+     */
+    static Optional<ParserToken> removeIfParent(final ParserToken parent,
+                                                final Predicate<ParserToken> predicate) {
+        checkParent(parent);
+        checkPredicate(predicate);
+
+        Optional<ParserToken> result;
+
+        if (predicate.test(parent)) {
+            result = Optional.empty();
+        } else {
+
+            final List<ParserToken> children = parent.children();
+            final List<ParserToken> newChildren = Lists.array();
+
+            for (final ParserToken child : children) {
+                final Optional<ParserToken> childResult = child.removeIf(predicate);
+                if (childResult.isPresent()) {
+                    newChildren.add(childResult.get());
+                }
+            }
+
+            if (newChildren.isEmpty()) {
+                result = Optional.empty();
+            } else {
+                result = Optional.of(
+                        parent.setChildren(newChildren)
+                );
+            }
+        }
+
+        return result;
+    }
+
     // replaceFirstIf...................................................................................................
 
     static ParserToken replaceFirstIf(final ParserToken token,
@@ -234,6 +359,14 @@ public final class ParserTokens implements PublicStaticHelper {
         }
 
         return result;
+    }
+
+    private static <T extends ParserToken> T checkParent(final T parent) {
+        return Objects.requireNonNull(parent, "parent");
+    }
+
+    private static Predicate<ParserToken> checkPredicate(final Predicate<ParserToken> predicate) {
+        return Objects.requireNonNull(predicate, "predicate");
     }
 
     /**

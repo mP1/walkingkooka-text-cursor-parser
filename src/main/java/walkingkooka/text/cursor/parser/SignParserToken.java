@@ -17,7 +17,6 @@
 package walkingkooka.text.cursor.parser;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -34,28 +33,6 @@ public final class SignParserToken extends LeafParserToken<Boolean> {
 
     private SignParserToken(final boolean value, final String text) {
         super(value, text);
-    }
-
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<SignParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                SignParserToken.class
-        );
-    }
-
-    // removeIf........................................................................................................
-
-    @Override
-    public Optional<SignParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                SignParserToken.class
-        );
     }
 
     // replaceFirstIf...................................................................................................
