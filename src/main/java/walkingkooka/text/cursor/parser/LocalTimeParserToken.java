@@ -18,7 +18,6 @@ package walkingkooka.text.cursor.parser;
 
 import java.time.LocalTime;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -35,28 +34,6 @@ public final class LocalTimeParserToken extends LeafParserToken<LocalTime> {
 
     private LocalTimeParserToken(final LocalTime value, final String text) {
         super(value, text);
-    }
-
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<LocalTimeParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                LocalTimeParserToken.class
-        );
-    }
-
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<LocalTimeParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                LocalTimeParserToken.class
-        );
     }
 
     // replaceFirstIf...................................................................................................

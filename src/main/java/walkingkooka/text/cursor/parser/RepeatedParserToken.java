@@ -20,7 +20,6 @@ import walkingkooka.visit.Visiting;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -58,28 +57,6 @@ public final class RepeatedParserToken extends RepeatedOrSequenceParserToken {
                 this,
                 children,
                 RepeatedParserToken::new
-        );
-    }
-
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<RepeatedParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfParent(
-                this,
-                predicate,
-                RepeatedParserToken.class
-        );
-    }
-
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<RepeatedParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfParent(
-                this,
-                predicate,
-                RepeatedParserToken.class
         );
     }
 

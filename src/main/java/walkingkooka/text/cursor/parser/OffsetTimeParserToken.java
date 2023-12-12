@@ -18,7 +18,6 @@ package walkingkooka.text.cursor.parser;
 
 import java.time.OffsetTime;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -35,28 +34,6 @@ public final class OffsetTimeParserToken extends LeafParserToken<OffsetTime> {
 
     private OffsetTimeParserToken(final OffsetTime value, final String text) {
         super(value, text);
-    }
-
-    // removeFirstIf....................................................................................................
-
-    @Override
-    public Optional<OffsetTimeParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeFirstIfLeaf(
-                this,
-                predicate,
-                OffsetTimeParserToken.class
-        );
-    }
-
-    // removeIf.........................................................................................................
-
-    @Override
-    public Optional<OffsetTimeParserToken> removeIf(final Predicate<ParserToken> predicate) {
-        return ParserToken.removeIfLeaf(
-                this,
-                predicate,
-                OffsetTimeParserToken.class
-        );
     }
 
     // replaceFirstIf...................................................................................................
