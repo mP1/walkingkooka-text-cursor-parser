@@ -17,8 +17,6 @@
 package walkingkooka.text.cursor.parser;
 
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * The parser token for a number with the value contained in a {@link Double}.
@@ -33,32 +31,6 @@ public final class DoubleParserToken extends LeafParserToken<Double> {
 
     private DoubleParserToken(final Double value, final String text) {
         super(value, text);
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public DoubleParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                            final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                DoubleParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public DoubleParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                       final Function<ParserToken, ParserToken> token) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                token,
-                DoubleParserToken.class
-        );
     }
 
     // visitor..........................................................................................................

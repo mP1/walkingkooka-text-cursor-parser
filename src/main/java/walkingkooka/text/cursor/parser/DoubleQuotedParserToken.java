@@ -17,8 +17,6 @@
 package walkingkooka.text.cursor.parser;
 
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * A {@link ParserToken} with text surrounded by double quotes.
@@ -38,32 +36,6 @@ public final class DoubleQuotedParserToken extends QuotedParserToken {
 
     private DoubleQuotedParserToken(final String value, final String text) {
         super(value, text);
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public DoubleQuotedParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                  final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                DoubleQuotedParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public DoubleQuotedParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                             final Function<ParserToken, ParserToken> token) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                token,
-                DoubleQuotedParserToken.class
-        );
     }
 
     // visitor..........................................................................................................

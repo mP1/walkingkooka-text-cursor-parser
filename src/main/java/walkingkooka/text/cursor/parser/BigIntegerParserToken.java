@@ -18,8 +18,6 @@ package walkingkooka.text.cursor.parser;
 
 import java.math.BigInteger;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * The parser token for a number with the value contained in a {@link BigInteger}.
@@ -35,32 +33,6 @@ public final class BigIntegerParserToken extends LeafParserToken<BigInteger> {
 
     private BigIntegerParserToken(final BigInteger value, final String text) {
         super(value, text);
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public BigIntegerParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                BigIntegerParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public BigIntegerParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                           final Function<ParserToken, ParserToken> token) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                token,
-                BigIntegerParserToken.class
-        );
     }
 
     // visitor..........................................................................................................

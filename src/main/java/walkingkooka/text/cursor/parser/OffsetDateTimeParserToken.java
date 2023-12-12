@@ -18,8 +18,6 @@ package walkingkooka.text.cursor.parser;
 
 import java.time.OffsetDateTime;
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * The parser token for a date+time with the value contained in a {@link OffsetDateTime}.
@@ -34,32 +32,6 @@ public final class OffsetDateTimeParserToken extends LeafParserToken<OffsetDateT
 
     private OffsetDateTimeParserToken(final OffsetDateTime value, final String text) {
         super(value, text);
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public OffsetDateTimeParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                                    final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                OffsetDateTimeParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public OffsetDateTimeParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                               final Function<ParserToken, ParserToken> token) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                token,
-                OffsetDateTimeParserToken.class
-        );
     }
 
     // visitor..........................................................................................................

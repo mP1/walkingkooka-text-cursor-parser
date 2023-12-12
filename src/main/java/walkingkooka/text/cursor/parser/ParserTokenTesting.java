@@ -604,28 +604,14 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
     // replaceFirstIf...................................................................................................
 
     @Test
-    default void testReplaceFirstIfNullTokenFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> ParserToken.replaceFirstIf(
-                        null,
-                        Predicates.fake(),
-                        Function.identity(),
-                        ParserToken.class
-                )
-        );
-    }
-
-    @Test
     default void testReplaceFirstIfNullPredicateFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> ParserToken.replaceFirstIf(
-                        this.createToken(),
-                        null,
-                        Function.identity(),
-                        ParserToken.class
-                )
+                () -> this.createToken()
+                        .replaceFirstIf(
+                                null, // predicate
+                                Function.identity() // mapper
+                        )
         );
     }
 
@@ -633,181 +619,11 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
     default void testReplaceFirstIfNullMapperFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> ParserToken.replaceFirstIf(
-                        this.createToken(),
-                        Predicates.fake(),
-                        null, // mapper
-                        ParserToken.class
-                )
-        );
-    }
-
-    @Test
-    default void testReplaceFirstIfNullTypeFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> ParserToken.replaceFirstIf(
-                        this.createToken(),
-                        Predicates.fake(),
-                        Function.identity(), // mapper
-                        null
-                )
-        );
-    }
-
-    @Test
-    default void testReplaceFirstIfLeaf() {
-        final T token = this.createToken();
-        if (token.isLeaf()) {
-            assertSame(
-                    token,
-                    token.replaceFirstIf(
-                            Predicates.always(),
-                            Function.identity() // mapper
-                    )
-            );
-        }
-    }
-
-    @Test
-    default void testReplaceFirstIfParentFirstChild() {
-        final T token = this.createToken();
-        if (token.isParent()) {
-            final List<ParserToken> children = token.children();
-            if (children.size() > 0) {
-                final int index = 0;
-
-                final ParserToken replaced = children.get(index);
-                final ParserToken with = ParserTokens.string("with", "with");
-
-                final List<ParserToken> newChildren = Lists.array();
-                newChildren.addAll(children);
-                newChildren.set(
-                        index,
-                        with
-                );
-
-                boolean skip;
-                try {
-                    token.setChildren(newChildren);
-                    skip = false;
-                } catch (final Exception cantBeEmpty) {
-                    skip = true;
-                }
-                ;
-
-                if (false == skip) {
-                    this.replaceFirstIfAndCheck(
-                            token,
-                            (t) -> t == replaced,
-                            (t) -> with, // mapper
-                            token.setChildren(newChildren)
-                    );
-                }
-            }
-        }
-    }
-
-    @Test
-    default void testReplaceFirstIfParentMiddleChild() {
-        final T token = this.createToken();
-        if (token.isParent()) {
-            final List<ParserToken> children = token.children();
-            if (children.size() > 3) {
-                final int index = 1;
-                final ParserToken replaced = children.get(index);
-                final ParserToken with = ParserTokens.string("with", "with");
-
-                final List<ParserToken> newChildren = Lists.array();
-                newChildren.addAll(children);
-                newChildren.set(
-                        index,
-                        with
-                );
-
-                boolean skip;
-                try {
-                    token.setChildren(newChildren);
-                    skip = false;
-                } catch (final Exception cantBeEmpty) {
-                    skip = true;
-                }
-
-                if (false == skip) {
-                    this.replaceFirstIfAndCheck(
-                            token,
-                            (t) -> t == replaced,
-                            (t) -> with,
-                            token.setChildren(newChildren)
-                    );
-                }
-            }
-        }
-    }
-
-    @Test
-    default void testReplaceFirstIfParentLastChild() {
-        final T token = this.createToken();
-        if (token.isParent()) {
-            final List<ParserToken> children = token.children();
-            if (children.size() > 2) {
-                final int index = children.size() - 1;
-                final ParserToken replaced = children.get(index);
-                final ParserToken with = ParserTokens.string("with", "with");
-
-                final List<ParserToken> newChildren = Lists.array();
-                newChildren.addAll(children);
-                newChildren.set(
-                        index,
-                        with
-                );
-
-                boolean skip;
-                try {
-                    token.setChildren(newChildren);
-                    skip = false;
-                } catch (final Exception cantBeEmpty) {
-                    skip = true;
-                }
-
-                if (false == skip) {
-                    this.replaceFirstIfAndCheck(
-                            token,
-                            (t) -> t == replaced,
-                            (t) -> with,
-                            token.setChildren(newChildren)
-                    );
-                }
-            }
-        }
-    }
-
-    default void replaceFirstIfAndCheck(final ParserToken token,
-                                        final Predicate<ParserToken> predicate,
-                                        final Function<ParserToken, ParserToken> mapper,
-                                        final ParserToken expected) {
-        this.checkEquals(
-                expected,
-                token.replaceFirstIf(
-                        predicate,
-                        mapper
-                ),
-                () -> token + " replaceFirstIf " + predicate + "," + mapper
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Test
-    default void testReplaceIfNullTokenFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> ParserToken.replaceIf(
-                        null,
-                        Predicates.fake(),
-                        Function.identity(), // mapper
-                        ParserToken.class
-                )
+                () -> this.createToken()
+                        .replaceFirstIf(
+                                Predicates.fake(),
+                                null
+                        )
         );
     }
 
@@ -815,12 +631,11 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
     default void testReplaceIfNullPredicateFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> ParserToken.replaceIf(
-                        this.createToken(),
-                        null,
-                        Function.identity(), // mapper
-                        ParserToken.class
-                )
+                () -> this.createToken()
+                        .replaceIf(
+                                null,
+                                Function.identity() // mapper
+                        )
         );
     }
 
@@ -828,25 +643,11 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
     default void testReplaceIfNullMapperFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> ParserToken.replaceIf(
-                        this.createToken(),
-                        Predicates.fake(),
-                        null,
-                        ParserToken.class
-                )
-        );
-    }
-
-    @Test
-    default void testReplaceIfNullTypeFails() {
-        assertThrows(
-                NullPointerException.class,
-                () -> ParserToken.replaceIf(
-                        this.createToken(),
-                        Predicates.fake(),
-                        Function.identity(), // mapper
-                        null
-                )
+                () -> this.createToken()
+                        .replaceIf(
+                                Predicates.fake(),
+                                null // mapper
+                        )
         );
     }
 

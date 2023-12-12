@@ -17,8 +17,6 @@
 package walkingkooka.text.cursor.parser;
 
 import java.util.Objects;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * The parser token for a matched string.
@@ -34,32 +32,6 @@ public final class StringParserToken extends LeafParserToken<String> {
 
     private StringParserToken(final String value, final String text) {
         super(value, text);
-    }
-
-    // replaceFirstIf...................................................................................................
-
-    @Override
-    public StringParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                                            final Function<ParserToken, ParserToken> mapper) {
-        return ParserToken.replaceFirstIf(
-                this,
-                predicate,
-                mapper,
-                StringParserToken.class
-        );
-    }
-
-    // replaceIf........................................................................................................
-
-    @Override
-    public StringParserToken replaceIf(final Predicate<ParserToken> predicate,
-                                       final Function<ParserToken, ParserToken> token) {
-        return ParserToken.replaceIf(
-                this,
-                predicate,
-                token,
-                StringParserToken.class
-        );
     }
 
     // visitor..........................................................................................................

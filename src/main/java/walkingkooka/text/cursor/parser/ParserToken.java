@@ -238,28 +238,13 @@ public interface ParserToken extends HasText,
      * Walks the token graph starting at this token, using the {@link Predicate} to find a match using the {@link Function}
      * to supply the replacement.
      */
-    ParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
-                               final Function<ParserToken, ParserToken> mapper);
-
-    /**
-     * Helper invoked by {@link ParserToken#replaceFirstIf(Predicate, Function)}.
-     */
-    static <T extends ParserToken> T replaceFirstIf(final ParserToken token,
-                                                    final Predicate<ParserToken> predicate,
-                                                    final Function<ParserToken, ParserToken> mapper,
-                                                    final Class<T> type) {
-        checkToken(token);
-        checkPredicate(predicate);
-        Objects.requireNonNull(mapper, "mapper");
-        checkType(type);
-
-        final boolean[] stop = new boolean[1];
+    default ParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
+                                       final Function<ParserToken, ParserToken> mapper) {
         return ParserTokens.replaceFirstIf(
-                token,
+                this,
                 predicate,
-                mapper,
-                stop
-        ).cast(type);
+                mapper
+        );
     }
 
     // replaceIf....................................................................................................
@@ -268,30 +253,13 @@ public interface ParserToken extends HasText,
      * Walks the token graph starting at this token, using the {@link Predicate} to find a match and when found replaces
      * the match with the given {@link ParserToken}. Unlike {@link #removeFirstIf(Predicate)} this works on leaf tokens.
      */
-    ParserToken replaceIf(final Predicate<ParserToken> predicate,
-                          final Function<ParserToken, ParserToken> mapper);
-
-    /**
-     * Helper invoked by {@link ParserToken#replaceIf(Predicate, Function)}.
-     */
-    static <T extends ParserToken> T replaceIf(final ParserToken token,
-                                               final Predicate<ParserToken> predicate,
-                                               final Function<ParserToken, ParserToken> mapper,
-                                               final Class<T> type) {
-        checkToken(token);
-        checkPredicate(predicate);
-        Objects.requireNonNull(mapper, "replacement");
-        checkType(type);
-
+    default ParserToken replaceIf(final Predicate<ParserToken> predicate,
+                                  final Function<ParserToken, ParserToken> mapper) {
         return ParserTokens.replaceIf(
-                token,
+                this,
                 predicate,
                 mapper
-        ).cast(type);
-    }
-
-    private static <T extends ParserToken> T checkParent(final T parent) {
-        return Objects.requireNonNull(parent, "parent");
+        );
     }
 
     private static Predicate<ParserToken> checkPredicate(final Predicate<ParserToken> predicate) {
