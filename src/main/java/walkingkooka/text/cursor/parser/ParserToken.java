@@ -114,7 +114,7 @@ public interface ParserToken extends HasText,
      */
     static <T extends ParserToken> T leafSetChildren(final T token,
                                                      final List<ParserToken> children) {
-        checkToken(token);
+        Objects.requireNonNull(token, "token");
         Objects.requireNonNull(children, "children");
 
         if (false == children.isEmpty()) {
@@ -137,8 +137,9 @@ public interface ParserToken extends HasText,
     static <T extends ParserToken> T parentSetChildren(final T token,
                                                        final List<ParserToken> children,
                                                        final BiFunction<List<ParserToken>, String, T> factory) {
-        checkToken(token);
+        Objects.requireNonNull(token, "token");
         Objects.requireNonNull(children, "children");
+
         final List<ParserToken> copy = Lists.immutable(children);
         Objects.requireNonNull(factory, "factory");
 
@@ -156,7 +157,7 @@ public interface ParserToken extends HasText,
      * Walks the graph starting at this {@link ParserToken} until the {@link Predicate} returns true.
      */
     default Optional<ParserToken> findFirst(final Predicate<ParserToken> predicate) {
-        checkPredicate(predicate);
+        Objects.requireNonNull(predicate, "predicate");
 
         Optional<ParserToken> result = Optional.empty();
 
@@ -182,7 +183,7 @@ public interface ParserToken extends HasText,
      */
     default void findIf(final Predicate<ParserToken> predicate,
                         final Consumer<ParserToken> consumer) {
-        checkPredicate(predicate);
+        Objects.requireNonNull(predicate, "predicate");
         Objects.requireNonNull(consumer, "consumer");
 
         if (predicate.test(this)) {
@@ -260,18 +261,6 @@ public interface ParserToken extends HasText,
                 predicate,
                 mapper
         );
-    }
-
-    private static Predicate<ParserToken> checkPredicate(final Predicate<ParserToken> predicate) {
-        return Objects.requireNonNull(predicate, "predicate");
-    }
-
-    private static ParserToken checkToken(final ParserToken token) {
-        return Objects.requireNonNull(token, "token");
-    }
-
-    private static <T extends ParserToken> Class<T> checkType(final Class<T> type) {
-        return Objects.requireNonNull(type, "type");
     }
 
     // ParserTokenVisitor...............................................................................................
