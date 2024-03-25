@@ -17,6 +17,7 @@
 
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.CanBeEmpty;
 import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
@@ -36,7 +37,8 @@ import java.util.stream.Collectors;
 /**
  * Represents a result of a parser attempt to consume a {@link walkingkooka.text.cursor.TextCursor}
  */
-public interface ParserToken extends HasText,
+public interface ParserToken extends CanBeEmpty,
+        HasText,
         TreePrintable {
 
     /**
@@ -336,5 +338,12 @@ public interface ParserToken extends HasText,
 
             printer.outdent();
         }
+    }
+
+    // CanBeEmpty........................................................................................................
+
+    @Override
+    default boolean isEmpty() {
+        return this.children().isEmpty();
     }
 }
