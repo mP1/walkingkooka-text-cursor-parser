@@ -17,8 +17,10 @@
 package walkingkooka.text.cursor.parser;
 
 import walkingkooka.Cast;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursors;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -33,6 +35,29 @@ public interface Parser<C extends ParserContext> {
      * Attempts to parse the text given by the {@link TextCursor}, only advancing if the required token was matched.
      */
     Optional<ParserToken> parse(final TextCursor cursor, final C context);
+
+    /**
+     * Helper that parses the given text, failing if the text was not consumed completely.
+     */
+    default ParserToken parseText(final String text,
+                                  final C context) {
+        try {
+            return this.orFailIfCursorNotEmpty(
+                    ParserReporters.basic()
+            ).parse(
+                    TextCursors.charSequence(text),
+                    context
+            ).orElseThrow(() -> new InvalidCharacterException(text, 0));
+        } catch (final ParserReporterException cause) {
+            throw new InvalidCharacterException(
+                    text,
+                    cause.lineInfo()
+                            .textOffset()
+            );
+        } catch (final ParserException cause) {
+            throw new IllegalArgumentException(cause.getCause());
+        }
+    }
 
     /**
      * Adds a post condition, namely this {@link Parser} when it returns a {@link ParserToken} must also be empty,
