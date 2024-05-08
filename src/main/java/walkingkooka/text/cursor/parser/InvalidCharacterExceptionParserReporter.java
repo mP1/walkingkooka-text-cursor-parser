@@ -58,8 +58,6 @@ final class InvalidCharacterExceptionParserReporter<C extends ParserContext> imp
         Objects.requireNonNull(parser, "parser");
 
         final TextCursorLineInfo lineInfo = cursor.lineInfo();
-        final String text = lineInfo.text()
-                .toString();
 
         throw new InvalidCharacterException(
                 lineInfo.text()
