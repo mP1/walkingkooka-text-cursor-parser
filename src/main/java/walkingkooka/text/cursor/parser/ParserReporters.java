@@ -43,6 +43,13 @@ public final class ParserReporters implements PublicStaticHelper {
     }
 
     /**
+     * {@see InvalidCharacterExceptionAndExpectedParserReporter}.
+     */
+    public static <C extends ParserContext> ParserReporter<C> invalidCharacterExceptionAndExpected() {
+        return InvalidCharacterExceptionAndExpectedParserReporter.get();
+    }
+
+    /**
      * Stop creation.
      */
     private ParserReporters() {
