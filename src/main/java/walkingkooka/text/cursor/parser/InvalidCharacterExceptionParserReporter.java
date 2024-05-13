@@ -27,6 +27,9 @@ import java.util.Optional;
 
 /**
  * A {@link ParserReporter} that throws an {@link walkingkooka.InvalidCharacterException}.
+ * <pre>
+ * Invalid character 'X' at pos 123
+ * </pre>
  */
 final class InvalidCharacterExceptionParserReporter<C extends ParserContext> implements ParserReporter<C> {
 
