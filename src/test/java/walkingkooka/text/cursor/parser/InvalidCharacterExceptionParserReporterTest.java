@@ -20,7 +20,9 @@ package walkingkooka.text.cursor.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.text.cursor.MaxPositionTextCursor;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -38,6 +40,36 @@ public final class InvalidCharacterExceptionParserReporterTest implements Parser
         final InvalidCharacterException thrown = assertThrows(
                 InvalidCharacterException.class,
                 () -> this.report(cursor, this.createContext(), Parsers.fake())
+        );
+
+        this.checkEquals(
+                new InvalidCharacterException(text, 2).getMessage(),
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testNotEmptyWhenMaxPositionTextCursor() {
+        final String text = "Hello";
+
+        final MaxPositionTextCursor cursor = TextCursors.maxPosition(
+                TextCursors.charSequence(text)
+        );
+
+        final TextCursorSavePoint save = cursor.save();
+
+        cursor.next();
+        cursor.next();
+
+        save.restore();
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> this.report(
+                        cursor,
+                        this.createContext(),
+                        Parsers.fake()
+                )
         );
 
         this.checkEquals(
