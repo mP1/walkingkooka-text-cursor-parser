@@ -19,6 +19,7 @@ package walkingkooka.text.cursor.parser;
 
 import walkingkooka.Cast;
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.text.cursor.MaxPositionTextCursor;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorLineInfo;
 
@@ -30,6 +31,7 @@ import java.util.Optional;
  * <pre>
  * Invalid character 'X' at pos 123
  * </pre>
+ * Note if the cursor is a {@link MaxPositionTextCursor} then that position will be compard against the current and the greater returned.
  */
 final class InvalidCharacterExceptionParserReporter<C extends ParserContext> implements ParserReporter<C> {
 
@@ -65,8 +67,31 @@ final class InvalidCharacterExceptionParserReporter<C extends ParserContext> imp
         throw new InvalidCharacterException(
                 lineInfo.text()
                         .toString(),
-                cursor.isEmpty() ? 0 : lineInfo.textOffset()
+                cursor.isEmpty() ?
+                        0 : // if cursor is empty prolly best to complain with pos = 0
+                        lineInfoTextOffsetOrMaxPositionTextCursor(
+                                cursor,
+                                lineInfo
+                        )
         );
+    }
+
+    /**
+     * Special cases if the {@link TextCursor} is a {@link MaxPositionTextCursor} return its max rather than 0.
+     */
+    private int lineInfoTextOffsetOrMaxPositionTextCursor(final TextCursor cursor,
+                                                          final TextCursorLineInfo lineInfo) {
+        int pos = lineInfo.textOffset();
+
+        if (cursor instanceof MaxPositionTextCursor) {
+            final MaxPositionTextCursor max = (MaxPositionTextCursor) cursor;
+            pos = Math.max(
+                    max.max(),
+                    pos
+            );
+        }
+
+        return pos;
     }
 
     @Override
