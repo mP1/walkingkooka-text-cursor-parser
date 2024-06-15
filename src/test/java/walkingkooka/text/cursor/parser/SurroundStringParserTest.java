@@ -50,57 +50,57 @@ public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStr
     }
 
     @Test
-    public void testOpenIncomplete() {
+    public void testParseOpenIncomplete() {
         this.parseFailAndCheck("<");
     }
 
     @Test
-    public void testOpenIncomplete2() {
+    public void testParseOpenIncomplete2() {
         this.parseFailAndCheck("<!");
     }
 
     @Test
-    public void testOpen() {
+    public void testParseOpen() {
         this.parseFailAndCheck(OPEN);
     }
 
     @Test
-    public void testOpenWithoutClose() {
+    public void testParseOpenWithoutClose() {
         this.parseFailAndCheck(OPEN + ".");
     }
 
     @Test
-    public void testOpenWithoutClose2() {
+    public void testParseOpenWithoutClose2() {
         this.parseFailAndCheck(OPEN + "..");
     }
 
     @Test
-    public void testCloseIncomplete() {
+    public void testParseCloseIncomplete() {
         this.parseFailAndCheck(OPEN + "..." + CLOSE.substring(0, 1));
     }
 
     @Test
-    public void testCloseIncomplete2() {
+    public void testParseCloseIncomplete2() {
         this.parseFailAndCheck(OPEN + "..." + CLOSE.substring(0, 2));
     }
 
     @Test
-    public void testClose() {
+    public void testParseClose() {
         this.parseAndCheck2(OPEN + "..." + CLOSE);
     }
 
     @Test
-    public void testClose2() {
+    public void testParseClose2() {
         this.parseAndCheck2(OPEN + "..." + CLOSE.substring(0, 2) + CLOSE);
     }
 
     @Test
-    public void testClose3() {
+    public void testParseClose3() {
         this.parseAndCheck2(OPEN + "..." + CLOSE.substring(0, 2) + "." + CLOSE);
     }
 
     @Test
-    public void testClose4() {
+    public void testParseClose4() {
         this.parseAndCheck2(OPEN + "..." + OPEN + "." + CLOSE);
     }
 
@@ -113,12 +113,6 @@ public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStr
         final String text = OPEN + "..." + OPEN + "." + CLOSE;
         final String textAfter = "!@#";
         this.parseAndCheck(text + textAfter, string(text), text, textAfter);
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createParser(),
-                CharSequences.quoteAndEscape(OPEN) + "*" + CharSequences.quoteAndEscape(CLOSE));
     }
 
     private StringParserToken string(final String text) {
@@ -155,6 +149,14 @@ public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStr
     @Override
     public SurroundStringParser<ParserContext> createObject() {
         return this.createParser();
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createParser(),
+                CharSequences.quoteAndEscape(OPEN) + "*" + CharSequences.quoteAndEscape(CLOSE));
     }
 
     // Class............................................................................................................
