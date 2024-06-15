@@ -141,4 +141,31 @@ final class StringInitialAndPartCharPredicateParser<C extends ParserContext> ext
                 toString
         );
     }
+
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                this.initial,
+                this.part,
+                this.minLength,
+                this.maxLength,
+                this.toString
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof StringInitialAndPartCharPredicateParser && this.equals0((StringInitialAndPartCharPredicateParser<?>) other);
+    }
+
+    private boolean equals0(final StringInitialAndPartCharPredicateParser<?> other) {
+        return this.initial.equals(other.initial) &&
+                this.part.equals(other.part) &&
+                this.minLength == other.minLength &&
+                this.maxLength == other.maxLength &&
+                this.toString.equals(other.toString);
+    }
 }
