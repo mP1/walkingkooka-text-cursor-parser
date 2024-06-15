@@ -189,6 +189,13 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
         );
     }
 
+    @Test
+    public void testEqualsDifferentToString() {
+        this.checkNotEquals(
+                this.createParser().setToString("Different")
+        );
+    }
+
     @Override
     public ReportingParser<ParserContext> createObject() {
         return this.createParser();

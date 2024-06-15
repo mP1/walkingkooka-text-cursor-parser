@@ -110,7 +110,8 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
         return Objects.hash(
                 this.condition,
                 this.reporter,
-                this.parser
+                this.parser,
+                this.toString
         );
     }
 
@@ -123,6 +124,7 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
     private boolean equals0(final ReportingParser<?> other) {
         return this.condition.equals(other.condition) &&
                 this.reporter.equals(other.reporter) &&
-                this.parser.equals(other.parser);
+                this.parser.equals(other.parser) &&
+                this.toString.equals(other.toString);
     }
 }
