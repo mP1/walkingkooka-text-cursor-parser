@@ -18,13 +18,15 @@ package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.cursor.TextCursor;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class CharacterCharPredicateParserTest extends NonEmptyParserTestCase<CharacterCharPredicateParser<ParserContext>, CharacterParserToken> {
+public final class CharacterCharPredicateParserTest extends NonEmptyParserTestCase<CharacterCharPredicateParser<ParserContext>, CharacterParserToken>
+        implements HashCodeEqualsDefinedTesting2<CharacterCharPredicateParser<ParserContext>> {
 
     private final static CharPredicate DIGITS = CharPredicates.digit();
 
@@ -87,6 +89,26 @@ public final class CharacterCharPredicateParserTest extends NonEmptyParserTestCa
         return this.parseAndCheck(cursor, CharacterParserToken.with(value, text), text, textAfter);
     }
 
+    // hashcode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentCharPredicate() {
+        this.checkNotEquals(
+                CharacterCharPredicateParser.with(
+                        CharPredicates.fake()
+                ),
+                CharacterCharPredicateParser.with(
+                        CharPredicates.fake()
+                )
+        );
+    }
+
+    @Override
+    public CharacterCharPredicateParser<ParserContext> createObject() {
+        return this.createParser();
+    }
+
+    // Class............................................................................................................
 
     @Override
     public Class<CharacterCharPredicateParser<ParserContext>> type() {

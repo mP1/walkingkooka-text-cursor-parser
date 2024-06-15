@@ -70,4 +70,21 @@ final class CharacterCharPredicateParser<C extends ParserContext> extends NonEmp
                 toString
         );
     }
+
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.predicate.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof CharacterCharPredicateParser && this.equals0((CharacterCharPredicateParser<?>) other);
+    }
+
+    private boolean equals0(final CharacterCharPredicateParser<?> other) {
+        return this.predicate.equals(other.predicate);
+    }
 }
