@@ -20,6 +20,7 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -119,5 +120,28 @@ final class SurroundStringParser<C extends ParserContext> extends NonEmptyParser
                 this.close,
                 toString
         );
+    }
+
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                this.open,
+                this.close,
+                this.toString
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof SurroundStringParser && this.equals0((SurroundStringParser<?>) other);
+    }
+
+    private boolean equals0(final SurroundStringParser<?> other) {
+        return this.open.equals(other.open) &&
+                this.close.equals(other.close) &&
+                this.toString.equals(other.toString);
     }
 }
