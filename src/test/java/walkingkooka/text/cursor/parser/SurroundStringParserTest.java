@@ -127,7 +127,7 @@ public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStr
     // hashCode/equals...................................................................................................
 
     @Test
-    public void testDifferentOpen() {
+    public void testEqualsDifferentOpen() {
         this.checkNotEquals(
                 SurroundStringParser.with(
                         "different",
@@ -137,7 +137,7 @@ public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStr
     }
 
     @Test
-    public void testDifferentClose() {
+    public void testEqualsDifferentClose() {
         this.checkNotEquals(
                 SurroundStringParser.with(
                         OPEN,
