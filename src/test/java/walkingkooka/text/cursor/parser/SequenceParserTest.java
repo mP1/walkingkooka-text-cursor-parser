@@ -52,37 +52,37 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     }
 
     @Test
-    public void testNone() {
+    public void testParseNone() {
         this.parseFailAndCheck("a");
     }
 
     @Test
-    public void testNone2() {
+    public void testParseNone2() {
         this.parseFailAndCheck("ab");
     }
 
     @Test
-    public void testMissingRequired() {
+    public void testParseMissingRequired() {
         this.parseFailAndCheck(TEXT1);
     }
 
     @Test
-    public void testMissingRequired2() {
+    public void testParseMissingRequired2() {
         this.parseFailAndCheck(TEXT1 + "x");
     }
 
     @Test
-    public void testMissingRequired3() {
+    public void testParseMissingRequired3() {
         this.parseFailAndCheck(TEXT1 + "xy");
     }
 
     @Test
-    public void testMissingRequired4() {
+    public void testParseMissingRequired4() {
         this.parseFailAndCheck(TEXT1 + TEXT3);
     }
 
     @Test
-    public void testMissingOptionalFirst() {
+    public void testParseMissingOptionalFirst() {
         final String text = TEXT2 + TEXT1;
         this.parseAndCheck(SequenceParserBuilder.empty()
                         .optional(PARSER3)
@@ -96,7 +96,7 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     }
 
     @Test
-    public void testAllOptionalFail() {
+    public void testParseAllOptionalFail() {
         this.parseFailAndCheck(SequenceParserBuilder.empty()
                         .optional(PARSER3)
                         .optional(PARSER2)
@@ -106,23 +106,23 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     }
 
     @Test
-    public void testOutOfOrder() {
+    public void testParseOutOfOrder() {
         this.parseFailAndCheck(TEXT2 + TEXT1);
     }
 
     @Test
-    public void testOutOfOrder2() {
+    public void testParseOutOfOrder2() {
         this.parseFailAndCheck(TEXT3 + TEXT2 + TEXT1);
     }
 
     @Test
-    public void testAllRequiredMissingOptional() {
+    public void testParseAllRequiredMissingOptional() {
         final String text = TEXT1 + TEXT2;
         this.parseAndCheck(text, SEQUENCE_MISSING, text, "");
     }
 
     @Test
-    public void testAllRequiredMissingOptional2() {
+    public void testParseAllRequiredMissingOptional2() {
         final String text = TEXT1 + TEXT2;
         final String textAfter = "...";
         this.parseAndCheck(text + textAfter,
@@ -132,7 +132,7 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     }
 
     @Test
-    public void testAllRequiredMissingOptional3() {
+    public void testParseAllRequiredMissingOptional3() {
         final String text = TEXT1 + TEXT2;
         final String textAfter = "12";
         this.parseAndCheck(text + textAfter,
@@ -142,7 +142,7 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     }
 
     @Test
-    public void testAllRequiredAndOptional() {
+    public void testParseAllRequiredAndOptional() {
         final String text = TEXT1 + TEXT2 + TEXT3;
         this.parseAndCheck(text,
                 SEQUENCE_TOKEN3,
@@ -151,7 +151,7 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     }
 
     @Test
-    public void testAllRequiredAndOptional2() {
+    public void testParseAllRequiredAndOptional2() {
         final String text = TEXT1 + TEXT2 + TEXT3;
         final String textAfter = "...";
         this.parseAndCheck(text + textAfter,
@@ -159,6 +159,25 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
                 text,
                 textAfter);
     }
+
+    @Override
+    public SequenceParser<ParserContext> createParser() {
+        return Cast.to(SequenceParserBuilder.empty()
+                .required(PARSER1)
+                .required(PARSER2)
+                .optional(PARSER3)
+                .build());
+    }
+
+    private static Parser<ParserContext> parser(final String string) {
+        return Parsers.string(string, CaseSensitivity.SENSITIVE);
+    }
+
+    private static StringParserToken string(final String s) {
+        return ParserTokens.string(s, s);
+    }
+
+    // equals...........................................................................................................
 
     @Test
     public void testEqualWithoutNames() {
@@ -195,36 +214,23 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
                 .build());
     }
 
+    @Override
+    public SequenceParser<ParserContext> createObject() {
+        return this.createParser();
+    }
+
+    // toString.........................................................................................................
+
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createParser(),
                 "(" + PARSER1 + ", " + PARSER2 + ", [" + PARSER3 + "])");
     }
 
-    @Override
-    public SequenceParser<ParserContext> createParser() {
-        return Cast.to(SequenceParserBuilder.empty()
-                .required(PARSER1)
-                .required(PARSER2)
-                .optional(PARSER3)
-                .build());
-    }
-
-    private static Parser<ParserContext> parser(final String string) {
-        return Parsers.string(string, CaseSensitivity.SENSITIVE);
-    }
-
-    private static StringParserToken string(final String s) {
-        return ParserTokens.string(s, s);
-    }
+    // Class............................................................................................................
 
     @Override
     public Class<SequenceParser<ParserContext>> type() {
         return Cast.to(SequenceParser.class);
-    }
-
-    @Override
-    public SequenceParser<ParserContext> createObject() {
-        return this.createParser();
     }
 }
