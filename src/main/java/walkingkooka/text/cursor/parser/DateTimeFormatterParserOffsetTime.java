@@ -55,4 +55,11 @@ final class DateTimeFormatterParserOffsetTime<C extends ParserContext> extends D
                 toString
         );
     }
+
+    // Object...........................................................................................................
+
+    @Override
+    boolean canBeEqual(final Object other) {
+        return other instanceof DateTimeFormatterParserOffsetTime;
+    }
 }

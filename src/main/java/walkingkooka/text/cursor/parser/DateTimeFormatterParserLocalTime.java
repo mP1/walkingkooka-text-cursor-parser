@@ -55,4 +55,11 @@ final class DateTimeFormatterParserLocalTime<C extends ParserContext> extends Da
                 toString
         );
     }
+
+    // Object...........................................................................................................
+
+    @Override
+    boolean canBeEqual(final Object other) {
+        return other instanceof DateTimeFormatterParserLocalTime;
+    }
 }
