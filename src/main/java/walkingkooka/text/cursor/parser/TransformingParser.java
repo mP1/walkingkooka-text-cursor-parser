@@ -76,7 +76,10 @@ final class TransformingParser<C extends ParserContext> extends ParserWrapper<C>
 
     @Override
     public int hashCode() {
-        return this.parser.hashCode();
+        return Objects.hash(
+                this.parser,
+                this.toString
+        );
     }
 
     @Override
@@ -87,6 +90,7 @@ final class TransformingParser<C extends ParserContext> extends ParserWrapper<C>
 
     private boolean equals0(final TransformingParser<?> other) {
         return this.parser.equals(other.parser) &&
-                this.transformer.equals(other.transformer);
+                this.transformer.equals(other.transformer) &&
+                this.toString.equals(other.toString);
     }
 }
