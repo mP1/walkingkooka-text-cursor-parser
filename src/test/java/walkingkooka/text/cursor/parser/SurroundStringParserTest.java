@@ -18,11 +18,13 @@ package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.text.CharSequences;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStringParser<ParserContext>, StringParserToken> {
+public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStringParser<ParserContext>, StringParserToken>
+        implements HashCodeEqualsDefinedTesting2<SurroundStringParser<ParserContext>> {
 
     private final static String OPEN = "<123";
     private final static String CLOSE = "456";
@@ -127,6 +129,35 @@ public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStr
     public SurroundStringParser<ParserContext> createParser() {
         return SurroundStringParser.with(OPEN, CLOSE);
     }
+
+    // hashCode/equals...................................................................................................
+
+    @Test
+    public void testDifferentOpen() {
+        this.checkNotEquals(
+                SurroundStringParser.with(
+                        "different",
+                        CLOSE
+                )
+        );
+    }
+
+    @Test
+    public void testDifferentClose() {
+        this.checkNotEquals(
+                SurroundStringParser.with(
+                        OPEN,
+                        "different"
+                )
+        );
+    }
+
+    @Override
+    public SurroundStringParser<ParserContext> createObject() {
+        return this.createParser();
+    }
+
+    // Class............................................................................................................
 
     @Override
     public Class<SurroundStringParser<ParserContext>> type() {
