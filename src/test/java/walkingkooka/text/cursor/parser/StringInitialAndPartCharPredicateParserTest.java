@@ -18,12 +18,14 @@ package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyParserTestCase<StringInitialAndPartCharPredicateParser<ParserContext>, StringParserToken> {
+public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyParserTestCase<StringInitialAndPartCharPredicateParser<ParserContext>, StringParserToken>
+        implements HashCodeEqualsDefinedTesting2<StringInitialAndPartCharPredicateParser<ParserContext>> {
 
     private final static CharPredicate INITIAL = CharPredicates.letter();
     private final static CharPredicate PART = CharPredicates.digit();
@@ -147,6 +149,63 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     private StringInitialAndPartCharPredicateParser<ParserContext> createParser(final int min, final int max) {
         return StringInitialAndPartCharPredicateParser.with(INITIAL, PART, min, max);
     }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentInitialCharPredicate() {
+        this.checkNotEquals(
+                StringInitialAndPartCharPredicateParser.with(
+                        CharPredicates.fake(),
+                        PART,
+                        MIN_LENGTH,
+                        MAX_LENGTH
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentPartCharPredicate() {
+        this.checkNotEquals(
+                StringInitialAndPartCharPredicateParser.with(
+                        INITIAL,
+                        CharPredicates.fake(),
+                        MIN_LENGTH,
+                        MAX_LENGTH
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentMinLength() {
+        this.checkNotEquals(
+                StringInitialAndPartCharPredicateParser.with(
+                        INITIAL,
+                        PART,
+                        MIN_LENGTH + 1,
+                        MAX_LENGTH
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentMaxLength() {
+        this.checkNotEquals(
+                StringInitialAndPartCharPredicateParser.with(
+                        INITIAL,
+                        PART,
+                        MIN_LENGTH,
+                        MAX_LENGTH + 1
+                )
+        );
+    }
+
+    @Override
+    public StringInitialAndPartCharPredicateParser<ParserContext> createObject() {
+        return this.createParser();
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<StringInitialAndPartCharPredicateParser<ParserContext>> type() {
