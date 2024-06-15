@@ -71,4 +71,22 @@ final class AndEmptyTextCursorParser<C extends ParserContext> extends ParserWrap
                 toString
         );
     }
+
+    // Object..........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return this.parser.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof AndEmptyTextCursorParser && this.equals0((AndEmptyTextCursorParser<?>) other);
+    }
+
+    private boolean equals0(final AndEmptyTextCursorParser<?> other) {
+        return this.parser.equals(other.parser) &&
+                this.toString.equals(other.toString);
+    }
 }

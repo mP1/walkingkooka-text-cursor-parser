@@ -18,11 +18,13 @@ package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.text.CaseSensitivity;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<AndEmptyTextCursorParser<ParserContext>> {
+public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<AndEmptyTextCursorParser<ParserContext>>
+        implements HashCodeEqualsDefinedTesting2<AndEmptyTextCursorParser<ParserContext>> {
 
     private final static String STRING = "abc";
     private final static Parser<ParserContext> WRAPPED = Parsers.string(STRING, CaseSensitivity.SENSITIVE);
@@ -73,6 +75,31 @@ public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<An
     Parser<ParserContext> wrappedParser() {
         return WRAPPED;
     }
+
+    // hashCode/Equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentParser() {
+        this.checkNotEquals(
+                AndEmptyTextCursorParser.with(Parsers.fake()),
+                AndEmptyTextCursorParser.with(Parsers.fake())
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentToString() {
+        this.checkNotEquals(
+                AndEmptyTextCursorParser.with(WRAPPED),
+                AndEmptyTextCursorParser.with(WRAPPED).setToString("different")
+        );
+    }
+
+    @Override
+    public AndEmptyTextCursorParser<ParserContext> createObject() {
+        return this.createParser();
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<AndEmptyTextCursorParser<ParserContext>> type() {
