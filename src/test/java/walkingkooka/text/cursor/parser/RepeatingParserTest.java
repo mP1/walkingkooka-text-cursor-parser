@@ -18,6 +18,7 @@ package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursors;
@@ -26,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<ParserContext>,
-        RepeatedParserToken> {
+        RepeatedParserToken> implements HashCodeEqualsDefinedTesting2<RepeatingParser<ParserContext>> {
 
     private final static String TEXT = "abc";
     private final static Parser<ParserContext> PARSER = Parsers.string(TEXT, CaseSensitivity.SENSITIVE);
@@ -122,6 +123,33 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
     private static StringParserToken string(final String s) {
         return ParserTokens.string(s, s);
     }
+
+    // hashCode/equals...................................................................................................
+
+    @Test
+    public void testEqualsDifferentParser() {
+        this.checkNotEquals(
+                RepeatingParser.with(
+                        Parsers.fake()
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentToString() {
+        this.checkNotEquals(
+                RepeatingParser.with(
+                        PARSER
+                ).setToString("different to string")
+        );
+    }
+
+    @Override
+    public RepeatingParser<ParserContext> createObject() {
+        return this.createParser();
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<RepeatingParser<ParserContext>> type() {
