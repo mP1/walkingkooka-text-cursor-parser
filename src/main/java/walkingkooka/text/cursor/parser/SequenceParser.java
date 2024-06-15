@@ -21,6 +21,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -32,8 +33,10 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C> {
      * Factory method only called by {@link SequenceParserBuilder#build()}
      */
     static <C extends ParserContext> SequenceParser<C> with(final List<SequenceParserComponent<C>> components) {
+        Objects.requireNonNull(components, "components");
+
         return new SequenceParser<>(
-                components,
+                Lists.immutable(components),
                 SequenceParserComponent.toString(components)
         );
     }

@@ -22,6 +22,8 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CaseSensitivity;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public final class SequenceParserTest extends NonEmptyParserTestCase<SequenceParser<ParserContext>, SequenceParserToken>
         implements HashCodeEqualsDefinedTesting2<SequenceParser<ParserContext>> {
 
@@ -40,6 +42,14 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     private final static SequenceParserToken SEQUENCE_TOKEN3 = ParserTokens.sequence(
             Lists.of(TOKEN1, TOKEN2, TOKEN3),
             TEXT1 + TEXT2 + TEXT3);
+
+    @Test
+    public void testWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> SequenceParser.with(null)
+        );
+    }
 
     @Test
     public void testNone() {
