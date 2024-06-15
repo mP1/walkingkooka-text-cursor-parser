@@ -44,17 +44,17 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
     }
 
     @Test
-    public void testIncomplete() {
+    public void testParseIncomplete() {
         this.parseFailAndCheck("a");
     }
 
     @Test
-    public void testIncomplete2() {
+    public void testParseIncomplete2() {
         this.parseFailAndCheck("ab");
     }
 
     @Test
-    public void testOnce() {
+    public void testParseOnce() {
         this.parseAndCheck(TEXT,
                 RepeatedParserToken.with(Lists.of(string(TEXT)), TEXT),
                 TEXT,
@@ -62,7 +62,7 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
     }
 
     @Test
-    public void testTwiceDifferentTokens() {
+    public void testParseTwiceDifferentTokens() {
         final String text1 = "'123'";
         final String text2 = "'4'";
         final String all = text1 + text2;
@@ -77,7 +77,7 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
     }
 
     @Test
-    public void testMultipleTokensAndTextAfter() {
+    public void testParseMultipleTokensAndTextAfter() {
         final String text1 = "'123'";
         final String text2 = "'4'";
         final String all = text1 + text2;
@@ -97,7 +97,7 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
     }
 
     @Test
-    public void testUntilUnmatched() {
+    public void testParseUntilUnmatched() {
         this.parseAndCheck(TEXT + "!!",
                 RepeatedParserToken.with(Lists.of(string(TEXT)), TEXT),
                 TEXT,
@@ -105,14 +105,9 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
     }
 
     @Test
-    public void testRepeating2() {
+    public void testParseRepeating2() {
         final RepeatingParser<ParserContext> parser = this.createParser();
         assertSame(parser, parser.repeating());
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createParser(), "{" + PARSER + "}");
     }
 
     @Override
@@ -147,6 +142,13 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
     @Override
     public RepeatingParser<ParserContext> createObject() {
         return this.createParser();
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createParser(), "{" + PARSER + "}");
     }
 
     // class............................................................................................................
