@@ -106,4 +106,29 @@ final class StringCharPredicateParser<C extends ParserContext> extends NonEmptyP
                 toString
         );
     }
+
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                this.predicate,
+                this.minLength,
+                this.maxLength,
+                this.toString
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof StringCharPredicateParser && this.equals0((StringCharPredicateParser<?>) other);
+    }
+
+    private boolean equals0(final StringCharPredicateParser<?> other) {
+        return this.predicate.equals(other.predicate) &&
+                this.minLength == other.minLength &&
+                this.maxLength == other.maxLength &&
+                this.toString.equals(other.toString);
+    }
 }
