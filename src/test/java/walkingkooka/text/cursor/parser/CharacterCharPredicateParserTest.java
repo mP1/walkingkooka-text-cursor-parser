@@ -32,44 +32,44 @@ public final class CharacterCharPredicateParserTest extends NonEmptyParserTestCa
 
     @Test
     public void testWithNullCharPredicateFails() {
-        assertThrows(NullPointerException.class, () -> CharacterCharPredicateParser.with(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> CharacterCharPredicateParser.with(null)
+        );
     }
 
+    // parse............................................................................................................
+
     @Test
-    public void testFailure() {
+    public void testParseFailure() {
         this.parseFailAndCheck("a");
     }
 
     @Test
-    public void testFailure2() {
+    public void testParseFailure2() {
         this.parseFailAndCheck("abc");
     }
 
     @Test
-    public void testSuccess() {
+    public void testParseSuccess() {
         this.parseAndCheck2("1", '1', "1");
     }
 
     @Test
-    public void testSuccess2() {
+    public void testParseSuccess2() {
         this.parseAndCheck2("2", '2', "2");
     }
 
     @Test
-    public void testSuccess3() {
+    public void testParseSuccess3() {
         this.parseAndCheck2("2abc", '2', "2", "abc");
     }
 
     @Test
-    public void testMultiple() {
+    public void testParseMultiple() {
         final TextCursor cursor = this.parseAndCheck2("123abc", '1', "1", "23abc");
         this.parseAndCheck2(cursor, '2', "2", "3abc");
         this.parseAndCheck2(cursor, '3', "3", "abc");
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createParser(), DIGITS.toString());
     }
 
     @Override
@@ -77,16 +77,39 @@ public final class CharacterCharPredicateParserTest extends NonEmptyParserTestCa
         return CharacterCharPredicateParser.with(DIGITS);
     }
 
-    private TextCursor parseAndCheck2(final String in, final char value, final String text) {
-        return this.parseAndCheck2(in, value, text, "");
+    private TextCursor parseAndCheck2(final String in,
+                                      final char value,
+                                      final String text) {
+        return this.parseAndCheck2(
+                in,
+                value,
+                text,
+                ""
+        );
     }
 
-    private TextCursor parseAndCheck2(final String in, final char value, final String text, final String textAfter) {
-        return this.parseAndCheck(in, CharacterParserToken.with(value, text), text, textAfter);
+    private TextCursor parseAndCheck2(final String in,
+                                      final char value,
+                                      final String text,
+                                      final String textAfter) {
+        return this.parseAndCheck(
+                in,
+                CharacterParserToken.with(value, text),
+                text,
+                textAfter
+        );
     }
 
-    private TextCursor parseAndCheck2(final TextCursor cursor, final char value, final String text, final String textAfter) {
-        return this.parseAndCheck(cursor, CharacterParserToken.with(value, text), text, textAfter);
+    private TextCursor parseAndCheck2(final TextCursor cursor,
+                                      final char value,
+                                      final String text,
+                                      final String textAfter) {
+        return this.parseAndCheck(
+                cursor,
+                CharacterParserToken.with(value, text),
+                text,
+                textAfter
+        );
     }
 
     // hashcode/equals..................................................................................................
@@ -106,6 +129,13 @@ public final class CharacterCharPredicateParserTest extends NonEmptyParserTestCa
     @Override
     public CharacterCharPredicateParser<ParserContext> createObject() {
         return this.createParser();
+    }
+
+    // ToString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createParser(), DIGITS.toString());
     }
 
     // Class............................................................................................................
