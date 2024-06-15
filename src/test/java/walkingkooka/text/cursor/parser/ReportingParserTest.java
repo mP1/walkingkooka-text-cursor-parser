@@ -19,6 +19,7 @@ package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.cursor.TextCursors;
 
@@ -27,7 +28,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class ReportingParserTest extends ParserWrapperTestCase<ReportingParser<ParserContext>> {
+public final class ReportingParserTest extends ParserWrapperTestCase<ReportingParser<ParserContext>>
+        implements HashCodeEqualsDefinedTesting2<ReportingParser<ParserContext>> {
 
     private final static ParserReporterCondition CONDITION = ParserReporterCondition.ALWAYS;
 
@@ -136,6 +138,63 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
                 "Invalid character \'!\' at (1,1)"
         );
     }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentCondition() {
+        this.checkNotEquals(
+                ReportingParser.with(
+                        ParserReporterCondition.ALWAYS,
+                        this.reporter(),
+                        this.wrappedParser()
+                ),
+                ReportingParser.with(
+                        ParserReporterCondition.NOT_EMPTY,
+                        this.reporter(),
+                        this.wrappedParser()
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentReporter() {
+        this.checkNotEquals(
+                ReportingParser.with(
+                        ParserReporterCondition.ALWAYS,
+                        this.reporter(),
+                        this.wrappedParser()
+                ),
+                ReportingParser.with(
+                        ParserReporterCondition.ALWAYS,
+                        ParserReporters.fake(),
+                        this.wrappedParser()
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentParser() {
+        this.checkNotEquals(
+                ReportingParser.with(
+                        ParserReporterCondition.ALWAYS,
+                        this.reporter(),
+                        this.wrappedParser()
+                ),
+                ReportingParser.with(
+                        ParserReporterCondition.ALWAYS,
+                        this.reporter(),
+                        Parsers.fake()
+                )
+        );
+    }
+
+    @Override
+    public ReportingParser<ParserContext> createObject() {
+        return this.createParser();
+    }
+
+    // toString.........................................................................................................
 
     @Test
     public void testToString() {

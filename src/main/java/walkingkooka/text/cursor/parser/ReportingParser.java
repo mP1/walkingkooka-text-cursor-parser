@@ -102,4 +102,27 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
                 toString
         );
     }
+
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                this.condition,
+                this.reporter,
+                this.parser
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof ReportingParser && this.equals0((ReportingParser<?>) other);
+    }
+
+    private boolean equals0(final ReportingParser<?> other) {
+        return this.condition.equals(other.condition) &&
+                this.reporter.equals(other.reporter) &&
+                this.parser.equals(other.parser);
+    }
 }
