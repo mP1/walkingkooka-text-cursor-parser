@@ -79,63 +79,57 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
         );
     }
 
+    // parse............................................................................................................
+
     @Test
-    public void testFailure() {
+    public void testParseFailure() {
         this.parseFailAndCheck("a");
     }
 
     @Test
-    public void testFailure2() {
+    public void testParseFailure2() {
         this.parseFailAndCheck("abc");
     }
 
     @Test
-    public void testTooShort() {
+    public void testParseTooShort() {
         this.parseFailAndCheck("1");
     }
 
     @Test
-    public void testSuccess() {
+    public void testParseSuccess() {
         this.parseAndCheck2("1", "1", "1");
     }
 
     @Test
-    public void testSuccess2() {
+    public void testParseSuccess2() {
         this.parseAndCheck2("2", "2", "2");
     }
 
     @Test
-    public void testSuccess3() {
+    public void testParseSuccess3() {
         this.parseAndCheck2("2abc", "2", "2", "abc");
     }
 
     @Test
-    public void testSuccess4() {
+    public void testParseSuccess4() {
         this.parseAndCheck3("123abc", "123", "123", "abc");
     }
 
     @Test
-    public void testSuccessTerminatedByMismatch() {
+    public void testParseSuccessTerminatedByMismatch() {
         this.parseAndCheck3("123abc", "123", "123", "abc");
     }
 
     @Test
-    public void testSuccessTerminatedEof() {
+    public void testParseSuccessTerminatedEof() {
         this.parseAndCheck3("123", "123", "123");
     }
 
     @Test
-    public void testMultipleAttempts() {
+    public void testParseMultipleAttempts() {
         final TextCursor cursor = this.parseAndCheck3("123abc", "123", "123", "abc");
         this.parseFailAndCheck(cursor);
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                this.createParser(),
-                DIGITS + "{2,4}"
-        );
     }
 
     @Override
@@ -143,28 +137,60 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
         return this.createParser(MIN_LENGTH, MAX_LENGTH);
     }
 
-    protected StringCharPredicateParser<ParserContext> createParser(final int min, final int max) {
-        return StringCharPredicateParser.with(DIGITS, min, max);
+    protected StringCharPredicateParser<ParserContext> createParser(final int min,
+                                                                    final int max) {
+        return StringCharPredicateParser.with(
+                DIGITS,
+                min,
+                max
+        );
     }
 
-    private TextCursor parseAndCheck2(final String in, final String value, final String text) {
-        return this.parseAndCheck2(in, value, text, "");
+    private TextCursor parseAndCheck2(final String in,
+                                      final String value,
+                                      final String text) {
+        return this.parseAndCheck2(
+                in,
+                value,
+                text,
+                ""
+        );
     }
 
-    private TextCursor parseAndCheck2(final String in, final String value, final String text, final String textAfter) {
-        return this.parseAndCheck(this.createParser(1, 4),
+    private TextCursor parseAndCheck2(final String in,
+                                      final String value,
+                                      final String text,
+                                      final String textAfter) {
+        return this.parseAndCheck(
+                this.createParser(1, 4),
                 in,
                 StringParserToken.with(value, text),
                 text,
-                textAfter);
+                textAfter
+        );
     }
 
-    private TextCursor parseAndCheck3(final String in, final String value, final String text) {
-        return this.parseAndCheck3(in, value, text, "");
+    private TextCursor parseAndCheck3(final String in,
+                                      final String value,
+                                      final String text) {
+        return this.parseAndCheck3(
+                in,
+                value,
+                text,
+                ""
+        );
     }
 
-    private TextCursor parseAndCheck3(final String in, final String value, final String text, final String textAfter) {
-        return this.parseAndCheck(in, StringParserToken.with(value, text), text, textAfter);
+    private TextCursor parseAndCheck3(final String in,
+                                      final String value,
+                                      final String text,
+                                      final String textAfter) {
+        return this.parseAndCheck(
+                in,
+                StringParserToken.with(value, text),
+                text,
+                textAfter
+        );
     }
 
     // hashCode/equals..................................................................................................
@@ -236,6 +262,16 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
     @Override
     public StringCharPredicateParser<ParserContext> createObject() {
         return this.createParser();
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createParser(),
+                DIGITS + "{2,4}"
+        );
     }
 
     // class............................................................................................................
