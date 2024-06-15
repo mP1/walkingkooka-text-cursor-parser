@@ -18,6 +18,7 @@
 package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
@@ -35,7 +36,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatterParser<ParserContext>, T extends ParserToken>
         extends DateTimeFormatterParserTestCase<P>
-        implements ParserTesting2<P, ParserContext> {
+        implements ParserTesting2<P, ParserContext>,
+        HashCodeEqualsDefinedTesting2<P> {
 
     DateTimeFormatterParserTestCase2() {
         super();
@@ -53,7 +55,44 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
 
     final P createParser(final String pattern) {
         // JAPAN will be overridden by DateTimeFormatterParser
-        return this.createParser(DateTimeFormatter.ofPattern(pattern).withLocale(Locale.JAPAN));
+        return this.createParser(
+                new TestFunction(pattern)
+        );
+    }
+
+    // this function needs to implement hashCode/equals otherwise testEquals will fail.
+    static class TestFunction implements Function<DateTimeContext, DateTimeFormatter> {
+
+        TestFunction(final String pattern) {
+            this.pattern = pattern;
+        }
+
+        @Override
+        public DateTimeFormatter apply(final DateTimeContext context) {
+            return DateTimeFormatter.ofPattern(this.pattern)
+                    .withLocale(context.locale());
+        }
+
+        @Override
+        public int hashCode() {
+            return this.pattern.hashCode();
+        }
+
+        @Override
+        public boolean equals(final Object other) {
+            return this == other || other instanceof TestFunction && this.equals0((TestFunction) other);
+        }
+
+        private boolean equals0(final TestFunction other) {
+            return this.pattern.equals(other.pattern);
+        }
+
+        private final String pattern;
+
+        @Override
+        public String toString() {
+            return this.pattern.toString();
+        }
     }
 
     private P createParser(final DateTimeFormatter formatter) {
@@ -63,7 +102,6 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
     abstract P createParser(final Function<DateTimeContext, DateTimeFormatter> formatter);
 
     abstract T createParserToken(final DateTimeFormatter formatter, final String text);
-
 
     final DateTimeFormatter formatter() {
         return DateTimeFormatter.ofPattern(this.pattern());
@@ -131,4 +169,34 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
         this.parseThrows(this.createParser(pattern), this.createContext(), TextCursors.charSequence(text), "");
     }
 
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public final void testEqualsDifferentFormatter() {
+        this.checkNotEquals(
+                this.createParser(
+                        (c) -> {
+                            throw new UnsupportedOperationException();
+                        }
+                ),
+                this.createParser(
+                        (c) -> {
+                            throw new UnsupportedOperationException();
+                        }
+                )
+        );
+    }
+
+    @Test
+    public final void testEqualsDifferentToString() {
+        this.checkNotEquals(
+                this.createParser(),
+                this.createParser().setToString("Different")
+        );
+    }
+
+    @Override
+    public P createObject() {
+        return this.createParser();
+    }
 }

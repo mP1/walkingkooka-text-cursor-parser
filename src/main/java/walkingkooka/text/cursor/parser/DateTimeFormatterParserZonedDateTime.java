@@ -55,4 +55,11 @@ final class DateTimeFormatterParserZonedDateTime<C extends ParserContext> extend
                 toString
         );
     }
+
+    // Object...........................................................................................................
+
+    @Override
+    boolean canBeEqual(final Object other) {
+        return other instanceof DateTimeFormatterParserZonedDateTime;
+    }
 }
