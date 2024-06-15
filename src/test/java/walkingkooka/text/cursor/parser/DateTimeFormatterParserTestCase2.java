@@ -129,26 +129,12 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
 
     private final static Locale LOCALE = Locale.ENGLISH;
 
-    final void parseAndCheck2(final String text) {
-        this.parseAndCheck2(text, "");
-    }
-
     final void parseAndCheck2(final String pattern,
                               final String text) {
         this.parseAndCheck2(pattern, text, "");
     }
 
     final void parseAndCheck2(final String pattern,
-                              final String text,
-                              final String after) {
-        this.parseAndCheck2((c) -> DateTimeFormatter.ofPattern(pattern),
-                pattern,
-                text,
-                after);
-    }
-
-    final void parseAndCheck2(final Function<DateTimeContext, DateTimeFormatter> formatter,
-                              final String pattern,
                               final String text,
                               final String after) {
         final DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern(pattern).withLocale(LOCALE);
