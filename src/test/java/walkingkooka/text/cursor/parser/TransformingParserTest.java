@@ -18,6 +18,7 @@ package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
@@ -27,7 +28,8 @@ import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TransformingParserTest extends ParserWrapperTestCase<TransformingParser<ParserContext>> {
+public class TransformingParserTest extends ParserWrapperTestCase<TransformingParser<ParserContext>>
+        implements HashCodeEqualsDefinedTesting2<TransformingParser<ParserContext>> {
 
     private final static int RADIX = 10;
     private final static Parser<ParserContext> WRAPPED_PARSER = Parsers.stringCharPredicate(CharPredicates.digit(), 1, 10);
@@ -68,10 +70,43 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
         this.parseAndCheck4(WRAPPED_PARSER.transform(TRANSFORMER), "123abc", 123, "123", "abc");
     }
 
+    // equals/hashCode..................................................................................................
+
+    @Test
+    public void testEqualsDifferentParser() {
+        this.checkNotEquals(
+                TransformingParser.with(
+                        Parsers.fake(),
+                        TRANSFORMER
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentTransformer() {
+        this.checkNotEquals(
+                TransformingParser.with(
+                        WRAPPED_PARSER,
+                        (i, ii) -> {
+                            throw new UnsupportedOperationException();
+                        }
+                )
+        );
+    }
+
+    @Override
+    public TransformingParser<ParserContext> createObject() {
+        return this.createParser();
+    }
+
+    // toString.........................................................................................................
+
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createParser(), WRAPPED_PARSER.toString());
     }
+
+    // parse............................................................................................................
 
     @Override
     TransformingParser<ParserContext> createParser(final Parser<ParserContext> parser) {
@@ -106,6 +141,8 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
                 text,
                 textAfter);
     }
+
+    // Class............................................................................................................
 
     @Override
     public Class<TransformingParser<ParserContext>> type() {
