@@ -18,13 +18,15 @@ package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.predicate.character.CharPredicate;
 import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.cursor.TextCursor;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class StringCharPredicateParserTest extends NonEmptyParserTestCase<StringCharPredicateParser<ParserContext>, StringParserToken> {
+public class StringCharPredicateParserTest extends NonEmptyParserTestCase<StringCharPredicateParser<ParserContext>, StringParserToken>
+        implements HashCodeEqualsDefinedTesting2<StringCharPredicateParser<ParserContext>> {
 
     private final static CharPredicate DIGITS = CharPredicates.digit();
     private final static int MIN_LENGTH = 2;
@@ -164,6 +166,79 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
     private TextCursor parseAndCheck3(final String in, final String value, final String text, final String textAfter) {
         return this.parseAndCheck(in, StringParserToken.with(value, text), text, textAfter);
     }
+
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentPredicate() {
+        this.checkNotEquals(
+                StringCharPredicateParser.with(
+                        DIGITS,
+                        MIN_LENGTH,
+                        MAX_LENGTH
+                ),
+                StringCharPredicateParser.with(
+                        CharPredicates.fake(),
+                        MIN_LENGTH,
+                        MAX_LENGTH
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentMinLength() {
+        this.checkNotEquals(
+                StringCharPredicateParser.with(
+                        DIGITS,
+                        MIN_LENGTH,
+                        MAX_LENGTH
+                ),
+                StringCharPredicateParser.with(
+                        DIGITS,
+                        MIN_LENGTH + 1,
+                        MAX_LENGTH
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentMaxLength() {
+        this.checkNotEquals(
+                StringCharPredicateParser.with(
+                        DIGITS,
+                        MIN_LENGTH,
+                        MAX_LENGTH
+                ),
+                StringCharPredicateParser.with(
+                        DIGITS,
+                        MIN_LENGTH,
+                        MAX_LENGTH + 1
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentToString() {
+        this.checkNotEquals(
+                StringCharPredicateParser.with(
+                        DIGITS,
+                        MIN_LENGTH,
+                        MAX_LENGTH
+                ),
+                StringCharPredicateParser.with(
+                        DIGITS,
+                        MIN_LENGTH,
+                        MAX_LENGTH
+                ).setToString("Different")
+        );
+    }
+
+    @Override
+    public StringCharPredicateParser<ParserContext> createObject() {
+        return this.createParser();
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<StringCharPredicateParser<ParserContext>> type() {
