@@ -94,6 +94,13 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
         );
     }
 
+    @Test
+    public void testEqualsDifferentToString() {
+        this.checkNotEquals(
+                this.createParser().setToString("Different")
+        );
+    }
+
     @Override
     public TransformingParser<ParserContext> createObject() {
         return this.createParser();
