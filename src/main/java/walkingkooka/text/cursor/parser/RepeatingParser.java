@@ -77,4 +77,25 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
                 toString
         );
     }
+
+    // Object...........................................................................................................
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                this.parser,
+                this.toString
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                other instanceof RepeatingParser && this.equals0((RepeatingParser<?>) other);
+    }
+
+    private boolean equals0(final RepeatingParser<?> other) {
+        return this.parser.equals(other.parser) &&
+                this.toString.equals(other.toString);
+    }
 }
