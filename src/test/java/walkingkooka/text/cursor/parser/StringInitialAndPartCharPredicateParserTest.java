@@ -52,38 +52,40 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
         assertThrows(IllegalArgumentException.class, () -> StringInitialAndPartCharPredicateParser.with(INITIAL, PART, MIN_LENGTH, MIN_LENGTH - 1));
     }
 
+    // parse............................................................................................................
+    
     @Test
-    public void testInitialFail() {
+    public void testParseInitialFail() {
         this.parseFailAndCheck("1");
     }
 
     @Test
-    public void testInitialOnlyShorterThanMinFails() {
+    public void testParseInitialOnlyShorterThanMinFails() {
         this.parseFailAndCheck("a");
     }
 
     @Test
-    public void testInitialAndPartShorterThanMinFails() {
+    public void testParseInitialAndPartShorterThanMinFails() {
         this.parseFailAndCheck("a12");
     }
 
     @Test
-    public void testInitialAndPart() {
+    public void testParseInitialAndPart() {
         this.parseAndCheck2("a12345", "a12345");
     }
 
     @Test
-    public void testInitialAndPart2() {
+    public void testParseInitialAndPart2() {
         this.parseAndCheck2("a12345-=", "a12345", "-=");
     }
 
     @Test
-    public void testHonourMaxLength() {
+    public void testParseHonourMaxLength() {
         this.parseAndCheck2("a12345678", "a12345", "678");
     }
 
     @Test
-    public void testHonourMaxLength2() {
+    public void testParseHonourMaxLength2() {
         this.parseAndCheck(this.createParser(1, 2), "a12345678", this.string("a1"), "a1", "2345678");
     }
 
@@ -96,7 +98,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     }
 
     @Test
-    public void testMinAndMaxLengthEqual() {
+    public void testParseMinAndMaxLengthEqual() {
         final String text = "ab";
 
         this.parseAndCheck(
@@ -112,7 +114,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     }
 
     @Test
-    public void testMinAndMaxLengthEqual2() {
+    public void testParseMinAndMaxLengthEqual2() {
         final String text = "ab";
         final String after = "b";
 
@@ -131,14 +133,6 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
 
     private StringParserToken string(final String text) {
         return ParserTokens.string(text, text);
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(
-                this.createParser(),
-                INITIAL + " " + PART + "{4,6}"
-        );
     }
 
     @Override
@@ -205,6 +199,16 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
         return this.createParser();
     }
 
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createParser(),
+                INITIAL + " " + PART + "{4,6}"
+        );
+    }
+    
     // class............................................................................................................
 
     @Override
