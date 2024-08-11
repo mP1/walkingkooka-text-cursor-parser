@@ -56,7 +56,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  * @param <T>
  */
 public interface ParserTokenTesting<T extends ParserToken > extends BeanPropertiesTesting,
-        CanBeEmptyTesting<T>,
+        CanBeEmptyTesting,
         HashCodeEqualsDefinedTesting2<T>,
         HasTextTesting,
         TreePrintableTesting,
@@ -887,13 +887,6 @@ public interface ParserTokenTesting<T extends ParserToken > extends BeanProperti
     T createToken(final String text);
 
     T createDifferentToken();
-
-    // CanBeEmptyTesting................................................................................................
-
-    @Override
-    default T createCanBeEmpty() {
-        return this.createToken();
-    }
 
     // HashCodeEqualityTesting..........................................................................................
 
