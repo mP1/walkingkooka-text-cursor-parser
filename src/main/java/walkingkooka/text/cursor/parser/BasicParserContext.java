@@ -18,18 +18,19 @@
 package walkingkooka.text.cursor.parser;
 
 import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 
-import java.math.MathContext;
-import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 /**
  * An adaptor for {@link DecimalNumberContext} to {@link ParserContext}.
  */
-final class BasicParserContext implements ParserContext {
+final class BasicParserContext implements ParserContext,
+        DateTimeContextDelegator,
+        DecimalNumberContextDelegator {
 
     /**
      * Creates a new {@link BasicParserContext}.
@@ -52,95 +53,25 @@ final class BasicParserContext implements ParserContext {
         this.decimalNumberContext = decimalNumberContext;
     }
 
-    // DateTimeContext..................................................................................................
-
     @Override
-    public List<String> ampms() {
-        return this.dateTimeContext.ampms();
+    public Locale locale() {
+        return this.dateTimeContext.locale();
     }
 
-    @Override
-    public int defaultYear() {
-        return this.dateTimeContext.defaultYear();
-    }
+    // DateTimeContextDelegator.........................................................................................
 
     @Override
-    public List<String> monthNames() {
-        return this.dateTimeContext.monthNames();
-    }
-
-    @Override
-    public List<String> monthNameAbbreviations() {
-        return this.dateTimeContext.monthNameAbbreviations();
-    }
-
-    @Override
-    public LocalDateTime now() {
-        return this.dateTimeContext.now();
-    }
-
-    @Override
-    public int twoDigitYear() {
-        return this.dateTimeContext.twoDigitYear();
-    }
-
-    @Override
-    public List<String> weekDayNames() {
-        return this.dateTimeContext.weekDayNames();
-    }
-
-    @Override
-    public List<String> weekDayNameAbbreviations() {
-        return this.dateTimeContext.weekDayNameAbbreviations();
+    public DateTimeContext dateTimeContext() {
+        return this.dateTimeContext;
     }
 
     private final DateTimeContext dateTimeContext;
 
-    // DecimalNumberContext.............................................................................................
+    // DecimalNumberContextDelegator....................................................................................
 
     @Override
-    public String currencySymbol() {
-        return this.decimalNumberContext.currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return this.decimalNumberContext.decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return this.decimalNumberContext.exponentSymbol();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return this.decimalNumberContext.groupSeparator();
-    }
-
-    @Override
-    public char negativeSign() {
-        return this.decimalNumberContext.negativeSign();
-    }
-
-    @Override
-    public char percentageSymbol() {
-        return this.decimalNumberContext.percentageSymbol();
-    }
-
-    @Override
-    public char positiveSign() {
-        return this.decimalNumberContext.positiveSign();
-    }
-
-    @Override
-    public Locale locale() {
-        return this.decimalNumberContext.locale();
-    }
-
-    @Override
-    public MathContext mathContext() {
-        return this.decimalNumberContext.mathContext();
+    public DecimalNumberContext decimalNumberContext() {
+        return this.decimalNumberContext;
     }
 
     private final DecimalNumberContext decimalNumberContext;
