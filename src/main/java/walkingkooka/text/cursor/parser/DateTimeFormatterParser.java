@@ -93,7 +93,7 @@ abstract class DateTimeFormatterParser<C extends ParserContext> extends NonEmpty
             position.setErrorIndex(-1);
             position.setIndex(0);
 
-            while (fill >= 0 && !cursor.isEmpty()) {
+            while (fill >= 0 && cursor.isNotEmpty()) {
                 chars.append(cursor.at());
                 cursor.next();
                 fill--;
@@ -107,7 +107,7 @@ abstract class DateTimeFormatterParser<C extends ParserContext> extends NonEmpty
 
                 save.restore();
 
-                while (read > 0 && !cursor.isEmpty()) {
+                while (read > 0 && cursor.isNotEmpty()) {
                     cursor.next();
                     read--;
                 }

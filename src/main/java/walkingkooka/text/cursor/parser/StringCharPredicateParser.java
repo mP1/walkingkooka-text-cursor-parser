@@ -76,7 +76,7 @@ final class StringCharPredicateParser<C extends ParserContext> extends NonEmptyP
         cursor.next();
 
         int i = 1;
-        while (!cursor.isEmpty() && i < this.maxLength && this.predicate.test(cursor.at())) {
+        while (cursor.isNotEmpty() && i < this.maxLength && this.predicate.test(cursor.at())) {
             cursor.next();
 
             i++;

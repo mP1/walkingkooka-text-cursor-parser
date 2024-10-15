@@ -76,7 +76,7 @@ final class StringInitialAndPartCharPredicateParser<C extends ParserContext> ext
                                    final TextCursorSavePoint start) {
         StringParserToken result = null;
 
-        if (!cursor.isEmpty()) {
+        if (cursor.isNotEmpty()) {
             final char first = cursor.at();
             if (!this.initial.test(first)) {
                 result = null;

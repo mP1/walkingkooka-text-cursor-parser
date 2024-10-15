@@ -51,7 +51,7 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C> {
         char unicodeCharValue = 0;
         final StringBuilder raw = new StringBuilder();
 
-        for (; !cursor.isEmpty(); cursor.next()) {
+        for (; cursor.isNotEmpty(); cursor.next()) {
             final char c = cursor.at();
             if (backslashed) {
                 backslashed = false;
