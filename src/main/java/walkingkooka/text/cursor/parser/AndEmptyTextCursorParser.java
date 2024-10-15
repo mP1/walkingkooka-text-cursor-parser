@@ -50,7 +50,7 @@ final class AndEmptyTextCursorParser<C extends ParserContext> extends ParserWrap
                                        final C context) {
         final TextCursorSavePoint save = cursor.save();
         Optional<ParserToken> token = this.parser.parse(cursor, context);
-        if (token.isPresent() && !cursor.isEmpty()) {
+        if (token.isPresent() && cursor.isNotEmpty()) {
             save.restore();
             token = Optional.empty();
         }
