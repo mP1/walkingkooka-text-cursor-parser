@@ -37,7 +37,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -196,7 +195,11 @@ public interface ParserTesting extends TreePrintableTesting {
         Objects.requireNonNull(cursor, "cursor");
 
         final Optional<ParserToken> result = parser.parse(cursor, context);
-        assertNotNull(result, () -> "parser " + parser + " returned null result");
+        this.checkNotEquals(
+                null,
+                result,
+                () -> "parser " + parser + " returned null result"
+        );
         return result;
     }
 
