@@ -211,11 +211,6 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
         );
     }
 
-//    @Override
-//    public ReportingParser<ParserContext> createParser() {
-//        return this.createParser(ParserReporterCondition.ALWAYS);
-//    }
-
     @Override
     Parser<ParserContext> wrappedParser() {
         return Parsers.character(CharPredicates.letter()).cast();
