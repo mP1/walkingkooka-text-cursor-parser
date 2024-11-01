@@ -58,7 +58,7 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
     }
 
     @Test
-    public void testParseInvalidCharacterFails() {
+    public void testParseTextInvalidCharacterFails() {
         final String text = "1X2";
 
         this.parseStringFails(
@@ -71,7 +71,7 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
     }
 
     @Test
-    public void testParseThrownException() {
+    public void testParseTextThrownException() {
         final String text = "'un-closed";
 
         assertThrows(
@@ -84,7 +84,7 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
     }
 
     @Test
-    public void testParseReturnsEmpty() {
+    public void testParseTextConsumesTextReturnsEmpty() {
         final String text = "ABC123";
 
         final InvalidCharacterException thrown = assertThrows(
@@ -102,7 +102,60 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
                 )
         );
         this.checkEquals(
-                new InvalidCharacterException(text, 0)
+                new InvalidCharacterException(
+                        text,
+                        0
+                ).getMessage(),
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testParseTextReturnsEmpty() {
+        final String text = "ABC123";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> new Parser<ParserContext>() {
+                    @Override
+                    public Optional<ParserToken> parse(final TextCursor cursor,
+                                                       final ParserContext context) {
+                        return Optional.empty();
+                    }
+                }.parseText(
+                        text,
+                        ParserContexts.fake()
+                )
+        );
+        this.checkEquals(
+                new InvalidCharacterException(
+                        text,
+                        0
+                ).getMessage(),
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testParseTextConsumesSomeReturnsEmpty() {
+        final String text = "ABC123";
+
+        final InvalidCharacterException thrown = assertThrows(
+                InvalidCharacterException.class,
+                () -> new Parser<ParserContext>() {
+                    @Override
+                    public Optional<ParserToken> parse(final TextCursor cursor,
+                                                       final ParserContext context) {
+                        cursor.next();
+                        return Optional.empty();
+                    }
+                }.parseText(
+                        text,
+                        ParserContexts.fake()
+                )
+        );
+        this.checkEquals(
+                new InvalidCharacterException(text, 1)
                         .getMessage(),
                 thrown.getMessage()
         );
@@ -116,7 +169,8 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
                         ParserContexts.basic(
                                 DateTimeContexts.fake(),
                                 DecimalNumberContexts.american(MathContext.DECIMAL32)
-                        ));
+                        )
+                );
     }
 
     @Override
