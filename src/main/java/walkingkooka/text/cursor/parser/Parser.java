@@ -20,6 +20,7 @@ import walkingkooka.Cast;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursorLineInfo;
 import walkingkooka.text.cursor.TextCursors;
 
 import java.util.Objects;
@@ -49,10 +50,20 @@ public interface Parser<C extends ParserContext> {
                     context
             ).orElseThrow(() -> new InvalidCharacterException(text, 0));
         } catch (final ParserReporterException cause) {
+            final Throwable cause2 = cause.getCause();
+            if (cause2 instanceof RuntimeException) {
+                throw (RuntimeException) cause2;
+            }
+
+            final TextCursorLineInfo lineInfo = cause.lineInfo();
+
+            // lineInfo.textOffset could be passed the end of text, move back by one if it is.
             throw new InvalidCharacterException(
                     text,
-                    cause.lineInfo()
-                            .textOffset()
+                    Math.min(
+                            lineInfo.textOffset(),
+                            text.length() - 1
+                    )
             );
         } catch (final ParserException cause) {
             throw new IllegalArgumentException(cause.getCause());
