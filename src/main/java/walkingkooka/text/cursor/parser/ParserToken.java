@@ -307,18 +307,43 @@ public interface ParserToken extends CanBeEmpty,
         if (this.isLeaf()) {
             final Object value = ((Value<?>) this).value();
 
+            final CharSequence toString;
+
+            if (null != value) {
+                final String typeName = value.getClass().getName();
+                switch (typeName) {
+                    case "java.lang.Boolean":
+                    case "java.lang.Double":
+                    case "java.lang.Integer":
+                        toString = value.toString();
+                        break;
+                    case "java.lang.Character":
+                    case "java.lang.String":
+                        toString = CharSequences.quoteIfChars(value);
+                        break;
+                    case "java.lang.Float":
+                        toString = value + "F";
+                        break;
+                    case "java.lang.Long":
+                        toString = value + "L";
+                        break;
+                    default:
+                        toString = CharSequences.quoteIfChars(value) +
+                                " (" +
+                                typeName +
+                                ")";
+                        break;
+                }
+            } else {
+                toString = null;
+            }
+
             printer.println(
                     ParserTokenTypeName.typeName(this) +
                             " " +
                             quotedText +
                             " " +
-                            (null == value ?
-                                    null :
-                                    CharSequences.quoteIfChars(value) +
-                                            " (" +
-                                            value.getClass().getName() +
-                                            ")"
-                            )
+                            toString
             );
         }
         if (this.isParent()) {

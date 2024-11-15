@@ -24,6 +24,7 @@ import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.printer.TreePrintableTesting;
 
+import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
@@ -1660,6 +1661,132 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                 Lists.of(new LinkedHashSet<>(expected).toArray()),
                 () -> "Expected no duplicates"
         );
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintBigDecimal() {
+        this.treePrintAndCheck(
+                new TestLeafParserToken(
+                        new BigDecimal("123.5"),
+                        "123.5"
+                ),
+                "TestLeaf \"123.5\" 123.5 (java.math.BigDecimal)\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintBoolean() {
+        this.treePrintAndCheck(
+                new TestLeafParserToken(
+                        true,
+                        "true"
+                ),
+                "TestLeaf \"true\" true\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintCharacter() {
+        this.treePrintAndCheck(
+                new TestLeafParserToken(
+                        'A',
+                        "A"
+                ),
+                "TestLeaf \"A\" 'A'\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintDouble() {
+        this.treePrintAndCheck(
+                new TestLeafParserToken(
+                        1.5,
+                        "1.5"
+                ),
+                "TestLeaf \"1.5\" 1.5\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintFloat() {
+        this.treePrintAndCheck(
+                new TestLeafParserToken(
+                        1.25f,
+                        "1.25"
+                ),
+                "TestLeaf \"1.25\" 1.25F\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintInteger() {
+        this.treePrintAndCheck(
+                new TestLeafParserToken(
+                        123,
+                        "123"
+                ),
+                "TestLeaf \"123\" 123\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintLong() {
+        this.treePrintAndCheck(
+                new TestLeafParserToken(
+                        234L,
+                        "234"
+                ),
+                "TestLeaf \"234\" 234L\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintString() {
+        this.treePrintAndCheck(
+                new TestLeafParserToken(
+                        "abc",
+                        "\"abc\""
+                ),
+                "TestLeaf \"abc\" \"abc\"\n"
+        );
+    }
+
+    @Test
+    public void testTreePrintStringBuilder() {
+        this.treePrintAndCheck(
+                new TestLeafParserToken(
+                        new StringBuilder("def"),
+                        "\"def\""
+                ),
+                "TestLeaf \"def\" \"def\" (java.lang.StringBuilder)\n"
+        );
+    }
+
+    static final class TestLeafParserToken<T> extends LeafParserToken<T> {
+
+        TestLeafParserToken(final T value,
+                            final String text) {
+            super(
+                    value,
+                    text
+            );
+        }
+
+        @Override
+        public final void accept(final ParserTokenVisitor visitor) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override final boolean canBeEqual(final Object other) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        boolean equals1(final ValueParserToken<?> other) {
+            throw new UnsupportedOperationException();
+        }
     }
 
     // ClassTesting.....................................................................................................
