@@ -122,162 +122,336 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
                 "failed to get required " + index + " from " + sequence);
     }
 
-    // BinaryOperatorTransformer......................................................................................
+    // BinaryOperator...................................................................................................
 
     @Test
-    public void testTransformNullFails() {
-        assertThrows(NullPointerException.class, () -> this.createDifferentToken().transform(null));
+    public void testBinaryOperatorWithNullFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createDifferentToken()
+                        .binaryOperator(null)
+        );
     }
 
     @Test
-    public void testTransformWhitespace() {
-        this.transformAndCheck(this.createToken(WHITESPACE));
+    public void testBinaryOperatorWithWhitespace() {
+        this.binaryOperatorAndCheck(
+                this.createToken(WHITESPACE)
+        );
     }
 
     @Test
-    public void testTransformWhitespaceWhitespace() {
-        this.transformAndCheck(this.createToken(WHITESPACE, WHITESPACE));
+    public void testBinaryOperatorWithWhitespaceWhitespace() {
+        this.binaryOperatorAndCheck(
+                this.createToken(WHITESPACE, WHITESPACE)
+        );
     }
 
     @Test
-    public void testTransformSymbol() {
-        this.transformAndCheck(this.createToken(this.symbol('%')));
+    public void testBinaryOperatorWithSymbol() {
+        this.binaryOperatorAndCheck(
+                this.createToken(
+                        this.symbol('%')
+                )
+        );
     }
 
     @Test
-    public void testTransformSymbolSymbol() {
-        this.transformAndCheck(this.createToken(this.symbol('%'), this.symbol('!')));
+    public void testBinaryOperatorWithSymbolSymbol() {
+        this.binaryOperatorAndCheck(
+                this.createToken(
+                        this.symbol('%'),
+                        this.symbol('!')
+                )
+        );
     }
 
     @Test
-    public void testTransformWhitespaceSymbol() {
-        this.transformAndCheck(this.createToken(WHITESPACE, this.symbol('%')));
+    public void testBinaryOperatorWithWhitespaceSymbol() {
+        this.binaryOperatorAndCheck(
+                this.createToken(
+                        WHITESPACE,
+                        this.symbol('%')
+                )
+        );
     }
 
     @Test
-    public void testTransformMinusNumber() {
+    public void testBinaryOperatorWithMinusNumber() {
         final ParserToken minus = symbol('-');
         final ParserToken right = integer(2);
-        final ParserToken negative = negative(Lists.of(minus, right), "-2");
+        final ParserToken negative = negative(
+                Lists.of(minus, right),
+                "-2"
+        );
 
-        this.transformAndCheck(sequence(negative), negative);
+        this.binaryOperatorAndCheck(
+                sequence(negative),
+                negative
+        );
     }
 
     @Test
-    public void testTransformMinusWhitespaceNumber() {
+    public void testBinaryOperatorWithMinusWhitespaceNumber() {
         final ParserToken minus = symbol('-');
         final ParserToken right = integer(2);
-        final ParserToken negative = negative(Lists.of(minus, WHITESPACE, right), "-2");
+        final ParserToken negative = negative(
+                Lists.of(
+                        minus,
+                        WHITESPACE,
+                        right
+                ),
+                "-2"
+        );
 
-        this.transformAndCheck(sequence(negative), negative);
+        this.binaryOperatorAndCheck(
+                sequence(negative),
+                negative
+        );
     }
 
     @Test
-    public void testTransformNumberPlusNumber() {
+    public void testBinaryOperatorWithNumberPlusNumber() {
         final ParserToken left = integer(1);
         final ParserToken plus = symbol('+');
         final ParserToken right = integer(2);
 
-        this.transformAndCheck(sequence(left, plus, right),
-                add(left, plus, right));
+        this.binaryOperatorAndCheck(
+                sequence(
+                        left,
+                        plus,
+                        right
+                ),
+                add(
+                        left,
+                        plus,
+                        right
+                )
+        );
     }
 
     @Test
-    public void testTransformWhitespaceNumberPlusNumber() {
+    public void testBinaryOperatorWithWhitespaceNumberPlusNumber() {
         final ParserToken left = integer(1);
         final ParserToken plus = symbol('+');
         final ParserToken right = integer(2);
 
-        this.transformAndCheck(sequence(WHITESPACE, left, plus, right),
-                sequence(WHITESPACE, add(left, plus, right)));
+        this.binaryOperatorAndCheck(
+                sequence(
+                        WHITESPACE,
+                        left,
+                        plus,
+                        right
+                ),
+                sequence(
+                        WHITESPACE,
+                        add(
+                                left,
+                                plus,
+                                right
+                        )
+                )
+        );
     }
 
     @Test
-    public void testTransformWhitespaceNumberWhitespacePlusNumber() {
+    public void testBinaryOperatorWithWhitespaceNumberWhitespacePlusNumber() {
         final ParserToken left = integer(1);
         final ParserToken plus = symbol('+');
         final ParserToken right = integer(2);
 
-        this.transformAndCheck(sequence(WHITESPACE, left, WHITESPACE, plus, right),
-                sequence(WHITESPACE, add(left, WHITESPACE, plus, right)));
+        this.binaryOperatorAndCheck(
+                sequence(
+                        WHITESPACE,
+                        left,
+                        WHITESPACE,
+                        plus,
+                        right
+                ),
+                sequence(
+                        WHITESPACE,
+                        add(
+                                left,
+                                WHITESPACE,
+                                plus,
+                                right
+                        )
+                )
+        );
     }
 
     @Test
-    public void testTransformNumberPlusWhitespaceNumber() {
+    public void testBinaryOperatorWithNumberPlusWhitespaceNumber() {
         final ParserToken left = integer(1);
         final ParserToken plus = symbol('+');
         final ParserToken right = integer(2);
 
-        this.transformAndCheck(sequence(left, plus, WHITESPACE, right),
-                add(left, plus, WHITESPACE, right));
+        this.binaryOperatorAndCheck(
+                sequence(
+                        left,
+                        plus,
+                        WHITESPACE,
+                        right
+                ),
+                add(
+                        left,
+                        plus,
+                        WHITESPACE,
+                        right
+                )
+        );
     }
 
     @Test
-    public void testTransformNumberMinusNumber() {
+    public void testBinaryOperatorWithNumberMinusNumber() {
         final ParserToken left = integer(1);
         final ParserToken minus = symbol('-');
         final ParserToken right = integer(2);
 
-        this.transformAndCheck(sequence(left, minus, right),
-                subtract(left, minus, right));
+        this.binaryOperatorAndCheck(
+                sequence(
+                        left,
+                        minus,
+                        right
+                ),
+                subtract(
+                        left,
+                        minus,
+                        right
+                )
+        );
     }
 
     @Test
-    public void testTransformMinusNumberPlusNumber() {
-        final ParserToken left = negative(symbol('-'), integer(1));
+    public void testBinaryOperatorWithMinusNumberPlusNumber() {
+        final ParserToken left = negative(
+                symbol('-'),
+                integer(1)
+        );
         final ParserToken plus = symbol('+');
         final ParserToken right = integer(2);
 
-        this.transformAndCheck(sequence(left, plus, right),
-                add(left, plus, right));
+        this.binaryOperatorAndCheck(
+                sequence(
+                        left,
+                        plus,
+                        right
+                ),
+                add(
+                        left,
+                        plus,
+                        right
+                )
+        );
     }
 
     @Test
-    public void testTransformNumberPlusMinusNumber() {
+    public void testBinaryOperatorWithNumberPlusMinusNumber() {
         final ParserToken left = integer(1);
         final ParserToken plus = symbol('+');
-        final ParserToken right = negative(symbol('-'), integer(2));
+        final ParserToken right = negative(
+                symbol('-'),
+                integer(2)
+        );
 
-        this.transformAndCheck(sequence(left, plus, right),
-                add(left, plus, right));
+        this.binaryOperatorAndCheck(
+                sequence(
+                        left,
+                        plus,
+                        right
+                ),
+                add(
+                        left,
+                        plus,
+                        right
+                )
+        );
     }
 
     @Test
-    public void testTransformMinusNumberPlusMinusNumber() {
-        final ParserToken left = negative(symbol('-'), integer(1));
+    public void testBinaryOperatorWithMinusNumberPlusMinusNumber() {
+        final ParserToken left = negative(
+                symbol('-'),
+                integer(1)
+        );
         final ParserToken plus = symbol('+');
-        final ParserToken right = negative(symbol('-'), integer(2));
+        final ParserToken right = negative(
+                symbol('-'),
+                integer(2)
+        );
 
-        this.transformAndCheck(sequence(left, plus, right),
-                add(left, plus, right));
+        this.binaryOperatorAndCheck(
+                sequence(
+                        left,
+                        plus,
+                        right
+                ),
+                add(
+                        left,
+                        plus,
+                        right
+                )
+        );
     }
 
     @Test
-    public void testTransformNumberPlusNumberMultiplyNumber() {
+    public void testBinaryOperatorWithNumberPlusNumberMultiplyNumber() {
         final ParserToken left = integer(1);
         final ParserToken plus = symbol('+');
         final ParserToken center = integer(2);
         final ParserToken multiply = symbol('*');
         final ParserToken right = integer(3);
 
-        this.transformAndCheck(sequence(left, plus, center, multiply, right),
-                add(left, plus, multiply(center, multiply, right)));
+        this.binaryOperatorAndCheck(
+                sequence(
+                        left,
+                        plus,
+                        center,
+                        multiply,
+                        right
+                ),
+                add(
+                        left,
+                        plus,
+                        multiply(
+                                center,
+                                multiply,
+                                right
+                        )
+                )
+        );
     }
 
     @Test
-    public void testTransformNumberMultiplyNumberPlusNumber() {
+    public void testBinaryOperatorWithNumberMultiplyNumberPlusNumber() {
         final ParserToken left = integer(1);
         final ParserToken multiply = symbol('*');
         final ParserToken center = integer(2);
         final ParserToken plus = symbol('+');
         final ParserToken right = integer(3);
 
-        this.transformAndCheck(sequence(left, multiply, center, plus, right),
-                add(multiply(left, multiply, center), plus, right));
+        this.binaryOperatorAndCheck(
+                sequence(
+                        left,
+                        multiply,
+                        center,
+                        plus,
+                        right
+                ),
+                add(
+                        multiply(
+                                left,
+                                multiply,
+                                center
+                        ),
+                        plus,
+                        right
+                )
+        );
     }
 
     @Test
-    public void testTransformNumberPlusNumberMultiplyNumberMinusNumber() {
+    public void testBinaryOperatorWithNumberPlusNumberMultiplyNumberMinusNumber() {
         final ParserToken left = integer(1);
         final ParserToken plus = symbol('+');
         final ParserToken left2 = integer(2);
@@ -286,18 +460,40 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final ParserToken minus = symbol('-');
         final ParserToken right2 = integer(4);
 
-        this.transformAndCheck(sequence(left, plus, left2, multiply, right1, minus, right2),
-                subtract(add(left, plus, multiply(left2, multiply, right1)), minus, right2));
+        this.binaryOperatorAndCheck(
+                sequence(
+                        left,
+                        plus,
+                        left2,
+                        multiply,
+                        right1,
+                        minus,
+                        right2
+                ),
+                subtract(
+                        add(
+                                left,
+                                plus,
+                                multiply(
+                                        left2,
+                                        multiply,
+                                        right1
+                                )
+                        ),
+                        minus,
+                        right2
+                )
+        );
     }
 
-    private void transformAndCheck(final SequenceParserToken token) {
-        this.transformAndCheck(token, token);
+    private void binaryOperatorAndCheck(final SequenceParserToken token) {
+        this.binaryOperatorAndCheck(token, token);
     }
 
-    private void transformAndCheck(final SequenceParserToken token,
-                                   final ParserToken expected) {
+    private void binaryOperatorAndCheck(final SequenceParserToken token,
+                                        final ParserToken expected) {
         this.checkEquals(expected,
-                token.transform(new TestBinaryOperatorTransformer()),
+                token.binaryOperator(new TestBinaryOperatorTransformer()),
                 token::toString);
     }
 

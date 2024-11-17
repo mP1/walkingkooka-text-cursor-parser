@@ -79,24 +79,26 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
      * Takes this {@link SequenceParserToken} and possibly rearranges tokens creating binary operators and unary negative tokens
      * as necessary honouring the priorities replied by the given {@link BinaryOperatorTransformer}.
      */
-    public ParserToken transform(final BinaryOperatorTransformer transformer) {
+    public ParserToken binaryOperator(final BinaryOperatorTransformer transformer) {
         Objects.requireNonNull(transformer, "transformer");
 
         final List<ParserToken> flat = RepeatedOrSequenceParserTokenFlatParserTokenVisitor.flat(this);
         return flat.stream()
-                .filter(SequenceParserToken::notWhitespace)
+                .filter(SequenceParserToken::isNotWhitespace)
                 .findFirst()
-                .map(t -> t.isSymbol() ?
+                .map(
+                        t -> t.isSymbol() ?
                         this :
-                        tryFindAndIntroduceBinaryOperator(flat, transformer)).orElse(this);
+                                tryOperatorAwareBinaryOperator(flat, transformer)
+                ).orElse(this);
     }
 
-    private static boolean notWhitespace(final ParserToken token) {
-        return !token.isWhitespace();
+    private static boolean isNotWhitespace(final ParserToken token) {
+        return false == token.isWhitespace();
     }
 
-    private ParserToken tryFindAndIntroduceBinaryOperator(final List<ParserToken> tokens,
-                                                          final BinaryOperatorTransformer transformer) {
+    private ParserToken tryOperatorAwareBinaryOperator(final List<ParserToken> tokens,
+                                                       final BinaryOperatorTransformer transformer) {
         List<ParserToken> result = Lists.array();
         result.addAll(tokens);
 
@@ -112,15 +114,21 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
                     if (0 != i && transformer.priority(t) == priority) {
                         changed = true;
 
-                        final int begin = findNonWhitespaceSibling(result, i - 1, -1);
-                        final int end = findNonWhitespaceSibling(result, i + 1, +1);
+                        final int begin = findNextNonWhitespace(result, i - 1, -1);
+                        final int end = findNextNonWhitespace(result, i + 1, +1);
 
                         final List<ParserToken> binaryOperandTokens = Lists.array();
                         binaryOperandTokens.addAll(result.subList(begin, end + 1));
 
                         final List<ParserToken> withBinary = Lists.array();
                         withBinary.addAll(result.subList(0, begin));
-                        withBinary.add(transformer.binaryOperand(binaryOperandTokens, ParserToken.text(binaryOperandTokens), t));
+                        withBinary.add(
+                                transformer.binaryOperand(
+                                        binaryOperandTokens,
+                                        ParserToken.text(binaryOperandTokens),
+                                        t
+                                )
+                        );
                         withBinary.addAll(result.subList(end + 1, result.size()));
 
                         result = withBinary;
@@ -136,9 +144,9 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
                 ParserTokens.sequence(result, this.text());
     }
 
-    private static int findNonWhitespaceSibling(final List<ParserToken> tokens,
-                                                final int startIndex,
-                                                final int step) {
+    private static int findNextNonWhitespace(final List<ParserToken> tokens,
+                                             final int startIndex,
+                                             final int step) {
         int i = startIndex;
         for (; ; ) {
             final ParserToken token = tokens.get(i);
