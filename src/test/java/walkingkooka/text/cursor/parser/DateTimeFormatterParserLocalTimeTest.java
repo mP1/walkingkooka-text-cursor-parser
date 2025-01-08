@@ -34,17 +34,17 @@ public final class DateTimeFormatterParserLocalTimeTest extends DateTimeFormatte
 
     @Test
     public void testHoursFails() {
-        this.parseFailAndCheck2("HH:mm","A");
+        this.parseFailAndCheck2("HH:mm", "A");
     }
 
     @Test
     public void testHoursFails2() {
-        this.parseFailAndCheck2("HH:mm","9A");
+        this.parseFailAndCheck2("HH:mm", "9A");
     }
 
     @Test
     public void testHoursFails3() {
-        this.parseFailAndCheck2("HH:mm","AB:59");
+        this.parseFailAndCheck2("HH:mm", "AB:59");
     }
 
     @Test
@@ -56,7 +56,7 @@ public final class DateTimeFormatterParserLocalTimeTest extends DateTimeFormatte
 
     @Test
     public void testHoursSeparatorMinutesFails() {
-        this.parseFailAndCheck2( "HH:mm", "12:A9");
+        this.parseFailAndCheck2("HH:mm", "12:A9");
     }
 
     @Test
@@ -83,12 +83,12 @@ public final class DateTimeFormatterParserLocalTimeTest extends DateTimeFormatte
 
     @Test
     public void testHoursSeparatorSecondsFails() {
-        this.parseFailAndCheck2("HH:ss","12:A9");
+        this.parseFailAndCheck2("HH:ss", "12:A9");
     }
 
     @Test
     public void testHoursSeparatorSecondsFails2() {
-        this.parseFailAndCheck2("HH:ss","12:9A");
+        this.parseFailAndCheck2("HH:ss", "12:9A");
     }
 
     @Test
@@ -115,7 +115,7 @@ public final class DateTimeFormatterParserLocalTimeTest extends DateTimeFormatte
 
     @Test
     public void testHoursSeparatorSecondsMillisFails2() {
-        this.parseFailAndCheck2("HH:ss.SSS","12:59.Q");
+        this.parseFailAndCheck2("HH:ss.SSS", "12:59.Q");
     }
 
     @Test

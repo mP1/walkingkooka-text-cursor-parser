@@ -73,7 +73,7 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
     private static <C extends ParserContext> List<Parser<C>> unwrapAllCustomToStringParsers(final List<Parser<C>> parsers) {
         return parsers.stream()
                 .filter(p -> p instanceof CustomToStringParser)
-                .map(p -> ((CustomToStringParser<C>)p).parser.cast())
+                .map(p -> ((CustomToStringParser<C>) p).parser.cast())
                 .map(Cast::<Parser<C>>to)
                 .collect(Collectors.toList());
     }

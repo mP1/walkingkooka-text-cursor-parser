@@ -55,7 +55,7 @@ import static org.junit.jupiter.api.Assertions.fail;
  *
  * @param <T>
  */
-public interface ParserTokenTesting<T extends ParserToken > extends BeanPropertiesTesting,
+public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertiesTesting,
         CanBeEmptyTesting,
         HashCodeEqualsDefinedTesting2<T>,
         HasTextTesting,

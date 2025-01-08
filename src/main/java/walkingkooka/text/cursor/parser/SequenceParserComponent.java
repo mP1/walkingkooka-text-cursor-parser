@@ -51,7 +51,7 @@ abstract class SequenceParserComponent<C extends ParserContext> {
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public boolean equals(final Object other) {
         return this == other ||
-                this.canBeEqual(other) && this.equals0((SequenceParserComponent<?>)other);
+                this.canBeEqual(other) && this.equals0((SequenceParserComponent<?>) other);
     }
 
     abstract boolean canBeEqual(final Object other);

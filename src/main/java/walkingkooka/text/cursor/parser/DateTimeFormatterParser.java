@@ -114,7 +114,7 @@ abstract class DateTimeFormatterParser<C extends ParserContext> extends NonEmpty
                 break;
             } catch (final DateTimeParseException parse) {
                 final Throwable cause = parse.getCause();
-                if(cause instanceof DateTimeException) {
+                if (cause instanceof DateTimeException) {
                     throw new ParserException(cause.getMessage(), cause);
                 }
                 if (cursor.isEmpty()) {

@@ -30,7 +30,7 @@ public final class DateTimeFormatterParserCacheTest extends DateTimeFormatterPar
     public void testToString() {
         final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
-        this.toStringAndCheck(DateTimeFormatterParserCache.with(Locale.ENGLISH, 123, formatter ),
+        this.toStringAndCheck(DateTimeFormatterParserCache.with(Locale.ENGLISH, 123, formatter),
                 "en 123 " + formatter);
     }
 

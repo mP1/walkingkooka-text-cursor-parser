@@ -76,7 +76,7 @@ abstract class ValueParserToken<V> implements ParserToken, Value<V> {
     @Override
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public final boolean equals(final Object other) {
-        return this == other || this.canBeEqual(other) && this.equals0((ValueParserToken<?>)other);
+        return this == other || this.canBeEqual(other) && this.equals0((ValueParserToken<?>) other);
     }
 
     abstract boolean canBeEqual(final Object other);

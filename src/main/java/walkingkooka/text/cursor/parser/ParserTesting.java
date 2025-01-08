@@ -127,7 +127,7 @@ public interface ParserTesting extends TreePrintableTesting {
                                                                     final TextCursor cursor) {
         final TextCursorSavePoint before = cursor.save();
         final Optional<ParserToken> result = this.parse(parser, cursor, context);
-        if(result.isPresent()) {
+        if (result.isPresent()) {
             final TextCursorSavePoint after = cursor.save();
 
             this.checkEquals(
