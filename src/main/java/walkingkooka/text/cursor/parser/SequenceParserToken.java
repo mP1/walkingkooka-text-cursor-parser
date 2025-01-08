@@ -88,7 +88,7 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
                 .findFirst()
                 .map(
                         t -> t.isSymbol() ?
-                        this :
+                                this :
                                 tryOperatorAwareBinaryOperator(flat, transformer)
                 ).orElse(this);
     }

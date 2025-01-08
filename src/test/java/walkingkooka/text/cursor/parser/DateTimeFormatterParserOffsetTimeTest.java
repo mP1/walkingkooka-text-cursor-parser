@@ -35,53 +35,53 @@ public final class DateTimeFormatterParserOffsetTimeTest extends DateTimeFormatt
 
     @Test
     public void testHoursFails() {
-        this.parseFailAndCheck2("HH:mm x","A");
+        this.parseFailAndCheck2("HH:mm x", "A");
     }
 
     @Test
     public void testHoursFails2() {
-        this.parseFailAndCheck2("HH:mm x","9A");
+        this.parseFailAndCheck2("HH:mm x", "9A");
     }
 
     @Test
     public void testOffsetHoursFails() {
-        this.parseFailAndCheck2("x HH:mm x","+10 Q");
+        this.parseFailAndCheck2("x HH:mm x", "+10 Q");
     }
 
     // minutes..........................................................................................................
 
     @Test
     public void testOffsetSeparatorMinutesFails() {
-        this.parseFailAndCheck2( "x mm", "+10 Q");
+        this.parseFailAndCheck2("x mm", "+10 Q");
     }
 
     @Test
     public void testOffsetSeparatorMinutesFails2() {
-        this.parseFailAndCheck2( "x mm", "+10 1Q");
+        this.parseFailAndCheck2("x mm", "+10 1Q");
     }
 
     // seconds...........................................................................................................
 
     @Test
     public void testOffsetSeparatorSecondsFails() {
-        this.parseFailAndCheck2("x ss","+10 Q");
+        this.parseFailAndCheck2("x ss", "+10 Q");
     }
 
     @Test
     public void testOffsetSeparatorSecondsFails2() {
-        this.parseFailAndCheck2("x ss","+10 Q9 ");
+        this.parseFailAndCheck2("x ss", "+10 Q9 ");
     }
 
     // secondsMillis....................................................................................................
 
     @Test
     public void testOffsetSeparatorSecondsMillisFails() {
-        this.parseFailAndCheck2("x ss.SSS","+10 12.Q");
+        this.parseFailAndCheck2("x ss.SSS", "+10 12.Q");
     }
 
     @Test
     public void testOffsetSeparatorSecondsMillisFails2() {
-        this.parseFailAndCheck2("x ss.SSS","+10 12.3Q");
+        this.parseFailAndCheck2("x ss.SSS", "+10 12.3Q");
     }
 
     // pass.............................................................................................................

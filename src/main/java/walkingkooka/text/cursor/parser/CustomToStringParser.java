@@ -82,7 +82,7 @@ final class CustomToStringParser<C extends ParserContext> extends ParserWrapper<
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof CustomToStringParser && this.equals0((CustomToStringParser<?>)other);
+                other instanceof CustomToStringParser && this.equals0((CustomToStringParser<?>) other);
     }
 
     private boolean equals0(final CustomToStringParser<?> other) {

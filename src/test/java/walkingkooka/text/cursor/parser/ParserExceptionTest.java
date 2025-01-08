@@ -21,7 +21,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.StandardThrowableTesting;
 
 public final class ParserExceptionTest implements StandardThrowableTesting<ParserException> {
-    
+
     @Override
     public ParserException createThrowable(final String message) {
         return new ParserException(message);
@@ -31,7 +31,7 @@ public final class ParserExceptionTest implements StandardThrowableTesting<Parse
     public ParserException createThrowable(final String message, final Throwable cause) {
         return new ParserException(message, cause);
     }
-    
+
     @Override
     public Class<ParserException> type() {
         return ParserException.class;

@@ -46,7 +46,7 @@ final class RepeatedOrSequenceParserTokenFlatParserTokenVisitor extends ParserTo
     @Override
     protected void endVisit(final ParserToken token) {
         final ParserToken add = this.add;
-        if(null!=add) {
+        if (null != add) {
             this.tokens.add(token);
         }
     }

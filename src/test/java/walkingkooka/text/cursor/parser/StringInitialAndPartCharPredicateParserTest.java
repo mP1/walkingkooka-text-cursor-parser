@@ -53,7 +53,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     }
 
     // parse............................................................................................................
-    
+
     @Test
     public void testParseInitialFail() {
         this.parseFailAndCheck("1");
@@ -208,7 +208,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
                 INITIAL + " " + PART + "{4,6}"
         );
     }
-    
+
     // class............................................................................................................
 
     @Override

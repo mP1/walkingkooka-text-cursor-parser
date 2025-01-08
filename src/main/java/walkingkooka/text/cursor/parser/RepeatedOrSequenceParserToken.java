@@ -69,8 +69,7 @@ abstract public class RepeatedOrSequenceParserToken extends ValueParserToken<Lis
 
     // Object...........................................................................................................
 
-    @Override
-    final boolean equals1(final ValueParserToken<?> other) {
+    @Override final boolean equals1(final ValueParserToken<?> other) {
         return true;
     }
 }
