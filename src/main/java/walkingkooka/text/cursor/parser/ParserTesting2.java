@@ -98,10 +98,6 @@ public interface ParserTesting2<P extends Parser<C>,
 
     // parseThrows......................................................................................................
 
-    default void parseThrows(final String cursorText) {
-        this.parseThrows(cursorText, "");
-    }
-
     default void parseThrows(final String cursorText,
                              final char c,
                              final String column,
@@ -141,10 +137,6 @@ public interface ParserTesting2<P extends Parser<C>,
 
     default void parseThrows(final TextCursor cursor, final String messagePart) {
         this.parseThrows(this.createParser(), this.createContext(), cursor, messagePart);
-    }
-
-    default void parseThrows(final Parser<C> parser, final String cursor) {
-        this.parseThrows(parser, cursor, "");
     }
 
     default void parseThrows(final Parser<C> parser, final String cursor, final String messagePart) {
