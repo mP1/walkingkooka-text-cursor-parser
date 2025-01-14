@@ -21,6 +21,8 @@ import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 /**
  * Mixin that includes numerous helpers to assist parsing and verifying the outcome for success and failures.
  */
@@ -98,19 +100,40 @@ public interface ParserTesting2<P extends Parser<C>,
 
     // parseThrows......................................................................................................
 
-    default void parseThrows(final String cursorText,
-                             final char c,
-                             final String column,
-                             final int row) {
-        this.parseThrows(cursorText, c, column.length(), row);
+    default void parseThrowsInvalidCharacterException(final String cursorText,
+                                                      final char c,
+                                                      final String column,
+                                                      final int row) {
+        this.parseThrowsInvalidCharacterException(
+                cursorText,
+                c,
+                column.length(),
+                row
+        );
     }
 
-    default void parseThrows(final String cursorText,
-                             final char c,
-                             final int column,
-                             final int row) {
+    default void parseThrowsInvalidCharacterException(final String text,
+                                                      final char c,
+                                                      final int column,
+                                                      final int row) {
         // Message format from BasicParserReporter
-        this.parseThrows(cursorText, "Invalid character " + CharSequences.quoteAndEscape(c) + " at (" + column + "," + row + ")");
+        final ParserException thrown = assertThrows(
+                ParserException.class,
+                () -> this.parse(
+                        this.createParser(),
+                        TextCursors.charSequence(text),
+                        this.createContext()
+                )
+        );
+
+        final String message = "Invalid character " + CharSequences.quoteAndEscape(c) + " at (" + column + "," + row + ")";
+        final String thrownMessage = thrown.getMessage();
+
+        this.checkEquals(
+                true,
+                thrownMessage.startsWith(message),
+                () -> "parse " + text
+        );
     }
 
     default void parseThrowsEndOfText(final String cursorText) {
