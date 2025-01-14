@@ -151,8 +151,25 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
         return this.parseFailAndCheck(this.createParser(pattern), cursorText);
     }
 
-    final void parseThrows2(final String pattern, final String text) {
-        this.parseThrows(this.createParser(pattern), this.createContext(), TextCursors.charSequence(text), "");
+    final void parseThrows2(final String pattern,
+                            final String text,
+                            final String expected) {
+        final ParserException thrown = assertThrows(
+                ParserException.class,
+                () -> this.parse(
+                        this.createParser(pattern),
+                        TextCursors.charSequence(text),
+                        this.createContext()
+                )
+        );
+
+        final String thrownMessage = thrown.getMessage();
+
+        this.checkEquals(
+                true,
+                thrownMessage.startsWith(expected),
+                () -> "parse " + text
+        );
     }
 
     // hashCode/equals..................................................................................................

@@ -166,23 +166,53 @@ public interface ParserTesting extends TreePrintableTesting {
 
     default <CC extends ParserContext> void parseThrowsEndOfText(final Parser<CC> parser,
                                                                  final CC context,
-                                                                 final String cursorText,
+                                                                 final String text,
                                                                  final int column,
                                                                  final int row) {
-        final TextCursor cursor = TextCursors.charSequence(cursorText);
-        cursor.end();
+        final ParserException thrown = assertThrows(
+                ParserException.class,
+                () -> this.parse(
+                        parser,
+                        TextCursors.charSequence(text),
+                        context
+                )
+        );
 
-        this.parseThrows(parser, context, cursor, endOfText(column, row));
+        final String message = endOfText(column, row);
+        final String thrownMessage = thrown.getMessage();
+
+        this.checkEquals(
+                true,
+                thrownMessage.startsWith(message),
+                () -> "parse " + text
+        );
     }
 
     default <CC extends ParserContext> void parseThrows(final Parser<CC> parser,
                                                         final CC context,
                                                         final TextCursor cursor,
-                                                        final String messagePart) {
-        final ParserException expected = assertThrows(ParserException.class, () -> this.parse(parser, cursor, context));
+                                                        final String expected) {
+        final TextCursorSavePoint save = cursor.save();
+        cursor.end();
 
-        final String message = expected.getMessage();
-        this.checkEquals(true, message.contains(messagePart), () -> "Message: " + message + " missing " + messagePart);
+        final String text = save.textBetween()
+                .toString();
+        save.restore();
+
+        final ParserException thrown = assertThrows(
+                ParserException.class,
+                () -> this.parse(
+                        parser,
+                        cursor,
+                        context
+                )
+        );
+
+        this.checkEquals(
+                expected,
+                thrown.getMessage(),
+                () -> "parse " + text
+        );
     }
 
     // parse............................................................................................................

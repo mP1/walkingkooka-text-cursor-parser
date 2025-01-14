@@ -131,19 +131,42 @@ public interface ParserTesting2<P extends Parser<C>,
         this.parseThrowsEndOfText(parser, this.createContext(), cursorText, column, row);
     }
 
-    default void parseThrows(final String cursorText, final String messagePart) {
-        this.parseThrows(TextCursors.charSequence(cursorText), messagePart);
+    default void parseThrows(final String cursorText,
+                             final String expected) {
+        this.parseThrows(
+                TextCursors.charSequence(cursorText),
+                expected
+        );
     }
 
-    default void parseThrows(final TextCursor cursor, final String messagePart) {
-        this.parseThrows(this.createParser(), this.createContext(), cursor, messagePart);
+    default void parseThrows(final TextCursor cursor,
+                             final String expected) {
+        this.parseThrows(
+                this.createParser(),
+                this.createContext(),
+                cursor,
+                expected
+        );
     }
 
-    default void parseThrows(final Parser<C> parser, final String cursor, final String messagePart) {
-        this.parseThrows(parser, TextCursors.charSequence(cursor), messagePart);
+    default void parseThrows(final Parser<C> parser,
+                             final String cursor,
+                             final String expected) {
+        this.parseThrows(
+                parser,
+                TextCursors.charSequence(cursor),
+                expected
+        );
     }
 
-    default void parseThrows(final Parser<C> parser, final TextCursor cursor, final String messagePart) {
-        this.parseThrows(parser, this.createContext(), cursor, messagePart);
+    default void parseThrows(final Parser<C> parser,
+                             final TextCursor cursor,
+                             final String expected) {
+        this.parseThrows(
+                parser,
+                this.createContext(),
+                cursor,
+                expected
+        );
     }
 }
