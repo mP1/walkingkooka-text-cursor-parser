@@ -52,8 +52,17 @@ final class BasicParserReporter<C extends ParserContext> implements ParserReport
         super();
     }
 
+    /**
+     * Creates a {@link ParserReporterException} with the following messages.
+     * <pre>
+     * End of text at 1, 1 expected ...
+     * Invalid character at 1, 1 expected ...
+     * </pre>
+     */
     @Override
-    public Optional<ParserToken> report(final TextCursor cursor, final C context, final Parser<C> parser) throws ParserReporterException {
+    public Optional<ParserToken> report(final TextCursor cursor,
+                                        final C context,
+                                        final Parser<C> parser) throws ParserReporterException {
         Objects.requireNonNull(cursor, "cursor");
         Objects.requireNonNull(context, "context");
         Objects.requireNonNull(parser, "parser");
@@ -70,11 +79,6 @@ final class BasicParserReporter<C extends ParserContext> implements ParserReport
         final TextCursorLineInfo info = cursor.lineInfo();
         message.append(info.summary());
 
-        final CharSequence text = info.text();
-        if (text.length() > 0) {
-            message.append(' ');
-            message.append(CharSequences.quoteAndEscape(info.text()));
-        }
         message.append(" expected ");
         message.append(parser);
 
