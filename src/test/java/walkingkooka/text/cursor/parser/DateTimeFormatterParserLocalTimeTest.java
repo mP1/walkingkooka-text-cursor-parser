@@ -66,17 +66,29 @@ public final class DateTimeFormatterParserLocalTimeTest extends DateTimeFormatte
 
     @Test
     public void testHoursSeparatorMinutesInvalidFails() {
-        this.parseThrows2("HH:mm", "12:99");
+        this.parseThrows2(
+                "HH:mm",
+                "12:99",
+                "Invalid value for MinuteOfHour (valid values 0 - 59): 99"
+        );
     }
 
     @Test
     public void testHoursSeparatorMinutesInvalidFails2() {
-        this.parseThrows2("HH:mm", "12:99 ");
+        this.parseThrows2(
+                "HH:mm",
+                "12:99 ",
+                "Invalid value for MinuteOfHour (valid values 0 - 59): 99"
+        );
     }
 
     @Test
     public void testHoursSeparatorMinutesInvalidFails3() {
-        this.parseThrows2("HH:mm", "12:99Q");
+        this.parseThrows2(
+                "HH:mm",
+                "12:99Q",
+                "Invalid value for MinuteOfHour (valid values 0 - 59): 99"
+        );
     }
 
     // seconds...........................................................................................................
@@ -93,17 +105,29 @@ public final class DateTimeFormatterParserLocalTimeTest extends DateTimeFormatte
 
     @Test
     public void testHoursSeparatorSecondsInvalidFails() {
-        this.parseThrows2("HH:ss", "12:99");
+        this.parseThrows2(
+                "HH:ss",
+                "12:99",
+                "Unable to obtain LocalTime from TemporalAccessor"
+        );
     }
 
     @Test
     public void testHoursSeparatorSecondsInvalidFails2() {
-        this.parseThrows2("HH:ss", "12:99 ");
+        this.parseThrows2(
+                "HH:ss",
+                "12:99 ",
+                "Unable to obtain LocalTime from TemporalAccessor"
+        );
     }
 
     @Test
     public void testHoursSeparatorSecondsInvalidFails3() {
-        this.parseThrows2("HH:ss", "12:99Q");
+        this.parseThrows2(
+                "HH:ss",
+                "12:99Q",
+                "Unable to obtain LocalTime from TemporalAccessor"
+        );
     }
 
     // secondsMillis....................................................................................................
@@ -120,17 +144,29 @@ public final class DateTimeFormatterParserLocalTimeTest extends DateTimeFormatte
 
     @Test
     public void testHoursSeparatorSecondsMillisInvalidFails() {
-        this.parseThrows2("HH:ss", "12:99");
+        this.parseThrows2(
+                "HH:ss",
+                "12:99",
+                "Unable to obtain LocalTime from TemporalAccessor"
+        );
     }
 
     @Test
     public void testHoursSeparatorSecondsMillisInvalidFails2() {
-        this.parseThrows2("HH:ss", "12:99 ");
+        this.parseThrows2(
+                "HH:ss",
+                "12:99 ",
+                "Unable to obtain LocalTime from TemporalAccessor"
+        );
     }
 
     @Test
     public void testHoursSeparatorSecondsMillisInvalidFails3() {
-        this.parseThrows2("HH:ss", "12:99Q");
+        this.parseThrows2(
+                "HH:ss",
+                "12:99Q",
+                "Unable to obtain LocalTime from TemporalAccessor"
+        );
     }
 
     // pass.............................................................................................................
