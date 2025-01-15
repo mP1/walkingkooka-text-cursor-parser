@@ -52,7 +52,7 @@ abstract class ParserSetToString<C extends ParserContext> implements Parser<C> {
     }
 
     /**
-     * The actual returned {@link #toString}.
+     * The actual returned {@link #toString()}.
      */
     final String toString;
 }
