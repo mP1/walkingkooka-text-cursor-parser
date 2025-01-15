@@ -692,7 +692,6 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
                 } catch (final Exception cantBeEmpty) {
                     skip = true;
                 }
-                ;
 
                 if (false == skip) {
                     this.replaceIfAndCheck(
