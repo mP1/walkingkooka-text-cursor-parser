@@ -129,14 +129,14 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
     @Test
     public void testPlusSignLongMaxValue() {
         final BigInteger bigInteger = BigInteger.valueOf(Long.MAX_VALUE);
-        final String text = "+" + bigInteger.toString();
+        final String text = "+" + bigInteger;
         this.parseAndCheck3(10, text, Long.MAX_VALUE, text, "");
     }
 
     @Test
     public void testPlusSignLongMaxValue2() {
         final BigInteger bigInteger = BigInteger.valueOf(Long.MAX_VALUE);
-        final String text = "+" + bigInteger.toString();
+        final String text = "+" + bigInteger;
         final String after = "//";
         this.parseAndCheck3(10, text + after, Long.MAX_VALUE, text, after);
     }

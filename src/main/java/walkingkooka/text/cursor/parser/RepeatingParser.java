@@ -36,7 +36,7 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
                 parser.cast() :
                 new RepeatingParser<>(
                         parser,
-                        "{" + parser.toString() + "}"
+                        "{" + parser + "}"
                 );
     }
 
