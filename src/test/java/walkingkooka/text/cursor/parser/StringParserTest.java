@@ -30,67 +30,120 @@ public class StringParserTest extends NonEmptyParserTestCase<StringParser<Parser
     private final static String STRING = "abcd";
     private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
 
+    // with.............................................................................................................
+
     @Test
     public void testWithNullStringFails() {
-        assertThrows(NullPointerException.class, () -> StringParser.with(null, CASE_SENSITIVITY));
+        assertThrows(
+                NullPointerException.class,
+                () -> StringParser.with(null, CASE_SENSITIVITY)
+        );
     }
 
     @Test
     public void testWithEmptyStringFails() {
-        assertThrows(IllegalArgumentException.class, () -> StringParser.with("", CASE_SENSITIVITY));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> StringParser.with("", CASE_SENSITIVITY)
+        );
     }
 
     @Test
     public void testWithNullCaseSensitivityFails() {
-        assertThrows(NullPointerException.class, () -> StringParser.with(STRING, null));
+        assertThrows(
+                NullPointerException.class,
+                () -> StringParser.with(STRING, null)
+        );
     }
 
+    // parse............................................................................................................
+
     @Test
-    public void testIncomplete() {
+    public void testParseIncomplete() {
         this.parseFailAndCheck("a");
     }
 
     @Test
-    public void testIncomplete2() {
+    public void testParseIncomplete2() {
         this.parseFailAndCheck("ab");
     }
 
     @Test
-    public void testIncompleteInsensitive() {
-        this.parseFailAndCheck(this.createParserInsensitive(), "a");
+    public void testParseIncompleteCaseInsensitive() {
+        this.parseFailAndCheck(
+                this.createParserCaseInsensitive(),
+                "a"
+        );
     }
 
     @Test
-    public void testIncompleteInsensitive2() {
-        this.parseFailAndCheck(this.createParserInsensitive(), "ab");
+    public void testParseIncompleteInsensitive2() {
+        this.parseFailAndCheck(
+                this.createParserCaseInsensitive(),
+                "ab"
+        );
     }
 
     @Test
-    public void testStringEoc() {
+    public void testParseStringEoc() {
         this.parseAndCheck(STRING, this.token(), STRING, "");
     }
 
     @Test
-    public void testStringEocInsensitive() {
+    public void testParseStringEocCaseInsensitive() {
         final String text = "abCD";
-        this.parseAndCheck(this.createParserInsensitive(),
-                text, this.token(text), text, "");
+        this.parseAndCheck(
+                this.createParserCaseInsensitive(),
+                text,
+                this.token(text),
+                text,
+                ""
+        );
     }
 
     @Test
-    public void testStringIgnoresRemainder() {
-        this.parseAndCheck(STRING + "xyz", this.token(), STRING, "xyz");
+    public void testParseStringIgnoresRemainder() {
+        this.parseAndCheck(
+                STRING + "xyz",
+                this.token(),
+                STRING,
+                "xyz"
+        );
     }
 
     @Test
-    public void testStringIgnoresRemainderInsensitive() {
+    public void testParseStringIgnoresRemainderCaseInsensitive() {
         final String text = "abCD";
-        this.parseAndCheck(this.createParserInsensitive(),
+        this.parseAndCheck(
+                this.createParserCaseInsensitive(),
                 text + "xyz",
                 this.token(text),
                 text,
-                "xyz");
+                "xyz"
+        );
     }
+
+    @Override
+    public StringParser<ParserContext> createParser() {
+        return StringParser.with(STRING, CASE_SENSITIVITY);
+    }
+
+    private StringParser<ParserContext> createParserCaseInsensitive() {
+        return StringParser.with(
+                STRING,
+                CaseSensitivity.INSENSITIVE
+        );
+    }
+
+    private StringParserToken token() {
+        return this.token(STRING);
+    }
+
+    private StringParserToken token(final String text) {
+        return StringParserToken.with(text, text);
+    }
+
+    // hashCode/equals..................................................................................................
 
     @Test
     public void testEqualsDifferentText() {
@@ -102,40 +155,31 @@ public class StringParserTest extends NonEmptyParserTestCase<StringParser<Parser
         this.checkNotEquals(StringParser.with(STRING, CASE_SENSITIVITY.invert()));
     }
 
+
+    @Override
+    public StringParser<ParserContext> createObject() {
+        return this.createParser();
+    }
+
+    // toString.........................................................................................................
+
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createParser(), CharSequences.quoteAndEscape(STRING).toString());
     }
 
     @Test
-    public void testToStringInsensitive() {
-        this.toStringAndCheck(this.createParserInsensitive(), CharSequences.quoteAndEscape(STRING) + " (CaseInsensitive)");
+    public void testToStringCaseInsensitive() {
+        this.toStringAndCheck(
+                this.createParserCaseInsensitive(),
+                CharSequences.quoteAndEscape(STRING) + " (CaseInsensitive)"
+        );
     }
 
-    @Override
-    public StringParser<ParserContext> createParser() {
-        return StringParser.with(STRING, CASE_SENSITIVITY);
-    }
-
-    private StringParser<ParserContext> createParserInsensitive() {
-        return StringParser.with(STRING, CaseSensitivity.INSENSITIVE);
-    }
-
-    private StringParserToken token() {
-        return this.token(STRING);
-    }
-
-    private StringParserToken token(final String text) {
-        return StringParserToken.with(text, text);
-    }
+    // class............................................................................................................
 
     @Override
     public Class<StringParser<ParserContext>> type() {
         return Cast.to(StringParser.class);
-    }
-
-    @Override
-    public StringParser<ParserContext> createObject() {
-        return this.createParser();
     }
 }
