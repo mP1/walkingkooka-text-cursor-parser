@@ -31,95 +31,105 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
 
     private final static int RADIX = 10;
 
+    // with.............................................................................................................
+
     @Test
     public void testWithNegativeRadixFails() {
-        assertThrows(IllegalArgumentException.class, () -> LongParser.with(-1));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> LongParser.with(-1)
+        );
     }
 
     @Test
     public void testWithZeroRadixFails() {
-        assertThrows(IllegalArgumentException.class, () -> LongParser.with(0));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> LongParser.with(0)
+        );
     }
 
+    // parse............................................................................................................
+
     @Test
-    public void testFailure() {
+    public void testParseFailure() {
         this.parseFailAndCheck("a");
     }
 
     @Test
-    public void testFailure2() {
+    public void testParseFailure2() {
         this.parseFailAndCheck("abc");
     }
 
     @Test
-    public void testPlusSignFails() {
+    public void testParsePlusSignFails() {
         this.parseFailAndCheck("+");
     }
 
     @Test
-    public void testMinusSignFails() {
+    public void testParseMinusSignFails() {
         this.parseFailAndCheck("-");
     }
 
     @Test
-    public void testDecimal() {
+    public void testParseDecimal() {
         this.parseAndCheck2("1", 1, "1", "");
     }
 
     @Test
-    public void testDecimal2() {
+    public void testParseDecimal2() {
         this.parseAndCheck2("123", 123, "123", "");
     }
 
     @Test
-    public void testDecimal3() {
+    public void testParseDecimal3() {
         this.parseAndCheck2("+123", 123, "+123", "");
     }
 
     @Test
-    public void testUntilNonDigit() {
+    public void testParseUntilNonDigit() {
         this.parseAndCheck2("123abc", 123, "123", "abc");
     }
 
     @Test
-    public void testNegativeDecimal() {
+    public void testParseNegativeDecimal() {
         this.parseAndCheck2("-123", -123, "-123", "");
     }
 
     @Test
-    public void testNegativeDecimal2() {
+    public void testParseNegativeDecimal2() {
         this.parseAndCheck2("-123//", -123, "-123", "//");
     }
 
     @Test
-    public void testHex() {
+    public void testParseHex() {
         this.parseAndCheck3(16, "1234xyz", 0x1234, "1234", "xyz");
     }
 
     @Test
-    public void testOctal() {
+    public void testParseOctal() {
         this.parseAndCheck3(8, "012345678xyz", 342391, "01234567", "8xyz");
     }
 
     @Test
-    public void testMaxValueHex() {
+    public void testParseMaxValueHex() {
         this.parseAndCheck3(16, "7fffffffffffffff", Long.MAX_VALUE, "7fffffffffffffff", "");
     }
 
     @Test
-    public void testMaxValueHex2() {
+    public void testParseMaxValueHex2() {
         this.parseAndCheck3(16, "7fffffffffffffff///", Long.MAX_VALUE, "7fffffffffffffff", "///");
     }
 
     @Test
-    public void testLongMaxValue() {
+    public void testParseLongMaxValue() {
         final BigInteger bigInteger = BigInteger.valueOf(Long.MAX_VALUE);
         final String text = bigInteger.toString();
         this.parseAndCheck3(10, text, Long.MAX_VALUE, text, "");
     }
 
     @Test
-    public void testLongMaxValue2() {
+    public void testParseLongMaxValue2() {
         final BigInteger bigInteger = BigInteger.valueOf(Long.MAX_VALUE);
         final String text = bigInteger.toString();
         final String after = "//";
@@ -127,14 +137,14 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
     }
 
     @Test
-    public void testPlusSignLongMaxValue() {
+    public void testParsePlusSignLongMaxValue() {
         final BigInteger bigInteger = BigInteger.valueOf(Long.MAX_VALUE);
         final String text = "+" + bigInteger;
         this.parseAndCheck3(10, text, Long.MAX_VALUE, text, "");
     }
 
     @Test
-    public void testPlusSignLongMaxValue2() {
+    public void testParsePlusSignLongMaxValue2() {
         final BigInteger bigInteger = BigInteger.valueOf(Long.MAX_VALUE);
         final String text = "+" + bigInteger;
         final String after = "//";
@@ -142,7 +152,7 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
     }
 
     @Test
-    public void testLongMinValue() {
+    public void testParseLongMinValue() {
         final BigInteger bigInteger = BigInteger.valueOf(Long.MIN_VALUE);
         final String text = bigInteger.toString();
         final String after = "";
@@ -150,7 +160,7 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
     }
 
     @Test
-    public void testLongMinValue2() {
+    public void testParseLongMinValue2() {
         final BigInteger bigInteger = BigInteger.valueOf(Long.MIN_VALUE);
         final String text = bigInteger.toString();
         final String after = "//";
@@ -158,36 +168,38 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
     }
 
     @Test
-    public void testGreaterMaxValueFails() {
+    public void testParseGreaterMaxValueFails() {
         final BigInteger bigInteger = BigInteger.valueOf(Long.MAX_VALUE).add(BigInteger.ONE);
 
         assertThrows(ParserException.class, () -> this.parseFailAndCheck(LongParser.with(10), bigInteger.toString()));
     }
 
     @Test
-    public void testLessMinValueFails() {
+    public void testParseLessMinValueFails() {
         final BigInteger bigInteger = BigInteger.valueOf(Long.MIN_VALUE).subtract(BigInteger.ONE);
 
         assertThrows(ParserException.class, () -> this.parseFailAndCheck(LongParser.with(10), bigInteger.toString()));
     }
 
     @Test
-    public void testGreaterMaxValueHexFails() {
+    public void testParseGreaterMaxValueHexFails() {
         assertThrows(ParserException.class, () -> this.parseFailAndCheck(LongParser.with(16), "8fffffffffffffff"));
     }
 
     @Test
-    public void testDifferentMinusSign() {
+    public void testParseDifferentMinusSign() {
         this.parseAndCheck3("M123", -123);
     }
 
     @Test
-    public void testDifferentPlusSign() {
+    public void testParseDifferentPlusSign() {
         this.parseAndCheck3("P123", 123);
     }
 
-    private TextCursor parseAndCheck3(final String text, final long value) {
-        return this.parseAndCheck(this.createParser(),
+    private TextCursor parseAndCheck3(final String text,
+                                      final long value) {
+        return this.parseAndCheck(
+                this.createParser(),
                 ParserContexts.basic(DateTimeContexts.fake(),
                         new FakeDecimalNumberContext() {
                             @Override
@@ -203,17 +215,8 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
                 text,
                 ParserTokens.longParserToken(value, text),
                 text,
-                "");
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createParser(), "Long");
-    }
-
-    @Test
-    public void testToString2() {
-        this.toStringAndCheck(LongParser.with(8), "Long(base=8)");
+                ""
+        );
     }
 
     @Override
@@ -238,6 +241,20 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
                 text,
                 textAfter);
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createParser(), "Long");
+    }
+
+    @Test
+    public void testToString2() {
+        this.toStringAndCheck(LongParser.with(8), "Long(base=8)");
+    }
+
+    // type.............................................................................................................
 
     @Override
     public Class<LongParser<ParserContext>> type() {
