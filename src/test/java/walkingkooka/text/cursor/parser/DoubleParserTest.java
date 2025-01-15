@@ -25,461 +25,704 @@ import walkingkooka.text.cursor.TextCursor;
 public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<ParserContext>, DoubleParserToken> {
 
     @Test
-    public void testFailure() {
+    public void testParseFailure() {
         this.parseFailAndCheck("a");
     }
 
     @Test
-    public void testFailure2() {
+    public void testParseFailure2() {
         this.parseFailAndCheck("abc");
     }
 
     @Test
-    public void testPlusZero() {
-        this.parseAndCheck2("+0", +0.0);
+    public void testParsePlusZero() {
+        this.parseAndCheck2(
+                "+0",
+                +0.0
+        );
     }
 
     @Test
-    public void testPlusZero2() {
-        this.parseAndCheck2("+0", +0.0, "~");
+    public void testParsePlusZero2() {
+        this.parseAndCheck2(
+                "+0",
+                +0.0,
+                "~"
+        );
     }
 
     @Test
-    public void testMinusZero() {
-        this.parseAndCheck2("-0", -0.0);
+    public void testParseMinusZero() {
+        this.parseAndCheck2(
+                "-0",
+                -0.0
+        );
     }
 
     @Test
-    public void testMinusZero2() {
-        this.parseAndCheck2("-0", -0.0, "~");
+    public void testParseMinusZero2() {
+        this.parseAndCheck2(
+                "-0",
+                -0.0,
+                "~"
+        );
     }
 
     @Test
-    public void testZero() {
-        this.parseAndCheck2("0", 0);
+    public void testParseZero() {
+        this.parseAndCheck2(
+                "0",
+                0
+        );
     }
 
     @Test
-    public void testZero2() {
-        this.parseAndCheck2("0", 0, "~");
+    public void testParseZero2() {
+        this.parseAndCheck2(
+                "0",
+                0,
+                "~"
+        );
     }
 
     @Test
-    public void testPlusPlusFail() {
+    public void testParsePlusPlusFail() {
         this.parseFailAndCheck("++1");
     }
 
     @Test
-    public void testMinusMinusFail() {
+    public void testParseMinusMinusFail() {
         this.parseFailAndCheck("--1");
     }
 
     @Test
-    public void testPlusMinusFail() {
+    public void testParsePlusMinusFail() {
         this.parseFailAndCheck("+-1");
     }
 
     @Test
-    public void testMinusPlusFail() {
+    public void testParseMinusPlusFail() {
         this.parseFailAndCheck("-+1");
     }
 
     @Test
-    public void testPlusZeroDecimal() {
-        this.parseAndCheck2("+0.", +0.);
+    public void testParsePlusZeroDecimal() {
+        this.parseAndCheck2(
+                "+0.",
+                +0.
+        );
     }
 
     @Test
-    public void testPlusZeroDecimal2() {
-        this.parseAndCheck2("+0.", +0., "~");
+    public void testParsePlusZeroDecimal2() {
+        this.parseAndCheck2(
+                "+0.",
+                +0.,
+                "~"
+        );
     }
 
     @Test
-    public void testMinusZeroDecimal() {
-        this.parseAndCheck2("-0.", -0.0);
+    public void testParseMinusZeroDecimal() {
+        this.parseAndCheck2(
+                "-0.",
+                -0.0
+        );
     }
 
     @Test
-    public void testMinusZeroDecimal2() {
-        this.parseAndCheck2("-0.", -0.0, "~");
+    public void testParseMinusZeroDecimal2() {
+        this.parseAndCheck2(
+                "-0.",
+                -0.0,
+                "~"
+        );
     }
 
     @Test
-    public void testZeroDecimal() {
-        this.parseAndCheck2("0.", 0);
+    public void testParseZeroDecimal() {
+        this.parseAndCheck2(
+                "0.",
+                0
+        );
     }
 
     @Test
-    public void testZeroDecimal2() {
-        this.parseAndCheck2("0.", 0, "~");
+    public void testParseZeroDecimal2() {
+        this.parseAndCheck2(
+                "0.",
+                0,
+                "~"
+        );
     }
 
     @Test
-    public void testZeroDecimalFraction() {
-        this.parseAndCheck2("0.5", 0.5);
+    public void testParseZeroDecimalFraction() {
+        this.parseAndCheck2(
+                "0.5",
+                0.5
+        );
     }
 
     @Test
-    public void testZeroDecimalFraction2() {
-        this.parseAndCheck2("0.5", 0.5, "~");
+    public void testParseZeroDecimalFraction2() {
+        this.parseAndCheck2(
+                "0.5",
+                0.5,
+                "~"
+        );
     }
 
     @Test
-    public void testZeroDecimalFraction3() {
-        this.parseAndCheck2("0.875", 0.875);
+    public void testParseZeroDecimalFraction3() {
+        this.parseAndCheck2(
+                "0.875",
+                0.875
+        );
     }
 
     @Test
-    public void testZeroDecimalFraction4() {
-        this.parseAndCheck2("0.875", 0.875, "~");
+    public void testParseZeroDecimalFraction4() {
+        this.parseAndCheck2(
+                "0.875",
+                0.875,
+                "~"
+        );
     }
 
     @Test
-    public void testMinusZeroDecimalFraction() {
-        this.parseAndCheck2("-0.5", -0.5);
+    public void testParseMinusZeroDecimalFraction() {
+        this.parseAndCheck2(
+                "-0.5",
+                -0.5
+        );
     }
 
     @Test
-    public void testMinusZeroDecimalFraction2() {
-        this.parseAndCheck2("-0.5", -0.5, "~");
+    public void testParseMinusZeroDecimalFraction2() {
+        this.parseAndCheck2(
+                "-0.5",
+                -0.5,
+                "~"
+        );
     }
 
     @Test
-    public void testMinusZeroDecimalFraction3() {
-        this.parseAndCheck2("-0.875", -0.875);
+    public void testParseMinusZeroDecimalFraction3() {
+        this.parseAndCheck2(
+                "-0.875",
+                -0.875
+        );
     }
 
     @Test
-    public void testMinusZeroDecimalFraction4() {
-        this.parseAndCheck2("-0.875", -0.875, "~");
+    public void testParseMinusZeroDecimalFraction4() {
+        this.parseAndCheck2(
+                "-0.875",
+                -0.875,
+                "~"
+        );
     }
 
     @Test
-    public void testZeroDecimalFraction5() {
-        this.parseAndCheck2("-0.000000001", -0.000000001);
+    public void testParseZeroDecimalFraction5() {
+        this.parseAndCheck2(
+                "-0.000000001",
+                -0.000000001
+        );
     }
 
     @Test
-    public void testNumber() {
-        this.parseAndCheck2("123", 123);
+    public void testParseNumber() {
+        this.parseAndCheck2(
+                "123",
+                123
+        );
     }
 
     @Test
-    public void testNumber2() {
-        this.parseAndCheck2("123", 123, "~");
+    public void testParseNumber2() {
+        this.parseAndCheck2(
+                "123",
+                123,
+                "~"
+        );
     }
 
     @Test
-    public void testNumberDecimal() {
-        this.parseAndCheck2("123.", 123);
+    public void testParseNumberDecimal() {
+        this.parseAndCheck2(
+                "123.",
+                123
+        );
     }
 
     @Test
-    public void testNumberDecimal2() {
-        this.parseAndCheck2("123.", 123, "~");
+    public void testParseNumberDecimal2() {
+        this.parseAndCheck2(
+                "123.",
+                123,
+                "~"
+        );
     }
 
     @Test
-    public void testNumberDecimalFraction() {
-        this.parseAndCheck2("123.5", 123.5);
+    public void testParseNumberDecimalFraction() {
+        this.parseAndCheck2(
+                "123.5",
+                123.5
+        );
     }
 
     @Test
-    public void testNumberDecimalFraction2() {
-        this.parseAndCheck2("123.5", 123.5, "~");
+    public void testParseNumberDecimalFraction2() {
+        this.parseAndCheck2(
+                "123.5",
+                123.5,
+                "~"
+        );
     }
 
     @Test
-    public void testNumberDecimalFraction3() {
-        this.parseAndCheck2("123.875", 123.875);
+    public void testParseNumberDecimalFraction3() {
+        this.parseAndCheck2(
+                "123.875",
+                123.875
+        );
     }
 
     @Test
-    public void testNumberDecimalFraction4() {
-        this.parseAndCheck2("123.875", 123.875, "~");
+    public void testParseNumberDecimalFraction4() {
+        this.parseAndCheck2(
+                "123.875",
+                123.875,
+                "~"
+        );
     }
 
     @Test
-    public void testMinusNumberDecimal() {
-        this.parseAndCheck2("-123.", -123);
+    public void testParseMinusNumberDecimal() {
+        this.parseAndCheck2(
+                "-123.",
+                -123
+        );
     }
 
     @Test
-    public void testMinusNumberDecimal2() {
-        this.parseAndCheck2("-123.", -123, "~");
+    public void testParseMinusNumberDecimal2() {
+        this.parseAndCheck2(
+                "-123.",
+                -123,
+                "~"
+        );
     }
 
     @Test
-    public void testMinusNumberDecimalFraction() {
-        this.parseAndCheck2("-123.5", -123.5);
+    public void testParseMinusNumberDecimalFraction() {
+        this.parseAndCheck2(
+                "-123.5",
+                -123.5
+        );
     }
 
     @Test
-    public void testMinusNumberDecimalFraction2() {
-        this.parseAndCheck2("-123.5", -123.5, "~");
+    public void testParseMinusNumberDecimalFraction2() {
+        this.parseAndCheck2(
+                "-123.5",
+                -123.5,
+                "~"
+        );
     }
 
     @Test
-    public void testMinusNumberDecimalFraction3() {
-        this.parseAndCheck2("-123.875", -123.875);
+    public void testParseMinusNumberDecimalFraction3() {
+        this.parseAndCheck2(
+                "-123.875",
+                -123.875
+        );
     }
 
     @Test
-    public void testMinusNumberDecimalFraction4() {
-        this.parseAndCheck2("-123.875", -123.875, "~");
+    public void testParseMinusNumberDecimalFraction4() {
+        this.parseAndCheck2(
+                "-123.875",
+                -123.875,
+                "~"
+        );
     }
 
     @Test
-    public void testZeroDecimalZeroes() {
-        this.parseAndCheck2("0.0000", 0.000);
+    public void testParseZeroDecimalZeroes() {
+        this.parseAndCheck2(
+                "0.0000",
+                0.000
+        );
     }
 
     @Test
-    public void testMinusZeroDecimalZeroes() {
-        this.parseAndCheck2("-0.0000", -0.000);
+    public void testParseMinusZeroDecimalZeroes() {
+        this.parseAndCheck2(
+                "-0.0000",
+                -0.000
+        );
     }
 
     @Test
-    public void testZeroE() {
-        this.parseAndCheck2("0E", 0);
+    public void testParseZeroE() {
+        this.parseAndCheck2(
+                "0E",
+                0
+        );
     }
 
     @Test
-    public void testZeroE2() {
-        this.parseAndCheck2("0E", 0, "~");
+    public void testParseZeroE2() {
+        this.parseAndCheck2(
+                "0E",
+                0,
+                "~"
+        );
     }
 
     @Test
-    public void testNumberE() {
-        this.parseAndCheck2("1E", 1);
+    public void testParseNumberE() {
+        this.parseAndCheck2(
+                "1E",
+                1
+        );
     }
 
     @Test
-    public void testNumberE2() {
-        this.parseAndCheck2("1E", 1, "~");
+    public void testParseNumberE2() {
+        this.parseAndCheck2(
+                "1E",
+                1,
+                "~"
+        );
     }
 
     @Test
-    public void testNumberE3() {
-        this.parseAndCheck2("123E", 123);
+    public void testParseNumberE3() {
+        this.parseAndCheck2(
+                "123E",
+                123
+        );
     }
 
     @Test
-    public void testNumberE4() {
-        this.parseAndCheck2("123E", 123, "~");
+    public void testParseNumberE4() {
+        this.parseAndCheck2(
+                "123E",
+                123,
+                "~"
+        );
     }
 
     @Test
-    public void testNumberEExponent() {
-        this.parseAndCheck2("123E45", 123E45);
+    public void testParseNumberEExponent() {
+        this.parseAndCheck2(
+                "123E45",
+                123E45
+        );
     }
 
     @Test
-    public void testNumberEExponent2() {
-        this.parseAndCheck2("123E45", 123E45, "~");
+    public void testParseNumberEExponent2() {
+        this.parseAndCheck2(
+                "123E45",
+                123E45,
+                "~"
+        );
     }
 
     @Test
-    public void testNumberEPlusExponent() {
-        this.parseAndCheck2("123E+45", 123E+45);
+    public void testParseNumberEPlusExponent() {
+        this.parseAndCheck2(
+                "123E+45",
+                123E+45
+        );
     }
 
     @Test
-    public void testNumberPlusEExponent2() {
-        this.parseAndCheck2("123E+45", 123E+45, "~");
+    public void testParseNumberPlusEExponent2() {
+        this.parseAndCheck2(
+                "123E+45",
+                123E+45,
+                "~"
+        );
     }
 
     @Test
-    public void testNumberEMinusExponent() {
-        this.parseAndCheck2("123E-45", 123E-45);
+    public void testParseNumberEMinusExponent() {
+        this.parseAndCheck2(
+                "123E-45",
+                123E-45
+        );
     }
 
     @Test
-    public void testNumberMinusEExponent2() {
-        this.parseAndCheck2("123E-45", 123E-45, "~");
+    public void testParseNumberMinusEExponent2() {
+        this.parseAndCheck2(
+                "123E-45",
+                123E-45,
+                "~"
+        );
     }
 
     @Test
     public void tesMinustNumberEMinusExponent() {
-        this.parseAndCheck2("-123E-45", -123E-45);
+        this.parseAndCheck2(
+                "-123E-45",
+                -123E-45
+        );
     }
 
     @Test
-    public void testMinusNumberMinusEExponent2() {
-        this.parseAndCheck2("-123E-45", -123E-45, "~");
+    public void testParseMinusNumberMinusEExponent2() {
+        this.parseAndCheck2(
+                "-123E-45",
+                -123E-45,
+                "~"
+        );
     }
 
     @Test
-    public void testNumberDecimalFractionEExponent() {
-        this.parseAndCheck2("123.5E-67", 123.5E-67);
+    public void testParseNumberDecimalFractionEExponent() {
+        this.parseAndCheck2(
+                "123.5E-67",
+                123.5E-67
+        );
     }
 
     @Test
-    public void testNumberDecimalFractionEExponent2() {
-        this.parseAndCheck2("123.5E-67", 123.5E-67, "~");
+    public void testParseNumberDecimalFractionEExponent2() {
+        this.parseAndCheck2(
+                "123.5E-67",
+                123.5E-67,
+                "~"
+        );
     }
 
     @Test
-    public void testNumberDecimalFractionEExponent3() {
-        this.parseAndCheck2("-123.5E-67", -123.5E-67);
+    public void testParseNumberDecimalFractionEExponent3() {
+        this.parseAndCheck2(
+                "-123.5E-67",
+                -123.5E-67
+        );
     }
 
     @Test
-    public void testNumberDecimalFractionEExponent4() {
-        this.parseAndCheck2("-123.5E-67", -123.5E-67, "~");
+    public void testParseNumberDecimalFractionEExponent4() {
+        this.parseAndCheck2(
+                "-123.5E-67",
+                -123.5E-67,
+                "~"
+        );
     }
 
     @Test
-    public void testZeroDecimalFractionEExponent() {
-        this.parseAndCheck2("0.00000E-67", 0, "~");
+    public void testParseZeroDecimalFractionEExponent() {
+        this.parseAndCheck2(
+                "0.00000E-67",
+                0,
+                "~"
+        );
     }
 
     @Test
-    public void testNegativeZeroDecimalFractionEExponent2() {
-        this.parseAndCheck2("-0.00000E-67", -0.0, "~");
+    public void testParseNegativeZeroDecimalFractionEExponent2() {
+        this.parseAndCheck2(
+                "-0.00000E-67",
+                -0.0,
+                "~"
+        );
     }
 
     @Test
-    public void testNumberMultiCharacterExponent() {
-        this.parseAndCheck4("123XYZ45", 123E45);
+    public void testParseNumberMultiCharacterExponent() {
+        this.parseAndCheck4(
+                "123XYZ45",
+                123E45
+        );
     }
 
     @Test
-    public void testNumberMultiCharacterExponentPlus() {
-        this.parseAndCheck4("123XYZP45", 123E45);
+    public void testParseNumberMultiCharacterExponentPlus() {
+        this.parseAndCheck4(
+                "123XYZP45",
+                123E45
+        );
     }
 
     @Test
-    public void testNumberMultiCharacterExponentMinus() {
-        this.parseAndCheck4("123XYZM45", 123E-45);
+    public void testParseNumberMultiCharacterExponentMinus() {
+        this.parseAndCheck4(
+                "123XYZM45",
+                123E-45
+        );
     }
 
     @Test
-    public void testNumberMultiCharacterExponentZero() {
-        this.parseAndCheck4("123XYZ0", 123E0);
+    public void testParseNumberMultiCharacterExponentZero() {
+        this.parseAndCheck4(
+                "123XYZ0",
+                123E0
+        );
     }
 
     @Test
-    public void testNanFail() {
+    public void testParseNanFail() {
         this.parseFailAndCheck("N");
     }
 
     @Test
-    public void testNanFail2() {
+    public void testParseNanFail2() {
         this.parseFailAndCheck("N2");
     }
 
     @Test
-    public void testNanFail3() {
+    public void testParseNanFail3() {
         this.parseFailAndCheck("Na");
     }
 
     @Test
-    public void testNanFail4() {
+    public void testParseNanFail4() {
         this.parseFailAndCheck("Na2");
     }
 
     @Test
-    public void testNan() {
-        this.parseAndCheck2("NaN", Double.NaN);
+    public void testParseNan() {
+        this.parseAndCheck2(
+                "NaN",
+                Double.NaN
+        );
     }
 
     @Test
-    public void testNan2() {
-        this.parseAndCheck2("NaN", Double.NaN, "~");
+    public void testParseNan2() {
+        this.parseAndCheck2(
+                "NaN",
+                Double.NaN,
+                "~"
+        );
     }
 
     @Test
-    public void testNan3() {
-        this.parseAndCheck2("NaN", Double.NaN, "1");
+    public void testParseNan3() {
+        this.parseAndCheck2(
+                "NaN",
+                Double.NaN,
+                "1"
+        );
     }
 
     @Test
-    public void testInfinityFail() {
+    public void testParseInfinityFail() {
         this.parseFailAndCheck("I");
     }
 
     @Test
-    public void testInfinityFail2() {
+    public void testParseInfinityFail2() {
         this.parseFailAndCheck("I2");
     }
 
     @Test
-    public void testInfinityFail3() {
+    public void testParseInfinityFail3() {
         this.parseFailAndCheck("In");
     }
 
     @Test
-    public void testInfinityFail4() {
+    public void testParseInfinityFail4() {
         this.parseFailAndCheck("Inf");
     }
 
     @Test
-    public void testInfinityFail5() {
+    public void testParseInfinityFail5() {
         this.parseFailAndCheck("Infi");
     }
 
     @Test
-    public void testInfinityFail6() {
+    public void testParseInfinityFail6() {
         this.parseFailAndCheck("Infin");
     }
 
     @Test
-    public void testInfinityFail7() {
+    public void testParseInfinityFail7() {
         this.parseFailAndCheck("Infini");
     }
 
     @Test
-    public void testInfinityFail8() {
+    public void testParseInfinityFail8() {
         this.parseFailAndCheck("Infinit");
     }
 
     @Test
-    public void testInfinity() {
-        this.parseAndCheck2("Infinity", Double.POSITIVE_INFINITY);
+    public void testParseInfinity() {
+        this.parseAndCheck2(
+                "Infinity",
+                Double.POSITIVE_INFINITY
+        );
     }
 
     @Test
-    public void testInfinity2() {
-        this.parseAndCheck2("Infinity", Double.POSITIVE_INFINITY, "~");
+    public void testParseInfinity2() {
+        this.parseAndCheck2(
+                "Infinity",
+                Double.POSITIVE_INFINITY,
+                "~"
+        );
     }
 
     @Test
-    public void testPlusInfinity() {
-        this.parseAndCheck2("+Infinity", Double.POSITIVE_INFINITY);
+    public void testParsePlusInfinity() {
+        this.parseAndCheck2(
+                "+Infinity",
+                Double.POSITIVE_INFINITY
+        );
     }
 
     @Test
-    public void testMinusInfinity() {
-        this.parseAndCheck2("-Infinity", Double.NEGATIVE_INFINITY);
+    public void testParseMinusInfinity() {
+        this.parseAndCheck2(
+                "-Infinity",
+                Double.NEGATIVE_INFINITY
+        );
     }
 
     @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createParser(), "Double");
+    public void testParseDifferentDecimalSeparator() {
+        this.parseAndCheck3(
+                "1!25",
+                1.25
+        );
     }
 
     @Test
-    public void testDifferentDecimalSeparator() {
-        this.parseAndCheck3("1!25", 1.25);
+    public void testParseDifferentExponentSymbol() {
+        this.parseAndCheck3(
+                "5X2",
+                Double.parseDouble("5E2")
+        );
     }
 
     @Test
-    public void testDifferentExponentSymbol() {
-        this.parseAndCheck3("5X2", Double.parseDouble("5E2"));
+    public void testParseDifferentMinusSign() {
+        this.parseAndCheck3(
+                "M123",
+                -123
+        );
     }
 
     @Test
-    public void testDifferentMinusSign() {
-        this.parseAndCheck3("M123", -123);
+    public void testParseDifferentPlusSign() {
+        this.parseAndCheck3(
+                "P123",
+                123
+        );
     }
 
-    @Test
-    public void testDifferentPlusSign() {
-        this.parseAndCheck3("P123", 123);
-    }
-
-    private TextCursor parseAndCheck3(final String text, final double value) {
+    private TextCursor parseAndCheck3(final String text,
+                                      final double value) {
         return this.parseAndCheck(this.createParser(),
                 ParserContexts.basic(
                         DateTimeContexts.fake(),
@@ -510,8 +753,10 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
                 "");
     }
 
-    private TextCursor parseAndCheck4(final String text, final double value) {
-        return this.parseAndCheck(this.createParser(),
+    private TextCursor parseAndCheck4(final String text,
+                                      final double value) {
+        return this.parseAndCheck(
+                this.createParser(),
                 ParserContexts.basic(
                         DateTimeContexts.fake(),
                         new FakeDecimalNumberContext() {
@@ -538,7 +783,8 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
                 text,
                 ParserTokens.doubleParserToken(value, text),
                 text,
-                "");
+                ""
+        );
     }
 
     @Override
@@ -548,16 +794,46 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
 
     @Override
     public ParserContext createContext() {
-        return ParserContexts.basic(this.dateTimeContext(), this.decimalNumberContext());
+        return ParserContexts.basic(
+                this.dateTimeContext(),
+                this.decimalNumberContext()
+        );
     }
 
-    private TextCursor parseAndCheck2(final String in, final double value) {
-        return this.parseAndCheck2(in, value, "");
+    private TextCursor parseAndCheck2(final String in,
+                                      final double value) {
+        return this.parseAndCheck2(
+                in,
+                value,
+                ""
+        );
     }
 
-    private TextCursor parseAndCheck2(final String text, final double value, final String textAfter) {
-        return this.parseAndCheck(text + textAfter, DoubleParserToken.with(value, text), text, textAfter);
+    private TextCursor parseAndCheck2(final String text,
+                                      final double value,
+                                      final String textAfter) {
+        return this.parseAndCheck(
+                text + textAfter,
+                DoubleParserToken.with(
+                        value,
+                        text
+                ),
+                text,
+                textAfter
+        );
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testParseToString() {
+        this.toStringAndCheck(
+                this.createParser(),
+                "Double"
+        );
+    }
+
+    // type.............................................................................................................
 
     @Override
     public Class<DoubleParser<ParserContext>> type() {
