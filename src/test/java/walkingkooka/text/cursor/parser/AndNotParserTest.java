@@ -33,31 +33,49 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
 
     @Test
     public void testWithNullLeftFails() {
-        assertThrows(NullPointerException.class, () -> this.createParser(null, this.right()));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createParser(
+                        null,
+                        this.right()
+                )
+        );
     }
 
     @Test
     public void testWithNullRightFails() {
-        assertThrows(NullPointerException.class, () -> this.createParser(this.left(), null));
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createParser(
+                        this.left(),
+                        null
+                )
+        );
     }
 
     @Test
-    public void testLeftFailed() {
+    public void testParseLeftFailed() {
         this.parseFailAndCheck("x");
     }
 
     @Test
-    public void testLeftMissingFailed() {
-        this.parseFailAndCheck(AndNotParser.with(this::missing, Parsers.fake()), "A");
+    public void testParseLeftMissingFailed() {
+        this.parseFailAndCheck(
+                AndNotParser.with(
+                        this::missing,
+                        Parsers.fake()
+                ),
+                "A"
+        );
     }
 
     @Test
-    public void testLeftFailedRightPass() {
+    public void testParseLeftFailedRightPass() {
         this.parseFailAndCheck("right");
     }
 
     @Test
-    public void testLeftMatchRightFail() {
+    public void testParseLeftMatchRightFail() {
         this.parseAndCheck(LEFT,
                 this.leftToken(),
                 LEFT);
@@ -68,7 +86,7 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
     }
 
     @Test
-    public void testLeftMatchRightMissing() {
+    public void testParseLeftMatchRightMissing() {
         this.parseAndCheck(this.createParser(this.left(), this::missing),
                 LEFT,
                 this.leftToken(),
@@ -76,13 +94,13 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
     }
 
     @Test
-    public void testLeftMatchRightMatch() {
+    public void testParseLeftMatchRightMatch() {
         this.parseFailAndCheck(this.createParser(string(LEFT), string(LEFT)),
                 LEFT);
     }
 
     @Test
-    public void testLeftMatchRightFail2() {
+    public void testParseLeftMatchRightFail2() {
         final String after = "123";
         this.parseAndCheck(LEFT + after,
                 this.leftToken(),
@@ -108,7 +126,8 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
         return string(RIGHT);
     }
 
-    private Optional<ParserToken> missing(final TextCursor cursor, final ParserContext context) {
+    private Optional<ParserToken> missing(final TextCursor cursor,
+                                          final ParserContext context) {
         return Optional.empty();
     }
 
