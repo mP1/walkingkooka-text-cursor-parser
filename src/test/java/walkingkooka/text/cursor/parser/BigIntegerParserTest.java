@@ -31,129 +31,141 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
 
     private final static int RADIX = 10;
 
+    // with.............................................................................................................
+    
     @Test
     public void testWithNegativeRadixFails() {
-        assertThrows(IllegalArgumentException.class, () -> BigIntegerParser.with(-1));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> BigIntegerParser.with(-1)
+        );
     }
 
     @Test
     public void testWithZeroRadixFails() {
-        assertThrows(IllegalArgumentException.class, () -> BigIntegerParser.with(0));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> BigIntegerParser.with(0)
+        );
     }
 
+    // parse............................................................................................................
+    
     @Test
-    public void testFailure() {
+    public void testParseFailure() {
         this.parseFailAndCheck("a");
     }
 
     @Test
-    public void testFailure2() {
+    public void testParseFailure2() {
         this.parseFailAndCheck("abc");
     }
 
     @Test
-    public void testPlusSignFail() {
+    public void testParsePlusSignFail() {
         this.parseFailAndCheck("+");
     }
 
     @Test
-    public void testMinusSignFail() {
+    public void testParseMinusSignFail() {
         this.parseFailAndCheck("-");
     }
 
     @Test
-    public void testZero() {
+    public void testParseZero() {
         this.parseAndCheck2("0", 0, "0", "");
     }
 
     @Test
-    public void testZeroZero() {
+    public void testParseZeroZero() {
         this.parseAndCheck2("00", 0, "00", "");
     }
 
     @Test
-    public void testZeroZeroZero() {
+    public void testParseZeroZeroZero() {
         this.parseAndCheck2("000", 0, "000", "");
     }
 
     @Test
-    public void testDecimal() {
+    public void testParseDecimal() {
         this.parseAndCheck2("1", 1, "1", "");
     }
 
     @Test
-    public void testDecimal2() {
+    public void testParseDecimal2() {
         this.parseAndCheck2("123", 123, "123", "");
     }
 
     @Test
-    public void testDecimal3() {
+    public void testParseDecimal3() {
         this.parseAndCheck2("12305", 12305, "12305", "");
     }
 
     @Test
-    public void testZeroDecimal() {
+    public void testParseZeroDecimal() {
         this.parseAndCheck2("0123", 123, "0123", "");
     }
 
     @Test
-    public void testZeroZeroDecimal() {
+    public void testParseZeroZeroDecimal() {
         this.parseAndCheck2("00123", 123, "00123", "");
     }
 
     @Test
-    public void testPlusSignDecimal() {
+    public void testParsePlusSignDecimal() {
         this.parseAndCheck2("+1", 1, "+1", "");
     }
 
     @Test
-    public void testPlusSignDecimal2() {
+    public void testParsePlusSignDecimal2() {
         this.parseAndCheck2("+0", 0, "+0", "");
     }
 
     @Test
-    public void testPlusSignDecimal3() {
+    public void testParsePlusSignDecimal3() {
         this.parseAndCheck2("+123", 123, "+123", "");
     }
 
     @Test
-    public void testMinusSignDecimal() {
+    public void testParseMinusSignDecimal() {
         this.parseAndCheck2("-1", -1, "-1", "");
     }
 
     @Test
-    public void testMinusSignDecimal2() {
+    public void testParseMinusSignDecimal2() {
         this.parseAndCheck2("-123", -123, "-123", "");
     }
 
     @Test
-    public void testUntilNonDigit() {
+    public void testParseUntilNonDigit() {
         this.parseAndCheck2("123abc", 123, "123", "abc");
     }
 
     @Test
-    public void testHex() {
+    public void testParseHex() {
         this.parseAndCheck3(16, "1234xyz", 0x1234, "1234", "xyz");
     }
 
     @SuppressWarnings("OctalInteger")
     @Test
-    public void testOctal() {
+    public void testParseOctal() {
         this.parseAndCheck3(8, "012345678xyz", 01234567, "01234567", "8xyz");
     }
 
     @Test
-    public void testDifferentMinusSign() {
+    public void testParseDifferentMinusSign() {
         this.parseAndCheck3("M123", -123);
     }
 
     @Test
-    public void testDifferentPlusSign() {
+    public void testParseDifferentPlusSign() {
         this.parseAndCheck3("P123", 123);
     }
 
-    private TextCursor parseAndCheck3(final String text, final int value) {
-        return this.parseAndCheck(this.createParser(),
+    private TextCursor parseAndCheck3(final String text,
+                                      final int value) {
+        return this.parseAndCheck(
+                this.createParser(),
                 ParserContexts.basic(
                         DateTimeContexts.fake(),
                         new FakeDecimalNumberContext() {
@@ -166,21 +178,16 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
                             public char positiveSign() {
                                 return 'P';
                             }
-                        }),
+                        }
+                ),
                 text,
-                ParserTokens.bigInteger(BigInteger.valueOf(value), text),
+                ParserTokens.bigInteger(
+                        BigInteger.valueOf(value),
+                        text
+                ),
                 text,
-                "");
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createParser(), "BigInteger");
-    }
-
-    @Test
-    public void testToString2() {
-        this.toStringAndCheck(BigIntegerParser.with(8), "BigInteger(base=8)");
+                ""
+        );
     }
 
     @Override
@@ -193,22 +200,70 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
         return ParserContexts.basic(DateTimeContexts.fake(), this.decimalNumberContext());
     }
 
-    private TextCursor parseAndCheck2(final String in, final long value, final String text, final String textAfter) {
-        return this.parseAndCheck2(in, BigInteger.valueOf(value), text, textAfter);
+    private TextCursor parseAndCheck2(final String in,
+                                      final long value,
+                                      final String text,
+                                      final String textAfter) {
+        return this.parseAndCheck2(
+                in,
+                BigInteger.valueOf(value),
+                text,
+                textAfter
+        );
     }
 
-    private TextCursor parseAndCheck2(final String in, final BigInteger value, final String text, final String textAfter) {
-        return this.parseAndCheck(in, BigIntegerParserToken.with(value, text), text, textAfter);
+    private TextCursor parseAndCheck2(final String in,
+                                      final BigInteger value,
+                                      final String text,
+                                      final String textAfter) {
+        return this.parseAndCheck(
+                in,
+                BigIntegerParserToken.with(
+                        value,
+                        text
+                ),
+                text,
+                textAfter
+        );
     }
 
-    private TextCursor parseAndCheck3(final int radix, final String from, final long value, final String text, final String textAfter) {
-        return this.parseAndCheck(BigIntegerParser.with(radix),
+    private TextCursor parseAndCheck3(final int radix,
+                                      final String from,
+                                      final long value,
+                                      final String text,
+                                      final String textAfter) {
+        return this.parseAndCheck(
+                BigIntegerParser.with(radix),
                 this.createContext(),
                 TextCursors.charSequence(from),
-                BigIntegerParserToken.with(BigInteger.valueOf(value), text),
+                BigIntegerParserToken.with(
+                        BigInteger.valueOf(value),
+                        text
+                ),
                 text,
-                textAfter);
+                textAfter
+        );
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createParser(),
+                "BigInteger"
+        );
+    }
+
+    @Test
+    public void testToString2() {
+        this.toStringAndCheck(
+                BigIntegerParser.with(8),
+                "BigInteger(base=8)"
+        );
+    }
+
+    // type.............................................................................................................
 
     @Override
     public Class<BigIntegerParser<ParserContext>> type() {
