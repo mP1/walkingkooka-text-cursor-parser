@@ -27,6 +27,7 @@ public abstract class ParserTokenVisitor extends Visitor<ParserToken> {
 
     // ParserToken.......................................................................
 
+    @Override
     public final void accept(final ParserToken token) {
         Objects.requireNonNull(token, "token");
 

@@ -42,6 +42,7 @@ abstract class ValueParserToken<V> implements ParserToken, Value<V> {
     /**
      * The text matched by the {@link Parser}.
      */
+    @Override
     public final String text() {
         return this.text;
     }

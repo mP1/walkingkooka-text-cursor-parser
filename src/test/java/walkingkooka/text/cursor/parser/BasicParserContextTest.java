@@ -61,8 +61,11 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     }
 
     @Test
-    public void testMathContext() {
-        this.hasMathContextAndCheck(this.createContext(), MATH_CONTEXT);
+    public void testMathContext2() {
+        this.hasMathContextAndCheck(
+                this.createContext(),
+                MATH_CONTEXT
+        );
     }
 
     @Test

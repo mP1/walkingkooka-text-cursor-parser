@@ -60,6 +60,7 @@ public final class CharacterParserTokenTest extends ValueParserTokenTestCase<Cha
     }
 
     @Test
+    @Override
     public void testToString() {
         this.toStringAndCheck(this.createToken(), this.text());
     }
