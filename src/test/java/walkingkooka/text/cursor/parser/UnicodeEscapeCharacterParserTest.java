@@ -23,78 +23,73 @@ import walkingkooka.text.cursor.TextCursor;
 public final class UnicodeEscapeCharacterParserTest extends NonEmptyParserTestCase<UnicodeEscapeCharacterParser<ParserContext>, CharacterParserToken> {
 
     @Test
-    public void testFailure() {
+    public void testParseFailure() {
         this.parseFailAndCheck("a");
     }
 
     @Test
-    public void testBacklashFails() {
+    public void testParseBacklashFails() {
         this.parseFailAndCheck("\\");
     }
 
     @Test
-    public void testBacklashFails2() {
+    public void testParseBacklashFails2() {
         this.parseFailAndCheck("\\-");
     }
 
     @Test
-    public void testBacklashUFails() {
+    public void testParseBacklashUFails() {
         this.parseFailAndCheck("\\u");
     }
 
     @Test
-    public void testBacklashUFails2() {
+    public void testParseBacklashUFails2() {
         this.parseFailAndCheck("\\u-");
     }
 
     @Test
-    public void testBacklashUOneDigitFails() {
+    public void testParseBacklashUOneDigitFails() {
         this.parseFailAndCheck("\\u1");
     }
 
     @Test
-    public void testBacklashUOneDigitFails2() {
+    public void testParseBacklashUOneDigitFails2() {
         this.parseFailAndCheck("\\u1-");
     }
 
     @Test
-    public void testBacklashUTwoDigitFails() {
+    public void testParseBacklashUTwoDigitFails() {
         this.parseFailAndCheck("\\u12");
     }
 
     @Test
-    public void testBacklashUTwoDigitFails2() {
+    public void testParseBacklashUTwoDigitFails2() {
         this.parseFailAndCheck("\\u12-");
     }
 
     @Test
-    public void testBacklashUThreeDigitFails() {
+    public void testParseBacklashUThreeDigitFails() {
         this.parseFailAndCheck("\\u123");
     }
 
     @Test
-    public void testBacklashUThreeDigitFails2() {
+    public void testParseBacklashUThreeDigitFails2() {
         this.parseFailAndCheck("\\u123-");
     }
 
     @Test
-    public void testComplete() {
+    public void testParseComplete() {
         this.parseAndCheck2("\\u1234", '\u1234', "\\u1234");
     }
 
     @Test
-    public void testComplete2() {
+    public void testParseComplete2() {
         this.parseAndCheck2("\\u12345", '\u1234', "\\u1234", "5");
     }
 
     @Test
-    public void testComplete3() {
+    public void testParseComplete3() {
         this.parseAndCheck2("\\u1234ABC", '\u1234', "\\u1234", "ABC");
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createParser(), "Unicode escape char sequence");
     }
 
     @Override
@@ -102,13 +97,40 @@ public final class UnicodeEscapeCharacterParserTest extends NonEmptyParserTestCa
         return UnicodeEscapeCharacterParser.get();
     }
 
-    private TextCursor parseAndCheck2(final String in, final char value, final String text) {
-        return this.parseAndCheck2(in, value, text, "");
+    private TextCursor parseAndCheck2(final String in,
+                                      final char value,
+                                      final String text) {
+        return this.parseAndCheck2(
+                in,
+                value,
+                text,
+                ""
+        );
     }
 
-    private TextCursor parseAndCheck2(final String in, final char value, final String text, final String textAfter) {
-        return this.parseAndCheck(in, CharacterParserToken.with(value, text), text, textAfter);
+    private TextCursor parseAndCheck2(final String in,
+                                      final char value,
+                                      final String text,
+                                      final String textAfter) {
+        return this.parseAndCheck(
+                in,
+                CharacterParserToken.with(
+                        value,
+                        text
+                ),
+                text,
+                textAfter
+        );
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createParser(), "Unicode escape char sequence");
+    }
+
+    // type.............................................................................................................
 
     @Override
     public Class<UnicodeEscapeCharacterParser<ParserContext>> type() {
