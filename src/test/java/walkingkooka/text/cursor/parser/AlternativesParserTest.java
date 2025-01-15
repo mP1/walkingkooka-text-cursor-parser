@@ -67,53 +67,43 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
     }
 
     @Test
-    public void testNone() {
+    public void testParseNone() {
         this.parseFailAndCheck("a");
     }
 
     @Test
-    public void testNone2() {
+    public void testParseNone2() {
         this.parseFailAndCheck("ab");
     }
 
     @Test
-    public void testFirst() {
-        this.parseAndCheck(TEXT1,
+    public void testParseFirstMatch() {
+        this.parseAndCheck(
+                TEXT1,
                 string(TEXT1),
                 TEXT1,
-                "");
+                ""
+        );
     }
 
     @Test
-    public void testSecond() {
-        this.parseAndCheck(TEXT2,
+    public void testParseSecondMatch() {
+        this.parseAndCheck(
+                TEXT2,
                 string(TEXT2),
                 TEXT2,
-                "");
+                ""
+        );
     }
 
     @Test
-    public void testSecondIgnoreExtra() {
+    public void testParseSecondIgnoreExtra() {
         final String extra = "!!!";
-        this.parseAndCheck(TEXT2 + extra,
+        this.parseAndCheck(
+                TEXT2 + extra,
                 string(TEXT2),
                 TEXT2,
-                extra);
-    }
-
-    @Test
-    @Override
-    public void testOr() {
-        final AlternativesParser<ParserContext> parser = createParser();
-
-        final Parser<ParserContext> parser3 = parser("text3");
-        this.checkEquals(
-                this.createParser0(
-                        PARSER1,
-                        PARSER2,
-                        parser3
-                ),
-                parser.or(parser3)
+                extra
         );
     }
 
@@ -139,20 +129,39 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
     }
 
     private void testParseAllCustomToStringParsers(final String text) {
-        this.parseAndCheck(this.createParser1(PARSER1.setToString("1"), PARSER2.setToString("2")),
+        this.parseAndCheck(
+                this.createParser1(
+                        PARSER1.setToString("1"),
+                        PARSER2.setToString("2")
+                ),
                 text,
                 string(text),
-                text);
+                text
+        );
     }
 
     @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createParser(), "(" + PARSER1 + " | " + PARSER2 + ")");
+    @Override
+    public void testOr() {
+        final AlternativesParser<ParserContext> parser = createParser();
+
+        final Parser<ParserContext> parser3 = parser("text3");
+        this.checkEquals(
+                this.createParser0(
+                        PARSER1,
+                        PARSER2,
+                        parser3
+                ),
+                parser.or(parser3)
+        );
     }
 
     @Override
     public AlternativesParser<ParserContext> createParser() {
-        return this.createParser0(PARSER1, PARSER2);
+        return this.createParser0(
+                PARSER1,
+                PARSER2
+        );
     }
 
     @SafeVarargs
@@ -162,7 +171,11 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
 
     @SafeVarargs
     private Parser<ParserContext> createParser1(final Parser<ParserContext>... parsers) {
-        return AlternativesParser.with(Cast.to(Lists.of(parsers)));
+        return AlternativesParser.with(
+                Cast.to(
+                        Lists.of(parsers)
+                )
+        );
     }
 
     private static StringParserToken string(final String s) {
@@ -170,8 +183,20 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
     }
 
     private static Parser<ParserContext> parser(final String string) {
-        return Parsers.string(string, CaseSensitivity.SENSITIVE);
+        return Parsers.string(
+                string,
+                CaseSensitivity.SENSITIVE
+        );
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createParser(), "(" + PARSER1 + " | " + PARSER2 + ")");
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<AlternativesParser<ParserContext>> type() {
