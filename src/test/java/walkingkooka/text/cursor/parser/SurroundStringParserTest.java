@@ -29,25 +29,41 @@ public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStr
     private final static String OPEN = "<123";
     private final static String CLOSE = "456";
 
+    // with.............................................................................................................
+
     @Test
     public void testWithNullOpenFails() {
-        assertThrows(NullPointerException.class, () -> SurroundStringParser.with(null, CLOSE));
+        assertThrows(
+                NullPointerException.class,
+                () -> SurroundStringParser.with(null, CLOSE)
+        );
     }
 
     @Test
     public void testWithEmptyOpenFails() {
-        assertThrows(IllegalArgumentException.class, () -> SurroundStringParser.with("", CLOSE));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SurroundStringParser.with("", CLOSE)
+        );
     }
 
     @Test
     public void testWithNullCloseFails() {
-        assertThrows(NullPointerException.class, () -> SurroundStringParser.with(OPEN, null));
+        assertThrows(
+                NullPointerException.class,
+                () -> SurroundStringParser.with(OPEN, null)
+        );
     }
 
     @Test
     public void testWithEmptyCloseFails() {
-        assertThrows(IllegalArgumentException.class, () -> SurroundStringParser.with(OPEN, ""));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> SurroundStringParser.with(OPEN, "")
+        );
     }
+
+    // parse............................................................................................................
 
     @Test
     public void testParseOpenIncomplete() {
@@ -109,7 +125,7 @@ public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStr
     }
 
     @Test
-    public void testClose5() {
+    public void testParseClose5() {
         final String text = OPEN + "..." + OPEN + "." + CLOSE;
         final String textAfter = "!@#";
         this.parseAndCheck(text + textAfter, string(text), text, textAfter);
