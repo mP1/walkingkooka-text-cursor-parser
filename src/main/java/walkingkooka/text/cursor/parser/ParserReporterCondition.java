@@ -30,6 +30,7 @@ public enum ParserReporterCondition {
      * Invoke the {@link ParserReporter} unconditionally.
      */
     ALWAYS {
+        @Override
         <C extends ParserContext> Optional<ParserToken> parse(final TextCursor cursor,
                                                               final ReportingParser<C> parser,
                                                               final C context) {
@@ -41,6 +42,7 @@ public enum ParserReporterCondition {
      * The {@link ParserReporter} should only be triggered when the {@link TextCursor} is not empty.
      */
     NOT_EMPTY {
+        @Override
         <C extends ParserContext> Optional<ParserToken> parse(final TextCursor cursor,
                                                               final ReportingParser<C> parser,
                                                               final C context) {

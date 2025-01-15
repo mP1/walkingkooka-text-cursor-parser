@@ -51,6 +51,7 @@ public abstract class RepeatedOrSequenceParserTokenTestCase<T extends RepeatedOr
     // children.........................................................................................................
 
     @Test
+    @Override
     public final void testChildren() {
         final T token = this.createToken(STRING1, STRING2, STRING4);
         this.checkEquals(

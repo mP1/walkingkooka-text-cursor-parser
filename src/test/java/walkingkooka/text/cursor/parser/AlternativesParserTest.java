@@ -102,11 +102,19 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
     }
 
     @Test
+    @Override
     public void testOr() {
         final AlternativesParser<ParserContext> parser = createParser();
 
         final Parser<ParserContext> parser3 = parser("text3");
-        this.checkEquals(this.createParser0(PARSER1, PARSER2, parser3), parser.or(parser3));
+        this.checkEquals(
+                this.createParser0(
+                        PARSER1,
+                        PARSER2,
+                        parser3
+                ),
+                parser.or(parser3)
+        );
     }
 
     @Test

@@ -224,6 +224,7 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
         );
     }
 
+    @Override
     ReportingParser<ParserContext> createParser(final Parser<ParserContext> parser) {
         return ReportingParser.with(
                 ParserReporterCondition.ALWAYS,
