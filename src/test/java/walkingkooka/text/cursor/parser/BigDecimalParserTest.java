@@ -29,292 +29,292 @@ import java.util.Locale;
 public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecimalParser<ParserContext>, BigDecimalParserToken> {
 
     @Test
-    public void testFailure() {
+    public void testParseFailure() {
         this.parseFailAndCheck("a");
     }
 
     @Test
-    public void testFailure2() {
+    public void testParseFailure2() {
         this.parseFailAndCheck("abc");
     }
 
     @Test
-    public void testPlusZero() {
+    public void testParsePlusZero() {
         this.parseAndCheck2("+0");
     }
 
     @Test
-    public void testPlusZero2() {
+    public void testParsePlusZero2() {
         this.parseAndCheck2("+0", "~");
     }
 
     @Test
-    public void testMinusZero() {
+    public void testParseMinusZero() {
         this.parseAndCheck2("-0");
     }
 
     @Test
-    public void testMinusZero2() {
+    public void testParseMinusZero2() {
         this.parseAndCheck2("-0", "~");
     }
 
     @Test
-    public void testZero() {
+    public void testParseZero() {
         this.parseAndCheck2("0");
     }
 
     @Test
-    public void testZeroZeroZero() {
+    public void testParseZeroZeroZero() {
         this.parseAndCheck2("000");
     }
 
     @Test
-    public void testZero2() {
+    public void testParseZero2() {
         this.parseAndCheck2("0", "~");
     }
 
     @Test
-    public void testPlusPlusFail() {
+    public void testParsePlusPlusFail() {
         this.parseFailAndCheck("++1");
     }
 
     @Test
-    public void testMinusMinusFail() {
+    public void testParseMinusMinusFail() {
         this.parseFailAndCheck("--1");
     }
 
     @Test
-    public void testPlusMinusFail() {
+    public void testParsePlusMinusFail() {
         this.parseFailAndCheck("+-1");
     }
 
     @Test
-    public void testMinusPlusFail() {
+    public void testParseMinusPlusFail() {
         this.parseFailAndCheck("-+1");
     }
 
     @Test
-    public void testPlusZeroDecimal() {
+    public void testParsePlusZeroDecimal() {
         this.parseAndCheck2("+0.");
     }
 
     @Test
-    public void testPlusZeroDecimal2() {
+    public void testParsePlusZeroDecimal2() {
         this.parseAndCheck2("+0.", "~");
     }
 
     @Test
-    public void testMinusZeroDecimal() {
+    public void testParseMinusZeroDecimal() {
         this.parseAndCheck2("-0.");
     }
 
     @Test
-    public void testMinusZeroDecimal2() {
+    public void testParseMinusZeroDecimal2() {
         this.parseAndCheck2("-0.", "~");
     }
 
     @Test
-    public void testZeroDecimal() {
+    public void testParseZeroDecimal() {
         this.parseAndCheck2("0.");
     }
 
     @Test
-    public void testZeroDecimal2() {
+    public void testParseZeroDecimal2() {
         this.parseAndCheck2("0.", "~");
     }
 
     @Test
-    public void testZeroDecimalFraction() {
+    public void testParseZeroDecimalFraction() {
         this.parseAndCheck2("0.5");
     }
 
     @Test
-    public void testZeroDecimalFraction2() {
+    public void testParseZeroDecimalFraction2() {
         this.parseAndCheck2("0.5", "~");
     }
 
     @Test
-    public void testZeroDecimalFraction3() {
+    public void testParseZeroDecimalFraction3() {
         this.parseAndCheck2("0.875");
     }
 
     @Test
-    public void testZeroDecimalFraction4() {
+    public void testParseZeroDecimalFraction4() {
         this.parseAndCheck2("0.875", "~");
     }
 
     @Test
-    public void testMinusZeroDecimalFraction() {
+    public void testParseMinusZeroDecimalFraction() {
         this.parseAndCheck2("-0.5");
     }
 
     @Test
-    public void testMinusZeroDecimalFraction2() {
+    public void testParseMinusZeroDecimalFraction2() {
         this.parseAndCheck2("-0.5", "~");
     }
 
     @Test
-    public void testMinusZeroDecimalFraction3() {
+    public void testParseMinusZeroDecimalFraction3() {
         this.parseAndCheck2("-0.875");
     }
 
     @Test
-    public void testMinusZeroDecimalFraction4() {
+    public void testParseMinusZeroDecimalFraction4() {
         this.parseAndCheck2("-0.875", "~");
     }
 
     @Test
-    public void testZeroDecimalFraction5() {
+    public void testParseZeroDecimalFraction5() {
         this.parseAndCheck2("-0.000000001");
     }
 
     @Test
-    public void testZeroNumber() {
+    public void testParseZeroNumber() {
         this.parseAndCheck2("0123");
     }
 
     @Test
-    public void testZeroNumber2() {
+    public void testParseZeroNumber2() {
         this.parseAndCheck2("00123");
     }
 
     @Test
-    public void testNumber() {
+    public void testParseNumber() {
         this.parseAndCheck2("123");
     }
 
     @Test
-    public void testNumber2() {
+    public void testParseNumber2() {
         this.parseAndCheck2("123", "~");
     }
 
     @Test
-    public void testNumberDecimal() {
+    public void testParseNumberDecimal() {
         this.parseAndCheck2("123.");
     }
 
     @Test
-    public void testNumberDecimal2() {
+    public void testParseNumberDecimal2() {
         this.parseAndCheck2("123.", "~");
     }
 
     @Test
-    public void testNumberDecimalFraction() {
+    public void testParseNumberDecimalFraction() {
         this.parseAndCheck2("123.5");
     }
 
     @Test
-    public void testNumberDecimalFraction2() {
+    public void testParseNumberDecimalFraction2() {
         this.parseAndCheck2("123.5", "~");
     }
 
     @Test
-    public void testNumberDecimalFraction3() {
+    public void testParseNumberDecimalFraction3() {
         this.parseAndCheck2("123.875");
     }
 
     @Test
-    public void testNumberDecimalFraction4() {
+    public void testParseNumberDecimalFraction4() {
         this.parseAndCheck2("123.875", "~");
     }
 
     @Test
-    public void testMinusNumberDecimal() {
+    public void testParseMinusNumberDecimal() {
         this.parseAndCheck2("-123.");
     }
 
     @Test
-    public void testMinusNumberDecimal2() {
+    public void testParseMinusNumberDecimal2() {
         this.parseAndCheck2("-123.", "~");
     }
 
     @Test
-    public void testMinusNumberDecimalFraction() {
+    public void testParseMinusNumberDecimalFraction() {
         this.parseAndCheck2("-123.5");
     }
 
     @Test
-    public void testMinusNumberDecimalFraction2() {
+    public void testParseMinusNumberDecimalFraction2() {
         this.parseAndCheck2("-123.5", "~");
     }
 
     @Test
-    public void testMinusNumberDecimalFraction3() {
+    public void testParseMinusNumberDecimalFraction3() {
         this.parseAndCheck2("-123.875");
     }
 
     @Test
-    public void testMinusNumberDecimalFraction4() {
+    public void testParseMinusNumberDecimalFraction4() {
         this.parseAndCheck2("-123.875", "#");
     }
 
     @Test
-    public void testZeroDecimalZeroes() {
+    public void testParseZeroDecimalZeroes() {
         this.parseAndCheck2("0.0000");
     }
 
     @Test
-    public void testMinusZeroDecimalZeroes() {
+    public void testParseMinusZeroDecimalZeroes() {
         this.parseAndCheck2("-0.0000");
     }
 
     @Test
-    public void testZeroE() {
+    public void testParseZeroE() {
         this.parseAndCheck2("0E", 0);
     }
 
     @Test
-    public void testZeroE2() {
+    public void testParseZeroE2() {
         this.parseAndCheck2("0E", 0, "~");
     }
 
     @Test
-    public void testNumberE() {
+    public void testParseNumberE() {
         this.parseAndCheck2("1E", 1);
     }
 
     @Test
-    public void testNumberE2() {
+    public void testParseNumberE2() {
         this.parseAndCheck2("1E", 1, "~");
     }
 
     @Test
-    public void testNumberE3() {
+    public void testParseNumberE3() {
         this.parseAndCheck2("123E", 123);
     }
 
     @Test
-    public void testNumberE4() {
+    public void testParseNumberE4() {
         this.parseAndCheck2("123E", 123, "~");
     }
 
     @Test
-    public void testNumberEExponent() {
+    public void testParseNumberEExponent() {
         this.parseAndCheck2("123E45");
     }
 
     @Test
-    public void testNumberEExponent2() {
+    public void testParseNumberEExponent2() {
         this.parseAndCheck2("123E45", "~");
     }
 
     @Test
-    public void testNumberEPlusExponent() {
+    public void testParseNumberEPlusExponent() {
         this.parseAndCheck2("123E+45");
     }
 
     @Test
-    public void testNumberPlusEExponent2() {
+    public void testParseNumberPlusEExponent2() {
         this.parseAndCheck2("123E+45", "~");
     }
 
     @Test
-    public void testNumberEMinusExponent() {
+    public void testParseNumberEMinusExponent() {
         this.parseAndCheck2("123E-45");
     }
 
     @Test
-    public void testNumberMinusEExponent2() {
+    public void testParseNumberMinusEExponent2() {
         this.parseAndCheck2("123E-45", "~");
     }
 
@@ -324,97 +324,97 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
     }
 
     @Test
-    public void testMinusNumberMinusEExponent2() {
+    public void testParseMinusNumberMinusEExponent2() {
         this.parseAndCheck2("-123E-45", "~");
     }
 
     @Test
-    public void testNumberDecimalFractionEExponent() {
+    public void testParseNumberDecimalFractionEExponent() {
         this.parseAndCheck2("123.5E-67");
     }
 
     @Test
-    public void testNumberDecimalFractionEExponent2() {
+    public void testParseNumberDecimalFractionEExponent2() {
         this.parseAndCheck2("123.5E-67", "~");
     }
 
     @Test
-    public void testNumberDecimalFractionEExponent3() {
+    public void testParseNumberDecimalFractionEExponent3() {
         this.parseAndCheck2("-123.5E-67");
     }
 
     @Test
-    public void testNumberDecimalFractionEExponent4() {
+    public void testParseNumberDecimalFractionEExponent4() {
         this.parseAndCheck2("-123.5E-67", "~");
     }
 
     @Test
-    public void testZeroDecimalFractionEExponent() {
+    public void testParseZeroDecimalFractionEExponent() {
         this.parseAndCheck2("0.00000E-67", "~");
     }
 
     @Test
-    public void testNegativeZeroDecimalFractionEExponent2() {
+    public void testParseNegativeZeroDecimalFractionEExponent2() {
         this.parseAndCheck2("-0.00000E-67", "~");
     }
 
     @Test
-    public void testNumberMultiCharacterExponent() {
+    public void testParseNumberMultiCharacterExponent() {
         this.parseAndCheck4("123XYZ45", new BigDecimal("123E45"));
     }
 
     @Test
-    public void testNumberMultiCharacterExponentPlus() {
+    public void testParseNumberMultiCharacterExponentPlus() {
         this.parseAndCheck4("123XYZP45", new BigDecimal("123E+45"));
     }
 
     @Test
-    public void testNumberMultiCharacterExponentMinus() {
+    public void testParseNumberMultiCharacterExponentMinus() {
         this.parseAndCheck4("123XYZM45", new BigDecimal("123E-45"));
     }
 
     @Test
-    public void testNumberMultiCharacterExponentZero() {
+    public void testParseNumberMultiCharacterExponentZero() {
         this.parseAndCheck4("123XYZ0", new BigDecimal("123E0"));
     }
 
     @Test
-    public void testNaNFails() {
+    public void testParseNaNFails() {
         this.parseFailAndCheck("NaN");
     }
 
     @Test
-    public void testInfinityFails() {
+    public void testParseInfinityFails() {
         this.parseFailAndCheck("Infinity");
     }
 
     @Test
-    public void testPlusInfinityFails() {
+    public void testParsePlusInfinityFails() {
         this.parseFailAndCheck("+Infinity");
     }
 
     @Test
-    public void testMinusInfinityFails() {
+    public void testParseMinusInfinityFails() {
         this.parseFailAndCheck("-Infinity");
     }
 
     @Test
-    public void testDifferentDecimalSeparator() {
+    public void testParseDifferentDecimalSeparator() {
         this.parseAndCheck3("1D25", BigDecimal.valueOf(1.25));
     }
 
     @Test
-    public void testDifferentExponentSymbol() {
+    public void testParseDifferentExponentSymbol() {
         this.parseAndCheck3("5X2", new BigDecimal("5E2"));
     }
 
     @Test
-    public void testDifferentMinusSign() {
+    public void testParseDifferentMinusSign() {
         this.parseAndCheck3("M123", BigDecimal.valueOf(-123));
     }
 
     @Test
-    public void testDifferentPlusSign() {
+    public void testParseDifferentPlusSign() {
         this.parseAndCheck3("P123", BigDecimal.valueOf(123));
     }
 
@@ -438,11 +438,6 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                 "");
     }
 
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createParser(), "Decimal");
-    }
-
     @Override
     public BigDecimalParser<ParserContext> createParser() {
         return BigDecimalParser.with();
@@ -450,28 +445,63 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
 
     @Override
     public ParserContext createContext() {
-        return ParserContexts.basic(DateTimeContexts.fake(), this.decimalNumberContext());
+        return ParserContexts.basic(
+                DateTimeContexts.fake(),
+                this.decimalNumberContext()
+        );
     }
 
     private TextCursor parseAndCheck2(final String text) {
         return this.parseAndCheck2(text, "");
     }
 
-    private TextCursor parseAndCheck2(final String text, final long value) {
-        return this.parseAndCheck2(text, BigDecimal.valueOf(value), "");
+    private TextCursor parseAndCheck2(final String text,
+                                      final long value) {
+        return this.parseAndCheck2(
+                text,
+                BigDecimal.valueOf(value),
+                ""
+        );
     }
 
-    private TextCursor parseAndCheck2(final String text, final String textAfter) {
-        return this.parseAndCheck2(text, new BigDecimal(text), textAfter);
+    private TextCursor parseAndCheck2(final String text,
+                                      final String textAfter) {
+        return this.parseAndCheck2(
+                text,
+                new BigDecimal(text),
+                textAfter
+        );
     }
 
-    private TextCursor parseAndCheck2(final String text, final long value, final String textAfter) {
-        return this.parseAndCheck2(text, BigDecimal.valueOf(value), textAfter);
+    private TextCursor parseAndCheck2(final String text,
+                                      final long value,
+                                      final String textAfter) {
+        return this.parseAndCheck2(
+                text,
+                BigDecimal.valueOf(value),
+                textAfter
+        );
     }
 
-    private TextCursor parseAndCheck2(final String text, final BigDecimal value, final String textAfter) {
-        return this.parseAndCheck(text + textAfter, ParserTokens.bigDecimal(value, text), text, textAfter);
+    private TextCursor parseAndCheck2(final String text,
+                                      final BigDecimal value,
+                                      final String textAfter) {
+        return this.parseAndCheck(
+                text + textAfter,
+                ParserTokens.bigDecimal(value, text),
+                text,
+                textAfter
+        );
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createParser(), "Decimal");
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<BigDecimalParser<ParserContext>> type() {
