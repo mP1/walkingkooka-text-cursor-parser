@@ -34,22 +34,54 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
 
     @Test
     public void testWithNullInitialCharPredicateFails() {
-        assertThrows(NullPointerException.class, () -> StringInitialAndPartCharPredicateParser.with(null, PART, MIN_LENGTH, MAX_LENGTH));
+        assertThrows(
+                NullPointerException.class,
+                () -> StringInitialAndPartCharPredicateParser.with(
+                        null,
+                        PART,
+                        MIN_LENGTH,
+                        MAX_LENGTH
+                )
+        );
     }
 
     @Test
     public void testWithNullInitialPartPredicateFails() {
-        assertThrows(NullPointerException.class, () -> StringInitialAndPartCharPredicateParser.with(INITIAL, null, MIN_LENGTH, MAX_LENGTH));
+        assertThrows(
+                NullPointerException.class,
+                () -> StringInitialAndPartCharPredicateParser.with(
+                        INITIAL,
+                        null,
+                        MIN_LENGTH,
+                        MAX_LENGTH
+                )
+        );
     }
 
     @Test
     public void testWithInvalidMinLengthFails() {
-        assertThrows(IllegalArgumentException.class, () -> StringInitialAndPartCharPredicateParser.with(INITIAL, PART, 0, MAX_LENGTH));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> StringInitialAndPartCharPredicateParser.with(
+                        INITIAL,
+                        PART,
+                        0,
+                        MAX_LENGTH
+                )
+        );
     }
 
     @Test
     public void testWithInvalidMaxLengthFails2() {
-        assertThrows(IllegalArgumentException.class, () -> StringInitialAndPartCharPredicateParser.with(INITIAL, PART, MIN_LENGTH, MIN_LENGTH - 1));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> StringInitialAndPartCharPredicateParser.with(
+                        INITIAL,
+                        PART,
+                        MIN_LENGTH,
+                        MIN_LENGTH - 1
+                )
+        );
     }
 
     // parse............................................................................................................
@@ -71,30 +103,59 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
 
     @Test
     public void testParseInitialAndPart() {
-        this.parseAndCheck2("a12345", "a12345");
+        this.parseAndCheck2(
+                "a12345",
+                "a12345"
+        );
     }
 
     @Test
     public void testParseInitialAndPart2() {
-        this.parseAndCheck2("a12345-=", "a12345", "-=");
+        this.parseAndCheck2(
+                "a12345-=",
+                "a12345",
+                "-="
+        );
     }
 
     @Test
     public void testParseHonourMaxLength() {
-        this.parseAndCheck2("a12345678", "a12345", "678");
+        this.parseAndCheck2(
+                "a12345678",
+                "a12345",
+                "678"
+        );
     }
 
     @Test
     public void testParseHonourMaxLength2() {
-        this.parseAndCheck(this.createParser(1, 2), "a12345678", this.string("a1"), "a1", "2345678");
+        this.parseAndCheck(
+                this.createParser(1, 2),
+                "a12345678",
+                this.string("a1"),
+                "a1",
+                "2345678"
+        );
     }
 
-    private void parseAndCheck2(final String text, final String expected) {
-        this.parseAndCheck2(text, expected, "");
+    private void parseAndCheck2(final String text,
+                                final String expected) {
+        this.parseAndCheck2(
+                text,
+                expected,
+                ""
+        );
     }
 
-    private void parseAndCheck2(final String text, final String expected, final String textAfter) {
-        this.parseAndCheck(text, this.string(expected), expected, textAfter);
+    private void parseAndCheck2(final String text,
+                                final String expected,
+                                final String textAfter) {
+        this.parseAndCheck(
+                text,
+                this.string(expected),
+                expected,
+                textAfter
+        );
     }
 
     @Test
