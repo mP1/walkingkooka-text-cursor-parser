@@ -33,34 +33,62 @@ public final class CustomToStringParserTest extends ParserWrapperTestCase<Custom
     private final static Parser<ParserContext> WRAPPED = Parsers.string(STRING, CaseSensitivity.SENSITIVE);
     private final static String CUSTOM_TO_STRING = "!!abc!!";
 
+    // wrap.............................................................................................................
+
     @Test
     public void testWrapNullToStringFails() {
-        assertThrows(NullPointerException.class, () -> CustomToStringParser.wrap(WRAPPED, null));
+        assertThrows(
+                NullPointerException.class,
+                () -> CustomToStringParser.wrap(
+                        WRAPPED,
+                        null
+                )
+        );
     }
 
     @Test
     public void testWrapEmptyToStringFails() {
-        assertThrows(IllegalArgumentException.class, () -> CustomToStringParser.wrap(WRAPPED, ""));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> CustomToStringParser.wrap(
+                        WRAPPED,
+                        ""
+                )
+        );
     }
 
     @Test
     public void testWrapWhitespaceToStringFails() {
-        assertThrows(IllegalArgumentException.class, () -> CustomToStringParser.wrap(WRAPPED, " \t"));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> CustomToStringParser.wrap(
+                        WRAPPED,
+                        " \t"
+                )
+        );
     }
 
     @Test
-    public void testDoesntWrapEquivalentToString() {
-        assertSame(WRAPPED, CustomToStringParser.wrap(WRAPPED, WRAPPED.toString()));
+    public void testWrapDoesntWrapEquivalentToString() {
+        assertSame(
+                WRAPPED,
+                CustomToStringParser.wrap(
+                        WRAPPED,
+                        WRAPPED.toString()
+                )
+        );
     }
 
     @Test
-    public void testUnwrapOtherCustomToStringParser() {
+    public void testWrapUnwrapOtherCustomToStringParser() {
         final Parser<ParserContext> first = CustomToStringParser.wrap(WRAPPED, "different");
         final CustomToStringParser<ParserContext> wrapped = Cast.to(CustomToStringParser.wrap(first, CUSTOM_TO_STRING));
         assertNotSame(first, wrapped);
         assertSame(WRAPPED, wrapped.parser, "wrapped parser");
         assertSame(CUSTOM_TO_STRING, wrapped.toString, "wrapped toString");
     }
+
+    // setToString......................................................................................................
 
     @Test
     public void testSetToStringSame() {
@@ -96,26 +124,6 @@ public final class CustomToStringParserTest extends ParserWrapperTestCase<Custom
         this.checkEquals(Parsers.alternatives(Lists.of(parser1, parser2)), parser1.or(parser2));
     }
 
-    @Test
-    public void testEqualsDifferentParser() {
-        this.checkNotEquals(this.createObject("different", CUSTOM_TO_STRING));
-    }
-
-    @Test
-    public void testEqualsDifferentParser2() {
-        this.checkNotEquals(this.createObject("different2", CUSTOM_TO_STRING));
-    }
-
-    @Test
-    public void testEqualsDifferentCustomToString() {
-        this.checkNotEquals(CustomToStringParser.wrap(WRAPPED, "different"));
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createParser(), CUSTOM_TO_STRING);
-    }
-
     @Override
     CustomToStringParser<ParserContext> createParser(final Parser<ParserContext> parser) {
         return CustomToStringParser.wrap(
@@ -129,9 +137,27 @@ public final class CustomToStringParserTest extends ParserWrapperTestCase<Custom
         return WRAPPED;
     }
 
-    @Override
-    public Class<CustomToStringParser<ParserContext>> type() {
-        return Cast.to(CustomToStringParser.class);
+    // hashCode/equals..................................................................................................
+
+    @Test
+    public void testEqualsDifferentParser() {
+        this.checkNotEquals(
+                this.createObject("different", CUSTOM_TO_STRING)
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentParser2() {
+        this.checkNotEquals(
+                this.createObject("different2", CUSTOM_TO_STRING)
+        );
+    }
+
+    @Test
+    public void testEqualsDifferentCustomToString() {
+        this.checkNotEquals(
+                CustomToStringParser.wrap(WRAPPED, "different")
+        );
     }
 
     @Override
@@ -143,5 +169,19 @@ public final class CustomToStringParserTest extends ParserWrapperTestCase<Custom
                                                              final String customToString) {
         return CustomToStringParser.wrap(Parsers.string(parserText, CaseSensitivity.SENSITIVE),
                 customToString).cast();
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createParser(), CUSTOM_TO_STRING);
+    }
+
+    // class............................................................................................................
+
+    @Override
+    public Class<CustomToStringParser<ParserContext>> type() {
+        return Cast.to(CustomToStringParser.class);
     }
 }
