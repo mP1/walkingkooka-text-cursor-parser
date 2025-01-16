@@ -19,7 +19,7 @@ package walkingkooka.text.cursor.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 
-public final class DoubleQuotedParserTest extends QuotedParserTestCase<DoubleQuotedParser<ParserContext>, DoubleQuotedParserToken> {
+public final class QuotedParserDoubleTest extends QuotedParserTestCase<QuotedParserDouble<ParserContext>, DoubleQuotedParserToken> {
 
     @Test
     public void testToStringDoubleQuoted() {
@@ -27,8 +27,8 @@ public final class DoubleQuotedParserTest extends QuotedParserTestCase<DoubleQuo
     }
 
     @Override
-    public DoubleQuotedParser<ParserContext> createParser() {
-        return DoubleQuotedParser.instance();
+    public QuotedParserDouble<ParserContext> createParser() {
+        return QuotedParserDouble.instance();
     }
 
     @Override
@@ -46,7 +46,7 @@ public final class DoubleQuotedParserTest extends QuotedParserTestCase<DoubleQuo
     }
 
     @Override
-    public Class<DoubleQuotedParser<ParserContext>> type() {
-        return Cast.to(DoubleQuotedParser.class);
+    public Class<QuotedParserDouble<ParserContext>> type() {
+        return Cast.to(QuotedParserDouble.class);
     }
 }
