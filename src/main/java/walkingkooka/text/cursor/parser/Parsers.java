@@ -91,7 +91,7 @@ public final class Parsers implements PublicStaticHelper {
      * {@see DoubleQuotedParserToken}
      */
     public static <C extends ParserContext> Parser<C> doubleQuoted() {
-        return DoubleQuotedParser.instance();
+        return QuotedParserDouble.instance();
     }
 
     /**
@@ -177,7 +177,7 @@ public final class Parsers implements PublicStaticHelper {
      * {@see SingleQuotedParserToken}
      */
     public static <C extends ParserContext> Parser<C> singleQuoted() {
-        return SingleQuotedParser.instance();
+        return QuotedParserSingle.instance();
     }
 
     /**

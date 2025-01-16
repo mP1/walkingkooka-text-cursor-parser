@@ -21,15 +21,15 @@ package walkingkooka.text.cursor.parser;
  *
  * @param <C>
  */
-final class DoubleQuotedParser<C extends ParserContext> extends QuotedParser<C> {
+final class QuotedParserDouble<C extends ParserContext> extends QuotedParser<C> {
 
-    static <C extends ParserContext> DoubleQuotedParser<C> instance() {
+    static <C extends ParserContext> QuotedParserDouble<C> instance() {
         return INSTANCE.cast();
     }
 
-    private final static DoubleQuotedParser<?> INSTANCE = new DoubleQuotedParser<>("double quoted string");
+    private final static QuotedParserDouble<?> INSTANCE = new QuotedParserDouble<>("double quoted string");
 
-    private DoubleQuotedParser(final String toString) {
+    private QuotedParserDouble(final String toString) {
         super(toString);
     }
 
@@ -46,8 +46,8 @@ final class DoubleQuotedParser<C extends ParserContext> extends QuotedParser<C> 
     // ParserSetToString..........................................................................................................
 
     @Override
-    DoubleQuotedParser<C> replaceToString(final String toString) {
-        return new DoubleQuotedParser<>(
+    QuotedParserDouble<C> replaceToString(final String toString) {
+        return new QuotedParserDouble<>(
                 toString
         );
     }

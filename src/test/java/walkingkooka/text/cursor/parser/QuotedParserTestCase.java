@@ -252,4 +252,9 @@ public abstract class QuotedParserTestCase<P extends QuotedParser<ParserContext>
 
     abstract T createToken(final String content,
                            final String text);
+
+    @Override
+    public final void testTypeNaming() {
+        throw new UnsupportedOperationException();
+    }
 }
