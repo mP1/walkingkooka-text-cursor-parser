@@ -91,7 +91,7 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
 
         @Override
         public String toString() {
-            return this.pattern.toString();
+            return this.pattern;
         }
     }
 
