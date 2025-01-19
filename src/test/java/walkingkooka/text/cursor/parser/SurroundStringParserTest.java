@@ -92,7 +92,7 @@ public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStr
 
     @Test
     public void testParseCloseIncomplete() {
-        this.parseFailAndCheck(OPEN + "..." + CLOSE.substring(0, 1));
+        this.parseFailAndCheck(OPEN + "..." + CLOSE.charAt(0));
     }
 
     @Test
