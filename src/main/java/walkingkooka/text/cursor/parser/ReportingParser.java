@@ -95,7 +95,7 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
 
     @Override
     ReportingParser<C> replaceToString(final String toString) {
-        return new ReportingParser(
+        return new ReportingParser<>(
                 this.condition,
                 this.reporter,
                 this.parser,

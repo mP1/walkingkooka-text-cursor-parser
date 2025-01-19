@@ -32,7 +32,7 @@ public final class ParserReporters implements PublicStaticHelper {
      * {@see FakeParserReporter}
      */
     public static <C extends ParserContext> ParserReporter<C> fake() {
-        return new FakeParserReporter();
+        return new FakeParserReporter<>();
     }
 
     /**

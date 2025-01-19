@@ -65,7 +65,7 @@ final class TransformingParser<C extends ParserContext> extends ParserWrapper<C>
 
     @Override
     TransformingParser<C> replaceToString(final String toString) {
-        return new TransformingParser(
+        return new TransformingParser<>(
                 this.parser,
                 this.transformer,
                 toString
