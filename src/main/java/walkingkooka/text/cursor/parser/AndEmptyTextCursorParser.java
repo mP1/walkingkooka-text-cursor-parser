@@ -66,7 +66,7 @@ final class AndEmptyTextCursorParser<C extends ParserContext> extends ParserWrap
 
     @Override
     AndEmptyTextCursorParser<C> replaceToString(final String toString) {
-        return new AndEmptyTextCursorParser(
+        return new AndEmptyTextCursorParser<>(
                 this.parser,
                 toString
         );

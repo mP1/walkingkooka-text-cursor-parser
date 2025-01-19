@@ -1668,7 +1668,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     @Test
     public void testTreePrintBigDecimal() {
         this.treePrintAndCheck(
-                new TestLeafParserToken(
+                new TestLeafParserToken<>(
                         new BigDecimal("123.5"),
                         "123.5"
                 ),
@@ -1679,7 +1679,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     @Test
     public void testTreePrintBoolean() {
         this.treePrintAndCheck(
-                new TestLeafParserToken(
+                new TestLeafParserToken<>(
                         true,
                         "true"
                 ),
@@ -1690,7 +1690,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     @Test
     public void testTreePrintCharacter() {
         this.treePrintAndCheck(
-                new TestLeafParserToken(
+                new TestLeafParserToken<>(
                         'A',
                         "A"
                 ),
@@ -1701,7 +1701,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     @Test
     public void testTreePrintDouble() {
         this.treePrintAndCheck(
-                new TestLeafParserToken(
+                new TestLeafParserToken<>(
                         1.5,
                         "1.5"
                 ),
@@ -1712,7 +1712,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     @Test
     public void testTreePrintFloat() {
         this.treePrintAndCheck(
-                new TestLeafParserToken(
+                new TestLeafParserToken<>(
                         1.25f,
                         "1.25"
                 ),
@@ -1723,7 +1723,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     @Test
     public void testTreePrintInteger() {
         this.treePrintAndCheck(
-                new TestLeafParserToken(
+                new TestLeafParserToken<>(
                         123,
                         "123"
                 ),
@@ -1734,7 +1734,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     @Test
     public void testTreePrintLong() {
         this.treePrintAndCheck(
-                new TestLeafParserToken(
+                new TestLeafParserToken<>(
                         234L,
                         "234"
                 ),
@@ -1745,7 +1745,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     @Test
     public void testTreePrintString() {
         this.treePrintAndCheck(
-                new TestLeafParserToken(
+                new TestLeafParserToken<>(
                         "abc",
                         "\"abc\""
                 ),
@@ -1756,7 +1756,7 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     @Test
     public void testTreePrintStringBuilder() {
         this.treePrintAndCheck(
-                new TestLeafParserToken(
+                new TestLeafParserToken<>(
                         new StringBuilder("def"),
                         "\"def\""
                 ),
