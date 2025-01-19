@@ -22,7 +22,7 @@ import walkingkooka.text.cursor.TextCursor;
 import java.util.Optional;
 
 /**
- * Wraps another {@link Parser} replacing or ignoring its {@link Parser#toString()} with the provided {@link String}.
+ * Wraps another {@link Parser} replacing or ignoring its {@link #toString()} with the provided {@link String}.
  */
 final class CustomToStringParser<C extends ParserContext> extends ParserWrapper<C> {
 
