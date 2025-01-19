@@ -113,8 +113,8 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
         return this.createParser(this.left(), this.right());
     }
 
-    protected AndNotParser<ParserContext> createParser(final Parser<ParserContext> left,
-                                                       final Parser<ParserContext> right) {
+    private AndNotParser<ParserContext> createParser(final Parser<ParserContext> left,
+                                                     final Parser<ParserContext> right) {
         return AndNotParser.with(left, right);
     }
 
