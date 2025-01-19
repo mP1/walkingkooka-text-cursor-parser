@@ -25,7 +25,6 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
-import walkingkooka.text.cursor.TextCursor;
 
 import java.math.MathContext;
 import java.util.Optional;
@@ -89,14 +88,10 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
 
         final InvalidCharacterException thrown = assertThrows(
                 InvalidCharacterException.class,
-                () -> new Parser<ParserContext>() {
-                    @Override
-                    public Optional<ParserToken> parse(final TextCursor cursor,
-                                                       final ParserContext context) {
-                        cursor.end();
-                        return Optional.empty();
-                    }
-                }.parseText(
+                () -> ((Parser<ParserContext>) (cursor, context) -> {
+                    cursor.end();
+                    return Optional.empty();
+                }).parseText(
                         text,
                         ParserContexts.fake()
                 )
@@ -116,13 +111,7 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
 
         final InvalidCharacterException thrown = assertThrows(
                 InvalidCharacterException.class,
-                () -> new Parser<ParserContext>() {
-                    @Override
-                    public Optional<ParserToken> parse(final TextCursor cursor,
-                                                       final ParserContext context) {
-                        return Optional.empty();
-                    }
-                }.parseText(
+                () -> ((Parser<ParserContext>) (cursor, context) -> Optional.empty()).parseText(
                         text,
                         ParserContexts.fake()
                 )
@@ -142,14 +131,10 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
 
         final InvalidCharacterException thrown = assertThrows(
                 InvalidCharacterException.class,
-                () -> new Parser<ParserContext>() {
-                    @Override
-                    public Optional<ParserToken> parse(final TextCursor cursor,
-                                                       final ParserContext context) {
-                        cursor.next();
-                        return Optional.empty();
-                    }
-                }.parseText(
+                () -> ((Parser<ParserContext>) (cursor, context) -> {
+                    cursor.next();
+                    return Optional.empty();
+                }).parseText(
                         text,
                         ParserContexts.fake()
                 )
