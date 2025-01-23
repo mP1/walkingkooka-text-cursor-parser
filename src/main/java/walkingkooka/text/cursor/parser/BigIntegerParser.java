@@ -33,7 +33,7 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C> 
      */
     static <C extends ParserContext> BigIntegerParser<C> with(final int radix) {
         if (radix <= 0) {
-            throw new IllegalArgumentException("Radix " + radix + " must be > 0");
+            throw new IllegalArgumentException("Invalid radix " + radix + " < 0");
         }
 
         return new BigIntegerParser<>(
