@@ -26,40 +26,42 @@ import java.util.Optional;
  */
 final class CustomToStringParser<C extends ParserContext> extends ParserWrapper<C> {
 
-    static <C extends ParserContext> Parser<C> wrap(final Parser<C> parser, final String toString) {
+    static <C extends ParserContext> Parser<C> wrap(final Parser<C> parser,
+                                                    final String toString) {
         checkParser(parser);
         Whitespace.failIfNullOrEmptyOrWhitespace(toString, "toString");
 
-        Parser<C> result;
+        Parser<C> parseWithToString;
 
-        for (; ; ) {
-            if (parser.toString().equals(toString)) {
-                result = parser;
-                break;
-            }
-
+        if (parser.toString().equals(toString)) {
+            parseWithToString = parser;
+        } else {
             Parser<C> wrap = parser;
             if (parser instanceof CustomToStringParser) {
                 // unwrap then re-wrap the parser...
                 final CustomToStringParser<C> custom = wrap.cast();
                 wrap = custom.parser;
             }
-            result = new CustomToStringParser<>(wrap, toString);
-            break;
+            parseWithToString = new CustomToStringParser<>(wrap, toString);
         }
 
-        return result;
+        return parseWithToString;
     }
 
-    private CustomToStringParser(final Parser<C> parser, final String toString) {
+    private CustomToStringParser(final Parser<C> parser,
+                                 final String toString) {
         super(parser, toString);
     }
 
     // Parser..........................................................................................................
 
     @Override
-    public Optional<ParserToken> parse(final TextCursor cursor, final C context) {
-        return this.parser.parse(cursor, context);
+    public Optional<ParserToken> parse(final TextCursor cursor,
+                                       final C context) {
+        return this.parser.parse(
+                cursor,
+                context
+        );
     }
 
     // ParserSetToString..........................................................................................................
