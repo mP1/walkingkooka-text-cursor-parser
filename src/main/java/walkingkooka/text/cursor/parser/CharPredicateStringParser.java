@@ -26,9 +26,9 @@ import java.util.Optional;
 /**
  * A {@link Parser} that continues to consume characters that are matched by a given {@link CharPredicate}.
  */
-final class StringCharPredicateParser<C extends ParserContext> extends NonEmptyParser<C> {
+final class CharPredicateStringParser<C extends ParserContext> extends NonEmptyParser<C> {
 
-    static <C extends ParserContext> StringCharPredicateParser<C> with(final CharPredicate predicate, final int minLength, final int maxLength) {
+    static <C extends ParserContext> CharPredicateStringParser<C> with(final CharPredicate predicate, final int minLength, final int maxLength) {
         Objects.requireNonNull(predicate, "predicate");
         if (minLength <= 0) {
             throw new IllegalArgumentException("Invalid min length " + minLength + " <= 0");
@@ -37,7 +37,7 @@ final class StringCharPredicateParser<C extends ParserContext> extends NonEmptyP
             throw new IllegalArgumentException("Invalid max length " + maxLength + " < min length " + minLength);
         }
 
-        return new StringCharPredicateParser<>(
+        return new CharPredicateStringParser<>(
                 predicate,
                 minLength,
                 maxLength,
@@ -50,7 +50,7 @@ final class StringCharPredicateParser<C extends ParserContext> extends NonEmptyP
         );
     }
 
-    private StringCharPredicateParser(final CharPredicate predicate,
+    private CharPredicateStringParser(final CharPredicate predicate,
                                       final int minLength,
                                       final int maxLength,
                                       final String toString) {
@@ -94,8 +94,8 @@ final class StringCharPredicateParser<C extends ParserContext> extends NonEmptyP
     // ParserSetToString..........................................................................................................
 
     @Override
-    StringCharPredicateParser<C> replaceToString(final String toString) {
-        return new StringCharPredicateParser<>(
+    CharPredicateStringParser<C> replaceToString(final String toString) {
+        return new CharPredicateStringParser<>(
                 this.predicate,
                 this.minLength,
                 this.maxLength,
@@ -118,10 +118,10 @@ final class StringCharPredicateParser<C extends ParserContext> extends NonEmptyP
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof StringCharPredicateParser && this.equals0((StringCharPredicateParser<?>) other);
+                other instanceof CharPredicateStringParser && this.equals0((CharPredicateStringParser<?>) other);
     }
 
-    private boolean equals0(final StringCharPredicateParser<?> other) {
+    private boolean equals0(final CharPredicateStringParser<?> other) {
         return this.predicate.equals(other.predicate) &&
                 this.minLength == other.minLength &&
                 this.maxLength == other.maxLength &&
