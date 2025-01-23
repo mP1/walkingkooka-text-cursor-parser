@@ -118,7 +118,7 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C> {
         }
 
         if (null == result) {
-            throw new ParserException(missingTerminatingQuote(quote));
+            throw new ParserException(missingClosingQuote(quote));
         }
 
         return Optional.of(result);
@@ -131,18 +131,18 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C> {
                                      final String rawText);
 
     // VisibleForTesting
-    static String missingTerminatingQuote(final char quote) {
-        return "Missing terminating '" + quote + "'";
+    static String missingClosingQuote(final char quote) {
+        return "Missing closing '" + quote + "'";
     }
 
     // VisibleForTesting
     static String invalidBackslashEscapeChar(final char c) {
-        return "Unexpected escape character '" + c + "'";
+        return "Invalid escape character '" + c + "'";
     }
 
     // VisibleForTesting
     static String invalidUnicodeEscapeChar(final char c) {
-        return "Expected hex character in unicode escape but got '" + c + "'";
+        return "Invalid unicode hex character '" + c + "'";
     }
 }
 

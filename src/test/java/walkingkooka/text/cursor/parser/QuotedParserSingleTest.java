@@ -21,11 +21,6 @@ import walkingkooka.Cast;
 
 public final class QuotedParserSingleTest extends QuotedParserTestCase<QuotedParserSingle<ParserContext>, SingleQuotedParserToken> {
 
-    @Test
-    public void testToStringSingleQuoted() {
-        this.toStringAndCheck(this.createParser(), "single quoted string");
-    }
-
     @Override
     public QuotedParserSingle<ParserContext> createParser() {
         return QuotedParserSingle.instance();
@@ -41,9 +36,26 @@ public final class QuotedParserSingleTest extends QuotedParserTestCase<QuotedPar
         return '"';
     }
 
-    @Override SingleQuotedParserToken createToken(final String content, final String text) {
-        return SingleQuotedParserToken.with(content, text);
+    @Override
+    SingleQuotedParserToken createToken(final String content,
+                                        final String text) {
+        return SingleQuotedParserToken.with(
+                content,
+                text
+        );
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToStringSingleQuoted() {
+        this.toStringAndCheck(
+                this.createParser(),
+                "single quoted string"
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<QuotedParserSingle<ParserContext>> type() {
