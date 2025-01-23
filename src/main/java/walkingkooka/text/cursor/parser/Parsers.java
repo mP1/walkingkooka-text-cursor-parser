@@ -67,10 +67,10 @@ public final class Parsers implements PublicStaticHelper {
     }
 
     /**
-     * {@see CharacterCharPredicateParser}
+     * {@see CharPredicateCharacterParser}
      */
     public static <C extends ParserContext> Parser<C> character(final CharPredicate predicate) {
-        return CharacterCharPredicateParser.with(predicate);
+        return CharPredicateCharacterParser.with(predicate);
     }
 
     /**
