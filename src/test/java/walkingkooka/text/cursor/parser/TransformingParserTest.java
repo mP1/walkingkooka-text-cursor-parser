@@ -43,6 +43,8 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
         );
     }
 
+    // parse............................................................................................................
+
     @Test
     public void testParseFailure() {
         this.parseFailAndCheck("a");
@@ -84,8 +86,14 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
     }
 
     @Test
-    public void testDefaultMethodTransform() {
-        this.parseAndCheck4(WRAPPED_PARSER.transform(TRANSFORMER), "123abc", 123, "123", "abc");
+    public void testParseWithDefaultMethodTransform() {
+        this.parseAndCheck4(
+                WRAPPED_PARSER.transform(TRANSFORMER),
+                "123abc",
+                123,
+                "123",
+                "abc"
+        );
     }
 
     // parse............................................................................................................
@@ -137,7 +145,10 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
                 parser,
                 this.createContext(),
                 TextCursors.charSequence(from),
-                ParserTokens.bigInteger(BigInteger.valueOf(value), text),
+                ParserTokens.bigInteger(
+                        BigInteger.valueOf(value),
+                        text
+                ),
                 text,
                 textAfter
         );
