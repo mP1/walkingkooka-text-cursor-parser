@@ -65,9 +65,7 @@ final class StringCharPredicateParser<C extends ParserContext> extends NonEmptyP
     Optional<ParserToken> tryParse(final TextCursor cursor,
                                    final C context,
                                    final TextCursorSavePoint start) {
-        return this.predicate.test(cursor.at()) ?
-                this.consumeRemaining(cursor, start) :
-                this.empty();
+        return this.predicate.test(cursor.at()) ? this.consumeRemaining(cursor, start) : Optional.empty();
     }
 
     private final CharPredicate predicate;
@@ -82,9 +80,7 @@ final class StringCharPredicateParser<C extends ParserContext> extends NonEmptyP
             i++;
         }
 
-        return i >= this.minLength ?
-                stringParserToken(start) :
-                this.empty();
+        return i >= this.minLength ? stringParserToken(start) : Optional.empty();
     }
 
     private final int minLength;

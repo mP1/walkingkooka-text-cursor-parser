@@ -35,19 +35,10 @@ abstract class NonEmptyParser<C extends ParserContext> extends ParserSetToString
     @Override
     public final Optional<ParserToken> parse(final TextCursor cursor,
                                              final C context) {
-        return cursor.isEmpty() ?
-                this.empty() :
-                this.parseNonEmpty(
-                        cursor,
-                        context
-                );
-    }
-
-    /**
-     * Returns an empty optional which matches an unsuccessful parser attempt.
-     */
-    final Optional<ParserToken> empty() {
-        return Optional.empty();
+        return cursor.isEmpty() ? Optional.empty() : this.parseNonEmpty(
+                cursor,
+                context
+        );
     }
 
     private Optional<ParserToken> parseNonEmpty(final TextCursor cursor,

@@ -61,9 +61,7 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
             tokens.add(maybe.get());
         }
 
-        return tokens.isEmpty() ?
-                this.empty() :
-                Optional.of(RepeatedParserToken.with(tokens, start.textBetween().toString()));
+        return tokens.isEmpty() ? Optional.empty() : Optional.of(RepeatedParserToken.with(tokens, start.textBetween().toString()));
     }
 
     private final Parser<C> parser;

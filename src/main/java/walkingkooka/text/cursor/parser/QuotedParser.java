@@ -34,9 +34,7 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C> {
     Optional<ParserToken> tryParse(final TextCursor cursor,
                                    final C context,
                                    final TextCursorSavePoint start) {
-        return this.quoteChar() == cursor.at() ?
-                this.tryParseAfterQuoteChar(cursor, start) :
-                this.empty();
+        return this.quoteChar() == cursor.at() ? this.tryParseAfterQuoteChar(cursor, start) : Optional.empty();
     }
 
     abstract char quoteChar();
