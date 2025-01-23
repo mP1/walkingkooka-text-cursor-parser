@@ -32,20 +32,35 @@ public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<An
     @Test
     public void testWithAndEmptyTextCursorParserSame() {
         final AndEmptyTextCursorParser<ParserContext> parser = AndEmptyTextCursorParser.with(WRAPPED);
-        assertSame(parser, AndEmptyTextCursorParser.with(parser));
+
+        assertSame(
+                parser,
+                AndEmptyTextCursorParser.with(parser)
+        );
     }
 
     @Test
-    public void testAndEmptyTextCursorSame() {
+    public void testWithAndEmptyTextCursorSame() {
         final AndEmptyTextCursorParser<ParserContext> parser = AndEmptyTextCursorParser.with(WRAPPED);
-        assertSame(parser, parser.andEmptyTextCursor());
+
+        assertSame(
+                parser,
+                parser.andEmptyTextCursor()
+        );
     }
 
     @Test
-    public void testAndEmptyTextCursorParserDefaultMethod() {
+    public void testWithAndEmptyTextCursorParserDefaultMethod() {
         final Parser<ParserContext> parser = WRAPPED.andEmptyTextCursor();
-        assertSame(AndEmptyTextCursorParser.class.getName(), parser.getClass().getName(), () -> "" + parser);
+
+        assertSame(
+                AndEmptyTextCursorParser.class.getName(),
+                parser.getClass().getName(),
+                () -> "" + parser
+        );
     }
+
+    // parse............................................................................................................
 
     @Test
     public void testParseWrapperEmpties() {
@@ -59,11 +74,6 @@ public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<An
     @Test
     public void testParseWrapperMatchesButTextCursorIsNotEmpty() {
         this.parseFailAndCheck(STRING + "!");
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createParser(), WRAPPED.toString());
     }
 
     @Override
@@ -97,6 +107,13 @@ public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<An
     @Override
     public AndEmptyTextCursorParser<ParserContext> createObject() {
         return this.createParser();
+    }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(this.createParser(), WRAPPED.toString());
     }
 
     // class............................................................................................................
