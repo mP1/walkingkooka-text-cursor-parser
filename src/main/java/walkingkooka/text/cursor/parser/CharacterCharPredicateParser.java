@@ -48,15 +48,25 @@ final class CharacterCharPredicateParser<C extends ParserContext> extends NonEmp
                                    final C context,
                                    final TextCursorSavePoint save) {
         final char first = cursor.at();
-        return this.predicate.test(first) ? this.makeSuccessfulResultAndAdvance(first, cursor) : Optional.empty();
+        return Optional.ofNullable(
+                this.predicate.test(first) ?
+                        this.characterParserTokenAndAdvance(
+                                first,
+                                cursor
+                        ) :
+                        null
+        );
     }
 
     private final CharPredicate predicate;
 
-    private Optional<ParserToken> makeSuccessfulResultAndAdvance(final char c, final TextCursor cursor) {
-        final Optional<ParserToken> token = Optional.of(CharacterParserToken.with(c, String.valueOf(c)));
+    private ParserToken characterParserTokenAndAdvance(final char c,
+                                                       final TextCursor cursor) {
         cursor.next();
-        return token;
+        return CharacterParserToken.with(
+                c,
+                String.valueOf(c)
+        );
     }
 
     // ParserSetToString..........................................................................................................
