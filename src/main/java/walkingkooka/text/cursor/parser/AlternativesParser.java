@@ -26,12 +26,19 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * A {@link Parser} that tries all parsers until one is matched and then ignores the remainder.
+ * A {@link Parser} that tries all parsers until one is matched and then ignores the remaining parsers.
  */
 final class AlternativesParser<C extends ParserContext> extends ParserSetToString<C> {
 
     /**
-     * Factory that creates a {@link Parser} possibly simplifying things.
+     * Factory that creates a {@link Parser} possibly simplifying things flattening any given {@link AlternativesParser}
+     * expanding their parsers into a horizontal line.
+     * <pre>
+     * A | B
+     * C | D
+     * ->
+     * A | B | C | D
+     * </pre>
      */
     static <C extends ParserContext> Parser<C> with(final List<Parser<C>> parsers) {
         Objects.requireNonNull(parsers, "parsers");
