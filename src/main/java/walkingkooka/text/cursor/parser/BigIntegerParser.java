@@ -74,7 +74,10 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C> 
             if (cursor.isEmpty()) {
                 token = empty ?
                         null :
-                        this.createToken(number, save);
+                        this.bigIntegerParserToken(
+                                number,
+                                save
+                        );
                 break;
             }
 
@@ -96,7 +99,10 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C> 
             if (-1 == digit) {
                 token = empty ?
                         null :
-                        this.createToken(number, save);
+                        this.bigIntegerParserToken(
+                                number,
+                                save
+                        );
                 break;
             }
             empty = false;
@@ -110,7 +116,10 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C> 
 
             cursor.next();
             if (cursor.isEmpty()) {
-                token = this.createToken(number, save);
+                token = this.bigIntegerParserToken(
+                        number,
+                        save
+                );
                 break;
             }
         }
@@ -118,9 +127,12 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C> 
         return Optional.ofNullable(token);
     }
 
-    private BigIntegerParserToken createToken(final BigInteger value, final TextCursorSavePoint save) {
-        return BigIntegerParserToken.with(value,
-                save.textBetween().toString());
+    private BigIntegerParserToken bigIntegerParserToken(final BigInteger value,
+                                                        final TextCursorSavePoint save) {
+        return BigIntegerParserToken.with(
+                value,
+                save.textBetween()
+                        .toString());
     }
 
     private final int radix;
