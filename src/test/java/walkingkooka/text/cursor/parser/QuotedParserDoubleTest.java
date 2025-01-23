@@ -21,11 +21,6 @@ import walkingkooka.Cast;
 
 public final class QuotedParserDoubleTest extends QuotedParserTestCase<QuotedParserDouble<ParserContext>, DoubleQuotedParserToken> {
 
-    @Test
-    public void testToStringDoubleQuoted() {
-        this.toStringAndCheck(this.createParser(), "double quoted string");
-    }
-
     @Override
     public QuotedParserDouble<ParserContext> createParser() {
         return QuotedParserDouble.instance();
@@ -41,9 +36,26 @@ public final class QuotedParserDoubleTest extends QuotedParserTestCase<QuotedPar
         return '\'';
     }
 
-    @Override DoubleQuotedParserToken createToken(final String content, final String text) {
-        return DoubleQuotedParserToken.with(content, text);
+    @Override //
+    DoubleQuotedParserToken createToken(final String content,
+                                        final String text) {
+        return DoubleQuotedParserToken.with(
+                content,
+                text
+        );
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToStringDoubleQuoted() {
+        this.toStringAndCheck(
+                this.createParser(),
+                "double quoted string"
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<QuotedParserDouble<ParserContext>> type() {

@@ -32,7 +32,10 @@ public abstract class QuotedParserTestCase<P extends QuotedParser<ParserContext>
     @Test
     public final void testParseMissingTerminalQuote() {
         final char quoteChar = this.quoteChar();
-        this.parseThrows(quoteChar + "z", QuotedParser.missingTerminatingQuote(quoteChar));
+        this.parseThrows(
+                quoteChar + "z",
+                QuotedParser.missingClosingQuote(quoteChar)
+        );
     }
 
     @Test
@@ -40,7 +43,7 @@ public abstract class QuotedParserTestCase<P extends QuotedParser<ParserContext>
         final char quoteChar = this.quoteChar();
         this.parseThrows(
                 "" + quoteChar + 'z' + this.otherQuoteChar(),
-                QuotedParser.missingTerminatingQuote(quoteChar)
+                QuotedParser.missingClosingQuote(quoteChar)
         );
     }
 
@@ -180,7 +183,7 @@ public abstract class QuotedParserTestCase<P extends QuotedParser<ParserContext>
     }
 
     @Test
-    public final void testParseIncludeUncodeEscaped() {
+    public final void testParseIncludeUnicodeEscaped() {
         this.quoteParseAndCheck(
                 "x\\u1234y",
                 "x\u1234y",
@@ -189,7 +192,7 @@ public abstract class QuotedParserTestCase<P extends QuotedParser<ParserContext>
     }
 
     @Test
-    public final void testParseIncludeUncodeEscaped2() {
+    public final void testParseIncludeUnicodeEscaped2() {
         this.quoteParseAndCheck(
                 "x\\u005Ay",
                 "xZy",
@@ -234,10 +237,10 @@ public abstract class QuotedParserTestCase<P extends QuotedParser<ParserContext>
     }
 
     private void quoteParseThrows(final String in,
-                                  final String messageContains) {
+                                  final String expected) {
         this.parseThrows(
                 this.quoteChar() + in,
-                messageContains
+                expected
         );
     }
 
