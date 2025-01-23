@@ -34,14 +34,24 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
 
     @Test
     public void testWithNullParserFails() {
-        assertThrows(NullPointerException.class, () -> RepeatingParser.with(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> RepeatingParser.with(null)
+        );
     }
 
     @Test
     public void testWrapAnotherRepeatedParser() {
         final RepeatingParser<ParserContext> parser = this.createParser();
-        assertSame(parser, Parsers.repeating(parser.cast()));
+        assertSame(
+                parser,
+                Parsers.repeating(
+                        parser.cast()
+                )
+        );
     }
+
+    // parse............................................................................................................
 
     @Test
     public void testParseIncomplete() {
@@ -55,10 +65,12 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
 
     @Test
     public void testParseOnce() {
-        this.parseAndCheck(TEXT,
+        this.parseAndCheck(
+                TEXT,
                 RepeatedParserToken.with(Lists.of(string(TEXT)), TEXT),
                 TEXT,
-                "");
+                ""
+        );
     }
 
     @Test
