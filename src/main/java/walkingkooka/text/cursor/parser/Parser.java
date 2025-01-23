@@ -98,11 +98,19 @@ public interface Parser<C extends ParserContext> {
         );
     }
 
+    int DEFAULT_REPEAT_MIN_COUNT = 0;
+
+    int DEFAULT_REPEAT_MAX_COUNT = Integer.MAX_VALUE;
+
     /**
      * Returns a {@link Parser} that matches zero or more repetitions of the given tokens.
      */
     default Parser<C> repeating() {
-        return Parsers.repeating(this.cast());
+        return Parsers.repeating(
+                DEFAULT_REPEAT_MIN_COUNT,
+                DEFAULT_REPEAT_MAX_COUNT,
+                this.cast()
+        );
     }
 
     /**
