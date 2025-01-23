@@ -83,10 +83,9 @@ abstract class ValueParserToken<V> implements ParserToken, Value<V> {
     abstract boolean canBeEqual(final Object other);
 
     private boolean equals0(final ValueParserToken<?> other) {
-        return this.value.equals(other.value) && this.text.equals(other.text) && this.equals1(other);
+        return this.value.equals(other.value) &&
+                this.text.equals(other.text);
     }
-
-    abstract boolean equals1(final ValueParserToken<?> other);
 
     @Override
     public final String toString() {
