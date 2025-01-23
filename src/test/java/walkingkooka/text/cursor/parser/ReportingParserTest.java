@@ -132,7 +132,7 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
 
     @Test
     @Override
-    public void testEmptyCursorFail() {
+    public void testParseEmptyCursorFail() {
         this.parseThrows(
                 "!",
                 "Invalid character \'!\' at (1,1) expected letter"

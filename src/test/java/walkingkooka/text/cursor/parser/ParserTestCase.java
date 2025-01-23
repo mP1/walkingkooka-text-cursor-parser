@@ -39,7 +39,7 @@ public abstract class ParserTestCase<P extends Parser<ParserContext>> implements
     }
 
     @Test
-    public void testEmptyCursorFail() {
+    public void testParseEmptyCursorFail() {
         this.parseFailAndCheck("");
     }
 
