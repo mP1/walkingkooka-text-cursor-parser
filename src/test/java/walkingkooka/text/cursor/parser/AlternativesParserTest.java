@@ -37,34 +37,73 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
 
     @Test
     public void testWithNullParsersFails() {
-        assertThrows(NullPointerException.class, () -> AlternativesParser.with(null));
+        assertThrows(
+                NullPointerException.class,
+                () -> AlternativesParser.with(null)
+        );
     }
 
     @Test
     public void testWithZeroParsersFails() {
-        assertThrows(IllegalArgumentException.class, () -> AlternativesParser.with(Lists.empty()));
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> AlternativesParser.with(
+                        Lists.empty()
+                )
+        );
     }
 
     @Test
     public void testWithOneNeverWrapped() {
-        assertSame(PARSER1, AlternativesParser.with(Lists.of(PARSER1.cast())));
+        assertSame(
+                PARSER1,
+                AlternativesParser.with(
+                        Lists.of(
+                                PARSER1.cast()
+                        )
+                )
+        );
     }
 
     @Test
     public void testWith() {
         final List<Parser<ParserContext>> parsers = Lists.of(PARSER1, PARSER2);
         final AlternativesParser<ParserContext> parser = AlternativesParser.with(parsers).cast();
-        assertNotSame(parsers, parser.parsers);
-        this.checkEquals(parsers, parser.parsers);
+        assertNotSame(
+                parsers,
+                parser.parsers
+        );
+        this.checkEquals(
+                parsers,
+                parser.parsers
+        );
     }
 
     @Test
     public void testWithAllCustomToStringParsers() {
-        final List<Parser<ParserContext>> parsers = Lists.of(PARSER1.setToString("1"), PARSER2.setToString("2"));
-        final AlternativesParser<ParserContext> custom = AlternativesParser.with(parsers).cast();
-        this.checkEquals(Lists.of(PARSER1, PARSER2), custom.parsers, "parsers");
-        this.checkEquals("(1 | 2)", custom.toString(), "custom toString");
+        final List<Parser<ParserContext>> parsers = Lists.of(
+                PARSER1.setToString("1"),
+                PARSER2.setToString("2")
+        );
+        final AlternativesParser<ParserContext> custom = AlternativesParser.with(parsers)
+                .cast();
+
+        this.checkEquals(
+                Lists.of(
+                        PARSER1,
+                        PARSER2
+                ),
+                custom.parsers,
+                "parsers"
+        );
+        this.checkEquals(
+                "(1 | 2)",
+                custom.toString(),
+                "custom toString"
+        );
     }
+
+    // parse............................................................................................................
 
     @Test
     public void testParseNone() {
@@ -193,7 +232,10 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createParser(), "(" + PARSER1 + " | " + PARSER2 + ")");
+        this.toStringAndCheck(
+                this.createParser(),
+                "(" + PARSER1 + " | " + PARSER2 + ")"
+        );
     }
 
     // class............................................................................................................
