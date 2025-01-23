@@ -98,37 +98,69 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
 
     @Test
     public void testParseSuccess() {
-        this.parseAndCheck2("1", "1", "1");
+        this.parseAndCheck2(
+                "1",
+                "1",
+                "1"
+        );
     }
 
     @Test
     public void testParseSuccess2() {
-        this.parseAndCheck2("2", "2", "2");
+        this.parseAndCheck2(
+                "2",
+                "2",
+                "2"
+        );
     }
 
     @Test
     public void testParseSuccess3() {
-        this.parseAndCheck2("2abc", "2", "2", "abc");
+        this.parseAndCheck2(
+                "2abc",
+                "2",
+                "2",
+                "abc"
+        );
     }
 
     @Test
     public void testParseSuccess4() {
-        this.parseAndCheck3("123abc", "123", "123", "abc");
+        this.parseAndCheck3(
+                "123abc",
+                "123",
+                "123",
+                "abc"
+        );
     }
 
     @Test
     public void testParseSuccessTerminatedByMismatch() {
-        this.parseAndCheck3("123abc", "123", "123", "abc");
+        this.parseAndCheck3(
+                "123abc",
+                "123",
+                "123",
+                "abc"
+        );
     }
 
     @Test
     public void testParseSuccessTerminatedEof() {
-        this.parseAndCheck3("123", "123", "123");
+        this.parseAndCheck3(
+                "123",
+                "123",
+                "123"
+        );
     }
 
     @Test
     public void testParseMultipleAttempts() {
-        final TextCursor cursor = this.parseAndCheck3("123abc", "123", "123", "abc");
+        final TextCursor cursor = this.parseAndCheck3(
+                "123abc",
+                "123",
+                "123",
+                "abc"
+        );
         this.parseFailAndCheck(cursor);
     }
 
