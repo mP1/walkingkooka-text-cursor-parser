@@ -58,7 +58,7 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
     }
 
     @Test
-    public void testWrapReportingParser() {
+    public void testWithWrapReportingParser() {
         final Parser<FakeParserContext> parser = Parsers.fake();
         final ParserReporter<FakeParserContext> reporter = ParserReporters.fake();
 
@@ -100,8 +100,10 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
         );
     }
 
+    // parse.............................................................................................................
+
     @Test
-    public void testReportFails() {
+    public void testParseReportFails() {
         this.parseThrows(
                 "!",
                 "Invalid character '!' at (1,1) expected letter"
@@ -109,7 +111,7 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
     }
 
     @Test
-    public void testNotEmptyConditionCursorEmptyNotFails() {
+    public void testParseNotEmptyConditionCursorEmptyNotFails() {
         this.parseThrows(
                 this.createParser(ParserReporterCondition.NOT_EMPTY),
                 "!",
@@ -118,16 +120,24 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
     }
 
     @Test
-    public void testNotEmptyConditionCursorNotEmptyParserSuccessful() {
-        this.parseAndCheck(this.createParser(ParserReporterCondition.NOT_EMPTY),
+    public void testParseNotEmptyConditionCursorNotEmptyParserSuccessful() {
+        this.parseAndCheck(
+                this.createParser(ParserReporterCondition.NOT_EMPTY),
                 "A",
                 ParserTokens.character('A', "A"),
-                "A");
+                "A"
+        );
     }
 
     @Test
-    public void testNotEmptyConditionCursorEmpty() {
-        this.checkEquals(Optional.empty(), this.createParser(ParserReporterCondition.NOT_EMPTY).parse(TextCursors.charSequence(""), this.createContext()));
+    public void testParseNotEmptyConditionCursorEmpty() {
+        this.checkEquals(
+                Optional.empty(),
+                this.createParser(ParserReporterCondition.NOT_EMPTY)
+                        .parse(TextCursors.charSequence(""),
+                                this.createContext()
+                        )
+        );
     }
 
     @Test
@@ -137,6 +147,32 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
                 "!",
                 "Invalid character \'!\' at (1,1) expected letter"
         );
+    }
+
+    @Override
+    Parser<ParserContext> wrappedParser() {
+        return Parsers.character(CharPredicates.letter()).cast();
+    }
+
+    private ReportingParser<ParserContext> createParser(final ParserReporterCondition condition) {
+        return ReportingParser.with(
+                condition,
+                this.reporter(),
+                this.wrappedParser()
+        );
+    }
+
+    @Override
+    ReportingParser<ParserContext> createParser(final Parser<ParserContext> parser) {
+        return ReportingParser.with(
+                ParserReporterCondition.ALWAYS,
+                this.reporter(),
+                parser
+        );
+    }
+
+    private ParserReporter<ParserContext> reporter() {
+        return ParserReporters.basic();
     }
 
     // hashCode/equals..................................................................................................
@@ -211,31 +247,7 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
         );
     }
 
-    @Override
-    Parser<ParserContext> wrappedParser() {
-        return Parsers.character(CharPredicates.letter()).cast();
-    }
-
-    private ReportingParser<ParserContext> createParser(final ParserReporterCondition condition) {
-        return ReportingParser.with(
-                condition,
-                this.reporter(),
-                this.wrappedParser()
-        );
-    }
-
-    @Override
-    ReportingParser<ParserContext> createParser(final Parser<ParserContext> parser) {
-        return ReportingParser.with(
-                ParserReporterCondition.ALWAYS,
-                this.reporter(),
-                parser
-        );
-    }
-
-    private ParserReporter<ParserContext> reporter() {
-        return ParserReporters.basic();
-    }
+    // class............................................................................................................
 
     @Override
     public Class<ReportingParser<ParserContext>> type() {
