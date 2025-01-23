@@ -53,6 +53,8 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
         );
     }
 
+    // parse............................................................................................................
+
     @Test
     public void testParseLeftFailed() {
         this.parseFailAndCheck("x");
@@ -134,6 +136,8 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
     private Parser<ParserContext> string(final String string) {
         return Parsers.string(string, CaseSensitivity.SENSITIVE);
     }
+
+    // class............................................................................................................
 
     @Override
     public Class<AndNotParser<ParserContext>> type() {
