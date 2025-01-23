@@ -31,10 +31,10 @@ final class StringCharPredicateParser<C extends ParserContext> extends NonEmptyP
     static <C extends ParserContext> StringCharPredicateParser<C> with(final CharPredicate predicate, final int minLength, final int maxLength) {
         Objects.requireNonNull(predicate, "predicate");
         if (minLength <= 0) {
-            throw new IllegalArgumentException("Min length " + minLength + " must be greater than 0");
+            throw new IllegalArgumentException("Invalid min length " + minLength + " <= 0");
         }
         if (maxLength < minLength) {
-            throw new IllegalArgumentException("Maxlength " + maxLength + " must be greater/equal than minLength: " + minLength);
+            throw new IllegalArgumentException("Invalid max length " + maxLength + " < min length " + minLength);
         }
 
         return new StringCharPredicateParser<>(

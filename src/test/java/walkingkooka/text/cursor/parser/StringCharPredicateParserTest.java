@@ -47,7 +47,7 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
                 () -> StringCharPredicateParser.with(DIGITS, -1, MAX_LENGTH)
         );
         this.checkEquals(
-                "Min length -1 must be greater than 0",
+                "Invalid min length -1 <= 0",
                 thrown.getMessage(),
                 "message"
         );
@@ -60,7 +60,7 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
                 () -> StringCharPredicateParser.with(DIGITS, 0, MAX_LENGTH)
         );
         this.checkEquals(
-                "Min length 0 must be greater than 0",
+                "Invalid min length 0 <= 0",
                 thrown.getMessage(),
                 "message"
         );
@@ -73,7 +73,7 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
                 () -> StringCharPredicateParser.with(DIGITS, MIN_LENGTH, MIN_LENGTH - 1)
         );
         this.checkEquals(
-                "Maxlength 1 must be greater/equal than minLength: 2",
+                "Invalid max length 1 < min length 2",
                 thrown.getMessage(),
                 "message"
         );
