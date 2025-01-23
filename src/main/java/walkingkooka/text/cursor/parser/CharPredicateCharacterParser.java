@@ -26,18 +26,18 @@ import java.util.Optional;
 /**
  * A {@link Parser} that matches a single character using the provided {@link CharPredicate}
  */
-final class CharacterCharPredicateParser<C extends ParserContext> extends NonEmptyParser<C> {
+final class CharPredicateCharacterParser<C extends ParserContext> extends NonEmptyParser<C> {
 
-    static <C extends ParserContext> CharacterCharPredicateParser<C> with(final CharPredicate predicate) {
+    static <C extends ParserContext> CharPredicateCharacterParser<C> with(final CharPredicate predicate) {
         Objects.requireNonNull(predicate, "predicate");
 
-        return new CharacterCharPredicateParser<>(
+        return new CharPredicateCharacterParser<>(
                 predicate,
                 predicate.toString()
         );
     }
 
-    private CharacterCharPredicateParser(final CharPredicate predicate,
+    private CharPredicateCharacterParser(final CharPredicate predicate,
                                          final String toString) {
         super(toString);
         this.predicate = predicate;
@@ -72,8 +72,8 @@ final class CharacterCharPredicateParser<C extends ParserContext> extends NonEmp
     // ParserSetToString..........................................................................................................
 
     @Override
-    CharacterCharPredicateParser<C> replaceToString(final String toString) {
-        return new CharacterCharPredicateParser<>(
+    CharPredicateCharacterParser<C> replaceToString(final String toString) {
+        return new CharPredicateCharacterParser<>(
                 this.predicate,
                 toString
         );
@@ -89,10 +89,10 @@ final class CharacterCharPredicateParser<C extends ParserContext> extends NonEmp
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof CharacterCharPredicateParser && this.equals0((CharacterCharPredicateParser<?>) other);
+                other instanceof CharPredicateCharacterParser && this.equals0((CharPredicateCharacterParser<?>) other);
     }
 
-    private boolean equals0(final CharacterCharPredicateParser<?> other) {
+    private boolean equals0(final CharPredicateCharacterParser<?> other) {
         return this.predicate.equals(other.predicate);
     }
 }

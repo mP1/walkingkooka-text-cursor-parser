@@ -25,8 +25,8 @@ import walkingkooka.text.cursor.TextCursor;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class CharacterCharPredicateParserTest extends NonEmptyParserTestCase<CharacterCharPredicateParser<ParserContext>, CharacterParserToken>
-        implements HashCodeEqualsDefinedTesting2<CharacterCharPredicateParser<ParserContext>> {
+public final class CharPredicateCharacterParserTest extends NonEmptyParserTestCase<CharPredicateCharacterParser<ParserContext>, CharacterParserToken>
+        implements HashCodeEqualsDefinedTesting2<CharPredicateCharacterParser<ParserContext>> {
 
     private final static CharPredicate DIGITS = CharPredicates.digit();
 
@@ -34,7 +34,7 @@ public final class CharacterCharPredicateParserTest extends NonEmptyParserTestCa
     public void testWithNullCharPredicateFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> CharacterCharPredicateParser.with(null)
+                () -> CharPredicateCharacterParser.with(null)
         );
     }
 
@@ -73,8 +73,8 @@ public final class CharacterCharPredicateParserTest extends NonEmptyParserTestCa
     }
 
     @Override
-    public CharacterCharPredicateParser<ParserContext> createParser() {
-        return CharacterCharPredicateParser.with(DIGITS);
+    public CharPredicateCharacterParser<ParserContext> createParser() {
+        return CharPredicateCharacterParser.with(DIGITS);
     }
 
     private TextCursor parseAndCheck2(final String in,
@@ -117,17 +117,17 @@ public final class CharacterCharPredicateParserTest extends NonEmptyParserTestCa
     @Test
     public void testEqualsDifferentCharPredicate() {
         this.checkNotEquals(
-                CharacterCharPredicateParser.with(
+                CharPredicateCharacterParser.with(
                         CharPredicates.fake()
                 ),
-                CharacterCharPredicateParser.with(
+                CharPredicateCharacterParser.with(
                         CharPredicates.fake()
                 )
         );
     }
 
     @Override
-    public CharacterCharPredicateParser<ParserContext> createObject() {
+    public CharPredicateCharacterParser<ParserContext> createObject() {
         return this.createParser();
     }
 
@@ -141,7 +141,7 @@ public final class CharacterCharPredicateParserTest extends NonEmptyParserTestCa
     // Class............................................................................................................
 
     @Override
-    public Class<CharacterCharPredicateParser<ParserContext>> type() {
-        return Cast.to(CharacterCharPredicateParser.class);
+    public Class<CharPredicateCharacterParser<ParserContext>> type() {
+        return Cast.to(CharPredicateCharacterParser.class);
     }
 }
