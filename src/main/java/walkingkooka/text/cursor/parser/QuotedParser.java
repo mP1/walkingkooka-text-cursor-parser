@@ -31,16 +31,18 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C> {
     }
 
     @Override
-    Optional<ParserToken> tryParse(final TextCursor cursor, final C context, final TextCursorSavePoint start) {
+    Optional<ParserToken> tryParse(final TextCursor cursor,
+                                   final C context,
+                                   final TextCursorSavePoint start) {
         return this.quoteChar() == cursor.at() ?
-                this.tryParse1(cursor, start) :
+                this.tryParseAfterQuoteChar(cursor, start) :
                 this.empty();
     }
 
     abstract char quoteChar();
 
-    private Optional<ParserToken> tryParse1(final TextCursor cursor,
-                                            final TextCursorSavePoint start) {
+    private Optional<ParserToken> tryParseAfterQuoteChar(final TextCursor cursor,
+                                                         final TextCursorSavePoint start) {
         final char quote = this.quoteChar();
 
         cursor.next();
@@ -125,7 +127,8 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C> {
     /**
      * Factory method that creates the token upon a successful match.
      */
-    abstract QuotedParserToken token(final String content, final String rawText);
+    abstract QuotedParserToken token(final String content,
+                                     final String rawText);
 
     // VisibleForTesting
     static String missingTerminatingQuote(final char quote) {
