@@ -82,7 +82,7 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C> 
             }
 
             char c = cursor.at();
-            if (empty && 10 == this.radix) {
+            if (empty && 10 == radix) {
                 if (negativeSign == c) {
                     signed = true;
                     cursor.next();
