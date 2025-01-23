@@ -191,12 +191,12 @@ public final class Parsers implements PublicStaticHelper {
     }
 
     /**
-     * {@see StringCharPredicateParser}
+     * {@see CharPredicateStringParser}
      */
     public static <C extends ParserContext> Parser<C> stringCharPredicate(final CharPredicate predicate,
                                                                           final int minLength,
                                                                           final int maxLength) {
-        return StringCharPredicateParser.with(predicate, minLength, maxLength);
+        return CharPredicateStringParser.with(predicate, minLength, maxLength);
     }
 
     /**

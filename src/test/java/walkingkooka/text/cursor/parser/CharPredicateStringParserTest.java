@@ -25,8 +25,8 @@ import walkingkooka.text.cursor.TextCursor;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class StringCharPredicateParserTest extends NonEmptyParserTestCase<StringCharPredicateParser<ParserContext>, StringParserToken>
-        implements HashCodeEqualsDefinedTesting2<StringCharPredicateParser<ParserContext>> {
+public class CharPredicateStringParserTest extends NonEmptyParserTestCase<CharPredicateStringParser<ParserContext>, StringParserToken>
+        implements HashCodeEqualsDefinedTesting2<CharPredicateStringParser<ParserContext>> {
 
     private final static CharPredicate DIGITS = CharPredicates.digit();
     private final static int MIN_LENGTH = 2;
@@ -36,7 +36,7 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
     public void testWithNullCharPredicateFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> StringCharPredicateParser.with(null, MIN_LENGTH, MAX_LENGTH)
+                () -> CharPredicateStringParser.with(null, MIN_LENGTH, MAX_LENGTH)
         );
     }
 
@@ -44,7 +44,7 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
     public void testWithInvalidMinLengthFails() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> StringCharPredicateParser.with(DIGITS, -1, MAX_LENGTH)
+                () -> CharPredicateStringParser.with(DIGITS, -1, MAX_LENGTH)
         );
         this.checkEquals(
                 "Invalid min length -1 <= 0",
@@ -57,7 +57,7 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
     public void testWithInvalidMinLengthFails2() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> StringCharPredicateParser.with(DIGITS, 0, MAX_LENGTH)
+                () -> CharPredicateStringParser.with(DIGITS, 0, MAX_LENGTH)
         );
         this.checkEquals(
                 "Invalid min length 0 <= 0",
@@ -70,7 +70,7 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
     public void testWithInvalidMaxLengthFails2() {
         final IllegalArgumentException thrown = assertThrows(
                 IllegalArgumentException.class,
-                () -> StringCharPredicateParser.with(DIGITS, MIN_LENGTH, MIN_LENGTH - 1)
+                () -> CharPredicateStringParser.with(DIGITS, MIN_LENGTH, MIN_LENGTH - 1)
         );
         this.checkEquals(
                 "Invalid max length 1 < min length 2",
@@ -165,13 +165,13 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
     }
 
     @Override
-    public StringCharPredicateParser<ParserContext> createParser() {
+    public CharPredicateStringParser<ParserContext> createParser() {
         return this.createParser(MIN_LENGTH, MAX_LENGTH);
     }
 
-    protected StringCharPredicateParser<ParserContext> createParser(final int min,
+    protected CharPredicateStringParser<ParserContext> createParser(final int min,
                                                                     final int max) {
-        return StringCharPredicateParser.with(
+        return CharPredicateStringParser.with(
                 DIGITS,
                 min,
                 max
@@ -230,12 +230,12 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
     @Test
     public void testEqualsDifferentPredicate() {
         this.checkNotEquals(
-                StringCharPredicateParser.with(
+                CharPredicateStringParser.with(
                         DIGITS,
                         MIN_LENGTH,
                         MAX_LENGTH
                 ),
-                StringCharPredicateParser.with(
+                CharPredicateStringParser.with(
                         CharPredicates.fake(),
                         MIN_LENGTH,
                         MAX_LENGTH
@@ -246,12 +246,12 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
     @Test
     public void testEqualsDifferentMinLength() {
         this.checkNotEquals(
-                StringCharPredicateParser.with(
+                CharPredicateStringParser.with(
                         DIGITS,
                         MIN_LENGTH,
                         MAX_LENGTH
                 ),
-                StringCharPredicateParser.with(
+                CharPredicateStringParser.with(
                         DIGITS,
                         MIN_LENGTH + 1,
                         MAX_LENGTH
@@ -262,12 +262,12 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
     @Test
     public void testEqualsDifferentMaxLength() {
         this.checkNotEquals(
-                StringCharPredicateParser.with(
+                CharPredicateStringParser.with(
                         DIGITS,
                         MIN_LENGTH,
                         MAX_LENGTH
                 ),
-                StringCharPredicateParser.with(
+                CharPredicateStringParser.with(
                         DIGITS,
                         MIN_LENGTH,
                         MAX_LENGTH + 1
@@ -278,12 +278,12 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
     @Test
     public void testEqualsDifferentToString() {
         this.checkNotEquals(
-                StringCharPredicateParser.with(
+                CharPredicateStringParser.with(
                         DIGITS,
                         MIN_LENGTH,
                         MAX_LENGTH
                 ),
-                StringCharPredicateParser.with(
+                CharPredicateStringParser.with(
                         DIGITS,
                         MIN_LENGTH,
                         MAX_LENGTH
@@ -292,7 +292,7 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
     }
 
     @Override
-    public StringCharPredicateParser<ParserContext> createObject() {
+    public CharPredicateStringParser<ParserContext> createObject() {
         return this.createParser();
     }
 
@@ -309,7 +309,7 @@ public class StringCharPredicateParserTest extends NonEmptyParserTestCase<String
     // class............................................................................................................
 
     @Override
-    public Class<StringCharPredicateParser<ParserContext>> type() {
-        return Cast.to(StringCharPredicateParser.class);
+    public Class<CharPredicateStringParser<ParserContext>> type() {
+        return Cast.to(CharPredicateStringParser.class);
     }
 }
