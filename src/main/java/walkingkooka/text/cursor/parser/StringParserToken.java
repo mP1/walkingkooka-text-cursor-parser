@@ -41,8 +41,4 @@ public final class StringParserToken extends LeafParserToken<String> {
         visitor.visit(this);
     }
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof StringParserToken;
-    }
 }

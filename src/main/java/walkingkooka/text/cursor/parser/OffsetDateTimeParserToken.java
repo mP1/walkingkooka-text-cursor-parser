@@ -41,8 +41,4 @@ public final class OffsetDateTimeParserToken extends LeafParserToken<OffsetDateT
         visitor.visit(this);
     }
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof OffsetDateTimeParserToken;
-    }
 }

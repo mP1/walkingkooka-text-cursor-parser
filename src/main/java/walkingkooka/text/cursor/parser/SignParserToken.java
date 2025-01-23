@@ -40,8 +40,4 @@ public final class SignParserToken extends LeafParserToken<Boolean> {
         visitor.visit(this);
     }
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SignParserToken;
-    }
 }

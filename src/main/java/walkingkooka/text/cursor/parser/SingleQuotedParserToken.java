@@ -45,8 +45,4 @@ public final class SingleQuotedParserToken extends QuotedParserToken {
         visitor.visit(this);
     }
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof SingleQuotedParserToken;
-    }
 }

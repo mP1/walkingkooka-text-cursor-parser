@@ -1779,10 +1779,6 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
             throw new UnsupportedOperationException();
         }
 
-        @Override //
-        boolean canBeEqual(final Object other) {
-            throw new UnsupportedOperationException();
-        }
     }
 
     // ClassTesting.....................................................................................................

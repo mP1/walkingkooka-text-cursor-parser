@@ -40,8 +40,4 @@ public final class LongParserToken extends LeafParserToken<Long> {
         visitor.visit(this);
     }
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof LongParserToken;
-    }
 }
