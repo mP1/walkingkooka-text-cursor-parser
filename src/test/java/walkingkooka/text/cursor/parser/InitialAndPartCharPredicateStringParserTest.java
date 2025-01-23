@@ -24,8 +24,8 @@ import walkingkooka.predicate.character.CharPredicates;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyParserTestCase<StringInitialAndPartCharPredicateParser<ParserContext>, StringParserToken>
-        implements HashCodeEqualsDefinedTesting2<StringInitialAndPartCharPredicateParser<ParserContext>> {
+public final class InitialAndPartCharPredicateStringParserTest extends NonEmptyParserTestCase<InitialAndPartCharPredicateStringParser<ParserContext>, StringParserToken>
+        implements HashCodeEqualsDefinedTesting2<InitialAndPartCharPredicateStringParser<ParserContext>> {
 
     private final static CharPredicate INITIAL = CharPredicates.letter();
     private final static CharPredicate PART = CharPredicates.digit();
@@ -36,7 +36,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     public void testWithNullInitialCharPredicateFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> StringInitialAndPartCharPredicateParser.with(
+                () -> InitialAndPartCharPredicateStringParser.with(
                         null,
                         PART,
                         MIN_LENGTH,
@@ -49,7 +49,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     public void testWithNullInitialPartPredicateFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> StringInitialAndPartCharPredicateParser.with(
+                () -> InitialAndPartCharPredicateStringParser.with(
                         INITIAL,
                         null,
                         MIN_LENGTH,
@@ -62,7 +62,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     public void testWithInvalidMinLengthFails() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> StringInitialAndPartCharPredicateParser.with(
+                () -> InitialAndPartCharPredicateStringParser.with(
                         INITIAL,
                         PART,
                         0,
@@ -75,7 +75,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     public void testWithInvalidMaxLengthFails2() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> StringInitialAndPartCharPredicateParser.with(
+                () -> InitialAndPartCharPredicateStringParser.with(
                         INITIAL,
                         PART,
                         MIN_LENGTH,
@@ -163,7 +163,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
         final String text = "ab";
 
         this.parseAndCheck(
-                StringInitialAndPartCharPredicateParser.with(
+                InitialAndPartCharPredicateStringParser.with(
                         CharPredicates.is('a'),
                         CharPredicates.is('b'),
                         2,
@@ -180,7 +180,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
         final String after = "b";
 
         this.parseAndCheck(
-                StringInitialAndPartCharPredicateParser.with(
+                InitialAndPartCharPredicateStringParser.with(
                         CharPredicates.is('a'),
                         CharPredicates.is('b'),
                         2,
@@ -197,12 +197,12 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     }
 
     @Override
-    public StringInitialAndPartCharPredicateParser<ParserContext> createParser() {
+    public InitialAndPartCharPredicateStringParser<ParserContext> createParser() {
         return this.createParser(MIN_LENGTH, MAX_LENGTH);
     }
 
-    private StringInitialAndPartCharPredicateParser<ParserContext> createParser(final int min, final int max) {
-        return StringInitialAndPartCharPredicateParser.with(INITIAL, PART, min, max);
+    private InitialAndPartCharPredicateStringParser<ParserContext> createParser(final int min, final int max) {
+        return InitialAndPartCharPredicateStringParser.with(INITIAL, PART, min, max);
     }
 
     // hashCode/equals..................................................................................................
@@ -210,7 +210,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     @Test
     public void testEqualsDifferentInitialCharPredicate() {
         this.checkNotEquals(
-                StringInitialAndPartCharPredicateParser.with(
+                InitialAndPartCharPredicateStringParser.with(
                         CharPredicates.fake(),
                         PART,
                         MIN_LENGTH,
@@ -222,7 +222,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     @Test
     public void testEqualsDifferentPartCharPredicate() {
         this.checkNotEquals(
-                StringInitialAndPartCharPredicateParser.with(
+                InitialAndPartCharPredicateStringParser.with(
                         INITIAL,
                         CharPredicates.fake(),
                         MIN_LENGTH,
@@ -234,7 +234,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     @Test
     public void testEqualsDifferentMinLength() {
         this.checkNotEquals(
-                StringInitialAndPartCharPredicateParser.with(
+                InitialAndPartCharPredicateStringParser.with(
                         INITIAL,
                         PART,
                         MIN_LENGTH + 1,
@@ -246,7 +246,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     @Test
     public void testEqualsDifferentMaxLength() {
         this.checkNotEquals(
-                StringInitialAndPartCharPredicateParser.with(
+                InitialAndPartCharPredicateStringParser.with(
                         INITIAL,
                         PART,
                         MIN_LENGTH,
@@ -256,7 +256,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     }
 
     @Override
-    public StringInitialAndPartCharPredicateParser<ParserContext> createObject() {
+    public InitialAndPartCharPredicateStringParser<ParserContext> createObject() {
         return this.createParser();
     }
 
@@ -273,7 +273,7 @@ public final class StringInitialAndPartCharPredicateParserTest extends NonEmptyP
     // class............................................................................................................
 
     @Override
-    public Class<StringInitialAndPartCharPredicateParser<ParserContext>> type() {
-        return Cast.to(StringInitialAndPartCharPredicateParser.class);
+    public Class<InitialAndPartCharPredicateStringParser<ParserContext>> type() {
+        return Cast.to(InitialAndPartCharPredicateStringParser.class);
     }
 }

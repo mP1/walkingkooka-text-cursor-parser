@@ -190,13 +190,13 @@ public final class Parsers implements PublicStaticHelper {
     }
 
     /**
-     * {@see StringInitialAndPartCharPredicateParser}
+     * {@see InitialAndPartCharPredicateStringParser}
      */
     public static <C extends ParserContext> Parser<C> stringInitialAndPartCharPredicate(final CharPredicate initial,
                                                                                         final CharPredicate part,
                                                                                         final int minLength,
                                                                                         final int maxLength) {
-        return StringInitialAndPartCharPredicateParser.with(initial, part, minLength, maxLength);
+        return InitialAndPartCharPredicateStringParser.with(initial, part, minLength, maxLength);
     }
 
     /**
