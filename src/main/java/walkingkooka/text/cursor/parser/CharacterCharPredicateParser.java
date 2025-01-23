@@ -48,9 +48,7 @@ final class CharacterCharPredicateParser<C extends ParserContext> extends NonEmp
                                    final C context,
                                    final TextCursorSavePoint save) {
         final char first = cursor.at();
-        return this.predicate.test(first) ?
-                this.makeSuccessfulResultAndAdvance(first, cursor) :
-                this.empty();
+        return this.predicate.test(first) ? this.makeSuccessfulResultAndAdvance(first, cursor) : Optional.empty();
     }
 
     private final CharPredicate predicate;
