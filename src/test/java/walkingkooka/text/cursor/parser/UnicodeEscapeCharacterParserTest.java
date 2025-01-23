@@ -79,17 +79,31 @@ public final class UnicodeEscapeCharacterParserTest extends NonEmptyParserTestCa
 
     @Test
     public void testParseComplete() {
-        this.parseAndCheck2("\\u1234", '\u1234', "\\u1234");
+        this.parseAndCheck2(
+                "\\u1234",
+                '\u1234',
+                "\\u1234"
+        );
     }
 
     @Test
     public void testParseComplete2() {
-        this.parseAndCheck2("\\u12345", '\u1234', "\\u1234", "5");
+        this.parseAndCheck2(
+                "\\u12345",
+                '\u1234',
+                "\\u1234",
+                "5"
+        );
     }
 
     @Test
     public void testParseComplete3() {
-        this.parseAndCheck2("\\u1234ABC", '\u1234', "\\u1234", "ABC");
+        this.parseAndCheck2(
+                "\\u1234ABC",
+                '\u1234',
+                "\\u1234",
+                "ABC"
+        );
     }
 
     @Override
