@@ -92,19 +92,32 @@ public final class CustomToStringParserTest extends ParserWrapperTestCase<Custom
 
     @Test
     public void testSetToStringSame() {
-        assertSame(WRAPPED, WRAPPED.setToString(WRAPPED.toString()));
+        assertSame(
+                WRAPPED,
+                WRAPPED.setToString(
+                        WRAPPED.toString()
+                )
+        );
     }
 
     @Test
     public void testDefaultMethodSetToString() {
         final Parser<?> parser = WRAPPED.setToString(CUSTOM_TO_STRING);
         assertNotSame(WRAPPED, parser);
-        this.checkEquals(CUSTOM_TO_STRING, parser.toString());
+        this.checkEquals(
+                CUSTOM_TO_STRING,
+                parser.toString()
+        );
     }
 
     @Test
     public void testDefaultMethodSetToStringCustomToString() {
-        assertSame(CUSTOM_TO_STRING, this.createParser().setToString(CUSTOM_TO_STRING).toString());
+        assertSame(
+                CUSTOM_TO_STRING,
+                this.createParser()
+                        .setToString(CUSTOM_TO_STRING)
+                        .toString()
+        );
     }
 
     @Test
@@ -113,8 +126,13 @@ public final class CustomToStringParserTest extends ParserWrapperTestCase<Custom
         final Parser<?> parser = this.createParser();
         final Parser<?> parser2 = parser.setToString(different);
         assertNotSame(parser, parser2);
-        this.checkEquals(different, parser2.toString());
+        this.checkEquals(
+                different,
+                parser2.toString()
+        );
     }
+
+    // OR...............................................................................................................
 
     @Test
     @Override
