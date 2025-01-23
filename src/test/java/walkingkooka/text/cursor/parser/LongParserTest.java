@@ -73,59 +73,119 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
 
     @Test
     public void testParseDecimal() {
-        this.parseAndCheck2("1", 1, "1", "");
+        this.parseAndCheck2(
+                "1",
+                1,
+                "1",
+                ""
+        );
     }
 
     @Test
     public void testParseDecimal2() {
-        this.parseAndCheck2("123", 123, "123", "");
+        this.parseAndCheck2(
+                "123",
+                123,
+                "123",
+                ""
+        );
     }
 
     @Test
     public void testParseDecimal3() {
-        this.parseAndCheck2("+123", 123, "+123", "");
+        this.parseAndCheck2(
+                "+123",
+                123,
+                "+123",
+                ""
+        );
     }
 
     @Test
     public void testParseUntilNonDigit() {
-        this.parseAndCheck2("123abc", 123, "123", "abc");
+        this.parseAndCheck2(
+                "123abc",
+                123,
+                "123",
+                "abc"
+        );
     }
 
     @Test
     public void testParseNegativeDecimal() {
-        this.parseAndCheck2("-123", -123, "-123", "");
+        this.parseAndCheck2(
+                "-123",
+                -123,
+                "-123",
+                ""
+        );
     }
 
     @Test
     public void testParseNegativeDecimal2() {
-        this.parseAndCheck2("-123//", -123, "-123", "//");
+        this.parseAndCheck2(
+                "-123//",
+                -123,
+                "-123",
+                "//"
+        );
     }
 
     @Test
     public void testParseHex() {
-        this.parseAndCheck3(16, "1234xyz", 0x1234, "1234", "xyz");
+        this.parseAndCheck3(
+                16,
+                "1234xyz",
+                0x1234,
+                "1234",
+                "xyz"
+        );
     }
 
     @Test
     public void testParseOctal() {
-        this.parseAndCheck3(8, "012345678xyz", 342391, "01234567", "8xyz");
+        this.parseAndCheck3(
+                8,
+                "012345678xyz",
+                342391,
+                "01234567",
+                "8xyz"
+        );
     }
 
     @Test
     public void testParseMaxValueHex() {
-        this.parseAndCheck3(16, "7fffffffffffffff", Long.MAX_VALUE, "7fffffffffffffff", "");
+        this.parseAndCheck3(
+                16,
+                "7fffffffffffffff",
+                Long.MAX_VALUE,
+                "7fffffffffffffff",
+                ""
+        );
     }
 
     @Test
     public void testParseMaxValueHex2() {
-        this.parseAndCheck3(16, "7fffffffffffffff///", Long.MAX_VALUE, "7fffffffffffffff", "///");
+        this.parseAndCheck3(
+                16,
+                "7fffffffffffffff///",
+                Long.MAX_VALUE,
+                "7fffffffffffffff",
+                "///"
+        );
     }
 
     @Test
     public void testParseLongMaxValue() {
         final BigInteger bigInteger = BigInteger.valueOf(Long.MAX_VALUE);
         final String text = bigInteger.toString();
-        this.parseAndCheck3(10, text, Long.MAX_VALUE, text, "");
+        this.parseAndCheck3(
+                10,
+                text,
+                Long.MAX_VALUE,
+                text,
+                ""
+        );
     }
 
     @Test
@@ -133,14 +193,27 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
         final BigInteger bigInteger = BigInteger.valueOf(Long.MAX_VALUE);
         final String text = bigInteger.toString();
         final String after = "//";
-        this.parseAndCheck3(10, text + after, Long.MAX_VALUE, text, after);
+        this.parseAndCheck3(
+                10,
+                text + after,
+                Long.MAX_VALUE,
+                text,
+                after
+        );
     }
 
     @Test
     public void testParsePlusSignLongMaxValue() {
         final BigInteger bigInteger = BigInteger.valueOf(Long.MAX_VALUE);
         final String text = "+" + bigInteger;
-        this.parseAndCheck3(10, text, Long.MAX_VALUE, text, "");
+
+        this.parseAndCheck3(
+                10,
+                text,
+                Long.MAX_VALUE,
+                text,
+                ""
+        );
     }
 
     @Test
@@ -148,7 +221,14 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
         final BigInteger bigInteger = BigInteger.valueOf(Long.MAX_VALUE);
         final String text = "+" + bigInteger;
         final String after = "//";
-        this.parseAndCheck3(10, text + after, Long.MAX_VALUE, text, after);
+
+        this.parseAndCheck3(
+                10,
+                text + after,
+                Long.MAX_VALUE,
+                text,
+                after
+        );
     }
 
     @Test
@@ -156,7 +236,13 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
         final BigInteger bigInteger = BigInteger.valueOf(Long.MIN_VALUE);
         final String text = bigInteger.toString();
         final String after = "";
-        this.parseAndCheck3(10, text + after, Long.MIN_VALUE, text, after);
+        this.parseAndCheck3(
+                10, // radix
+                text + after,
+                Long.MIN_VALUE,
+                text,
+                after
+        );
     }
 
     @Test
@@ -164,36 +250,68 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
         final BigInteger bigInteger = BigInteger.valueOf(Long.MIN_VALUE);
         final String text = bigInteger.toString();
         final String after = "//";
-        this.parseAndCheck3(10, text + after, Long.MIN_VALUE, text, after);
+
+        this.parseAndCheck3(
+                10, // radix
+                text + after,
+                Long.MIN_VALUE,
+                text,
+                after
+        );
     }
 
     @Test
     public void testParseGreaterMaxValueFails() {
-        final BigInteger bigInteger = BigInteger.valueOf(Long.MAX_VALUE).add(BigInteger.ONE);
+        final BigInteger bigInteger = BigInteger.valueOf(Long.MAX_VALUE)
+                .add(BigInteger.ONE);
 
-        assertThrows(ParserException.class, () -> this.parseFailAndCheck(LongParser.with(10), bigInteger.toString()));
+        assertThrows(
+                ParserException.class,
+                () -> this.parseFailAndCheck(
+                        LongParser.with(10),
+                        bigInteger.toString()
+                )
+        );
     }
 
     @Test
     public void testParseLessMinValueFails() {
         final BigInteger bigInteger = BigInteger.valueOf(Long.MIN_VALUE).subtract(BigInteger.ONE);
 
-        assertThrows(ParserException.class, () -> this.parseFailAndCheck(LongParser.with(10), bigInteger.toString()));
+        assertThrows(
+                ParserException.class,
+                () -> this.parseFailAndCheck(
+                        LongParser.with(10),
+                        bigInteger.toString()
+                )
+        );
     }
 
     @Test
     public void testParseGreaterMaxValueHexFails() {
-        assertThrows(ParserException.class, () -> this.parseFailAndCheck(LongParser.with(16), "8fffffffffffffff"));
+        assertThrows(
+                ParserException.class,
+                () -> this.parseFailAndCheck(
+                        LongParser.with(16),
+                        "8fffffffffffffff"
+                )
+        );
     }
 
     @Test
     public void testParseDifferentMinusSign() {
-        this.parseAndCheck3("M123", -123);
+        this.parseAndCheck3(
+                "M123",
+                -123
+        );
     }
 
     @Test
     public void testParseDifferentPlusSign() {
-        this.parseAndCheck3("P123", 123);
+        this.parseAndCheck3(
+                "P123",
+                123
+        );
     }
 
     private TextCursor parseAndCheck3(final String text,
@@ -226,32 +344,56 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
 
     @Override
     public ParserContext createContext() {
-        return ParserContexts.basic(DateTimeContexts.fake(), this.decimalNumberContext());
+        return ParserContexts.basic(
+                DateTimeContexts.fake(),
+                this.decimalNumberContext()
+        );
     }
 
-    private TextCursor parseAndCheck2(final String in, final long value, final String text, final String textAfter) {
-        return this.parseAndCheck3(RADIX, in, value, text, textAfter);
+    private TextCursor parseAndCheck2(final String in,
+                                      final long value,
+                                      final String text,
+                                      final String textAfter) {
+        return this.parseAndCheck3(
+                RADIX,
+                in,
+                value,
+                text,
+                textAfter
+        );
     }
 
-    private TextCursor parseAndCheck3(final int radix, final String from, final long value, final String text, final String textAfter) {
-        return this.parseAndCheck(LongParser.with(radix),
+    private TextCursor parseAndCheck3(final int radix,
+                                      final String from,
+                                      final long value,
+                                      final String text,
+                                      final String textAfter) {
+        return this.parseAndCheck(
+                LongParser.with(radix),
                 this.createContext(),
                 TextCursors.charSequence(from),
                 LongParserToken.with(value, text),
                 text,
-                textAfter);
+                textAfter
+        );
     }
 
     // toString.........................................................................................................
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createParser(), "Long");
+        this.toStringAndCheck(
+                this.createParser(),
+                "Long"
+        );
     }
 
     @Test
     public void testToString2() {
-        this.toStringAndCheck(LongParser.with(8), "Long(base=8)");
+        this.toStringAndCheck(
+                LongParser.with(8),
+                "Long(base=8)"
+        );
     }
 
     // type.............................................................................................................
