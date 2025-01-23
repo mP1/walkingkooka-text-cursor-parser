@@ -27,12 +27,12 @@ import java.util.Optional;
  * A {@link Parser} that uses two {@link walkingkooka.predicate.character.CharPredicate}.
  * The final matched token must have a length between min and max.
  */
-final class StringInitialAndPartCharPredicateParser<C extends ParserContext> extends NonEmptyParser<C> {
+final class InitialAndPartCharPredicateStringParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     /**
-     * Factory that creates a new {@link StringInitialAndPartCharPredicateParser}
+     * Factory that creates a new {@link InitialAndPartCharPredicateStringParser}
      */
-    static <C extends ParserContext> StringInitialAndPartCharPredicateParser<C> with(final CharPredicate initial,
+    static <C extends ParserContext> InitialAndPartCharPredicateStringParser<C> with(final CharPredicate initial,
                                                                                      final CharPredicate part,
                                                                                      final int minLength,
                                                                                      final int maxLength) {
@@ -45,7 +45,7 @@ final class StringInitialAndPartCharPredicateParser<C extends ParserContext> ext
             throw new IllegalArgumentException("Max length " + minLength + " must be greater than or equal min length " + minLength);
         }
 
-        return new StringInitialAndPartCharPredicateParser<>(
+        return new InitialAndPartCharPredicateStringParser<>(
                 initial,
                 part,
                 minLength,
@@ -57,7 +57,7 @@ final class StringInitialAndPartCharPredicateParser<C extends ParserContext> ext
     /**
      * Private ctor use factory
      */
-    private StringInitialAndPartCharPredicateParser(final CharPredicate initial,
+    private InitialAndPartCharPredicateStringParser(final CharPredicate initial,
                                                     final CharPredicate part,
                                                     final int minLength,
                                                     final int maxLength,
@@ -132,8 +132,8 @@ final class StringInitialAndPartCharPredicateParser<C extends ParserContext> ext
     // ParserSetToString..........................................................................................................
 
     @Override
-    StringInitialAndPartCharPredicateParser<C> replaceToString(final String toString) {
-        return new StringInitialAndPartCharPredicateParser<>(
+    InitialAndPartCharPredicateStringParser<C> replaceToString(final String toString) {
+        return new InitialAndPartCharPredicateStringParser<>(
                 this.initial,
                 this.part,
                 this.minLength,
@@ -158,10 +158,10 @@ final class StringInitialAndPartCharPredicateParser<C extends ParserContext> ext
     @Override
     public boolean equals(final Object other) {
         return this == other ||
-                other instanceof StringInitialAndPartCharPredicateParser && this.equals0((StringInitialAndPartCharPredicateParser<?>) other);
+                other instanceof InitialAndPartCharPredicateStringParser && this.equals0((InitialAndPartCharPredicateStringParser<?>) other);
     }
 
-    private boolean equals0(final StringInitialAndPartCharPredicateParser<?> other) {
+    private boolean equals0(final InitialAndPartCharPredicateStringParser<?> other) {
         return this.initial.equals(other.initial) &&
                 this.part.equals(other.part) &&
                 this.minLength == other.minLength &&
