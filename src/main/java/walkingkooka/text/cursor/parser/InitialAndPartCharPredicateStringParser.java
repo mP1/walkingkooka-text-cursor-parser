@@ -39,10 +39,10 @@ final class InitialAndPartCharPredicateStringParser<C extends ParserContext> ext
         Objects.requireNonNull(initial, "initial");
         Objects.requireNonNull(part, "part");
         if (minLength < 1) {
-            throw new IllegalArgumentException("Min length " + minLength + " must be greater than 0");
+            throw new IllegalArgumentException("Invalid min length " + minLength + " < 0");
         }
         if (minLength > maxLength) {
-            throw new IllegalArgumentException("Max length " + minLength + " must be greater than or equal min length " + minLength);
+            throw new IllegalArgumentException("Invalid max length " + minLength + " < min length " + minLength);
         }
 
         return new InitialAndPartCharPredicateStringParser<>(
