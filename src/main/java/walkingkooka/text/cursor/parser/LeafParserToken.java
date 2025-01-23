@@ -38,8 +38,4 @@ abstract class LeafParserToken<V> extends ValueParserToken<V> {
                 children
         );
     }
-
-    @Override final boolean equals1(final ValueParserToken<?> other) {
-        return true; // no extra properties to compare
-    }
 }

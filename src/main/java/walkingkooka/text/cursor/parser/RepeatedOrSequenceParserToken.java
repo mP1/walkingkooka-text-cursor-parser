@@ -66,10 +66,4 @@ abstract public class RepeatedOrSequenceParserToken extends ValueParserToken<Lis
             visitor.accept(token);
         }
     }
-
-    // Object...........................................................................................................
-
-    @Override final boolean equals1(final ValueParserToken<?> other) {
-        return true;
-    }
 }
