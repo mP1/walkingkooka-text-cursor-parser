@@ -54,14 +54,25 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
         final List<ParserToken> tokens = Lists.array();
 
         for (; ; ) {
-            final Optional<ParserToken> maybe = this.parser.parse(cursor, context);
-            if (!maybe.isPresent()) {
+            final Optional<ParserToken> maybe = this.parser.parse(
+                    cursor,
+                    context
+            );
+            if (false == maybe.isPresent()) {
                 break;
             }
             tokens.add(maybe.get());
         }
 
-        return tokens.isEmpty() ? Optional.empty() : Optional.of(RepeatedParserToken.with(tokens, start.textBetween().toString()));
+        return Optional.ofNullable(
+                tokens.isEmpty() ?
+                        null :
+                        RepeatedParserToken.with(
+                                tokens,
+                                start.textBetween()
+                                        .toString()
+                        )
+        );
     }
 
     private final Parser<C> parser;
