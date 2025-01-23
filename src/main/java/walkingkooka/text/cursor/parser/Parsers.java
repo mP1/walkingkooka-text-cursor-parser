@@ -102,6 +102,16 @@ public final class Parsers implements PublicStaticHelper {
     }
 
     /**
+     * {@see InitialAndPartCharPredicateStringParser}
+     */
+    public static <C extends ParserContext> Parser<C> initialAndPartCharPredicateString(final CharPredicate initial,
+                                                                                        final CharPredicate part,
+                                                                                        final int minLength,
+                                                                                        final int maxLength) {
+        return InitialAndPartCharPredicateStringParser.with(initial, part, minLength, maxLength);
+    }
+
+    /**
      * {@see DateTimeFormatterParserLocalDate}
      */
     public static <C extends ParserContext> Parser<C> localDate(final Function<DateTimeContext, DateTimeFormatter> formatter) {
@@ -187,16 +197,6 @@ public final class Parsers implements PublicStaticHelper {
                                                                           final int minLength,
                                                                           final int maxLength) {
         return StringCharPredicateParser.with(predicate, minLength, maxLength);
-    }
-
-    /**
-     * {@see InitialAndPartCharPredicateStringParser}
-     */
-    public static <C extends ParserContext> Parser<C> stringInitialAndPartCharPredicate(final CharPredicate initial,
-                                                                                        final CharPredicate part,
-                                                                                        final int minLength,
-                                                                                        final int maxLength) {
-        return InitialAndPartCharPredicateStringParser.with(initial, part, minLength, maxLength);
     }
 
     /**
