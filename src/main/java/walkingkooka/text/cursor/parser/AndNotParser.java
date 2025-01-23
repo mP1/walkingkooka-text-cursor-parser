@@ -67,8 +67,10 @@ final class AndNotParser<C extends ParserContext> implements Parser<C> {
     private final Parser<C> left;
     private final Parser<C> right;
 
+    // Object...........................................................................................................
+
     @Override
     public String toString() {
-        return this.left + " && !" + this.right;
+        return this.left + " - " + this.right;
     }
 }
