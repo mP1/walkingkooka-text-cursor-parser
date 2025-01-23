@@ -52,18 +52,6 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
                 .cast(SequenceParserToken.class);
     }
 
-    /**
-     * Asserts that the sequence contains the correct number of tokens throwing a {@link IllegalStateException} if the
-     * test fails.
-     */
-    public void checkTokenCount(final int expected) {
-        final List<ParserToken> list = this.value();
-        final int actual = list.size();
-        if (actual != expected) {
-            throw new IllegalStateException("Expected " + expected + " but got " + actual + "=" + list);
-        }
-    }
-
     public <T extends ParserToken> T required(final int index, final Class<T> type) {
         final List<ParserToken> tokens = this.value();
         try {
