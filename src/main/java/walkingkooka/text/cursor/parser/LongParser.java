@@ -73,12 +73,12 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> {
             if (cursor.isEmpty()) {
                 token = empty ?
                         null :
-                        this.createToken(number, save);
+                        this.longParserToken(number, save);
                 break;
             }
 
             char c = cursor.at();
-            if (empty && 10 == this.radix) {
+            if (empty && 10 == radix) {
                 if (negativeSign == c) {
                     signed = true;
                     cursor.next();
@@ -94,7 +94,7 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> {
             if (-1 == digit) {
                 token = empty ?
                         null :
-                        this.createToken(number, save);
+                        this.longParserToken(number, save);
                 break;
             }
             empty = false;
@@ -117,9 +117,13 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> {
         return Optional.ofNullable(token);
     }
 
-    private LongParserToken createToken(final Long value, final TextCursorSavePoint save) {
-        return LongParserToken.with(value,
-                save.textBetween().toString());
+    private LongParserToken longParserToken(final Long value,
+                                            final TextCursorSavePoint save) {
+        return LongParserToken.with(
+                value,
+                save.textBetween()
+                        .toString()
+        );
     }
 
     private final int radix;
