@@ -73,93 +73,181 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
 
     @Test
     public void testParseZero() {
-        this.parseAndCheck2("0", 0, "0", "");
+        this.parseAndCheck2(
+                "0",
+                0,
+                "0",
+                ""
+        );
     }
 
     @Test
     public void testParseZeroZero() {
-        this.parseAndCheck2("00", 0, "00", "");
+        this.parseAndCheck2(
+                "00",
+                0,
+                "00",
+                ""
+        );
     }
 
     @Test
     public void testParseZeroZeroZero() {
-        this.parseAndCheck2("000", 0, "000", "");
+        this.parseAndCheck2(
+                "000",
+                0,
+                "000",
+                ""
+        );
     }
 
     @Test
     public void testParseDecimal() {
-        this.parseAndCheck2("1", 1, "1", "");
+        this.parseAndCheck2(
+                "1",
+                1,
+                "1",
+                ""
+        );
     }
 
     @Test
     public void testParseDecimal2() {
-        this.parseAndCheck2("123", 123, "123", "");
+        this.parseAndCheck2(
+                "123",
+                123,
+                "123",
+                ""
+        );
     }
 
     @Test
     public void testParseDecimal3() {
-        this.parseAndCheck2("12305", 12305, "12305", "");
+        this.parseAndCheck2(
+                "12305",
+                12305,
+                "12305",
+                ""
+        );
     }
 
     @Test
     public void testParseZeroDecimal() {
-        this.parseAndCheck2("0123", 123, "0123", "");
+        this.parseAndCheck2(
+                "0123",
+                123,
+                "0123",
+                ""
+        );
     }
 
     @Test
     public void testParseZeroZeroDecimal() {
-        this.parseAndCheck2("00123", 123, "00123", "");
+        this.parseAndCheck2(
+                "00123",
+                123,
+                "00123",
+                ""
+        );
     }
 
     @Test
     public void testParsePlusSignDecimal() {
-        this.parseAndCheck2("+1", 1, "+1", "");
+        this.parseAndCheck2(
+                "+1",
+                1,
+                "+1",
+                ""
+        );
     }
 
     @Test
     public void testParsePlusSignDecimal2() {
-        this.parseAndCheck2("+0", 0, "+0", "");
+        this.parseAndCheck2(
+                "+0",
+                0,
+                "+0",
+                ""
+        );
     }
 
     @Test
     public void testParsePlusSignDecimal3() {
-        this.parseAndCheck2("+123", 123, "+123", "");
+        this.parseAndCheck2(
+                "+123",
+                123,
+                "+123",
+                ""
+        );
     }
 
     @Test
     public void testParseMinusSignDecimal() {
-        this.parseAndCheck2("-1", -1, "-1", "");
+        this.parseAndCheck2(
+                "-1",
+                -1,
+                "-1",
+                ""
+        );
     }
 
     @Test
     public void testParseMinusSignDecimal2() {
-        this.parseAndCheck2("-123", -123, "-123", "");
+        this.parseAndCheck2(
+                "-123",
+                -123,
+                "-123",
+                ""
+        );
     }
 
     @Test
     public void testParseUntilNonDigit() {
-        this.parseAndCheck2("123abc", 123, "123", "abc");
+        this.parseAndCheck2(
+                "123abc",
+                123,
+                "123",
+                "abc"
+        );
     }
 
     @Test
     public void testParseHex() {
-        this.parseAndCheck3(16, "1234xyz", 0x1234, "1234", "xyz");
+        this.parseAndCheck3(
+                16,
+                "1234xyz",
+                0x1234,
+                "1234",
+                "xyz"
+        );
     }
 
     @SuppressWarnings("OctalInteger")
     @Test
     public void testParseOctal() {
-        this.parseAndCheck3(8, "012345678xyz", 01234567, "01234567", "8xyz");
+        this.parseAndCheck3(
+                8,
+                "012345678xyz",
+                01234567,
+                "01234567",
+                "8xyz"
+        );
     }
 
     @Test
     public void testParseDifferentMinusSign() {
-        this.parseAndCheck3("M123", -123);
+        this.parseAndCheck3(
+                "M123",
+                -123
+        );
     }
 
     @Test
     public void testParseDifferentPlusSign() {
-        this.parseAndCheck3("P123", 123);
+        this.parseAndCheck3(
+                "P123",
+                123
+        );
     }
 
     private TextCursor parseAndCheck3(final String text,
