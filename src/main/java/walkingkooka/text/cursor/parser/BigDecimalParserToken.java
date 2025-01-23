@@ -58,9 +58,4 @@ public final class BigDecimalParserToken extends LeafParserToken<BigDecimal> {
     boolean canBeEqual(final Object other) {
         return other instanceof BigDecimalParserToken;
     }
-
-    @Override
-    boolean equals1(final ValueParserToken<?> other) {
-        return true; // no extra properties to compare
-    }
 }

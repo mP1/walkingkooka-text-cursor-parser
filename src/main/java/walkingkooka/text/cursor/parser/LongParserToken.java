@@ -44,9 +44,4 @@ public final class LongParserToken extends LeafParserToken<Long> {
     boolean canBeEqual(final Object other) {
         return other instanceof LongParserToken;
     }
-
-    @Override
-    boolean equals1(final ValueParserToken<?> other) {
-        return true; // no extra properties to compare
-    }
 }

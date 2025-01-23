@@ -44,9 +44,4 @@ public final class SignParserToken extends LeafParserToken<Boolean> {
     boolean canBeEqual(final Object other) {
         return other instanceof SignParserToken;
     }
-
-    @Override
-    boolean equals1(final ValueParserToken<?> other) {
-        return true; // no extra properties to compare
-    }
 }
