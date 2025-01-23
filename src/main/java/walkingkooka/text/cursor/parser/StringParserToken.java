@@ -45,9 +45,4 @@ public final class StringParserToken extends LeafParserToken<String> {
     boolean canBeEqual(final Object other) {
         return other instanceof StringParserToken;
     }
-
-    @Override
-    boolean equals1(final ValueParserToken<?> other) {
-        return true; // no extra properties to compare
-    }
 }

@@ -45,9 +45,4 @@ public final class ZonedDateTimeParserToken extends LeafParserToken<ZonedDateTim
     boolean canBeEqual(final Object other) {
         return other instanceof ZonedDateTimeParserToken;
     }
-
-    @Override
-    boolean equals1(final ValueParserToken<?> other) {
-        return true; // no extra properties to compare
-    }
 }

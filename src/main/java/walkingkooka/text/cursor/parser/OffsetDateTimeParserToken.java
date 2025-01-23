@@ -45,9 +45,4 @@ public final class OffsetDateTimeParserToken extends LeafParserToken<OffsetDateT
     boolean canBeEqual(final Object other) {
         return other instanceof OffsetDateTimeParserToken;
     }
-
-    @Override
-    boolean equals1(final ValueParserToken<?> other) {
-        return true; // no extra properties to compare
-    }
 }

@@ -46,9 +46,4 @@ public final class BigIntegerParserToken extends LeafParserToken<BigInteger> {
     boolean canBeEqual(final Object other) {
         return other instanceof BigIntegerParserToken;
     }
-
-    @Override
-    boolean equals1(final ValueParserToken<?> other) {
-        return true; // no extra properties to compare
-    }
 }

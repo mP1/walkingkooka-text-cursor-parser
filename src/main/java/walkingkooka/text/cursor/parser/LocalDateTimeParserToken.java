@@ -45,9 +45,4 @@ public final class LocalDateTimeParserToken extends LeafParserToken<LocalDateTim
     boolean canBeEqual(final Object other) {
         return other instanceof LocalDateTimeParserToken;
     }
-
-    @Override
-    boolean equals1(final ValueParserToken<?> other) {
-        return true; // no extra properties to compare
-    }
 }

@@ -27,9 +27,5 @@ public abstract class QuotedParserToken extends LeafParserToken<String> {
     QuotedParserToken(final String value, final String text) {
         super(value, text);
     }
-
-    @Override final boolean equals1(final ValueParserToken<?> other) {
-        return true; // no extra properties to compare
-    }
 }
 
