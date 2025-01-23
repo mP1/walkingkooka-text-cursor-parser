@@ -74,6 +74,19 @@ public final class Parsers implements PublicStaticHelper {
     }
 
     /**
+     * {@see CharPredicateStringParser}
+     */
+    public static <C extends ParserContext> Parser<C> charPredicateString(final CharPredicate predicate,
+                                                                          final int minLength,
+                                                                          final int maxLength) {
+        return CharPredicateStringParser.with(
+                predicate,
+                minLength,
+                maxLength
+        );
+    }
+
+    /**
      * {@see CustomToStringParser}
      */
     public static <C extends ParserContext> Parser<C> customToString(final Parser<C> parser, final String toString) {
@@ -188,15 +201,6 @@ public final class Parsers implements PublicStaticHelper {
      */
     public static <C extends ParserContext> Parser<C> singleQuoted() {
         return QuotedParserSingle.instance();
-    }
-
-    /**
-     * {@see CharPredicateStringParser}
-     */
-    public static <C extends ParserContext> Parser<C> stringCharPredicate(final CharPredicate predicate,
-                                                                          final int minLength,
-                                                                          final int maxLength) {
-        return CharPredicateStringParser.with(predicate, minLength, maxLength);
     }
 
     /**

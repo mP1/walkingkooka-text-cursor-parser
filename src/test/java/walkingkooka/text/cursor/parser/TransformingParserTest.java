@@ -32,7 +32,7 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
         implements HashCodeEqualsDefinedTesting2<TransformingParser<ParserContext>> {
 
     private final static int RADIX = 10;
-    private final static Parser<ParserContext> WRAPPED_PARSER = Parsers.stringCharPredicate(CharPredicates.digit(), 1, 10);
+    private final static Parser<ParserContext> WRAPPED_PARSER = Parsers.charPredicateString(CharPredicates.digit(), 1, 10);
     private final static BiFunction<ParserToken, ParserContext, ParserToken> TRANSFORMER = (t, c) -> ParserTokens.bigInteger(new BigInteger(((StringParserToken) t).value(), RADIX), t.text());
 
     @Test
