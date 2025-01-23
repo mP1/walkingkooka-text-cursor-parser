@@ -54,8 +54,4 @@ public final class BigDecimalParserToken extends LeafParserToken<BigDecimal> {
         printer.println();
     }
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof BigDecimalParserToken;
-    }
 }

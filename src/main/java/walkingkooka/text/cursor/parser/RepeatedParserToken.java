@@ -70,8 +70,4 @@ public final class RepeatedParserToken extends RepeatedOrSequenceParserToken {
 
     // Object...........................................................................................................
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof RepeatedParserToken;
-    }
 }

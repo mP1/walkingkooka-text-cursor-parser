@@ -40,8 +40,4 @@ public final class DoubleParserToken extends LeafParserToken<Double> {
         visitor.visit(this);
     }
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof DoubleParserToken;
-    }
 }

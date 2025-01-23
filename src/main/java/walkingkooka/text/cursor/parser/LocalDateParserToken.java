@@ -41,8 +41,4 @@ public final class LocalDateParserToken extends LeafParserToken<LocalDate> {
         visitor.visit(this);
     }
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof LocalDateParserToken;
-    }
 }

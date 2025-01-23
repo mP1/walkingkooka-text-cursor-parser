@@ -40,8 +40,4 @@ public final class CharacterParserToken extends LeafParserToken<Character> {
         visitor.visit(this);
     }
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof CharacterParserToken;
-    }
 }

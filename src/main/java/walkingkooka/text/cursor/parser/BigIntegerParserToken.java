@@ -42,8 +42,4 @@ public final class BigIntegerParserToken extends LeafParserToken<BigInteger> {
         visitor.visit(this);
     }
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof BigIntegerParserToken;
-    }
 }

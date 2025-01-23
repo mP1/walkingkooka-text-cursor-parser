@@ -41,8 +41,4 @@ public final class ZonedDateTimeParserToken extends LeafParserToken<ZonedDateTim
         visitor.visit(this);
     }
 
-    @Override
-    boolean canBeEqual(final Object other) {
-        return other instanceof ZonedDateTimeParserToken;
-    }
 }
