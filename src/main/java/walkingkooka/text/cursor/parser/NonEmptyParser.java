@@ -37,7 +37,10 @@ abstract class NonEmptyParser<C extends ParserContext> extends ParserSetToString
                                              final C context) {
         return cursor.isEmpty() ?
                 this.empty() :
-                this.prepareNonEmpty(cursor, context);
+                this.parseNonEmpty(
+                        cursor,
+                        context
+                );
     }
 
     /**
@@ -47,12 +50,16 @@ abstract class NonEmptyParser<C extends ParserContext> extends ParserSetToString
         return Optional.empty();
     }
 
-    private Optional<ParserToken> prepareNonEmpty(final TextCursor cursor,
-                                                  final C context) {
+    private Optional<ParserToken> parseNonEmpty(final TextCursor cursor,
+                                                final C context) {
         final TextCursorSavePoint start = cursor.save();
 
-        final Optional<ParserToken> result = this.tryParse(cursor, context, start);
-        if (!result.isPresent()) {
+        final Optional<ParserToken> result = this.tryParse(
+                cursor,
+                context,
+                start
+        );
+        if (false == result.isPresent()) {
             // unsuccessful restore cursor to original position...
             start.restore();
         }
