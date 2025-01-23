@@ -21,7 +21,6 @@ import walkingkooka.Cast;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CaseSensitivity;
-import walkingkooka.text.cursor.TextCursors;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,23 +28,119 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<ParserContext>,
         RepeatedParserToken> implements HashCodeEqualsDefinedTesting2<RepeatingParser<ParserContext>> {
 
+    private final static int MIN_COUNT = 3;
+    private final static int MAX_COUNT = 4;
+
     private final static String TEXT = "abc";
-    private final static Parser<ParserContext> PARSER = Parsers.string(TEXT, CaseSensitivity.SENSITIVE);
+    private final static Parser<ParserContext> PARSER = Parsers.string(
+            TEXT,
+            CaseSensitivity.SENSITIVE
+    );
+
+    @Test
+    public void testWithInvalidMinCountFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> RepeatingParser.with(
+                        -1,
+                        MAX_COUNT,
+                        PARSER
+                )
+        );
+
+        this.checkEquals(
+                "Invalid min count -1 < 0",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testWithInvalidMaxCountFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> RepeatingParser.with(
+                        3,
+                        2,
+                        PARSER
+                )
+        );
+
+        this.checkEquals(
+                "Invalid max count 2 < min count 3",
+                thrown.getMessage()
+        );
+    }
+
+    @Test
+    public void testWithZeroMinCountAndMaxCountFails() {
+        final IllegalArgumentException thrown = assertThrows(
+                IllegalArgumentException.class,
+                () -> RepeatingParser.with(
+                        0,
+                        0,
+                        PARSER
+                )
+        );
+
+        this.checkEquals(
+                "Invalid min count 0 and max count 0",
+                thrown.getMessage()
+        );
+    }
 
     @Test
     public void testWithNullParserFails() {
         assertThrows(
                 NullPointerException.class,
-                () -> RepeatingParser.with(null)
+                () -> RepeatingParser.with(
+                        MIN_COUNT,
+                        MAX_COUNT,
+                        null
+                )
         );
     }
 
     @Test
-    public void testWrapAnotherRepeatedParser() {
-        final RepeatingParser<ParserContext> parser = this.createParser();
+    public void testWithMinMaxBothOne() {
+        assertSame(
+                PARSER,
+                RepeatingParser.with(
+                        1,
+                        1,
+                        PARSER
+                )
+        );
+    }
+
+    @Test
+    public void testWithSameRepeatedParserZeroAndMaxInteger() {
+        final Parser<ParserContext> parser = RepeatingParser.with(
+                RepeatingParser.DEFAULT_REPEAT_MIN_COUNT,
+                RepeatingParser.DEFAULT_REPEAT_MAX_COUNT,
+                PARSER
+        );
         assertSame(
                 parser,
-                Parsers.repeating(
+                RepeatingParser.with(
+                        RepeatingParser.DEFAULT_REPEAT_MIN_COUNT,
+                        RepeatingParser.DEFAULT_REPEAT_MAX_COUNT,
+                        parser
+                )
+        );
+    }
+
+    @Test
+    public void testWithSameRepeatedParser() {
+        final RepeatingParser<ParserContext> parser = this.createParser();
+        this.checkEquals(
+                RepeatingParser.with(
+                        MIN_COUNT * MIN_COUNT,
+                        MAX_COUNT * MAX_COUNT,
+                        PARSER
+                ),
+                RepeatingParser.with(
+                        parser.minCount(),
+                        parser.maxCount(),
                         parser.cast()
                 )
         );
@@ -64,67 +159,129 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
     }
 
     @Test
-    public void testParseOnce() {
+    public void testParseLessThanMinCount() {
+        this.parseFailAndCheck(
+                TEXT
+        );
+    }
+
+    @Test
+    public void testParseLessThanMinCount2() {
+        this.parseFailAndCheck(
+                TEXT + TEXT
+        );
+    }
+
+    @Test
+    public void testParseMinCount() {
+        final String text = TEXT + TEXT + TEXT;
+
         this.parseAndCheck(
-                TEXT,
-                RepeatedParserToken.with(Lists.of(string(TEXT)), TEXT),
-                TEXT,
+                text,
+                RepeatedParserToken.with(
+                        Lists.of(
+                                string(TEXT),
+                                string(TEXT),
+                                string(TEXT)
+                        ),
+                        text
+                ),
+                text,
                 ""
         );
     }
 
     @Test
-    public void testParseTwiceDifferentTokens() {
-        final String text1 = "'123'";
-        final String text2 = "'4'";
-        final String all = text1 + text2;
+    public void testParseMinCountIncompleteIgnored() {
+        final String after = TEXT.substring(0, 1);
+        final String text = TEXT + TEXT + TEXT;
 
         this.parseAndCheck(
-                RepeatingParser.with(Parsers.singleQuoted().cast()),
-                this.createContext(),
-                TextCursors.charSequence(all),
-                RepeatedParserToken.with(Lists.of(quoted(text1), quoted(text2)), all),
-                all,
-                "");
+                text + after,
+                RepeatedParserToken.with(
+                        Lists.of(
+                                string(TEXT),
+                                string(TEXT),
+                                string(TEXT)
+                        ),
+                        text
+                ),
+                text,
+                after
+        );
     }
 
     @Test
-    public void testParseMultipleTokensAndTextAfter() {
-        final String text1 = "'123'";
-        final String text2 = "'4'";
-        final String all = text1 + text2;
+    public void testParseMaxCount() {
+        final String text = TEXT + TEXT + TEXT + TEXT;
+
+        this.parseAndCheck(
+                text,
+                RepeatedParserToken.with(
+                        Lists.of(
+                                string(TEXT),
+                                string(TEXT),
+                                string(TEXT),
+                                string(TEXT)
+                        ),
+                        text
+                ),
+                text,
+                ""
+        );
+    }
+
+    @Test
+    public void testParseMaxCountExtraTokenIgnored() {
+        final String text = TEXT + TEXT + TEXT + TEXT;
+        final String after = TEXT;
+
+        this.parseAndCheck(
+                text + after,
+                RepeatedParserToken.with(
+                        Lists.of(
+                                string(TEXT),
+                                string(TEXT),
+                                string(TEXT),
+                                string(TEXT)
+                        ),
+                        text
+                ),
+                text,
+                after
+        );
+    }
+
+    @Test
+    public void testParseMaxCountExtraTokenIgnored2() {
+        final String text = TEXT + TEXT + TEXT + TEXT;
         final String after = "!!!";
 
         this.parseAndCheck(
-                RepeatingParser.with(Parsers.singleQuoted().cast()),
-                this.createContext(),
-                TextCursors.charSequence(all + after),
-                RepeatedParserToken.with(Lists.of(quoted(text1), quoted(text2)), all),
-                all,
-                after);
-    }
-
-    private static SingleQuotedParserToken quoted(final String text) {
-        return ParserTokens.singleQuoted(text.substring(1, text.length() - 1), text);
-    }
-
-    @Test
-    public void testParseUntilUnmatched() {
-        this.parseAndCheck(TEXT + "!!",
-                RepeatedParserToken.with(Lists.of(string(TEXT)), TEXT),
-                TEXT,
-                "!!");
-    }
-
-    @Test
-    public void testParseRepeating2() {
-        final RepeatingParser<ParserContext> parser = this.createParser();
-        assertSame(parser, parser.repeating());
+                text + after,
+                RepeatedParserToken.with(
+                        Lists.of(
+                                string(TEXT),
+                                string(TEXT),
+                                string(TEXT),
+                                string(TEXT)
+                        ),
+                        text
+                ),
+                text,
+                after
+        );
     }
 
     @Override
     public RepeatingParser<ParserContext> createParser() {
-        return RepeatingParser.with(PARSER);
+        return Cast.to(
+                RepeatingParser.with(
+                        MIN_COUNT,
+                        MAX_COUNT,
+                        PARSER
+                )
+        );
     }
 
     private static StringParserToken string(final String s) {
@@ -134,9 +291,43 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
     // hashCode/equals...................................................................................................
 
     @Test
+    public void testEqualsMinCount() {
+        this.checkNotEquals(
+                RepeatingParser.with(
+                        1,
+                        MAX_COUNT,
+                        PARSER
+                ),
+                RepeatingParser.with(
+                        2,
+                        MAX_COUNT,
+                        PARSER
+                )
+        );
+    }
+
+    @Test
+    public void testEqualsMaxCount() {
+        this.checkNotEquals(
+                RepeatingParser.with(
+                        MIN_COUNT,
+                        MAX_COUNT,
+                        PARSER
+                ),
+                RepeatingParser.with(
+                        MIN_COUNT,
+                        MAX_COUNT + 1,
+                        PARSER
+                )
+        );
+    }
+
+    @Test
     public void testEqualsDifferentParser() {
         this.checkNotEquals(
                 RepeatingParser.with(
+                        MIN_COUNT,
+                        MAX_COUNT,
                         Parsers.fake()
                 )
         );
@@ -146,6 +337,8 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
     public void testEqualsDifferentToString() {
         this.checkNotEquals(
                 RepeatingParser.with(
+                        MIN_COUNT,
+                        MAX_COUNT,
                         PARSER
                 ).setToString("different to string")
         );
@@ -159,8 +352,72 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
     // toString.........................................................................................................
 
     @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createParser(), "{" + PARSER + "}");
+    public void testToStringZeroMinCountIntegerMaxMaxCount() {
+        this.toStringAndCheck(
+                RepeatingParser.with(
+                        0,
+                        Integer.MAX_VALUE,
+                        PARSER
+                ),
+                "{" + PARSER + "}"
+        );
+    }
+
+    @Test
+    public void testToStringOneMinCountIntegerMaxMaxCount() {
+        this.toStringAndCheck(
+                RepeatingParser.with(
+                        1,
+                        Integer.MAX_VALUE,
+                        PARSER
+                ),
+                "{" + PARSER + "}{1,*}"
+        );
+    }
+
+    @Test
+    public void testToStringNonZeroMinCountEqMaxCount() {
+        this.toStringAndCheck(
+                RepeatingParser.with(
+                        2,
+                        2,
+                        PARSER
+                ),
+                "{" + PARSER + "}{2}"
+        );
+    }
+
+    @Test
+    public void testToStringNonZeroMinCountIntegerMaxMaxCount() {
+        this.toStringAndCheck(
+                RepeatingParser.with(
+                        3,
+                        Integer.MAX_VALUE,
+                        PARSER
+                ),
+                "{" + PARSER + "}{3,*}"
+        );
+    }
+
+    @Test
+    public void testToStringNonZeroMinCountNonZeroMaxCount() {
+        this.toStringAndCheck(
+                RepeatingParser.with(
+                        3,
+                        4,
+                        PARSER
+                ),
+                "{" + PARSER + "}{3,4}"
+        );
+    }
+
+
+    @Test
+    public void testToStringZeroMinCountMaxCount() {
+        this.toStringAndCheck(
+                this.createParser(),
+                "{" + PARSER + "}{3,4}"
+        );
     }
 
     // class............................................................................................................

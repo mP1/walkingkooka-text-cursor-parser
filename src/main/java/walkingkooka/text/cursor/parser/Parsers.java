@@ -176,8 +176,14 @@ public final class Parsers implements PublicStaticHelper {
     /**
      * {@see RepeatingParser}
      */
-    public static <C extends ParserContext> Parser<C> repeating(final Parser<C> parser) {
-        return RepeatingParser.with(parser);
+    public static <C extends ParserContext> Parser<C> repeating(final int minCount,
+                                                                final int maxCount,
+                                                                final Parser<C> parser) {
+        return RepeatingParser.with(
+                minCount,
+                maxCount,
+                parser
+        );
     }
 
     /**
