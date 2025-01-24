@@ -219,6 +219,38 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
         );
     }
 
+    // required.........................................................................................................
+
+    @Test
+    public void testRequiredWhenOptional() {
+        final Parser<ParserContext> required = Parsers.string("Hello", CaseSensitivity.SENSITIVE);
+        final Parser<ParserContext> optional = required.optional();
+
+        this.isOptionalAndCheck(
+                optional,
+                true
+        );
+
+        this.requiredAndCheck(
+                optional,
+                Parsers.repeating(
+                        0,
+                        1,
+                        required
+                )
+        );
+    }
+
+    @Test
+    public void testRequiredWhenRequired() {
+        final Parser<ParserContext> required = Parsers.string("Hello", CaseSensitivity.SENSITIVE);
+
+        this.requiredAndCheck(
+                required,
+                required
+        );
+    }
+
     // ClassTesting.....................................................................................................
 
     @Override

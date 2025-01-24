@@ -124,6 +124,17 @@ public interface Parser<C extends ParserContext> {
     }
 
     /**
+     * Returns a {@link Parser} that is required.
+     */
+    default Parser<C> required() {
+        return Parsers.repeating(
+                1,
+                1,
+                this
+        );
+    }
+
+    /**
      * Returns a {@link Parser} that matches this OR the given {@link Parser} tokens.
      */
     default Parser<C> or(final Parser<C> parser) {
