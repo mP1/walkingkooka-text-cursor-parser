@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 /**
  * A {@link Parser} that tries all parsers until one is matched and then ignores the remaining parsers.
  */
-final class AlternativesParser<C extends ParserContext> extends ParserSetToString<C> {
+final class AlternativesParser<C extends ParserContext> extends ParserSetToString<C> implements RequiredParser<C> {
 
     /**
      * Factory that creates a {@link Parser} possibly simplifying things flattening any given {@link AlternativesParser}

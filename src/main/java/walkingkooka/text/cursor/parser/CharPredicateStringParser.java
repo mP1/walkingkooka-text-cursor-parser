@@ -26,7 +26,8 @@ import java.util.Optional;
 /**
  * A {@link Parser} that continues to consume characters that are matched by a given {@link CharPredicate}.
  */
-final class CharPredicateStringParser<C extends ParserContext> extends NonEmptyParser<C> {
+final class CharPredicateStringParser<C extends ParserContext> extends NonEmptyParser<C>
+        implements RequiredParser<C> {
 
     static <C extends ParserContext> CharPredicateStringParser<C> with(final CharPredicate predicate, final int minLength, final int maxLength) {
         Objects.requireNonNull(predicate, "predicate");

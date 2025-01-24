@@ -249,4 +249,26 @@ public interface ParserTesting extends TreePrintableTesting {
     default String endOfText(final int column, final int row) {
         return "End of text at (" + column + "," + row + ")";
     }
+
+    // minCount.........................................................................................................
+
+    default void minCountAndCheck(final Parser<?> parser,
+                                  final int expected) {
+        this.checkEquals(
+                expected,
+                parser.minCount(),
+                parser::toString
+        );
+    }
+
+    // maxCount.........................................................................................................
+
+    default void maxCountAndCheck(final Parser<?> parser,
+                                  final int expected) {
+        this.checkEquals(
+                expected,
+                parser.maxCount(),
+                parser::toString
+        );
+    }
 }

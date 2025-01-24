@@ -26,7 +26,8 @@ import java.util.Optional;
 /**
  * A {@link Parser} that parser that parsers double numbers, including the sign, decimals and any exponent.
  */
-final class DoubleParser<C extends ParserContext> extends NonEmptyParser<C> {
+final class DoubleParser<C extends ParserContext> extends NonEmptyParser<C>
+        implements RequiredParser<C> {
 
     /**
      * Factory that creates a {@link DoubleParser}

@@ -21,18 +21,28 @@ import walkingkooka.text.cursor.TextCursor;
 
 import java.util.Optional;
 
-final class FakeParser<C extends ParserContext> implements Parser<C> {
+public class FakeParser<C extends ParserContext> implements Parser<C> {
 
     static <T extends ParserToken, C extends ParserContext> FakeParser<C> create() {
         return new FakeParser<>();
     }
 
-    private FakeParser() {
+    public FakeParser() {
         super();
     }
 
     @Override
     public Optional<ParserToken> parse(final TextCursor cursor, final C context) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int minCount() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int maxCount() {
         throw new UnsupportedOperationException();
     }
 }

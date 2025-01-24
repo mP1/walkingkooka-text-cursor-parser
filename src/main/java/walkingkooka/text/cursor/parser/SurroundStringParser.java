@@ -26,7 +26,8 @@ import java.util.Optional;
 /**
  * A {@link Parser} that only requires an opening string and is terminated by another closing string.
  */
-final class SurroundStringParser<C extends ParserContext> extends NonEmptyParser<C> {
+final class SurroundStringParser<C extends ParserContext> extends NonEmptyParser<C>
+        implements RequiredParser<C> {
 
     static <C extends ParserContext> SurroundStringParser<C> with(final String open, final String close) {
         return new SurroundStringParser<>(

@@ -207,4 +207,22 @@ public interface ParserTesting2<P extends Parser<C>,
                 expected
         );
     }
+
+    // minCount.........................................................................................................
+
+    default void minCountAndCheck(final int expected) {
+        this.minCountAndCheck(
+                this.createParser(),
+                expected
+        );
+    }
+
+    // maxCount.........................................................................................................
+
+    default void maxCountAndCheck(final int expected) {
+        this.maxCountAndCheck(
+                this.createParser(),
+                expected
+        );
+    }
 }

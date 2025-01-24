@@ -223,13 +223,15 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     // will become public when Parser gains minCount/maxCount
 
-    int minCount() {
+    @Override
+    public int minCount() {
         return this.minCount;
     }
 
     private final int minCount;
 
-    int maxCount() {
+    @Override
+    public int maxCount() {
         return this.maxCount;
     }
 

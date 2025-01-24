@@ -17,14 +17,33 @@
 
 package walkingkooka.text.cursor.parser;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 
 public final class NeverParserTest extends ParserTestCase<NeverParser<ParserContext>> {
+
+    @Test
+    public void testMinCount() {
+        this.minCountAndCheck(
+                this.createParser(),
+                1
+        );
+    }
+
+    @Test
+    public void testMaxCount() {
+        this.maxCountAndCheck(
+                this.createParser(),
+                1
+        );
+    }
 
     @Override
     public NeverParser<ParserContext> createParser() {
         return NeverParser.instance();
     }
+
+    // class............................................................................................................
 
     @Override
     public Class<NeverParser<ParserContext>> type() {

@@ -180,6 +180,22 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
     }
 
     @Test
+    public void testMinCount() {
+        this.minCountAndCheck(
+                this.createParser(),
+                1
+        );
+    }
+
+    @Test
+    public void testMaxCount() {
+        this.maxCountAndCheck(
+                this.createParser(),
+                1
+        );
+    }
+
+    @Test
     @Override
     public void testOr() {
         final AlternativesParser<ParserContext> parser = createParser();

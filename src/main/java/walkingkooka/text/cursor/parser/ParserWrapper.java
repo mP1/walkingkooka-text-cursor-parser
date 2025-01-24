@@ -31,5 +31,15 @@ abstract class ParserWrapper<C extends ParserContext> extends ParserSetToString<
         this.parser = parser;
     }
 
+    @Override
+    public final int minCount() {
+        return this.parser.minCount();
+    }
+
+    @Override
+    public final int maxCount() {
+        return this.parser.maxCount();
+    }
+
     final Parser<C> parser;
 }
