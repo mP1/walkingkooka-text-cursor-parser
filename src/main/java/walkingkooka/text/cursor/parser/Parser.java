@@ -113,6 +113,17 @@ public interface Parser<C extends ParserContext> {
     }
 
     /**
+     * Returns a {@link Parser} that is optional.
+     */
+    default Parser<C> optional() {
+        return Parsers.repeating(
+                0,
+                1,
+                this
+        );
+    }
+
+    /**
      * Returns a {@link Parser} that matches this OR the given {@link Parser} tokens.
      */
     default Parser<C> or(final Parser<C> parser) {

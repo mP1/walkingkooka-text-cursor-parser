@@ -37,6 +37,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
@@ -292,5 +293,25 @@ public interface ParserTesting extends TreePrintableTesting {
                 parser.maxCount(),
                 parser::toString
         );
+    }
+
+    // optional.........................................................................................................
+
+    default <C extends ParserContext> void optionalAndCheck(final Parser<C> parser,
+                                                            final Parser<C> expected) {
+        final Parser<C> actual = parser.optional();
+
+        if (actual.equals(parser)) {
+            assertSame(
+                    parser,
+                    parser
+            );
+        } else {
+            this.checkEquals(
+                    expected,
+                    actual,
+                    () -> parser + " -> optional"
+            );
+        }
     }
 }

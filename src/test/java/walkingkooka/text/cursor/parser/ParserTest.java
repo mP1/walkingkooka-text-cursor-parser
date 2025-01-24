@@ -25,6 +25,7 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.ClassTesting;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.test.ParseStringTesting;
+import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 
 import java.math.MathContext;
@@ -33,7 +34,8 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
-        ParseStringTesting<ParserToken> {
+        ParseStringTesting<ParserToken>,
+        ParserTesting {
 
     // parseText........................................................................................................
 
@@ -185,6 +187,36 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
         return cause;
+    }
+
+    // optional.........................................................................................................
+
+    @Test
+    public void testOptionalWhenRequired() {
+        final Parser<ParserContext> required = Parsers.string("Hello", CaseSensitivity.SENSITIVE);
+
+        this.optionalAndCheck(
+                required,
+                Parsers.repeating(
+                        0,
+                        1,
+                        required
+                )
+        );
+    }
+
+    @Test
+    public void testOptionalWhenOptional() {
+        final Parser<ParserContext> required = Parsers.string("Hello", CaseSensitivity.SENSITIVE);
+        
+        this.optionalAndCheck(
+                required.optional(),
+                Parsers.repeating(
+                        0,
+                        1,
+                        required
+                )
+        );
     }
 
     // ClassTesting.....................................................................................................
