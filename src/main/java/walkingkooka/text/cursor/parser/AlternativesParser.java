@@ -16,7 +16,6 @@
  */
 package walkingkooka.text.cursor.parser;
 
-import walkingkooka.Cast;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.TextCursor;
 
@@ -43,21 +42,29 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
     static <C extends ParserContext> Parser<C> with(final List<Parser<C>> parsers) {
         Objects.requireNonNull(parsers, "parsers");
 
-        final List<Parser<C>> copy = Lists.array();
+        final List<Parser<C>> unique = Lists.array();
 
-        // visit all parsers,. flattening any that are themselves AlternativesParser
-        parsers.forEach(p -> tryFlatten(p, copy));
+        // visit all parsers, flattening any that are themselves AlternativesParser
+        parsers.forEach(
+                p -> tryFlatten(p, unique)
+        );
 
-        final List<Parser<C>> withoutCustomToString = unwrapAllCustomToStringParsers(copy);
-        final boolean allCustomToStringParsers = withoutCustomToString.size() == copy.size();
+        final Parser<C> result;
 
-        final Parser<C> created = with0(allCustomToStringParsers ?
-                withoutCustomToString :
-                copy);
+        switch (unique.size()) {
+            case 0:
+                throw new IllegalArgumentException("Empty parsers");
+            case 1:
+                result = unique.get(0);
+                break;
+            default:
+                result = new AlternativesParser<>(
+                        unique,
+                        buildToString(unique)
+                );
+        }
 
-        return allCustomToStringParsers ?
-                created.setToString(buildToString(copy)) :
-                created;
+        return result;
     }
 
     /**
@@ -65,47 +72,20 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
      * flattening.
      */
     private static <C extends ParserContext> void tryFlatten(final Parser<C> parser,
-                                                             final List<Parser<C>> copy) {
+                                                             final List<Parser<C>> unique) {
         if (parser instanceof AlternativesParser) {
             final AlternativesParser<C> alt = parser.cast();
-            copy.addAll(alt.parsers);
-        } else {
-            copy.add(parser);
-        }
-    }
-
-    /**
-     * Loop over all parsers, unwrapping all {@link CustomToStringParser}.
-     */
-    private static <C extends ParserContext> List<Parser<C>> unwrapAllCustomToStringParsers(final List<Parser<C>> parsers) {
-        return parsers.stream()
-                .filter(p -> p instanceof CustomToStringParser)
-                .map(p -> ((CustomToStringParser<C>) p).parser.cast())
-                .map(Cast::<Parser<C>>to)
-                .collect(Collectors.toList());
-    }
-
-    /**
-     * The actual factory method that accepts the copy of parsers that have been processed and possibly simplified.
-     */
-    private static <C extends ParserContext> Parser<C> with0(final List<Parser<C>> parsers) {
-        Parser<C> parser;
-
-        switch (parsers.size()) {
-            case 0:
-                throw new IllegalArgumentException("At least one parser must be provided");
-            case 1:
-                parser = parsers.get(0).cast();
-                break;
-            default:
-                parser = new AlternativesParser<>(
-                        parsers,
-                        buildToString(parsers)
+            for (final Parser<C> p : alt.parsers) {
+                tryFlatten(
+                        p,
+                        unique
                 );
-                break;
+            }
+        } else {
+            if (false == unique.contains(parser)) {
+                unique.add(parser);
+            }
         }
-
-        return parser;
     }
 
     /**
