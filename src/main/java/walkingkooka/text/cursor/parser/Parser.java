@@ -69,10 +69,10 @@ public interface Parser<C extends ParserContext> {
     }
 
     /**
-     * Tests if this parser is required.
+     * Tests if this parser is required, when {@link #minCount()} GTE 1
      */
     default boolean isRequired() {
-        return 1 == this.minCount() && 1 == this.maxCount();
+        return this.minCount() >= 1;
     }
 
     /**
