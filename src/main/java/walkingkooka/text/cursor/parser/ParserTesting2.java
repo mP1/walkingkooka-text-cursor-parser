@@ -249,6 +249,18 @@ public interface ParserTesting2<P extends Parser<C>,
 
     // minCount.........................................................................................................
 
+    @Test
+    default void testMinCountGreaterThanEqualZero() {
+        final P parser = this.createParser();
+        final int minCount = parser.minCount();
+
+        this.checkNotEquals(
+                -1,
+                Math.signum(minCount),
+                () -> parser + " minCount=" + minCount
+        );
+    }
+
     default void minCountAndCheck(final int expected) {
         this.minCountAndCheck(
                 this.createParser(),
