@@ -17,6 +17,7 @@
 
 package walkingkooka.text.cursor.parser;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
@@ -204,6 +205,25 @@ public interface ParserTesting2<P extends Parser<C>,
                 parser,
                 this.createContext(),
                 cursor,
+                expected
+        );
+    }
+
+    // isOptional.......................................................................................................
+
+    @Test
+    default void testIsOptional() {
+        final P parser = this.createParser();
+
+        this.isOptionalAndCheck(
+                parser,
+                parser.minCount() == 0 && parser.maxCount() == 1
+        );
+    }
+
+    default void isOptionalAndCheck(final boolean expected) {
+        this.isOptionalAndCheck(
+                this.createParser(),
                 expected
         );
     }
