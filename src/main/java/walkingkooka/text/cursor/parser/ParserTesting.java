@@ -261,6 +261,17 @@ public interface ParserTesting extends TreePrintableTesting {
         );
     }
 
+    // isRequired.......................................................................................................
+
+    default void isRequiredAndCheck(final Parser<?> parser,
+                                    final boolean expected) {
+        this.checkEquals(
+                expected,
+                parser.isRequired(),
+                parser::toString
+        );
+    }
+
     // minCount.........................................................................................................
 
     default void minCountAndCheck(final Parser<?> parser,

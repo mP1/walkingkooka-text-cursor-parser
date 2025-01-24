@@ -228,6 +228,25 @@ public interface ParserTesting2<P extends Parser<C>,
         );
     }
 
+    // isRequired.......................................................................................................
+
+    @Test
+    default void testIsRequired() {
+        final P parser = this.createParser();
+
+        this.isRequiredAndCheck(
+                parser,
+                parser.minCount() == 1 && parser.maxCount() == 1
+        );
+    }
+
+    default void isRequiredAndCheck(final boolean expected) {
+        this.isRequiredAndCheck(
+                this.createParser(),
+                expected
+        );
+    }
+
     // minCount.........................................................................................................
 
     default void minCountAndCheck(final int expected) {
