@@ -270,6 +270,19 @@ public interface ParserTesting2<P extends Parser<C>,
 
     // maxCount.........................................................................................................
 
+    @Test
+    default void testMaxCountGreaterThanEqualMinCount() {
+        final P parser = this.createParser();
+        final int minCount = parser.minCount();
+        final int maxCount = parser.maxCount();
+
+        this.checkNotEquals(
+                -1,
+                Math.signum(maxCount - minCount),
+                () -> parser + " maxCount " + maxCount + " < minCount=" + minCount
+        );
+    }
+
     default void maxCountAndCheck(final int expected) {
         this.maxCountAndCheck(
                 this.createParser(),
