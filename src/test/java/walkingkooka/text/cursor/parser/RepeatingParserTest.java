@@ -352,6 +352,18 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
     // toString.........................................................................................................
 
     @Test
+    public void testToStringZeroMinCountIntegerOneMaxCount() {
+        this.toStringAndCheck(
+                RepeatingParser.with(
+                        0,
+                        1,
+                        PARSER
+                ),
+                "[" + PARSER + "]"
+        );
+    }
+
+    @Test
     public void testToStringZeroMinCountIntegerMaxMaxCount() {
         this.toStringAndCheck(
                 RepeatingParser.with(

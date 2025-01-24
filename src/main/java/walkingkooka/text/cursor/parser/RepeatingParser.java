@@ -130,39 +130,46 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
         );
     }
 
-    // {0,1}
-    // {1,*}
-    // {2,3}
+    // [PARSER]
+    // {PARSER}{1,*}
+    // {PARSER}{2,3}
     private static String buildRepeatingToString(final int minCount,
                                                  final int maxCount,
                                                  final Parser<?> parser) {
         final StringBuilder builder = new StringBuilder();
-        builder.append('{');
-        builder.append(parser);
-        builder.append('}');
 
-        if (DEFAULT_REPEAT_MIN_COUNT != minCount || DEFAULT_REPEAT_MAX_COUNT != maxCount) {
+        if (0 == minCount && 1 == maxCount) {
+            builder.append('[');
+            builder.append(parser);
+            builder.append(']');
+        } else {
             builder.append('{');
-
-            boolean separator = false;
-
-            if (0 != minCount) {
-                builder.append(minCount);
-                separator = true;
-            }
-
-            if (minCount != maxCount) {
-                if (separator) {
-                    builder.append(',');
-                }
-                builder.append(
-                        DEFAULT_REPEAT_MAX_COUNT == maxCount ?
-                                "*" :
-                                String.valueOf(maxCount)
-                );
-            }
-
+            builder.append(parser);
             builder.append('}');
+
+            if (DEFAULT_REPEAT_MIN_COUNT != minCount || DEFAULT_REPEAT_MAX_COUNT != maxCount) {
+                builder.append('{');
+
+                boolean separator = false;
+
+                if (0 != minCount) {
+                    builder.append(minCount);
+                    separator = true;
+                }
+
+                if (minCount != maxCount) {
+                    if (separator) {
+                        builder.append(',');
+                    }
+                    builder.append(
+                            DEFAULT_REPEAT_MAX_COUNT == maxCount ?
+                                    "*" :
+                                    String.valueOf(maxCount)
+                    );
+                }
+
+                builder.append('}');
+            }
         }
 
         return builder.toString();
