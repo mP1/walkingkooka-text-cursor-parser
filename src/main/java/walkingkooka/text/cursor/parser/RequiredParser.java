@@ -24,7 +24,7 @@ public interface RequiredParser<C extends ParserContext> extends Parser<C> {
 
     @Override
     default int minCount() {
-        return 1;
+        return OPTIONAL_MAX_COUNT;
     }
 
     @Override

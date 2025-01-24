@@ -70,6 +70,8 @@ public interface Parser<C extends ParserContext> {
         return OPTIONAL_MIN_COUNT == this.minCount();
     }
 
+    int OPTIONAL_MAX_COUNT = 1;
+
     /**
      * Tests if this parser is required, when {@link #minCount()} GTE 1
      */
