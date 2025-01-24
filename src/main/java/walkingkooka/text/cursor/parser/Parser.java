@@ -62,10 +62,10 @@ public interface Parser<C extends ParserContext> {
     }
 
     /**
-     * Tests if this parser is optional.
+     * Tests if this parser is optional, aka the {@link #minCount()} == 0
      */
     default boolean isOptional() {
-        return 0 == this.minCount() && 1 == this.maxCount();
+        return 0 == this.minCount();
     }
 
     /**
