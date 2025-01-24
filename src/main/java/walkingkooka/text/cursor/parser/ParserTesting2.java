@@ -262,7 +262,7 @@ public interface ParserTesting2<P extends Parser<C>,
 
         this.isOptionalAndCheck(
                 parser,
-                parser.minCount() == 0 && parser.maxCount() == 1
+                parser.minCount() == 0
         );
     }
 
