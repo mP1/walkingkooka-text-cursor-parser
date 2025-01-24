@@ -46,34 +46,62 @@ public interface ParserTesting2<P extends Parser<C>,
     default TextCursor parseAndCheck(final String cursorText,
                                      final ParserToken token,
                                      final String text) {
-        return this.parseAndCheck(cursorText, token, text, "");
+        return this.parseAndCheck(
+                cursorText,
+                token,
+                text,
+                ""
+        );
     }
 
     default TextCursor parseAndCheck(final String cursorText,
                                      final ParserToken token,
                                      final String text,
                                      final String textAfter) {
-        return this.parseAndCheck(TextCursors.charSequence(cursorText), token, text, textAfter);
+        return this.parseAndCheck(
+                TextCursors.charSequence(cursorText),
+                token,
+                text,
+                textAfter
+        );
     }
 
     default TextCursor parseAndCheck(final TextCursor cursor,
                                      final ParserToken token,
                                      final String text) {
-        return this.parseAndCheck(cursor, token, text, "");
+        return this.parseAndCheck(
+                cursor,
+                token,
+                text,
+                ""
+        );
     }
 
     default TextCursor parseAndCheck(final TextCursor cursor,
                                      final ParserToken token,
                                      final String text,
                                      final String textAfter) {
-        return this.parseAndCheck(this.createParser(), this.createContext(), cursor, token, text, textAfter);
+        return this.parseAndCheck(
+                this.createParser(),
+                this.createContext(),
+                cursor,
+                token,
+                text,
+                textAfter
+        );
     }
 
     default TextCursor parseAndCheck(final Parser<C> parser,
                                      final String cursorText,
                                      final ParserToken token,
                                      final String text) {
-        return this.parseAndCheck(parser, cursorText, token, text, "");
+        return this.parseAndCheck(
+                parser,
+                cursorText,
+                token,
+                text,
+                ""
+        );
     }
 
     default TextCursor parseAndCheck(final Parser<C> parser,
@@ -81,22 +109,39 @@ public interface ParserTesting2<P extends Parser<C>,
                                      final ParserToken token,
                                      final String text,
                                      final String textAfter) {
-        return this.parseAndCheck(parser, this.createContext(), cursorText, token, text, textAfter);
+        return this.parseAndCheck(
+                parser,
+                this.createContext(),
+                cursorText,
+                token,
+                text,
+                textAfter
+        );
     }
 
     // parseFailAndCheck................................................................................................
 
     default TextCursor parseFailAndCheck(final String cursorText) {
-        return this.parseFailAndCheck(TextCursors.charSequence(cursorText));
+        return this.parseFailAndCheck(
+                TextCursors.charSequence(cursorText)
+        );
     }
 
     default TextCursor parseFailAndCheck(final TextCursor cursor) {
-        return this.parseFailAndCheck(this.createParser(), this.createContext(), cursor);
+        return this.parseFailAndCheck(
+                this.createParser(),
+                this.createContext(),
+                cursor
+        );
     }
 
     default TextCursor parseFailAndCheck(final Parser<C> parser,
                                          final String cursorText) {
-        return this.parseFailAndCheck(parser, this.createContext(), cursorText);
+        return this.parseFailAndCheck(
+                parser,
+                this.createContext(),
+                cursorText
+        );
     }
 
     // parseThrows......................................................................................................
