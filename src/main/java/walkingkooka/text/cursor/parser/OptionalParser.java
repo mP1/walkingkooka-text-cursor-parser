@@ -24,7 +24,7 @@ public interface OptionalParser<C extends ParserContext> extends Parser<C> {
 
     @Override
     default int minCount() {
-        return 0;
+        return OPTIONAL_MIN_COUNT;
     }
 
     @Override
