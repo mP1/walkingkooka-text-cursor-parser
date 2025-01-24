@@ -314,4 +314,24 @@ public interface ParserTesting extends TreePrintableTesting {
             );
         }
     }
+
+    // required.........................................................................................................
+
+    default <C extends ParserContext> void requiredAndCheck(final Parser<C> parser,
+                                                            final Parser<C> expected) {
+        final Parser<C> actual = parser.required();
+
+        if (actual.equals(parser)) {
+            assertSame(
+                    parser,
+                    parser
+            );
+        } else {
+            this.checkEquals(
+                    expected,
+                    actual,
+                    () -> parser + " -> required"
+            );
+        }
+    }
 }
