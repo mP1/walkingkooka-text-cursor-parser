@@ -26,17 +26,26 @@ import java.util.Optional;
 /**
  * A parser that implements a only returns a token if the first matches and the second fails.
  */
-final class AndNotParser<C extends ParserContext> implements Parser<C>,
-        RequiredParser<C> {
+final class AndNotParser<C extends ParserContext> extends ParserSetToString<C>
+        implements RequiredParser<C> {
 
     static <T extends ParserToken, C extends ParserContext> AndNotParser<C> with(final Parser<C> left, final Parser<C> right) {
         Objects.requireNonNull(left, "left");
         Objects.requireNonNull(right, "right");
 
-        return new AndNotParser<>(left, right);
+        return new AndNotParser<>(
+                left,
+                right,
+                left + " - " + right
+        );
     }
 
-    private AndNotParser(final Parser<C> left, final Parser<C> right) {
+    // @VisibleForTesting
+    AndNotParser(final Parser<C> left,
+                 final Parser<C> right,
+                 final String toString) {
+        super(toString);
+
         this.left = left;
         this.right = right;
     }
@@ -65,13 +74,39 @@ final class AndNotParser<C extends ParserContext> implements Parser<C>,
         return leftResult;
     }
 
+    // ParserSetToString..........................................................................................................
+
+    @Override
+    AndNotParser<C> replaceToString(final String toString) {
+        return new AndNotParser<>(
+                this.left,
+                this.right,
+                toString
+        );
+    }
+
     private final Parser<C> left;
     private final Parser<C> right;
 
     // Object...........................................................................................................
 
     @Override
-    public String toString() {
-        return this.left + " - " + this.right;
+    public int hashCode() {
+        return Objects.hash(
+                this.left,
+                this.right,
+                this.toString
+        );
+    }
+
+    @Override
+    public boolean equals(final Object other) {
+        return this == other ||
+                (other instanceof AndNotParser && this.equals0((AndNotParser<?>) other));
+    }
+
+    private boolean equals0(final AndNotParser<?> other) {
+        return this.left.equals(other.left) &&
+                this.right.equals(other.right);
     }
 }

@@ -112,6 +112,22 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
                 after);
     }
 
+    @Test
+    public void testSetToString() {
+        this.checkEquals(
+                new AndNotParser<>(
+                        left(),
+                        right(),
+                        "Hello"
+                ),
+                new AndNotParser<>(
+                        left(),
+                        right(),
+                        "Old"
+                ).setToString("Hello")
+        );
+    }
+
     @Override
     public AndNotParser<ParserContext> createParser() {
         return this.createParser(this.left(), this.right());
@@ -135,6 +151,16 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
     }
 
     // class............................................................................................................
+
+    @Override
+    public void testAllConstructorsVisibility() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void testIfClassIsFinalIfAllConstructorsArePrivate() {
+        throw new UnsupportedOperationException();
+    }
 
     @Override
     public Class<AndNotParser<ParserContext>> type() {
