@@ -281,7 +281,7 @@ public interface ParserTesting2<P extends Parser<C>,
 
         this.isRequiredAndCheck(
                 parser,
-                parser.minCount() == 1 && parser.maxCount() == 1
+                parser.minCount() >= 1
         );
     }
 
