@@ -250,6 +250,17 @@ public interface ParserTesting extends TreePrintableTesting {
         return "End of text at (" + column + "," + row + ")";
     }
 
+    // isOptional.......................................................................................................
+
+    default void isOptionalAndCheck(final Parser<?> parser,
+                                    final boolean expected) {
+        this.checkEquals(
+                expected,
+                parser.isOptional(),
+                parser::toString
+        );
+    }
+
     // minCount.........................................................................................................
 
     default void minCountAndCheck(final Parser<?> parser,
