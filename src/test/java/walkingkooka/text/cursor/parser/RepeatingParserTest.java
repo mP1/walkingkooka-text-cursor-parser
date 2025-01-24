@@ -273,6 +273,24 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
         );
     }
 
+    @Test
+    @Override
+    public void testMinCount() {
+        this.minCountAndCheck(
+                this.createParser(),
+                MIN_COUNT
+        );
+    }
+
+    @Test
+    @Override
+    public void testMaxCount() {
+        this.maxCountAndCheck(
+                this.createParser(),
+                MAX_COUNT
+        );
+    }
+
     @Override
     public RepeatingParser<ParserContext> createParser() {
         return Cast.to(

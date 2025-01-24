@@ -26,7 +26,8 @@ import java.util.Optional;
 /**
  * A {@link Parser} that matches a single character using the provided {@link CharPredicate}
  */
-final class CharPredicateCharacterParser<C extends ParserContext> extends NonEmptyParser<C> {
+final class CharPredicateCharacterParser<C extends ParserContext> extends NonEmptyParser<C>
+        implements RequiredParser<C> {
 
     static <C extends ParserContext> CharPredicateCharacterParser<C> with(final CharPredicate predicate) {
         Objects.requireNonNull(predicate, "predicate");

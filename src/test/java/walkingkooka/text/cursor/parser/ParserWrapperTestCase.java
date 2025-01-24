@@ -34,6 +34,22 @@ public abstract class ParserWrapperTestCase<P extends ParserWrapper<ParserContex
                 () -> this.createParser(null));
     }
 
+    @Test
+    public final void testMinCount() {
+        this.minCountAndCheck(
+                this.createParser(),
+                1
+        );
+    }
+
+    @Test
+    public final void testMaxCount() {
+        this.maxCountAndCheck(
+                this.createParser(),
+                1
+        );
+    }
+
     @Override
     public final P createParser() {
         return this.createParser(

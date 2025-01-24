@@ -27,7 +27,8 @@ import java.util.Optional;
 /**
  * A {@link Parser} that requires all parsers are matched in order returning all tokens within a {@link SequenceParserToken}
  */
-final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C> {
+final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
+        implements RequiredParser<C> {
 
     /**
      * Factory method only called by {@link SequenceParserBuilder#build()}

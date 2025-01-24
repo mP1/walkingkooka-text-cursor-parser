@@ -26,7 +26,8 @@ import java.util.Optional;
 /**
  * A parser that implements a only returns a token if the first matches and the second fails.
  */
-final class AndNotParser<C extends ParserContext> implements Parser<C> {
+final class AndNotParser<C extends ParserContext> implements Parser<C>,
+        RequiredParser<C> {
 
     static <T extends ParserToken, C extends ParserContext> AndNotParser<C> with(final Parser<C> left, final Parser<C> right) {
         Objects.requireNonNull(left, "left");

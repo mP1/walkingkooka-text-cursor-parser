@@ -14,29 +14,21 @@
  * limitations under the License.
  *
  */
+
 package walkingkooka.text.cursor.parser;
 
-import org.junit.jupiter.api.Test;
+/**
+ * A required {@link Parser} has {@link #minCount()} and {@link #maxCount()} both returning 1.
+ */
+public interface RequiredParser<C extends ParserContext> extends Parser<C> {
 
-public abstract class NonEmptyParserTestCase<P extends NonEmptyParser<ParserContext>, T extends ParserToken> extends ParserTestCase<P> {
-
-    NonEmptyParserTestCase() {
-        super();
+    @Override
+    default int minCount() {
+        return 1;
     }
 
-    @Test
-    public void testMinCount() {
-        this.minCountAndCheck(
-                this.createParser(),
-                1
-        );
-    }
-
-    @Test
-    public void testMaxCount() {
-        this.maxCountAndCheck(
-                this.createParser(),
-                1
-        );
+    @Override
+    default int maxCount() {
+        return 1;
     }
 }

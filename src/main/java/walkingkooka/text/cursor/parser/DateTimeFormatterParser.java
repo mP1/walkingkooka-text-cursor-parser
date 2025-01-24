@@ -40,7 +40,8 @@ import java.util.function.Function;
  * The pattern that created the {@link DateTimeFormatter} must be given to the factory so the preliminary phase can
  * try its simple parsing.
  */
-abstract class DateTimeFormatterParser<C extends ParserContext> extends NonEmptyParser<C> {
+abstract class DateTimeFormatterParser<C extends ParserContext> extends NonEmptyParser<C>
+        implements RequiredParser<C> {
 
     static Function<DateTimeContext, DateTimeFormatter> check(final Function<DateTimeContext, DateTimeFormatter> formatter) {
         return Objects.requireNonNull(formatter, "formatter");

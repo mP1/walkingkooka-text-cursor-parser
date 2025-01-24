@@ -25,7 +25,8 @@ import java.util.Optional;
 /**
  * A {@link Parser} that matches unicode escape sequences returning the decoded character.
  */
-final class UnicodeEscapeCharacterParser<C extends ParserContext> extends NonEmptyParser<C> {
+final class UnicodeEscapeCharacterParser<C extends ParserContext> extends NonEmptyParser<C>
+        implements RequiredParser<C> {
 
     /**
      * Type safe singleton getter.

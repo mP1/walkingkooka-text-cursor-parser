@@ -62,6 +62,20 @@ public interface Parser<C extends ParserContext> {
     }
 
     /**
+     * Returns the min count for this parser.
+     * For optional parsers this will return 0, required will return 1, and repeating any number.
+     */
+    int minCount();
+
+    /**
+     * Returns the max count for this parser.
+     * For optional and required parsers this will return 1, repeating any number.
+     */
+    int maxCount();
+
+    // parser building..................................................................................................
+
+    /**
      * Adds a post condition, namely this {@link Parser} when it returns a {@link ParserToken} must also be empty,
      * otherwise the {@link TextCursor} is restored.
      */
