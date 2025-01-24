@@ -291,6 +291,42 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
         );
     }
 
+    @Test
+    public void testOptionalWhenOptional() {
+        final RepeatingParser<ParserContext> repeating = Cast.to(
+                RepeatingParser.with(
+                        0,
+                        100,
+                        PARSER
+                )
+        );
+
+        this.optionalAndCheck(
+                repeating,
+                repeating
+        );
+    }
+
+    @Test
+    public void testOptionalWhenNotOptional() {
+        final RepeatingParser<ParserContext> repeating = Cast.to(
+                RepeatingParser.with(
+                        1,
+                        100,
+                        PARSER
+                )
+        );
+
+        this.optionalAndCheck(
+                repeating,
+                RepeatingParser.with(
+                        0,
+                        100,
+                        PARSER
+                )
+        );
+    }
+
     @Override
     public RepeatingParser<ParserContext> createParser() {
         return Cast.to(
