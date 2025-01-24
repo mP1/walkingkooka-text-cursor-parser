@@ -61,11 +61,13 @@ public interface Parser<C extends ParserContext> {
         }
     }
 
+    int OPTIONAL_MIN_COUNT = 0;
+
     /**
      * Tests if this parser is optional, aka the {@link #minCount()} == 0
      */
     default boolean isOptional() {
-        return 0 == this.minCount();
+        return OPTIONAL_MIN_COUNT == this.minCount();
     }
 
     /**
@@ -117,7 +119,7 @@ public interface Parser<C extends ParserContext> {
      */
     default Parser<C> optional() {
         return Parsers.repeating(
-                0,
+                OPTIONAL_MIN_COUNT,
                 1,
                 this
         );
