@@ -23,6 +23,7 @@ import walkingkooka.text.cursor.TextCursorSavePoint;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * A {@link Parser} that requires all parsers are matched in order returning all tokens within a {@link SequenceParserToken}
@@ -33,19 +34,36 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
     /**
      * Factory method only called by {@link SequenceParserBuilder#build()}
      */
-    static <C extends ParserContext> SequenceParser<C> with(final List<SequenceParserComponent<C>> components) {
-        Objects.requireNonNull(components, "components");
+    static <C extends ParserContext> SequenceParser<C> with(final List<Parser<C>> parsers) {
+        Objects.requireNonNull(parsers, "parsers");
 
         return new SequenceParser<>(
-                Lists.immutable(components),
-                SequenceParserComponent.toString(components)
+                Lists.immutable(parsers),
+                buildToString(parsers)
         );
     }
 
-    private SequenceParser(final List<SequenceParserComponent<C>> components,
+    /**
+     * Concats all parsers separated by comma, and surrounding the sequence with grouping parens.
+     * <pre>
+     * (A, B, C)
+     * </pre>
+     */
+    static <C extends ParserContext> String buildToString(final List<Parser<C>> parsers) {
+        return parsers.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(
+                                ", ",
+                                "(",
+                                ")"
+                        )
+                );
+    }
+
+    private SequenceParser(final List<Parser<C>> parsers,
                            final String toString) {
         super(toString);
-        this.components = components;
+        this.parsers = parsers;
     }
 
     @Override
@@ -56,31 +74,39 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
 
         final List<ParserToken> tokens = Lists.array();
 
-        for (SequenceParserComponent<C> component : this.components) {
-            final Optional<ParserToken> token = component.parse(cursor, context);
+        for (final Parser<C> parser : this.parsers) {
+            final Optional<ParserToken> token = parser.parse(cursor, context);
             if (token.isPresent()) {
                 tokens.add(token.get());
                 continue;
             }
-            if (component.abortIfMissing()) {
+            if (parser.isRequired()) {
                 tokens.clear();
                 break;
             }
         }
 
-        if (!tokens.isEmpty()) {
-            result = Optional.of(SequenceParserToken.with(tokens, start.textBetween().toString()));
+        if (false == tokens.isEmpty()) {
+            result = Optional.of(
+                    SequenceParserToken.with(
+                            tokens,
+                            start.textBetween()
+                                    .toString()
+                    )
+            );
         }
+
+        // caller will restore cursor when $result is empty
         return result;
     }
 
-    private final List<SequenceParserComponent<C>> components;
+    private final List<Parser<C>> parsers;
 
     // Object .............................................................................................................
 
     @Override
     public int hashCode() {
-        return this.components.hashCode();
+        return this.parsers.hashCode();
     }
 
     @Override
@@ -89,7 +115,7 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
     }
 
     private boolean equals0(final SequenceParser<?> other) {
-        return this.components.equals(other.components);
+        return this.parsers.equals(other.parsers);
     }
 
     // ParserSetToString..........................................................................................................
@@ -97,7 +123,7 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
     @Override
     SequenceParser<C> replaceToString(final String toString) {
         return new SequenceParser<>(
-                this.components,
+                this.parsers,
                 toString
         );
     }
