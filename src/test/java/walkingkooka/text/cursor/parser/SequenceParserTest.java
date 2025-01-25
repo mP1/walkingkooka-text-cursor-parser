@@ -119,25 +119,35 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     @Test
     public void testParseMissingOptionalFirst() {
         final String text = TEXT2 + TEXT1;
-        this.parseAndCheck(SequenceParserBuilder.empty()
-                        .optional(PARSER3)
-                        .required(PARSER2)
-                        .required(PARSER1)
-                        .build(),
+
+        this.parseAndCheck(
+                PARSER3.optional()
+                        .and(PARSER2)
+                        .and(PARSER1),
                 this.createContext(),
                 text,
-                ParserTokens.sequence(Lists.of(TOKEN2, TOKEN1), text),
-                text);
+                ParserTokens.sequence(
+                        Lists.of(
+                                TOKEN2,
+                                TOKEN1
+                        ),
+                        text
+                ),
+                text
+        );
     }
 
     @Test
     public void testParseAllOptionalFail() {
-        this.parseFailAndCheck(SequenceParserBuilder.empty()
-                        .optional(PARSER3)
-                        .optional(PARSER2)
-                        .optional(PARSER1)
-                        .build(),
-                "!@#");
+        this.parseFailAndCheck(
+                PARSER3.optional()
+                        .and(
+                                PARSER2.optional()
+                        ).and(
+                                PARSER1.optional()
+                        ),
+                "!@#"
+        );
     }
 
     @Test
@@ -211,11 +221,13 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     @Override
     public SequenceParser<ParserContext> createParser() {
         return Cast.to(
-                SequenceParserBuilder.empty()
-                .required(PARSER1)
-                .required(PARSER2)
-                .optional(PARSER3)
-                        .build()
+                SequenceParser.with(
+                        Lists.of(
+                                PARSER1,
+                                PARSER2,
+                                PARSER3.optional()
+                        )
+                )
         );
     }
 
@@ -292,43 +304,42 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     @Test
     public void testEqualWithoutNames() {
         this.checkEquals(
-                SequenceParserBuilder.empty()
-                .required(PARSER1)
-                .required(PARSER2)
-                .optional(PARSER3)
-                        .build()
+                SequenceParser.with(
+                        Lists.of(
+                                PARSER1,
+                                PARSER2,
+                                PARSER3.optional()
+                        )
+
+                )
         );
     }
 
     @Test
-    public void testEqualsDifferent() {
+    public void testEqualsReversed() {
         this.checkNotEquals(
-                SequenceParserBuilder.empty()
-                .required(PARSER3)
-                .required(PARSER2)
-                .required(PARSER1)
-                        .build()
+                SequenceParser.with(
+                        Lists.of(
+                                PARSER3,
+                                PARSER2,
+                                PARSER1
+                        )
+
+                )
         );
     }
 
     @Test
-    public void testEqualsDifferentRequiredOptionals() {
+    public void testEqualsDifferentOptionalness() {
         this.checkNotEquals(
-                SequenceParserBuilder.empty()
-                .optional(PARSER1)
-                .required(PARSER2)
-                .required(PARSER3)
-                        .build()
-        );
-    }
+                SequenceParser.with(
+                        Lists.of(
+                                PARSER1.optional(),
+                                PARSER2,
+                                PARSER3
+                        )
 
-    @Test
-    public void testEqualsBuiltUsingDefaultMethods() {
-        this.checkEquals(
-                PARSER1.builder()
-                .required(PARSER2.cast())
-                .optional(PARSER3.cast())
-                        .build()
+                )
         );
     }
 
