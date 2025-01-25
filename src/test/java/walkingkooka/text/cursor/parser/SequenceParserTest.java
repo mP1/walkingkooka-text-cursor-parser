@@ -219,6 +219,63 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
         );
     }
 
+    // and..............................................................................................................
+
+    @Test
+    public void testAndParser() {
+        final Parser<ParserContext> aaa = parser("AAA");
+        final Parser<ParserContext> bbb = parser("BBB");
+        final Parser<ParserContext> and = parser("ZZZ");
+
+        this.andAndCheck(
+                SequenceParser.with(
+                        Lists.of(
+                                aaa,
+                                bbb
+                        )
+                ),
+                and,
+                Parsers.sequence(
+                        Lists.of(
+                                aaa,
+                                bbb,
+                                and
+                        )
+                )
+        );
+    }
+
+    @Test
+    public void testAndSequenceParser() {
+        final Parser<ParserContext> aaa = parser("AAA");
+        final Parser<ParserContext> bbb = parser("BBB");
+        final Parser<ParserContext> ccc = parser("CCC");
+        final Parser<ParserContext> ddd = parser("DDD");
+
+        this.andAndCheck(
+                SequenceParser.with(
+                        Lists.of(
+                                aaa,
+                                bbb
+                        )
+                ),
+                Parsers.sequence(
+                        Lists.of(
+                                ccc,
+                                ddd
+                        )
+                ),
+                Parsers.sequence(
+                        Lists.of(
+                                aaa,
+                                bbb,
+                                ccc,
+                                ddd
+                        )
+                )
+        );
+    }
+
     private static Parser<ParserContext> parser(final String string) {
         return Parsers.string(
                 string,

@@ -295,6 +295,18 @@ public interface ParserTesting extends TreePrintableTesting {
         );
     }
 
+    // and..............................................................................................................
+
+    default <C extends ParserContext> void andAndCheck(final Parser<C> parser,
+                                                       final Parser<C> and,
+                                                       final Parser<C> expected) {
+        this.checkEquals(
+                expected,
+                parser.and(and),
+                () -> parser + " AND " + and
+        );
+    }
+
     // optional.........................................................................................................
 
     default <C extends ParserContext> void optionalAndCheck(final Parser<C> parser,
