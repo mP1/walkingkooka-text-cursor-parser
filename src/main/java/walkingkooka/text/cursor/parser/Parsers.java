@@ -203,13 +203,6 @@ public final class Parsers implements PublicStaticHelper {
     }
 
     /**
-     * {@see SequenceParserBuilder}
-     */
-    public static <C extends ParserContext> SequenceParserBuilder<C> sequenceParserBuilder() {
-        return SequenceParserBuilder.empty();
-    }
-
-    /**
      * {@see SingleQuotedParserToken}
      */
     public static <C extends ParserContext> Parser<C> singleQuoted() {

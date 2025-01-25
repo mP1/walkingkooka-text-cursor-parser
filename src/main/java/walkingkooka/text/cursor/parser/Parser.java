@@ -120,14 +120,6 @@ public interface Parser<C extends ParserContext> {
     }
 
     /**
-     * Creates a new {@link SequenceParserBuilder} and adds this parser as a required().
-     * The builder may then be used to continue building...
-     */
-    default SequenceParserBuilder<C> builder() {
-        return Cast.to(Parsers.sequenceParserBuilder().required(this.cast()));
-    }
-
-    /**
      * Returns a {@link Parser} that is optional.
      */
     default Parser<C> optional() {
