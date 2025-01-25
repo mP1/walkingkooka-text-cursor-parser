@@ -213,11 +213,26 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
         return Optional.ofNullable(
                 null == tokens || tokens.size() < this.minCount ?
                         null :
-                        RepeatedParserToken.with(
-                                tokens,
-                                start.textBetween()
-                                        .toString()
-                        )
+                        // if this parser is optional min=0 & max=1 DONT wrap the only matched token in a RepeatingParserToken
+                        this.isOptional() ?
+                                optionalResult(tokens) :
+                                nonOptionalResult(
+                                        tokens,
+                                        start
+                                )
+        );
+    }
+
+    private static ParserToken optionalResult(final List<ParserToken> tokens) {
+        return tokens.get(0);
+    }
+
+    private static RepeatedParserToken nonOptionalResult(final List<ParserToken> tokens,
+                                                         final TextCursorSavePoint start) {
+        return RepeatedParserToken.with(
+                tokens,
+                start.textBetween()
+                        .toString()
         );
     }
 
