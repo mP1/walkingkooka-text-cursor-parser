@@ -274,6 +274,42 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
     }
 
     @Test
+    public void testParseOptionalMinCount0AndMaxCount1() {
+        final String text = TEXT;
+        final String after = "!!!";
+
+        this.parseAndCheck(
+                RepeatingParser.with(
+                        0, // min
+                        1, // max
+                        PARSER
+                ),
+                text + after,
+                string(TEXT),
+                text,
+                after
+        );
+    }
+
+    @Test
+    public void testParseOptionalMinCount0AndMaxCount1SecondCopyIgnored() {
+        final String text = TEXT;
+        final String after = TEXT;
+
+        this.parseAndCheck(
+                RepeatingParser.with(
+                        0, // min
+                        1, // max
+                        PARSER
+                ),
+                text + after,
+                string(TEXT),
+                text,
+                after
+        );
+    }
+
+    @Test
     @Override
     public void testMinCount() {
         this.minCountAndCheck(
