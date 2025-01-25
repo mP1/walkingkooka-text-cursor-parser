@@ -21,6 +21,7 @@ import walkingkooka.build.BuilderException;
 import walkingkooka.collect.list.Lists;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A {@link Builder} that may be used to build a sequence of tokens, some required or optional.
@@ -36,11 +37,19 @@ public final class SequenceParserBuilder<C extends ParserContext> implements Bui
     }
 
     public SequenceParserBuilder<C> optional(final Parser<C> parser) {
-        return this.add(SequenceParserOptionalComponent.with(parser));
+        Objects.requireNonNull(parser, "parser");
+
+        return this.add(
+                parser.optional()
+        );
     }
 
     public SequenceParserBuilder<C> required(final Parser<C> parser) {
-        return this.add(SequenceParserRequiredComponent.with(parser));
+        Objects.requireNonNull(parser, "parser");
+
+        return this.add(
+                parser.required()
+        );
     }
 
     /**
@@ -56,15 +65,15 @@ public final class SequenceParserBuilder<C extends ParserContext> implements Bui
         return SequenceParser.with(this.components);
     }
 
-    private SequenceParserBuilder<C> add(final SequenceParserComponent<C> component) {
+    private SequenceParserBuilder<C> add(final Parser<C> component) {
         this.components.add(component);
         return this;
     }
 
-    private final List<SequenceParserComponent<C>> components = Lists.array();
+    private final List<Parser<C>> components = Lists.array();
 
     @Override
     public String toString() {
-        return SequenceParserComponent.toString(this.components);
+        return SequenceParser.buildToString(this.components);
     }
 }
