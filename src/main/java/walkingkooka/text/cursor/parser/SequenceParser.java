@@ -82,20 +82,34 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
     }
 
     /**
-     * Concats all parsers separated by comma, and surrounding the sequence with grouping parens.
+     * Concats all parsers separated by comma, any {@link AlternativesParser} will have extra grouping parens around them.
      * <pre>
      * (A, B, C)
      * </pre>
      */
     static <C extends ParserContext> String buildToString(final List<Parser<C>> parsers) {
         return parsers.stream()
-                .map(Object::toString)
+                .map(SequenceParser::parserToString)
                 .collect(Collectors.joining(
-                                ", ",
-                                "(",
-                                ")"
+                        ", "
                         )
                 );
+    }
+
+    /**
+     * Only add grouping parens if any {@link AlternativesParser} has a NON custom {@link Object#toString()}.
+     */
+    private static <C extends ParserContext> String parserToString(final Parser<C> parser) {
+        String toString = parser.toString();
+
+        if (parser instanceof AlternativesParser) {
+            final AlternativesParser<?> alternativesParser = parser.cast();
+            if (false == alternativesParser.customToString) {
+                toString = "(" + toString + ")";
+            }
+        }
+
+        return toString;
     }
 
     private SequenceParser(final List<Parser<C>> parsers,
@@ -166,4 +180,6 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
                 toString
         );
     }
+
+    boolean customToString;
 }
