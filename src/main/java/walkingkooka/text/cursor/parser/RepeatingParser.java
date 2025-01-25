@@ -191,6 +191,8 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
                                    final C context,
                                    final TextCursorSavePoint start) {
         final Parser<C> parser = this.parser;
+        final int maxCount = this.maxCount;
+
         List<ParserToken> tokens = null; // lazily create
 
         for (; ; ) {
@@ -205,7 +207,7 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
                 tokens = Lists.array();
             }
             tokens.add(maybe.get());
-            if (tokens.size() == this.maxCount) {
+            if (tokens.size() == maxCount) {
                 break;
             }
         }
@@ -214,7 +216,7 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
                 null == tokens || tokens.size() < this.minCount ?
                         null :
                         // if this parser is optional min=0 & max=1 DONT wrap the only matched token in a RepeatingParserToken
-                        this.isOptional() ?
+                        this.isOptional() && 1 == maxCount ?
                                 optionalResult(tokens) :
                                 nonOptionalResult(
                                         tokens,
