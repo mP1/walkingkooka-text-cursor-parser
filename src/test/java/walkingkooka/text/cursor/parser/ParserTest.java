@@ -20,6 +20,7 @@ package walkingkooka.text.cursor.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.collect.list.Lists;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.ClassTesting;
@@ -187,6 +188,25 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
     @Override
     public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
         return cause;
+    }
+
+    // and..............................................................................................................
+
+    @Test
+    public void testAndRequired() {
+        final Parser<ParserContext> parser = Parsers.string("AAA", CaseSensitivity.SENSITIVE);
+        final Parser<ParserContext> and = Parsers.string("BBB", CaseSensitivity.SENSITIVE);
+
+        this.andAndCheck(
+                parser,
+                and,
+                Parsers.sequence(
+                        Lists.of(
+                                parser,
+                                and
+                        )
+                )
+        );
     }
 
     // optional.........................................................................................................

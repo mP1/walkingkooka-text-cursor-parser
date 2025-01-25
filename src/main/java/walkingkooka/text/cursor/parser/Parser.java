@@ -93,6 +93,17 @@ public interface Parser<C extends ParserContext> {
 
     // parser building..................................................................................................
 
+    default Parser<C> and(final Parser<C> next) {
+        Objects.requireNonNull(next, "next");
+
+        return Parsers.sequence(
+                Lists.of(
+                        this,
+                        next
+                )
+        );
+    }
+
     /**
      * Adds a post condition, namely this {@link Parser} when it returns a {@link ParserToken} must also be empty,
      * otherwise the {@link TextCursor} is restored.
