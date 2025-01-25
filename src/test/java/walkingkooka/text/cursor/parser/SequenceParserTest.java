@@ -286,7 +286,7 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     public void testToString() {
         this.toStringAndCheck(
                 this.createParser(),
-                "(" + PARSER1 + ", " + PARSER2 + ", [" + PARSER3 + "])"
+                PARSER1 + ", " + PARSER2 + ", [" + PARSER3 + "]"
         );
     }
 
@@ -305,7 +305,7 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
                                 PARSER4
                         )
                 ),
-                "(" + PARSER1 + ", " + PARSER2 + ", " + PARSER3 + ", " + PARSER4 + ")"
+                PARSER1 + ", " + PARSER2 + ", " + PARSER3 + ", " + PARSER4
         );
     }
 
@@ -329,7 +329,26 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
                                 parser("@@@")
                         )
                 ),
-                "(" + PARSER1 + ", " + PARSER2 + ", " + PARSER3 + ", " + PARSER4 + ", \"@@@\")"
+                PARSER1 + ", " + PARSER2 + ", " + PARSER3 + ", " + PARSER4 + ", \"@@@\""
+        );
+    }
+
+    @Test
+    public void testToStringSurroundAlternativeParser() {
+        this.toStringAndCheck(
+                SequenceParser.with(
+                        Lists.of(
+                                PARSER1,
+                                AlternativesParser.with(
+                                        Lists.of(
+                                                PARSER2,
+                                                PARSER3
+                                        )
+                                ),
+                                PARSER4
+                        )
+                ),
+                PARSER1 + ", (" + PARSER2 + " | " + PARSER3 + "), " + PARSER4
         );
     }
 

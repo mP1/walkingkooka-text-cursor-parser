@@ -81,11 +81,13 @@ public final class SequenceParserBuilderTest implements ClassTesting2<SequencePa
 
     @Test
     public void testToString() {
-        this.toStringAndCheck(this.createBuilder()
+        this.toStringAndCheck(
+                this.createBuilder()
                         .optional(PARSER1)
                         .required(PARSER2)
                         .required(PARSER3),
-                "([" + PARSER1 + "], " + PARSER2 + ", " + PARSER3 + ")");
+                "[" + PARSER1 + "], " + PARSER2 + ", " + PARSER3
+        );
     }
 
     @Override

@@ -32,8 +32,13 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
 
     private final static String TEXT1 = "abc";
     private final static String TEXT2 = "xyz";
+    private final static String TEXT3 = "333";
+    private final static String TEXT4 = "444";
+
     private final static Parser<ParserContext> PARSER1 = parser(TEXT1);
     private final static Parser<ParserContext> PARSER2 = parser(TEXT2);
+    private final static Parser<ParserContext> PARSER3 = parser(TEXT3);
+    private final static Parser<ParserContext> PARSER4 = parser(TEXT4);
 
     @Test
     public void testWithNullParsersFails() {
@@ -97,7 +102,7 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
                 "parsers"
         );
         this.checkEquals(
-                "(1 | 2)",
+                "1 | 2",
                 custom.toString(),
                 "custom toString"
         );
@@ -250,7 +255,26 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
     public void testToString() {
         this.toStringAndCheck(
                 this.createParser(),
-                "(" + PARSER1 + " | " + PARSER2 + ")"
+                PARSER1 + " | " + PARSER2
+        );
+    }
+
+    @Test
+    public void testToStringSurroundSequenceParser() {
+        this.toStringAndCheck(
+                AlternativesParser.with(
+                        Lists.of(
+                                PARSER1,
+                                SequenceParser.with(
+                                        Lists.of(
+                                                PARSER2,
+                                                PARSER3
+                                        )
+                                ),
+                                PARSER4
+                        )
+                ),
+                PARSER1 + " | (" + PARSER2 + ", " + PARSER3 + ") | " + PARSER4
         );
     }
 

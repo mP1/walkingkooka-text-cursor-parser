@@ -60,7 +60,8 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
             default:
                 result = new AlternativesParser<>(
                         unique,
-                        buildToString(unique)
+                        buildToString(unique),
+                        false // customToString=false
                 );
         }
 
@@ -88,13 +89,39 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
         }
     }
 
+    private static <CC extends ParserContext> String buildToString(final List<Parser<CC>> parsers) {
+        return parsers.stream()
+                .map(AlternativesParser::parserToString)
+                .collect(
+                        Collectors.joining(" | ")
+                );
+    }
+
+    /**
+     * Only add grouping parens if any {@link SequenceParser} has a NON custom {@link Object#toString()}.
+     */
+    private static <C extends ParserContext> String parserToString(final Parser<C> parser) {
+        String toString = parser.toString();
+
+        if (parser instanceof SequenceParser) {
+            final SequenceParser<?> sequenceParser = parser.cast();
+            if (false == sequenceParser.customToString) {
+                toString = "(" + toString + ")";
+            }
+        }
+
+        return toString;
+    }
+
     /**
      * Private ctor
      */
     private AlternativesParser(final List<Parser<C>> parsers,
-                               final String toString) {
+                               final String toString,
+                               final boolean customToString) {
         super(toString);
         this.parsers = parsers;
+        this.customToString = customToString;
     }
 
     /**
@@ -137,7 +164,8 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
     AlternativesParser<C> replaceToString(final String toString) {
         return new AlternativesParser<>(
                 this.parsers,
-                toString
+                toString,
+                true // customToString=true
         );
     }
 
@@ -158,9 +186,5 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
         return this.parsers.equals(other.parsers);
     }
 
-    private static <CC extends ParserContext> String buildToString(final List<Parser<CC>> parsers) {
-        return parsers.stream()
-                .map(Object::toString)
-                .collect(Collectors.joining(" | ", "(", ")"));
-    }
+    boolean customToString;
 }
