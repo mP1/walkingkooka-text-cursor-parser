@@ -187,6 +187,13 @@ public final class Parsers implements PublicStaticHelper {
     }
 
     /**
+     * {@see SequenceParser}
+     */
+    public static <C extends ParserContext> Parser<C> sequence(final List<Parser<C>> parsers) {
+        return SequenceParser.with(parsers);
+    }
+
+    /**
      * {@see ReportingParser}
      */
     public static <C extends ParserContext> Parser<C> report(final ParserReporterCondition condition,
