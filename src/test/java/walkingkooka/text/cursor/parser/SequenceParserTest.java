@@ -30,12 +30,18 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     private final static String TEXT1 = "abc";
     private final static String TEXT2 = "xyz";
     private final static String TEXT3 = "123";
+    private final static String TEXT4 = "456";
+
     private final static Parser<ParserContext> PARSER1 = parser(TEXT1);
     private final static Parser<ParserContext> PARSER2 = parser(TEXT2);
     private final static Parser<ParserContext> PARSER3 = parser(TEXT3);
+    private final static Parser<ParserContext> PARSER4 = parser(TEXT4);
+
     private final static StringParserToken TOKEN1 = string(TEXT1);
     private final static StringParserToken TOKEN2 = string(TEXT2);
     private final static StringParserToken TOKEN3 = string(TEXT3);
+    private final static StringParserToken TOKEN4 = string(TEXT4);
+
     private final static SequenceParserToken SEQUENCE_MISSING = ParserTokens.sequence(
             Lists.of(TOKEN1, TOKEN2),
             TEXT1 + TEXT2);
@@ -48,6 +54,33 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
         assertThrows(
                 NullPointerException.class,
                 () -> SequenceParser.with(null)
+        );
+    }
+
+    @Test
+    public void testWithFlattens() {
+        final Parser<ParserContext> wrapped = SequenceParser.with(
+                Lists.of(
+                        PARSER2,
+                        PARSER3
+                )
+        );
+        final SequenceParser<ParserContext> wrapper = SequenceParser.with(
+                Lists.of(
+                        PARSER1,
+                        wrapped,
+                        PARSER4
+                )
+        ).cast();
+
+        this.checkEquals(
+                Lists.of(
+                        PARSER1,
+                        PARSER2,
+                        PARSER3,
+                        PARSER4
+                ),
+                wrapper.parsers
         );
     }
 
@@ -254,6 +287,49 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
         this.toStringAndCheck(
                 this.createParser(),
                 "(" + PARSER1 + ", " + PARSER2 + ", [" + PARSER3 + "])"
+        );
+    }
+
+    @Test
+    public void testToStringWrappedSequenceParser() {
+        this.toStringAndCheck(
+                SequenceParser.with(
+                        Lists.of(
+                                PARSER1,
+                                SequenceParser.with(
+                                        Lists.of(
+                                                PARSER2,
+                                                PARSER3
+                                        )
+                                ),
+                                PARSER4
+                        )
+                ),
+                "(" + PARSER1 + ", " + PARSER2 + ", " + PARSER3 + ", " + PARSER4 + ")"
+        );
+    }
+
+    @Test
+    public void testToStringWrappedSequenceParser2() {
+        this.toStringAndCheck(
+                SequenceParser.with(
+                        Lists.of(
+                                PARSER1,
+                                SequenceParser.with(
+                                        Lists.of(
+                                                PARSER2,
+                                                SequenceParser.with(
+                                                        Lists.of(
+                                                                PARSER3,
+                                                                PARSER4
+                                                        )
+                                                )
+                                        )
+                                ),
+                                parser("@@@")
+                        )
+                ),
+                "(" + PARSER1 + ", " + PARSER2 + ", " + PARSER3 + ", " + PARSER4 + ", \"@@@\")"
         );
     }
 

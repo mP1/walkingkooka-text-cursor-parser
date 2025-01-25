@@ -34,13 +34,51 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
     /**
      * Factory method only called by {@link SequenceParserBuilder#build()}
      */
-    static <C extends ParserContext> SequenceParser<C> with(final List<Parser<C>> parsers) {
+    static <C extends ParserContext> Parser<C> with(final List<Parser<C>> parsers) {
         Objects.requireNonNull(parsers, "parsers");
 
-        return new SequenceParser<>(
-                Lists.immutable(parsers),
-                buildToString(parsers)
+        final List<Parser<C>> flat = Lists.array();
+
+        // visit all parsers, flattening any that are themselves AlternativesParser
+        parsers.forEach(
+                p -> tryFlatten(p, flat)
         );
+
+        final Parser<C> result;
+
+        switch (flat.size()) {
+            case 0:
+                throw new IllegalArgumentException("Empty parsers");
+            case 1:
+                result = flat.get(0);
+                break;
+            default:
+                result = new SequenceParser<>(
+                        flat,
+                        buildToString(flat)
+                );
+        }
+
+        return result;
+    }
+
+    /**
+     * Loop over all parsers, and if any is a {@link AlternativesParser} add its children parsers, effectively
+     * flattening.
+     */
+    private static <C extends ParserContext> void tryFlatten(final Parser<C> parser,
+                                                             final List<Parser<C>> flat) {
+        if (parser instanceof SequenceParser) {
+            final SequenceParser<C> sequence = parser.cast();
+            for (final Parser<C> p : sequence.parsers) {
+                tryFlatten(
+                        p,
+                        flat
+                );
+            }
+        } else {
+            flat.add(parser);
+        }
     }
 
     /**
@@ -100,7 +138,8 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
         return result;
     }
 
-    private final List<Parser<C>> parsers;
+    // @VisibleForTesting
+    final List<Parser<C>> parsers;
 
     // Object .............................................................................................................
 
