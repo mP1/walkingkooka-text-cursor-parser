@@ -86,14 +86,18 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C>
                         unicodeCharValue = 0;
                         break;
                     default:
-                        throw new ParserException(invalidBackslashEscapeChar(c));
+                        throw new ParserException(
+                                invalidBackslashEscapeChar(c)
+                        );
                 }
                 continue;
             }
             if (unicodeDigitCounter >= 0) {
                 final int hex = Character.digit(c, 16);
                 if (-1 == hex) {
-                    throw new ParserException(invalidUnicodeEscapeChar(c));
+                    throw new ParserException(
+                            invalidUnicodeEscapeChar(c)
+                    );
                 }
                 unicodeCharValue = (char) (unicodeCharValue * 16 + hex);
                 unicodeDigitCounter++;
@@ -106,7 +110,11 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C>
             // closing quote found...
             if (quote == c) {
                 cursor.next();
-                result = this.token(raw.toString(), start.textBetween().toString());
+                result = this.token(
+                        raw.toString(),
+                        start.textBetween()
+                                .toString()
+                );
                 break;
             }
 
@@ -117,7 +125,9 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C>
         }
 
         if (null == result) {
-            throw new ParserException(missingClosingQuote(quote));
+            throw new ParserException(
+                    missingClosingQuote(quote)
+            );
         }
 
         return Optional.of(result);
