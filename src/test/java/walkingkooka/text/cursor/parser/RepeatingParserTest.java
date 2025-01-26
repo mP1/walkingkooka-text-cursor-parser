@@ -146,6 +146,42 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
         );
     }
 
+    @Test
+    public void testWithParserSameMinCountSameMaxCount() {
+        assertSame(
+                PARSER,
+                RepeatingParser.with(
+                        PARSER.minCount(),
+                        PARSER.maxCount(),
+                        PARSER
+                )
+        );
+    }
+
+    @Test
+    public void testWithParserSameMinCountSameMaxCount2() {
+        final Parser<ParserContext> parser = new FakeParser<>() {
+            @Override
+            public int minCount() {
+                return 3;
+            }
+
+            @Override
+            public int maxCount() {
+                return 4;
+            }
+        };
+
+        assertSame(
+                parser,
+                RepeatingParser.with(
+                        parser.minCount(),
+                        parser.maxCount(),
+                        parser
+                )
+        );
+    }
+
     // parse............................................................................................................
 
     @Test
@@ -442,7 +478,17 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
                 RepeatingParser.with(
                         MIN_COUNT,
                         MAX_COUNT,
-                        Parsers.fake()
+                        new FakeParser() {
+                            @Override
+                            public int minCount() {
+                                return 1;
+                            }
+
+                            @Override
+                            public int maxCount() {
+                                return 1;
+                            }
+                        }
                 )
         );
     }
