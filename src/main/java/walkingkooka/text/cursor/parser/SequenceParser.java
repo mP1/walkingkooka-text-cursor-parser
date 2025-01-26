@@ -155,22 +155,6 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
     // @VisibleForTesting
     final List<Parser<C>> parsers;
 
-    // Object .............................................................................................................
-
-    @Override
-    public int hashCode() {
-        return this.parsers.hashCode();
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        return this == other || other instanceof SequenceParser && this.equals0((SequenceParser<?>) other);
-    }
-
-    private boolean equals0(final SequenceParser<?> other) {
-        return this.parsers.equals(other.parsers);
-    }
-
     // ParserSetToString..........................................................................................................
 
     @Override
@@ -182,4 +166,18 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
     }
 
     boolean customToString;
+
+    // Object ..........................................................................................................
+
+    @Override //
+    int hashCode0() {
+        return this.parsers.hashCode();
+    }
+
+    @Override //
+    boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        final SequenceParser<?> otherSequenceParser = (SequenceParser<?>) other;
+
+        return this.parsers.equals(otherSequenceParser.parsers);
+    }
 }

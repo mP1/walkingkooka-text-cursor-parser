@@ -74,21 +74,15 @@ final class CustomToStringParser<C extends ParserContext> extends ParserWrapper<
         );
     }
 
-    // Object..........................................................................................................
+    // Object...........................................................................................................
 
-    @Override
-    public int hashCode() {
-        return this.parser.hashCode();
+    @Override //
+    int hashCode1() {
+        return 0;
     }
 
-    @Override
-    public boolean equals(final Object other) {
-        return this == other ||
-                other instanceof CustomToStringParser && this.equals0((CustomToStringParser<?>) other);
-    }
-
-    private boolean equals0(final CustomToStringParser<?> other) {
-        return this.parser.equals(other.parser) &&
-                this.toString.equals(other.toString);
+    @Override //
+    boolean equalsParserWrapper(final ParserWrapper<?> other) {
+        return true; // no new properties
     }
 }

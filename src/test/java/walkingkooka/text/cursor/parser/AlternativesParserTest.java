@@ -93,7 +93,7 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
         final AlternativesParser<ParserContext> custom = AlternativesParser.with(parsers)
                 .cast();
 
-        this.checkEquals(
+        this.checkNotEquals(
                 Lists.of(
                         PARSER1,
                         PARSER2

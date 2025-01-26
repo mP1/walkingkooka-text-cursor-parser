@@ -72,25 +72,19 @@ final class TransformingParser<C extends ParserContext> extends ParserWrapper<C>
         );
     }
 
-    // Object..........................................................................................................
+    // Object...........................................................................................................
 
-    @Override
-    public int hashCode() {
+    @Override //
+    int hashCode1() {
         return Objects.hash(
-                this.parser,
-                this.toString
+                this.transformer
         );
     }
 
-    @Override
-    public boolean equals(final Object other) {
-        return this == other ||
-                other instanceof TransformingParser && this.equals0((TransformingParser<?>) other);
-    }
+    @Override //
+    boolean equalsParserWrapper(final ParserWrapper<?> other) {
+        final TransformingParser<?> otherTransformerParser = other.cast();
 
-    private boolean equals0(final TransformingParser<?> other) {
-        return this.parser.equals(other.parser) &&
-                this.transformer.equals(other.transformer) &&
-                this.toString.equals(other.toString);
+        return this.transformer.equals(otherTransformerParser.transformer);
     }
 }

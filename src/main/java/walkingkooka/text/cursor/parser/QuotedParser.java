@@ -153,5 +153,17 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C>
     static String invalidUnicodeEscapeChar(final char c) {
         return "Invalid unicode hex character '" + c + "'";
     }
+
+    // Object...........................................................................................................
+
+    @Override //
+    final int hashCode0() {
+        return 0;
+    }
+
+    @Override //
+    final boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        return true; // no extra properties
+    }
 }
 

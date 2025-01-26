@@ -47,6 +47,29 @@ abstract class ParserSetToString<C extends ParserContext> implements Parser<C> {
     // Object..........................................................................................................
 
     @Override
+    public final int hashCode() {
+        return Objects.hash(
+                this.toString,
+                this.hashCode0()
+        );
+    }
+
+    abstract int hashCode0();
+
+    @Override
+    public final boolean equals(final Object other) {
+        return this == other ||
+                null != other && this.getClass() == other.getClass() && this.equals0((ParserSetToString<?>) other);
+    }
+
+    private boolean equals0(final ParserSetToString<?> other) {
+        return this.toString.equals(other.toString) &&
+                this.equalsParserSetToString(other);
+    }
+
+    abstract boolean equalsParserSetToString(final ParserSetToString<?> other);
+
+    @Override
     public final String toString() {
         return this.toString;
     }

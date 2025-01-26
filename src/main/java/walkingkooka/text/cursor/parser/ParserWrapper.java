@@ -42,4 +42,26 @@ abstract class ParserWrapper<C extends ParserContext> extends ParserSetToString<
     }
 
     final Parser<C> parser;
+
+    // Object...........................................................................................................
+
+    @Override //
+    final int hashCode0() {
+        return Objects.hash(
+                this.parser,
+                this.hashCode1()
+        );
+    }
+
+    abstract int hashCode1();
+
+    @Override //
+    final boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        final ParserWrapper<?> otherParserWrapper = (ParserWrapper<?>) other;
+
+        return this.parser.equals(otherParserWrapper.parser) &&
+                this.equalsParserWrapper(otherParserWrapper);
+    }
+
+    abstract boolean equalsParserWrapper(final ParserWrapper<?> other);
 }

@@ -152,24 +152,15 @@ abstract class DateTimeFormatterParser<C extends ParserContext> extends NonEmpty
 
     // Object...........................................................................................................
 
-    @Override
-    public final int hashCode() {
-        return Objects.hash(
-                this.formatter,
-                this.toString
-        );
+    @Override //
+    final int hashCode0() {
+        return this.formatter.hashCode();
     }
 
-    @Override
-    public final boolean equals(final Object other) {
-        return this == other ||
-                this.canBeEqual(other) && this.equals0((DateTimeFormatterParser<?>) other);
-    }
+    @Override //
+    final boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        final DateTimeFormatterParser<?> otherDateTimeFormatterParser = other.cast();
 
-    abstract boolean canBeEqual(final Object other);
-
-    private boolean equals0(final DateTimeFormatterParser<?> other) {
-        return this.formatter.equals(other.formatter) &&
-                this.toString.equals(other.toString);
+        return this.formatter.equals(otherDateTimeFormatterParser.formatter);
     }
 }

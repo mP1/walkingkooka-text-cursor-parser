@@ -53,4 +53,16 @@ final class NeverParser<C extends ParserContext> extends ParserSetToString<C>
     Parser<C> replaceToString(final String toString) {
         return new NeverParser<>(toString);
     }
+
+    // Object...........................................................................................................
+
+    @Override //
+    int hashCode0() {
+        return 0;
+    }
+
+    @Override //
+    boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        return true; // singleton always true
+    }
 }
