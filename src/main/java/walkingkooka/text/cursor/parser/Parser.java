@@ -123,10 +123,9 @@ public interface Parser<C extends ParserContext> {
      * Returns a {@link Parser} that is optional.
      */
     default Parser<C> optional() {
-        return Parsers.repeating(
+        return this.repeat(
                 OPTIONAL_MIN_COUNT,
-                1,
-                this
+                1
         );
     }
 
@@ -134,10 +133,9 @@ public interface Parser<C extends ParserContext> {
      * Returns a {@link Parser} that is required.
      */
     default Parser<C> required() {
-        return Parsers.repeating(
+        return this.repeat(
                 1,
-                1,
-                this
+                1
         );
     }
 
@@ -155,6 +153,18 @@ public interface Parser<C extends ParserContext> {
         );
     }
 
+    /**
+     * {@see RepeatingParser}
+     */
+    default Parser<C> repeat(final int minCount,
+                             final int maxCount) {
+        return Parsers.repeating(
+                minCount,
+                maxCount,
+                this
+        );
+    }
+
     int DEFAULT_REPEAT_MIN_COUNT = 0;
 
     int DEFAULT_REPEAT_MAX_COUNT = Integer.MAX_VALUE;
@@ -163,10 +173,9 @@ public interface Parser<C extends ParserContext> {
      * Returns a {@link Parser} that matches zero or more repetitions of the given tokens.
      */
     default Parser<C> repeating() {
-        return Parsers.repeating(
+        return this.repeat(
                 DEFAULT_REPEAT_MIN_COUNT,
-                DEFAULT_REPEAT_MAX_COUNT,
-                this.cast()
+                DEFAULT_REPEAT_MAX_COUNT
         );
     }
 
