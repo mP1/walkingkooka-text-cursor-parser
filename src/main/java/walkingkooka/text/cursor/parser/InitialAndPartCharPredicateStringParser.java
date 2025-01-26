@@ -145,28 +145,24 @@ final class InitialAndPartCharPredicateStringParser<C extends ParserContext> ext
 
     // Object...........................................................................................................
 
-    @Override
-    public int hashCode() {
+    @Override //
+    int hashCode0() {
         return Objects.hash(
                 this.initial,
                 this.part,
                 this.minLength,
-                this.maxLength,
-                this.toString
+                this.maxLength
         );
     }
 
-    @Override
-    public boolean equals(final Object other) {
-        return this == other ||
-                other instanceof InitialAndPartCharPredicateStringParser && this.equals0((InitialAndPartCharPredicateStringParser<?>) other);
-    }
+    @Override //
+    boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        final InitialAndPartCharPredicateStringParser<?> otherInitial = other.cast();
 
-    private boolean equals0(final InitialAndPartCharPredicateStringParser<?> other) {
-        return this.initial.equals(other.initial) &&
-                this.part.equals(other.part) &&
-                this.minLength == other.minLength &&
-                this.maxLength == other.maxLength &&
-                this.toString.equals(other.toString);
+        return this.initial.equals(otherInitial.initial) &&
+                this.part.equals(otherInitial.part) &&
+                this.minLength == otherInitial.minLength &&
+                this.maxLength == otherInitial.maxLength &&
+                this.toString.equals(otherInitial.toString);
     }
 }

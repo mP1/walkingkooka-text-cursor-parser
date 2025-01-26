@@ -350,4 +350,16 @@ final class DoubleParser<C extends ParserContext> extends NonEmptyParser<C>
     DoubleParser<C> replaceToString(final String toString) {
         return new DoubleParser<>(toString);
     }
+
+    // Object...........................................................................................................
+
+    @Override //
+    int hashCode0() {
+        return 0;
+    }
+
+    @Override //
+    boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        return true; // no extra properties
+    }
 }

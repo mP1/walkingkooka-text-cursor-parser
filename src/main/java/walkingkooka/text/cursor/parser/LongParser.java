@@ -137,4 +137,16 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> implem
                 toString
         );
     }
+
+    // Object...........................................................................................................
+
+    @Override //
+    int hashCode0() {
+        return 0;
+    }
+
+    @Override //
+    boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        return true; // no extra properties
+    }
 }

@@ -171,19 +171,18 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
 
     // Object...........................................................................................................
 
-    @Override
-    public int hashCode() {
-        return this.parsers.hashCode();
+    @Override //
+    int hashCode0() {
+        return Objects.hash(this.parsers);
     }
 
-    @Override
-    public boolean equals(final Object other) {
-        return this == other ||
-                (other instanceof AlternativesParser && this.equals0((AlternativesParser<?>) other));
-    }
+    @Override //
+    boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        final AlternativesParser<?> otherAlternativeParser = other.cast();
 
-    private boolean equals0(final AlternativesParser<?> other) {
-        return this.parsers.equals(other.parsers);
+        return this.parsers.equals(
+                otherAlternativeParser.parsers
+        );
     }
 
     boolean customToString;

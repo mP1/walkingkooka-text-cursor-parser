@@ -125,24 +125,19 @@ final class SurroundStringParser<C extends ParserContext> extends NonEmptyParser
 
     // Object...........................................................................................................
 
-    @Override
-    public int hashCode() {
+    @Override //
+    int hashCode0() {
         return Objects.hash(
                 this.open,
-                this.close,
-                this.toString
+                this.close
         );
     }
 
-    @Override
-    public boolean equals(final Object other) {
-        return this == other ||
-                other instanceof SurroundStringParser && this.equals0((SurroundStringParser<?>) other);
-    }
+    @Override //
+    boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        final SurroundStringParser<?> otherSurroundingStringParser = other.cast();
 
-    private boolean equals0(final SurroundStringParser<?> other) {
-        return this.open.equals(other.open) &&
-                this.close.equals(other.close) &&
-                this.toString.equals(other.toString);
+        return this.open.equals(otherSurroundingStringParser.open) &&
+                this.close.equals(otherSurroundingStringParser.close);
     }
 }

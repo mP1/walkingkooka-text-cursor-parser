@@ -270,26 +270,19 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
 
     // Object...........................................................................................................
 
-    @Override
-    public int hashCode() {
+    @Override //
+    int hashCode0() {
         return Objects.hash(
                 this.minCount,
-                this.maxCount,
-                this.parser,
-                this.toString
+                this.maxCount
         );
     }
 
-    @Override
-    public boolean equals(final Object other) {
-        return this == other ||
-                other instanceof RepeatingParser && this.equals0((RepeatingParser<?>) other);
-    }
+    @Override //
+    boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        final RepeatingParser<?> otherRepeatingParser = other.cast();
 
-    private boolean equals0(final RepeatingParser<?> other) {
-        return this.minCount == other.minCount &&
-                this.maxCount == other.maxCount &&
-                this.parser.equals(other.parser) &&
-                this.toString.equals(other.toString);
+        return this.minCount == otherRepeatingParser.minCount &&
+                this.maxCount == otherRepeatingParser.maxCount;
     }
 }

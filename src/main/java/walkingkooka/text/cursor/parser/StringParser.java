@@ -87,24 +87,6 @@ final class StringParser<C extends ParserContext> extends NonEmptyParser<C>
     private final String string;
     private final CaseSensitivity caseSensitivity;
 
-    // Object.................................................................................................
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.string, this.caseSensitivity);
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-        return this == other ||
-                other instanceof StringParser && this.equals0((StringParser<?>) other);
-    }
-
-    private boolean equals0(final StringParser<?> other) {
-        return this.string.equals(other.string) &&
-                this.caseSensitivity.equals(other.caseSensitivity);
-    }
-
     // ParserSetToString..........................................................................................................
 
     @Override
@@ -114,5 +96,23 @@ final class StringParser<C extends ParserContext> extends NonEmptyParser<C>
                 this.caseSensitivity,
                 toString
         );
+    }
+
+    // Object...........................................................................................................
+
+    @Override //
+    int hashCode0() {
+        return Objects.hash(
+                this.string,
+                this.caseSensitivity
+        );
+    }
+
+    @Override //
+    boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        final StringParser<?> otherStringParser = other.cast();
+
+        return this.string.equals(otherStringParser.string) &&
+                this.caseSensitivity == otherStringParser.caseSensitivity;
     }
 }

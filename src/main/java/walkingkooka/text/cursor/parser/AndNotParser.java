@@ -90,23 +90,19 @@ final class AndNotParser<C extends ParserContext> extends ParserSetToString<C>
 
     // Object...........................................................................................................
 
-    @Override
-    public int hashCode() {
+    @Override //
+    int hashCode0() {
         return Objects.hash(
                 this.left,
-                this.right,
-                this.toString
+                this.right
         );
     }
 
-    @Override
-    public boolean equals(final Object other) {
-        return this == other ||
-                (other instanceof AndNotParser && this.equals0((AndNotParser<?>) other));
-    }
+    @Override //
+    boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        final AndNotParser<?> otherAndNotParser = other.cast();
 
-    private boolean equals0(final AndNotParser<?> other) {
-        return this.left.equals(other.left) &&
-                this.right.equals(other.right);
+        return this.left.equals(otherAndNotParser.left) &&
+                this.right.equals(otherAndNotParser.right);
     }
 }

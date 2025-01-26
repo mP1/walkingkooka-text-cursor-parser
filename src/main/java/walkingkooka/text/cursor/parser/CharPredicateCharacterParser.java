@@ -82,18 +82,17 @@ final class CharPredicateCharacterParser<C extends ParserContext> extends NonEmp
 
     // Object...........................................................................................................
 
-    @Override
-    public int hashCode() {
-        return this.predicate.hashCode();
+    @Override //
+    int hashCode0() {
+        return Objects.hash(
+                this.predicate
+        );
     }
 
-    @Override
-    public boolean equals(final Object other) {
-        return this == other ||
-                other instanceof CharPredicateCharacterParser && this.equals0((CharPredicateCharacterParser<?>) other);
-    }
+    @Override //
+    boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        final CharPredicateCharacterParser<?> otherCharPredicateCharacterParser = other.cast();
 
-    private boolean equals0(final CharPredicateCharacterParser<?> other) {
-        return this.predicate.equals(other.predicate);
+        return this.predicate.equals(otherCharPredicateCharacterParser.predicate);
     }
 }

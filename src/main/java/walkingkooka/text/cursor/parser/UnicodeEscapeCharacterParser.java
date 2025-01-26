@@ -98,4 +98,16 @@ final class UnicodeEscapeCharacterParser<C extends ParserContext> extends NonEmp
                 toString
         );
     }
+
+    // Object...........................................................................................................
+
+    @Override //
+    int hashCode0() {
+        return 0;
+    }
+
+    @Override //
+    boolean equalsParserSetToString(final ParserSetToString<?> other) {
+        return true; // no extra properties
+    }
 }
