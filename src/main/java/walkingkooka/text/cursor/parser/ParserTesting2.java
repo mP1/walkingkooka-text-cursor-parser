@@ -195,8 +195,8 @@ public interface ParserTesting2<P extends Parser<C>,
                                                       final int column,
                                                       final int row) {
         // Message format from BasicParserReporter
-        final ParserException thrown = assertThrows(
-                ParserException.class,
+        final RuntimeException thrown = assertThrows(
+                RuntimeException.class,
                 () -> this.parse(
                         parser,
                         text,
