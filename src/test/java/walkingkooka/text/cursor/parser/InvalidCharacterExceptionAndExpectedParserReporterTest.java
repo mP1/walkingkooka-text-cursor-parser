@@ -49,7 +49,7 @@ public final class InvalidCharacterExceptionAndExpectedParserReporterTest implem
 
         this.checkEquals(
                 new InvalidCharacterException(text, 2)
-                        .appendToMessage(" expected " + expected)
+                        .appendToMessage("expected " + expected)
                         .getMessage(),
                 thrown.getMessage()
         );
@@ -76,7 +76,7 @@ public final class InvalidCharacterExceptionAndExpectedParserReporterTest implem
 
         this.checkEquals(
                 new InvalidCharacterException(text, 0)
-                        .appendToMessage(" expected " + expected)
+                        .appendToMessage("expected " + expected)
                         .getMessage(),
                 thrown.getMessage()
         );

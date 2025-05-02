@@ -66,7 +66,7 @@ final class InvalidCharacterExceptionAndExpectedParserReporter<C extends ParserC
                 lineInfo.text()
                         .toString(),
                 cursor.isEmpty() ? 0 : lineInfo.textOffset()
-        ).appendToMessage(" expected " + parser);
+        ).appendToMessage("expected " + parser);
     }
 
     @Override
