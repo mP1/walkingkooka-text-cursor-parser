@@ -162,13 +162,45 @@ public interface ParserTesting2<P extends Parser<C>,
                                                       final char c,
                                                       final int column,
                                                       final int row) {
+        this.parseThrowsInvalidCharacterException(
+                this.createParser(),
+                this.createContext(),
+                text,
+                c,
+                column,
+                row
+        );
+    }
+
+    default void parseThrowsInvalidCharacterException(final P parser,
+                                                      final C context,
+                                                      final String text,
+                                                      final char c,
+                                                      final int column,
+                                                      final int row) {
+        this.parseThrowsInvalidCharacterException(
+                parser,
+                context,
+                TextCursors.charSequence(text),
+                c,
+                column,
+                row
+        );
+    }
+
+    default void parseThrowsInvalidCharacterException(final P parser,
+                                                      final C context,
+                                                      final TextCursor text,
+                                                      final char c,
+                                                      final int column,
+                                                      final int row) {
         // Message format from BasicParserReporter
         final ParserException thrown = assertThrows(
                 ParserException.class,
                 () -> this.parse(
-                        this.createParser(),
-                        TextCursors.charSequence(text),
-                        this.createContext()
+                        parser,
+                        text,
+                        context
                 )
         );
 
