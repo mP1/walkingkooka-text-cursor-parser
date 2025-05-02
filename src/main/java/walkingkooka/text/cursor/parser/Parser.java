@@ -57,7 +57,11 @@ public interface Parser<C extends ParserContext> {
             throw cause.lineInfo()
                     .emptyTextOrInvalidCharacterExceptionOrLast("text");
         } catch (final ParserException cause) {
-            throw new IllegalArgumentException(cause.getCause());
+            final Throwable wrapped = cause.getCause();
+            if (wrapped instanceof RuntimeException) {
+                throw (RuntimeException) wrapped;
+            }
+            throw new IllegalArgumentException(wrapped);
         }
     }
 
