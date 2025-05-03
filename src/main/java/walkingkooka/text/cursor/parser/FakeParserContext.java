@@ -24,6 +24,10 @@ import java.util.List;
 
 public class FakeParserContext extends FakeDecimalNumberContext implements ParserContext {
 
+    public FakeParserContext() {
+        super();
+    }
+
     @Override
     public List<String> ampms() {
         throw new UnsupportedOperationException();
