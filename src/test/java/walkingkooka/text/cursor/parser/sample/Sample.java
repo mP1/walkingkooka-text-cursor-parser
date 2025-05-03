@@ -20,6 +20,7 @@ package walkingkooka.text.cursor.parser.sample;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -36,9 +37,31 @@ public class Sample {
     public static void main(final String[] args) {
         final String text = "123";
 
-        assertEquals(Optional.of(ParserTokens.bigInteger(BigInteger.valueOf(123), text)),
+        assertEquals(
+                Optional.of(
+                        ParserTokens.bigInteger(
+                                BigInteger.valueOf(123),
+                                text
+                        )
+                ),
                 Parsers.bigInteger(10)
                         .parse(TextCursors.charSequence(text),
-                                ParserContexts.basic(DateTimeContexts.fake(), DecimalNumberContexts.basic("$", '.', "E", ',', '-', '%', '+', Locale.forLanguageTag("en-AU"), MathContext.DECIMAL32))));
+                                ParserContexts.basic(
+                                        InvalidCharacterExceptionFactory.POSITION,
+                                        DateTimeContexts.fake(),
+                                        DecimalNumberContexts.basic(
+                                                "$",
+                                                '.',
+                                                "E",
+                                                ',',
+                                                '-',
+                                                '%',
+                                                '+',
+                                                Locale.forLanguageTag("en-AU"),
+                                                MathContext.DECIMAL32
+                                        )
+                                )
+                        )
+        );
     }
 }

@@ -174,6 +174,7 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
                 .parseText(
                         text,
                         ParserContexts.basic(
+                                InvalidCharacterExceptionFactory.POSITION,
                                 DateTimeContexts.fake(),
                                 DecimalNumberContexts.american(MathContext.DECIMAL32)
                         )

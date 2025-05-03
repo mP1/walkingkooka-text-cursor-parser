@@ -16,9 +16,13 @@
  */
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.reflect.PublicStaticHelper;
+import walkingkooka.text.cursor.TextCursor;
+
+import java.util.function.BiFunction;
 
 /**
  * A collection of factory methods to create parsers.
@@ -28,9 +32,14 @@ public final class ParserContexts implements PublicStaticHelper {
     /**
      * {@see BasicParserContext}
      */
-    public static ParserContext basic(final DateTimeContext dateTimeContext,
+    public static ParserContext basic(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+                                      final DateTimeContext dateTimeContext,
                                       final DecimalNumberContext decimalNumberContext) {
-        return BasicParserContext.with(dateTimeContext, decimalNumberContext);
+        return BasicParserContext.with(
+                invalidCharacterExceptionFactory,
+                dateTimeContext,
+                decimalNumberContext
+        );
     }
 
     /**

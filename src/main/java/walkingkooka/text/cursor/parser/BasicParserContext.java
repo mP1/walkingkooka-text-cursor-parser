@@ -17,13 +17,16 @@
 
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.text.cursor.TextCursor;
 
 import java.util.Locale;
 import java.util.Objects;
+import java.util.function.BiFunction;
 
 /**
  * An adaptor for {@link DecimalNumberContext} to {@link ParserContext}.
@@ -35,23 +38,43 @@ final class BasicParserContext implements ParserContext,
     /**
      * Creates a new {@link BasicParserContext}.
      */
-    static BasicParserContext with(final DateTimeContext dateTimeContext,
+    static BasicParserContext with(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+                                   final DateTimeContext dateTimeContext,
                                    final DecimalNumberContext decimalNumberContext) {
+        Objects.requireNonNull(invalidCharacterExceptionFactory, "invalidCharacterExceptionFactory");
         Objects.requireNonNull(dateTimeContext, "dateTimeContext");
         Objects.requireNonNull(decimalNumberContext, "decimalNumberContext");
 
-        return new BasicParserContext(dateTimeContext, decimalNumberContext);
+        return new BasicParserContext(
+                invalidCharacterExceptionFactory,
+                dateTimeContext,
+                decimalNumberContext
+        );
     }
 
     /**
      * Private ctor use factory
      */
-    private BasicParserContext(final DateTimeContext dateTimeContext,
+    private BasicParserContext(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+                               final DateTimeContext dateTimeContext,
                                final DecimalNumberContext decimalNumberContext) {
         super();
+
+        this.invalidCharacterExceptionFactory = invalidCharacterExceptionFactory;
         this.dateTimeContext = dateTimeContext;
         this.decimalNumberContext = decimalNumberContext;
     }
+
+    @Override
+    public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                               final TextCursor cursor) {
+        return this.invalidCharacterExceptionFactory.apply(
+                parser,
+                cursor
+        );
+    }
+
+    private final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory;
 
     @Override
     public Locale locale() {

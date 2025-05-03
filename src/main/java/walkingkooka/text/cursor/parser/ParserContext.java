@@ -17,12 +17,21 @@
 package walkingkooka.text.cursor.parser;
 
 import walkingkooka.Context;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.text.cursor.TextCursor;
 
 /**
  * A {@link Context} that accompanies a parser invocation. This may be used to hold state that is used during parsing.
  */
 public interface ParserContext extends DateTimeContext,
         DecimalNumberContext {
+
+    /**
+     * Factory that creates a {@link InvalidCharacterException} for the current {@link TextCursor#at()}.
+     * The context is able to custom whether the message will include the position or text offset or column and line.
+     */
+    InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                        final TextCursor cursor);
 }

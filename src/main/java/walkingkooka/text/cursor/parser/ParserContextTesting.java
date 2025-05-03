@@ -16,12 +16,40 @@
  */
 package walkingkooka.text.cursor.parser;
 
+import org.junit.jupiter.api.Test;
 import walkingkooka.math.DecimalNumberContextTesting2;
+import walkingkooka.text.cursor.TextCursors;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Mixing testing interface for {@link ParserContext}
  */
 public interface ParserContextTesting<C extends ParserContext> extends DecimalNumberContextTesting2<C> {
+
+    @Test
+    default void testInvalidCharacterExceptionWithNullParserFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .invalidCharacterException(
+                                null,
+                                TextCursors.fake()
+                        )
+        );
+    }
+
+    @Test
+    default void testInvalidCharacterExceptionWithNullTextCursorFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> this.createContext()
+                        .invalidCharacterException(
+                                Parsers.fake(),
+                                null
+                        )
+        );
+    }
 
     @Override
     default String typeNameSuffix() {

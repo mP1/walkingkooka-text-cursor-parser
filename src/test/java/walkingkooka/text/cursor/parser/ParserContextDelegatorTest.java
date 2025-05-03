@@ -80,6 +80,7 @@ public final class ParserContextDelegatorTest implements ParserContextTesting<Te
         @Override
         public ParserContext parserContext() {
             return ParserContexts.basic(
+                    InvalidCharacterExceptionFactory.POSITION,
                     DateTimeContexts.locale(
                             Locale.ENGLISH,
                             1950, // defaultYear

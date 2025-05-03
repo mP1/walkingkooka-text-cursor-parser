@@ -255,6 +255,7 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
         return this.parseAndCheck(
                 this.createParser(),
                 ParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION,
                         DateTimeContexts.fake(),
                         new FakeDecimalNumberContext() {
                             @Override
@@ -285,7 +286,11 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
 
     @Override
     public ParserContext createContext() {
-        return ParserContexts.basic(DateTimeContexts.fake(), this.decimalNumberContext());
+        return ParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
+                DateTimeContexts.fake(),
+                this.decimalNumberContext()
+        );
     }
 
     private TextCursor parseAndCheck2(final String in,
