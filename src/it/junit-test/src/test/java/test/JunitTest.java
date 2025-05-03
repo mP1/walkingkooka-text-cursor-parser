@@ -19,9 +19,11 @@ package test;
 import com.google.j2cl.junit.apt.J2clTestInput;
 import org.junit.Assert;
 import org.junit.Test;
+
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -38,9 +40,32 @@ public class JunitTest {
     public void testBigIntegerParser() {
         final String text = "123";
 
-        Assert.assertEquals(Optional.of(ParserTokens.bigInteger(BigInteger.valueOf(123), text)),
+        Assert.assertEquals(
+                Optional.of(
+                        ParserTokens.bigInteger(
+                                BigInteger.valueOf(123),
+                                text
+                        )
+                ),
                 Parsers.bigInteger(10)
-                        .parse(TextCursors.charSequence(text),
-                                ParserContexts.basic(DateTimeContexts.fake(), DecimalNumberContexts.basic("$", '.', "E", ',', '-', '%', '+', Locale.forLanguageTag("en-AU"), MathContext.DECIMAL32))));
+                        .parse(
+                                TextCursors.charSequence(text),
+                                ParserContexts.basic(
+                                        InvalidCharacterExceptionFactory.POSITION,
+                                        DateTimeContexts.fake(),
+                                        DecimalNumberContexts.basic(
+                                                "$",
+                                                '.',
+                                                "E",
+                                                ',',
+                                                '-',
+                                                '%',
+                                                '+',
+                                                Locale.forLanguageTag("en-AU"),
+                                                MathContext.DECIMAL32
+                                        )
+                                )
+                        )
+        );
     }
 }

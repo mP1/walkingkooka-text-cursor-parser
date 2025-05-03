@@ -723,8 +723,10 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
 
     private TextCursor parseAndCheck3(final String text,
                                       final double value) {
-        return this.parseAndCheck(this.createParser(),
+        return this.parseAndCheck(
+                this.createParser(),
                 ParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION,
                         DateTimeContexts.fake(),
                         new FakeDecimalNumberContext() {
                             @Override
@@ -746,11 +748,13 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
                             public char positiveSign() {
                                 return 'P';
                             }
-                        }),
+                        }
+                ),
                 text,
                 ParserTokens.doubleParserToken(value, text),
                 text,
-                "");
+                ""
+        );
     }
 
     private TextCursor parseAndCheck4(final String text,
@@ -758,6 +762,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
         return this.parseAndCheck(
                 this.createParser(),
                 ParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION,
                         DateTimeContexts.fake(),
                         new FakeDecimalNumberContext() {
                             @Override
@@ -779,7 +784,8 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
                             public char positiveSign() {
                                 return 'P';
                             }
-                        }),
+                        }
+                ),
                 text,
                 ParserTokens.doubleParserToken(value, text),
                 text,
@@ -795,6 +801,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
     @Override
     public ParserContext createContext() {
         return ParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
                 this.dateTimeContext(),
                 this.decimalNumberContext()
         );

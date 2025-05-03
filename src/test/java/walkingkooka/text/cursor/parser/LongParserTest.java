@@ -318,7 +318,9 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
                                       final long value) {
         return this.parseAndCheck(
                 this.createParser(),
-                ParserContexts.basic(DateTimeContexts.fake(),
+                ParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION,
+                        DateTimeContexts.fake(),
                         new FakeDecimalNumberContext() {
                             @Override
                             public char negativeSign() {
@@ -329,7 +331,8 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
                             public char positiveSign() {
                                 return 'P';
                             }
-                        }),
+                        }
+                ),
                 text,
                 ParserTokens.longParserToken(value, text),
                 text,
@@ -345,6 +348,7 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
     @Override
     public ParserContext createContext() {
         return ParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
                 this.decimalNumberContext()
         );

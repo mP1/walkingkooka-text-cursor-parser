@@ -17,7 +17,9 @@
 
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.math.FakeDecimalNumberContext;
+import walkingkooka.text.cursor.TextCursor;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,6 +29,16 @@ public class FakeParserContext extends FakeDecimalNumberContext implements Parse
     public FakeParserContext() {
         super();
     }
+
+    // ParserContext....................................................................................................
+
+    @Override
+    public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                               final TextCursor cursor) {
+        throw new UnsupportedOperationException();
+    }
+
+    // DateTimeContext..................................................................................................
 
     @Override
     public List<String> ampms() {

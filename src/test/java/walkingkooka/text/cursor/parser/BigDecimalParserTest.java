@@ -418,24 +418,36 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
         this.parseAndCheck3("P123", BigDecimal.valueOf(123));
     }
 
-    private TextCursor parseAndCheck3(final String text, final BigDecimal value) {
-        return this.parseAndCheck(this.createParser(),
-                ParserContexts.basic(DateTimeContexts.fake(),
-                        DecimalNumberContexts.basic("C", 'D', "X", 'G', 'M', 'R', 'P', Locale.ENGLISH, MathContext.DECIMAL32)),
+    private TextCursor parseAndCheck3(final String text,
+                                      final BigDecimal value) {
+        return this.parseAndCheck(
+                this.createParser(),
+                ParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION,
+                        DateTimeContexts.fake(),
+                        DecimalNumberContexts.basic("C", 'D', "X", 'G', 'M', 'R', 'P', Locale.ENGLISH, MathContext.DECIMAL32)
+                ),
                 text,
                 ParserTokens.bigDecimal(value, text),
                 text,
-                "");
+                ""
+        );
     }
 
-    private TextCursor parseAndCheck4(final String text, final BigDecimal value) {
-        return this.parseAndCheck(this.createParser(),
-                ParserContexts.basic(DateTimeContexts.fake(),
-                        DecimalNumberContexts.basic("C", 'D', "XYZ", 'G', 'M', 'R', 'P', Locale.ENGLISH, MathContext.DECIMAL32)),
+    private TextCursor parseAndCheck4(final String text,
+                                      final BigDecimal value) {
+        return this.parseAndCheck(
+                this.createParser(),
+                ParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION,
+                        DateTimeContexts.fake(),
+                        DecimalNumberContexts.basic("C", 'D', "XYZ", 'G', 'M', 'R', 'P', Locale.ENGLISH, MathContext.DECIMAL32)
+                ),
                 text,
                 ParserTokens.bigDecimal(value, text),
                 text,
-                "");
+                ""
+        );
     }
 
     @Override
@@ -446,6 +458,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
     @Override
     public ParserContext createContext() {
         return ParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
                 this.decimalNumberContext()
         );

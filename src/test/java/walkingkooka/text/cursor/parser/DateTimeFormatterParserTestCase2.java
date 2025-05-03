@@ -112,6 +112,7 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
     @Override
     public ParserContext createContext() {
         return ParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.locale(
                         LOCALE,
                         1900,

@@ -18,21 +18,33 @@
 package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.text.cursor.TextCursor;
 
 import java.math.MathContext;
 import java.time.LocalDateTime;
 import java.util.Locale;
+import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicParserContextTest implements ClassTesting2<BasicParserContext>,
         ParserContextTesting<BasicParserContext> {
+
+    private final static BiFunction<Parser<?>, TextCursor, InvalidCharacterException> INVALID_CHARACTER_EXCEPTION_FACTORY =
+            (final Parser<?> parser,
+             final TextCursor cursor) -> new InvalidCharacterException(
+                    cursor.lineInfo()
+                            .text()
+                            .toString(),
+                    cursor.at()
+            );
 
     private final static String CURRENCY = "$$";
     private final static char DECIMAL = 'D';
@@ -46,10 +58,23 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
 
     @Test
+    public void testWithNullInvalidCharacterExceptionFactoryFails() {
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicParserContext.with(
+                        null,
+                        DateTimeContexts.fake(),
+                        DecimalNumberContexts.fake()
+                )
+        );
+    }
+
+    @Test
     public void testWithNullDateTimeContextFails() {
         assertThrows(
                 NullPointerException.class,
                 () -> BasicParserContext.with(
+                        INVALID_CHARACTER_EXCEPTION_FACTORY,
                         null,
                         DecimalNumberContexts.fake()
                 )
@@ -61,6 +86,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
         assertThrows(
                 NullPointerException.class,
                 () -> BasicParserContext.with(
+                        INVALID_CHARACTER_EXCEPTION_FACTORY,
                         DateTimeContexts.fake(),
                         null
                 )
@@ -84,10 +110,17 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     }
 
     @Override
+    public void testInvalidCharacterExceptionWithNullParserFails() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public BasicParserContext createContext() {
         return BasicParserContext.with(
+                INVALID_CHARACTER_EXCEPTION_FACTORY,
                 this.dateTimeContext(),
-                this.decimalNumberContext());
+                this.decimalNumberContext()
+        );
     }
 
     private DateTimeContext dateTimeContext() {

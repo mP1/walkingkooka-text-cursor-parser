@@ -17,10 +17,12 @@
 
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContextDelegator;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
+import walkingkooka.text.cursor.TextCursor;
 
 import java.util.Locale;
 
@@ -36,6 +38,16 @@ public interface ParserContextDelegator extends ParserContext,
     @Override
     default DecimalNumberContext decimalNumberContext() {
         return this.parserContext();
+    }
+
+    @Override
+    default InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                                final TextCursor cursor) {
+        return this.parserContext()
+                .invalidCharacterException(
+                        parser,
+                        cursor
+                );
     }
 
     @Override

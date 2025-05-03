@@ -1,10 +1,11 @@
 package test;
 
 import com.google.gwt.junit.client.GWTTestCase;
+
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.j2cl.locale.LocaleAware;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserContexts;
 import walkingkooka.text.cursor.parser.ParserTokens;
 import walkingkooka.text.cursor.parser.Parsers;
@@ -42,6 +43,7 @@ public class TestGwtTest extends GWTTestCase {
                 Parsers.bigInteger(10)
                         .parse(TextCursors.charSequence(text),
                                 ParserContexts.basic(
+                                        InvalidCharacterExceptionFactory.POSITION,
                                         DateTimeContexts.fake(),
                                         DecimalNumberContexts.basic(
                                                 "$",
