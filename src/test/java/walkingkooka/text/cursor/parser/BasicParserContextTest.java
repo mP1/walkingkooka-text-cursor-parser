@@ -47,17 +47,32 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
 
     @Test
     public void testWithNullDateTimeContextFails() {
-        assertThrows(NullPointerException.class, () -> BasicParserContext.with(null, DecimalNumberContexts.fake()));
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicParserContext.with(
+                        null,
+                        DecimalNumberContexts.fake()
+                )
+        );
     }
 
     @Test
     public void testWithNullDecimalNumberContextFails() {
-        assertThrows(NullPointerException.class, () -> BasicParserContext.with(DateTimeContexts.fake(), null));
+        assertThrows(
+                NullPointerException.class,
+                () -> BasicParserContext.with(
+                        DateTimeContexts.fake(),
+                        null
+                )
+        );
     }
 
     @Test
     public void testLocale() {
-        this.hasLocaleAndCheck(this.createContext(), LOCALE);
+        this.hasLocaleAndCheck(
+                this.createContext(),
+                LOCALE
+        );
     }
 
     @Test
@@ -66,11 +81,6 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
                 this.createContext(),
                 MATH_CONTEXT
         );
-    }
-
-    @Test
-    public void testToString() {
-        this.toStringAndCheck(this.createContext(), this.dateTimeContext() + " " + this.decimalNumberContext());
     }
 
     @Override
@@ -140,6 +150,18 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     public char positiveSign() {
         return PLUS;
     }
+
+    // toString.........................................................................................................
+
+    @Test
+    public void testToString() {
+        this.toStringAndCheck(
+                this.createContext(),
+                this.dateTimeContext() + " " + this.decimalNumberContext()
+        );
+    }
+
+    // class............................................................................................................
 
     @Override
     public Class<BasicParserContext> type() {
