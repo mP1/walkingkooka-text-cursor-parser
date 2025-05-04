@@ -15,7 +15,7 @@ import java.math.MathContext;
 import java.util.Locale;
 import java.util.Optional;
 
-@LocaleAware
+@walkingkooka.j2cl.locale.LocaleAware
 public class TestGwtTest extends GWTTestCase {
 
     @Override
