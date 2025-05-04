@@ -20,6 +20,7 @@ package walkingkooka.text.cursor.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.util.BiFunctionTesting;
 
@@ -49,6 +50,33 @@ public final class InvalidCharacterExceptionFactoryTest implements BiFunctionTes
                 new InvalidCharacterException(
                         "xyz",
                         0
+                )
+        );
+    }
+
+    @Test
+    public void testPositionApplyWhenMaxTextCursor() {
+        final String text = "abcdef";
+
+        final TextCursor cursor = TextCursors.maxPosition(
+                TextCursors.charSequence(text)
+        );
+
+        cursor.next();
+
+        final TextCursorSavePoint save = cursor.save();
+
+        cursor.next();
+
+        save.restore();
+
+        this.applyAndCheck(
+                InvalidCharacterExceptionFactory.POSITION,
+                Parsers.fake(),
+                cursor,
+                new InvalidCharacterException(
+                        text,
+                        2
                 )
         );
     }

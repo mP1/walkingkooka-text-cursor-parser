@@ -20,6 +20,7 @@ package walkingkooka.text.cursor.parser;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.text.cursor.MaxPositionTextCursor;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorLineInfo;
 
@@ -73,12 +74,21 @@ public enum InvalidCharacterExceptionFactory implements BiFunction<Parser<?>, Te
 
         final TextCursorLineInfo lineInfo = cursor.lineInfo();
 
+        int position = cursor.isEmpty() ?
+                0 :
+                lineInfo.textOffset();
+        if (cursor instanceof MaxPositionTextCursor) {
+            final MaxPositionTextCursor max = (MaxPositionTextCursor) cursor;
+            position = Math.max(
+                    max.max(),
+                    position
+            );
+        }
+
         InvalidCharacterException ice = new InvalidCharacterException(
                 lineInfo.text()
                         .toString(), // text
-                cursor.isEmpty() ?
-                        0 :
-                        lineInfo.textOffset() // position
+                position
         );
 
         if (this == COLUMN_AND_LINE || this == COLUMN_AND_LINE_EXPECTED) {
