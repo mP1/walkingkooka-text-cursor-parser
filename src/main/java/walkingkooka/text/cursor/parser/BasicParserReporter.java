@@ -18,7 +18,6 @@
 package walkingkooka.text.cursor.parser;
 
 import walkingkooka.Cast;
-import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorLineInfo;
 
@@ -67,22 +66,29 @@ final class BasicParserReporter<C extends ParserContext> implements ParserReport
         Objects.requireNonNull(context, "context");
         Objects.requireNonNull(parser, "parser");
 
-        final StringBuilder message = new StringBuilder();
-        if (cursor.isEmpty()) {
-            message.append("End of text");
-        } else {
-            message.append("Invalid character ");
-            message.append(CharSequences.quoteAndEscape(cursor.at()));
-        }
-        message.append(" at ");
-
+        final boolean endOfText = cursor.isEmpty();
         final TextCursorLineInfo info = cursor.lineInfo();
-        message.append(info.summary());
 
-        message.append(" expected ");
-        message.append(parser);
+        if (endOfText) {
+            final StringBuilder message = new StringBuilder();
+            message.append("End of text");
 
-        throw new ParserReporterException(message.toString(), info);
+            message.append(" at ");
+            message.append(info.summary());
+
+            message.append(" expected ");
+            message.append(parser);
+
+            throw new ParserReporterException(
+                    message.toString(),
+                    info
+            );
+        } else {
+            throw context.invalidCharacterException(
+                    parser,
+                    cursor
+            );
+        }
     }
 
     @Override

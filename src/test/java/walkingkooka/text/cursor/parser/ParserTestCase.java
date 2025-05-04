@@ -18,11 +18,13 @@ package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.reflect.TypeNameTesting;
+import walkingkooka.text.cursor.TextCursor;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -63,7 +65,16 @@ public abstract class ParserTestCase<P extends Parser<ParserContext>> implements
 
     @Override
     public ParserContext createContext() {
-        return ParserContexts.fake();
+        return new FakeParserContext() {
+            @Override
+            public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                                       final TextCursor cursor) {
+                return InvalidCharacterExceptionFactory.POSITION.apply(
+                        parser,
+                        cursor
+                );
+            }
+        };
     }
 
     // setToString......................................................................................................

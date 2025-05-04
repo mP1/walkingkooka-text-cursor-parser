@@ -170,8 +170,8 @@ public interface ParserTesting extends TreePrintableTesting {
                                                                  final String text,
                                                                  final int column,
                                                                  final int row) {
-        final ParserException thrown = assertThrows(
-                ParserException.class,
+        final RuntimeException thrown = assertThrows(
+                RuntimeException.class,
                 () -> this.parse(
                         parser,
                         TextCursors.charSequence(text),
@@ -200,8 +200,8 @@ public interface ParserTesting extends TreePrintableTesting {
                 .toString();
         save.restore();
 
-        final ParserException thrown = assertThrows(
-                ParserException.class,
+        final RuntimeException thrown = assertThrows(
+                RuntimeException.class,
                 () -> this.parse(
                         parser,
                         cursor,
