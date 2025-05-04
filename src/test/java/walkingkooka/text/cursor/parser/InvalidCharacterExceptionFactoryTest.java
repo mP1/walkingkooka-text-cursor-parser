@@ -30,7 +30,22 @@ public final class InvalidCharacterExceptionFactoryTest implements BiFunctionTes
         this.applyAndCheck(
                 InvalidCharacterExceptionFactory.POSITION,
                 Parsers.fake(),
-                TextCursors.charSequence("xyz"),
+                TextCursors.charSequence("xyz")
+                        .next(),
+                new InvalidCharacterException(
+                        "xyz",
+                        1
+                )
+        );
+    }
+
+    @Test
+    public void testPositionApplyWhenCursorEmpty() {
+        this.applyAndCheck(
+                InvalidCharacterExceptionFactory.POSITION,
+                Parsers.fake(),
+                TextCursors.charSequence("xyz")
+                        .end(),
                 new InvalidCharacterException(
                         "xyz",
                         0
