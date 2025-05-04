@@ -76,7 +76,9 @@ public enum InvalidCharacterExceptionFactory implements BiFunction<Parser<?>, Te
         InvalidCharacterException ice = new InvalidCharacterException(
                 lineInfo.text()
                         .toString(), // text
-                lineInfo.textOffset() // position
+                cursor.isEmpty() ?
+                        0 :
+                        lineInfo.textOffset() // position
         );
 
         if (this == COLUMN_AND_LINE || this == COLUMN_AND_LINE_EXPECTED) {
