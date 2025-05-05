@@ -82,7 +82,7 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
             }
         } else {
             // no need to wrap parser
-            if (1 == newRepeatingMinCount && 1 == newRepeatingMaxCount) {
+            if (parser.minCount() == newRepeatingMinCount && parser.maxCount() == newRepeatingMaxCount) {
                 result = parser;
             } else {
                 // wrap parser and repeat it
