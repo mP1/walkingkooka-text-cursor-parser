@@ -19,6 +19,7 @@ package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
+import walkingkooka.InvalidCharacterException;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.cursor.TextCursor;
@@ -35,23 +36,7 @@ public final class BasicParserReporterTest implements ClassTesting2<BasicParserR
                 Parsers.fake()
                         .setToString("ABC")
                         .cast(),
-                "Invalid character 'a' at (1,1) expected ABC"
-        );
-    }
-
-    @Test
-    public void testReport2() {
-        // has a dependency on the results of TextCursorLineInfo methods...
-        final TextCursor cursor = TextCursors.charSequence("abc def ghi");
-        cursor.next();
-        cursor.next();
-
-        this.reportAndCheck(
-                cursor,
-                Parsers.fake()
-                        .setToString("ABC")
-                        .cast(),
-                "Invalid character 'c' at (3,1) expected ABC"
+                "Invalid character 'l' at 2"
         );
     }
 
@@ -75,7 +60,16 @@ public final class BasicParserReporterTest implements ClassTesting2<BasicParserR
 
     @Override
     public FakeParserContext createContext() {
-        return new FakeParserContext();
+        return new FakeParserContext() {
+            @Override
+            public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                                       final TextCursor cursor) {
+                return new InvalidCharacterException(
+                        "Hello",
+                        2
+                );
+            }
+        };
     }
 
     @Override

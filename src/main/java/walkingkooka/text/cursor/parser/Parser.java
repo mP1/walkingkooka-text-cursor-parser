@@ -48,6 +48,8 @@ public interface Parser<C extends ParserContext> {
                     TextCursors.charSequence(text),
                     context
             ).orElseThrow(() -> new InvalidCharacterException(text, 0));
+        } catch (final InvalidCharacterException cause) {
+            throw cause.clearColumnAndLine();
         } catch (final ParserReporterException cause) {
             final Throwable cause2 = cause.getCause();
             if (cause2 instanceof RuntimeException) {

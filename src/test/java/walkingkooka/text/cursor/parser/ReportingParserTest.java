@@ -106,7 +106,7 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
     public void testParseReportFails() {
         this.parseThrows(
                 "!",
-                "Invalid character '!' at (1,1) expected letter"
+                "Invalid character '!' at 0"
         );
     }
 
@@ -115,7 +115,7 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
         this.parseThrows(
                 this.createParser(ParserReporterCondition.NOT_EMPTY),
                 "!",
-                "Invalid character '!' at (1,1) expected letter"
+                "Invalid character '!' at 0"
         );
     }
 
@@ -145,7 +145,7 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
     public void testParseEmptyCursorFail() {
         this.parseThrows(
                 "!",
-                "Invalid character \'!\' at (1,1) expected letter"
+                "Invalid character \'!\' at 0"
         );
     }
 

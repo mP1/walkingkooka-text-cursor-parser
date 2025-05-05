@@ -32,6 +32,7 @@ import walkingkooka.text.cursor.TextCursor;
 import java.math.MathContext;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
@@ -119,6 +120,11 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
     public void testParseTextReturnsEmpty() {
         final String text = "ABC123";
 
+        final InvalidCharacterException ice = new InvalidCharacterException(
+                "Hello",
+                2
+        );
+
         final InvalidCharacterException thrown = assertThrows(
                 InvalidCharacterException.class,
                 () -> new FakeParser<>() {
@@ -128,17 +134,25 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
                                                        final ParserContext context) {
                         return Optional.empty();
                     }
+
+                    @Override
+                    public String toString() {
+                        return "PARSER123";
+                    }
                 }.parseText(
                         text,
-                        ParserContexts.fake()
+                        new FakeParserContext() {
+                            @Override
+                            public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                                                       final TextCursor cursor) {
+                                return ice;
+                            }
+                        }
                 )
         );
-        this.checkEquals(
-                new InvalidCharacterException(
-                        text,
-                        0
-                ).getMessage(),
-                thrown.getMessage()
+        assertSame(
+                ice,
+                thrown
         );
     }
 
@@ -146,25 +160,40 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
     public void testParseTextConsumesSomeReturnsEmpty() {
         final String text = "ABC123";
 
-        final InvalidCharacterException thrown = assertThrows(
-                InvalidCharacterException.class,
-                () -> new FakeParser<>() {
-
-                    @Override
-                    public Optional<ParserToken> parse(final TextCursor cursor,
-                                                       final ParserContext context) {
-                        cursor.next();
-                        return Optional.empty();
-                    }
-                }.parseText(
-                        text,
-                        ParserContexts.fake()
-                )
+        final InvalidCharacterException ice = new InvalidCharacterException(
+                "Hello",
+                2
         );
-        this.checkEquals(
-                new InvalidCharacterException(text, 1)
-                        .getMessage(),
-                thrown.getMessage()
+
+        assertSame(
+                ice,
+                assertThrows(
+                        InvalidCharacterException.class,
+                        () -> new FakeParser<>() {
+
+                            @Override
+                            public Optional<ParserToken> parse(final TextCursor cursor,
+                                                               final ParserContext context) {
+                                cursor.next();
+                                return Optional.empty();
+                            }
+
+                            @Override
+                            public String toString() {
+                                return "PARSER123";
+                            }
+                        }.parseText(
+                                text,
+                                new FakeParserContext() {
+
+                                    @Override
+                                    public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                                                               final TextCursor cursor) {
+                                        return ice;
+                                    }
+                                }
+                        )
+                )
         );
     }
 

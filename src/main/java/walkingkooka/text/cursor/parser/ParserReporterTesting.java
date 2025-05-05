@@ -88,13 +88,20 @@ public interface ParserReporterTesting<R extends ParserReporter<C>, C extends Pa
 
         final TextCursorSavePoint save = cursor.save();
         try {
-            this.report(reporter, cursor, context, parser);
+            this.report(
+                    reporter,
+                    cursor,
+                    context,
+                    parser
+            );
             fail("Reporter should have reported exception");
-        } catch (final ParserReporterException expected) {
+        } catch (final RuntimeException expected) {
             save.restore();
             final String message = expected.getMessage();
-            assertTrue(message.contains(messageContains),
-                    () -> "report message: " + CharSequences.quoteAndEscape(message) + " missing contains: " + CharSequences.quoteAndEscape(messageContains));
+            assertTrue(
+                    message.contains(messageContains),
+                    () -> "report message: " + CharSequences.quoteAndEscape(message) + " missing contains: " + CharSequences.quoteAndEscape(messageContains)
+            );
         }
     }
 
