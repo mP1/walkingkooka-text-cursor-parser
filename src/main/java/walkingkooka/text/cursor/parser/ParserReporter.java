@@ -30,5 +30,7 @@ public interface ParserReporter<C extends ParserContext> {
     /**
      * Handles a parse failure.
      */
-    Optional<ParserToken> report(final TextCursor cursor, final C context, final Parser<C> parser) throws ParserReporterException;
+    Optional<ParserToken> report(final TextCursor cursor,
+                                 final C context,
+                                 final Parser<C> parser);
 }

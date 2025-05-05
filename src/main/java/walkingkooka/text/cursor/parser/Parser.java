@@ -50,14 +50,14 @@ public interface Parser<C extends ParserContext> {
             ).orElseThrow(() -> new InvalidCharacterException(text, 0));
         } catch (final InvalidCharacterException cause) {
             throw cause.clearColumnAndLine();
-        } catch (final ParserReporterException cause) {
-            final Throwable cause2 = cause.getCause();
-            if (cause2 instanceof RuntimeException) {
-                throw (RuntimeException) cause2;
-            }
-
-            throw cause.lineInfo()
-                    .emptyTextOrInvalidCharacterExceptionOrLast("text");
+//        } catch (final ParserReporterException cause) {
+//            final Throwable cause2 = cause.getCause();
+//            if (cause2 instanceof RuntimeException) {
+//                throw (RuntimeException) cause2;
+//            }
+//
+//            throw cause.lineInfo()
+//                    .emptyTextOrInvalidCharacterExceptionOrLast("text");
         } catch (final ParserException cause) {
             final Throwable wrapped = cause.getCause();
             if (wrapped instanceof RuntimeException) {
