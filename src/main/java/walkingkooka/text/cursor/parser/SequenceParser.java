@@ -32,7 +32,7 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
         implements RequiredParser<C> {
 
     /**
-     * Factory method only called by {@link SequenceParserBuilder#build()}
+     * Factory method only called by {@link Parser#or(Parser)}
      */
     static <C extends ParserContext> Parser<C> with(final List<Parser<C>> parsers) {
         Objects.requireNonNull(parsers, "parsers");
