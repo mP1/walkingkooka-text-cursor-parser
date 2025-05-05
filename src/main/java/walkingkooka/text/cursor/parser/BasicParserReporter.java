@@ -18,6 +18,7 @@
 package walkingkooka.text.cursor.parser;
 
 import walkingkooka.Cast;
+import walkingkooka.EndOfTextException;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorLineInfo;
 
@@ -52,7 +53,7 @@ final class BasicParserReporter<C extends ParserContext> implements ParserReport
     }
 
     /**
-     * Creates a {@link ParserReporterException} with the following messages.
+     * Handles reporting either an END OF TEXT or INVALID CHARACTER or returning a {@link ParserToken}.
      * <pre>
      * End of text at 1, 1 expected ...
      * Invalid character at 1, 1 expected ...
@@ -61,7 +62,7 @@ final class BasicParserReporter<C extends ParserContext> implements ParserReport
     @Override
     public Optional<ParserToken> report(final TextCursor cursor,
                                         final C context,
-                                        final Parser<C> parser) throws ParserReporterException {
+                                        final Parser<C> parser) {
         Objects.requireNonNull(cursor, "cursor");
         Objects.requireNonNull(context, "context");
         Objects.requireNonNull(parser, "parser");
@@ -79,10 +80,7 @@ final class BasicParserReporter<C extends ParserContext> implements ParserReport
             message.append(" expected ");
             message.append(parser);
 
-            throw new ParserReporterException(
-                    message.toString(),
-                    info
-            );
+            throw new EndOfTextException(message.toString());
         } else {
             throw context.invalidCharacterException(
                     parser,

@@ -26,7 +26,7 @@ public class FakeParserReporter<C extends ParserContext> implements ParserReport
     @Override
     public Optional<ParserToken> report(final TextCursor cursor,
                                         final C context,
-                                        final Parser<C> parser) throws ParserReporterException {
+                                        final Parser<C> parser) {
         throw new UnsupportedOperationException();
     }
 }
