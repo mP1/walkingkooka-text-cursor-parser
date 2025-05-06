@@ -19,6 +19,7 @@ package walkingkooka.text.cursor.parser;
 
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.text.CharSequences;
@@ -28,6 +29,7 @@ import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.printer.TreePrintableTesting;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
@@ -235,8 +237,13 @@ public interface ParserTesting extends TreePrintableTesting {
     }
 
     default DateTimeContext dateTimeContext() {
-        return DateTimeContexts.locale(
-                Locale.ENGLISH,
+        final Locale locale = Locale.ENGLISH;
+
+        return DateTimeContexts.basic(
+                DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(locale)
+                ),
+                locale,
                 1900,
                 20,
                 LocalDateTime::now
