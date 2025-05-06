@@ -73,6 +73,8 @@ public enum InvalidCharacterExceptionFactory implements BiFunction<Parser<?>, Te
         Objects.requireNonNull(cursor, "cursor");
 
         final TextCursorLineInfo lineInfo = cursor.lineInfo();
+        final String text = lineInfo.text()
+                .toString();
 
         int position = cursor.isEmpty() ?
                 0 :
@@ -80,14 +82,16 @@ public enum InvalidCharacterExceptionFactory implements BiFunction<Parser<?>, Te
         if (cursor instanceof MaxPositionTextCursor) {
             final MaxPositionTextCursor max = (MaxPositionTextCursor) cursor;
             position = Math.max(
-                    max.max(),
+                    Math.min(
+                            max.max(),
+                            text.length() - 1
+                    ),
                     position
             );
         }
 
         InvalidCharacterException ice = new InvalidCharacterException(
-                lineInfo.text()
-                        .toString(), // text
+                text,
                 position
         );
 

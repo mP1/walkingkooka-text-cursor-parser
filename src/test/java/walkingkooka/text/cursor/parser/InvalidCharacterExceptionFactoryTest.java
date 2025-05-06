@@ -82,6 +82,33 @@ public final class InvalidCharacterExceptionFactoryTest implements BiFunctionTes
     }
 
     @Test
+    public void testPositionApplyWhenMaxTextCursorEnd() {
+        final String text = "abcdef";
+
+        final TextCursor cursor = TextCursors.maxPosition(
+                TextCursors.charSequence(text)
+        );
+
+        cursor.next();
+
+        final TextCursorSavePoint save = cursor.save();
+
+        cursor.end();
+
+        save.restore();
+
+        this.applyAndCheck(
+                InvalidCharacterExceptionFactory.POSITION,
+                Parsers.fake(),
+                cursor,
+                new InvalidCharacterException(
+                        text,
+                        text.length() - 1
+                )
+        );
+    }
+
+    @Test
     public void testColumnAndLineApply() {
         this.applyAndCheck(
                 InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
