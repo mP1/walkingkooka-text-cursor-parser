@@ -21,11 +21,13 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -113,7 +115,10 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
     public ParserContext createContext() {
         return ParserContexts.basic(
                 InvalidCharacterExceptionFactory.POSITION,
-                DateTimeContexts.locale(
+                DateTimeContexts.basic(
+                        DateTimeSymbols.fromDateFormatSymbols(
+                                new DateFormatSymbols(LOCALE)
+                        ),
                         LOCALE,
                         1900,
                         50,

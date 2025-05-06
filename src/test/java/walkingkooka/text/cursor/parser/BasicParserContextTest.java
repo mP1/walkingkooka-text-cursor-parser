@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.reflect.ClassTesting2;
@@ -28,6 +29,7 @@ import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.cursor.TextCursor;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.function.BiFunction;
@@ -124,8 +126,12 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     }
 
     private DateTimeContext dateTimeContext() {
-        return DateTimeContexts.locale(
-                Locale.ENGLISH,
+        final Locale locale = Locale.ENGLISH;
+        return DateTimeContexts.basic(
+                DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(locale)
+                ),
+                locale,
                 1900,
                 50,
                 LocalDateTime::now

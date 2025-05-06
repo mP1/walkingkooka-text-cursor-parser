@@ -18,11 +18,13 @@
 package walkingkooka.text.cursor.parser;
 
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.text.cursor.parser.ParserContextDelegatorTest.TestParserContextDelegator;
 
 import java.math.MathContext;
+import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
@@ -79,10 +81,15 @@ public final class ParserContextDelegatorTest implements ParserContextTesting<Te
     static final class TestParserContextDelegator implements ParserContextDelegator {
         @Override
         public ParserContext parserContext() {
+            final Locale locale = Locale.ENGLISH;
+
             return ParserContexts.basic(
                     InvalidCharacterExceptionFactory.POSITION,
-                    DateTimeContexts.locale(
-                            Locale.ENGLISH,
+                    DateTimeContexts.basic(
+                            DateTimeSymbols.fromDateFormatSymbols(
+                                    new DateFormatSymbols(locale)
+                            ),
+                            locale,
                             1950, // defaultYear
                             50, // twoDigitYear
                             LocalDateTime::now
