@@ -23,6 +23,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 
@@ -124,9 +125,11 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
                         50,
                         LocalDateTime::now
                 ),
-                DecimalNumberContexts.decimalFormatSymbols(
-                        new DecimalFormatSymbols(LOCALE),
-                        '+',
+                DecimalNumberContexts.basic(
+                        DecimalNumberSymbols.fromDecimalFormatSymbols(
+                                '+',
+                                new DecimalFormatSymbols(LOCALE)
+                        ),
                         LOCALE,
                         MathContext.UNLIMITED
                 )
