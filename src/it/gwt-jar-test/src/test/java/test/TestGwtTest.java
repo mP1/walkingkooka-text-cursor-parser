@@ -4,6 +4,7 @@ import com.google.gwt.junit.client.GWTTestCase;
 
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.text.cursor.parser.InvalidCharacterExceptionFactory;
 import walkingkooka.text.cursor.parser.ParserContexts;
@@ -46,13 +47,15 @@ public class TestGwtTest extends GWTTestCase {
                                         InvalidCharacterExceptionFactory.POSITION,
                                         DateTimeContexts.fake(),
                                         DecimalNumberContexts.basic(
-                                                "$",
-                                                '.',
-                                                "E",
-                                                ',',
-                                                '-',
-                                                '%',
-                                                '+',
+                                                DecimalNumberSymbols.with(
+                                                        '-',
+                                                        '+',
+                                                        "$",
+                                                        '.',
+                                                        "E",
+                                                        ',',
+                                                        '%'
+                                                ),
                                                 Locale.forLanguageTag("en-AU"),
                                                 MathContext.DECIMAL32
                                         )
