@@ -24,6 +24,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.cursor.TextCursor;
@@ -139,15 +140,19 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     }
 
     private DecimalNumberContext decimalNumberContext() {
-        return DecimalNumberContexts.basic(CURRENCY,
-                DECIMAL,
-                EXPONENT,
-                GROUPING,
-                MINUS,
-                PERCENTAGE,
-                PLUS,
+        return DecimalNumberContexts.basic(
+                DecimalNumberSymbols.with(
+                        MINUS,
+                        PLUS,
+                        CURRENCY,
+                        DECIMAL,
+                        EXPONENT,
+                        GROUPING,
+                        PERCENTAGE
+                ),
                 LOCALE,
-                MATH_CONTEXT);
+                MATH_CONTEXT
+        );
     }
 
     @Override

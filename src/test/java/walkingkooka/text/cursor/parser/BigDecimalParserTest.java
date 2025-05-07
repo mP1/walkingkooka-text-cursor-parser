@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.text.cursor.TextCursor;
 
 import java.math.BigDecimal;
@@ -425,7 +426,19 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                 ParserContexts.basic(
                         InvalidCharacterExceptionFactory.POSITION,
                         DateTimeContexts.fake(),
-                        DecimalNumberContexts.basic("C", 'D', "X", 'G', 'M', 'R', 'P', Locale.ENGLISH, MathContext.DECIMAL32)
+                        DecimalNumberContexts.basic(
+                                DecimalNumberSymbols.with(
+                                        'M', // negativeSign
+                                        'P', // positiveSign
+                                        "C", // currenct
+                                        'D', // decimalPoint
+                                        "X", // exponentSymbol
+                                        'G', // groupSeparator
+                                        'R' // percent
+                                ),
+                                Locale.ENGLISH,
+                                MathContext.DECIMAL32
+                        )
                 ),
                 text,
                 ParserTokens.bigDecimal(value, text),
@@ -441,7 +454,19 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                 ParserContexts.basic(
                         InvalidCharacterExceptionFactory.POSITION,
                         DateTimeContexts.fake(),
-                        DecimalNumberContexts.basic("C", 'D', "XYZ", 'G', 'M', 'R', 'P', Locale.ENGLISH, MathContext.DECIMAL32)
+                        DecimalNumberContexts.basic(
+                                DecimalNumberSymbols.with(
+                                        'M', // negativeSign
+                                        'P', // positiveSign
+                                        "C", // currency
+                                        'D', // decimalPoint
+                                        "XYZ", // exponentSymbol
+                                        'G', // groupSeparator
+                                        'R' // percent
+                                ),
+                                Locale.ENGLISH,
+                                MathContext.DECIMAL32
+                        )
                 ),
                 text,
                 ParserTokens.bigDecimal(value, text),
