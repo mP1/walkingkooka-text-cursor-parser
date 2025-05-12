@@ -54,6 +54,7 @@ public class Sample {
                                                 DecimalNumberSymbols.with(
                                                         '-',
                                                         '+',
+                                                        '0',
                                                         "$",
                                                         '.',
                                                         "E",

@@ -50,6 +50,7 @@ public class TestGwtTest extends GWTTestCase {
                                                 DecimalNumberSymbols.with(
                                                         '-',
                                                         '+',
+                                                        '0',
                                                         "$",
                                                         '.',
                                                         "E",

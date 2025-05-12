@@ -366,12 +366,12 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
 
     @Test
     public void testParseNumberMultiCharacterExponentPlus() {
-        this.parseAndCheck4("123XYZP45", new BigDecimal("123E+45"));
+        this.parseAndCheck4("123XYZ-45", new BigDecimal("123E+45"));
     }
 
     @Test
     public void testParseNumberMultiCharacterExponentMinus() {
-        this.parseAndCheck4("123XYZM45", new BigDecimal("123E-45"));
+        this.parseAndCheck4("123XYZ+45", new BigDecimal("123E-45"));
     }
 
     @Test
@@ -401,7 +401,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
 
     @Test
     public void testParseDifferentDecimalSeparator() {
-        this.parseAndCheck3("1D25", BigDecimal.valueOf(1.25));
+        this.parseAndCheck3("1*25", BigDecimal.valueOf(1.25));
     }
 
     @Test
@@ -411,12 +411,12 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
 
     @Test
     public void testParseDifferentMinusSign() {
-        this.parseAndCheck3("M123", BigDecimal.valueOf(-123));
+        this.parseAndCheck3("+123", BigDecimal.valueOf(-123));
     }
 
     @Test
     public void testParseDifferentPlusSign() {
-        this.parseAndCheck3("P123", BigDecimal.valueOf(123));
+        this.parseAndCheck3("-123", BigDecimal.valueOf(123));
     }
 
     private TextCursor parseAndCheck3(final String text,
@@ -428,13 +428,14 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                         DateTimeContexts.fake(),
                         DecimalNumberContexts.basic(
                                 DecimalNumberSymbols.with(
-                                        'M', // negativeSign
-                                        'P', // positiveSign
-                                        "C", // currenct
-                                        'D', // decimalPoint
+                                        '+', // negativeSign
+                                        '-', // positiveSign
+                                        '1', // zero
+                                        "C", // currency
+                                        '*', // decimalPoint
                                         "X", // exponentSymbol
-                                        'G', // groupSeparator
-                                        'R' // percent
+                                        '/', // groupSeparator
+                                        '$' // percent
                                 ),
                                 Locale.ENGLISH,
                                 MathContext.DECIMAL32
@@ -456,13 +457,14 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                         DateTimeContexts.fake(),
                         DecimalNumberContexts.basic(
                                 DecimalNumberSymbols.with(
-                                        'M', // negativeSign
-                                        'P', // positiveSign
+                                        '+', // negativeSign
+                                        '-', // positiveSign
+                                        '0', // zeroDigit
                                         "C", // currency
-                                        'D', // decimalPoint
+                                        '*', // decimalPoint
                                         "XYZ", // exponentSymbol
-                                        'G', // groupSeparator
-                                        'R' // percent
+                                        '/', // groupSeparator
+                                        '$' // percent
                                 ),
                                 Locale.ENGLISH,
                                 MathContext.DECIMAL32
