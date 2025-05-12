@@ -58,6 +58,7 @@ public class JunitTest {
                                                 DecimalNumberSymbols.with(
                                                         '-',
                                                         '+',
+                                                        '0',
                                                         "$",
                                                         '.',
                                                         "E",

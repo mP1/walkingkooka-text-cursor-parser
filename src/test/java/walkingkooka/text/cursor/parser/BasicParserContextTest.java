@@ -50,12 +50,13 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
             );
 
     private final static String CURRENCY = "$$";
-    private final static char DECIMAL = 'D';
+    private final static char DECIMAL = '.';
+    private final static char ZERO_DIGIT = '0';
     private final static String EXPONENT = "XX";
-    private final static char GROUPING = 'G';
-    private final static char MINUS = 'M';
-    private final static char PERCENTAGE = 'R';
-    private final static char PLUS = 'P';
+    private final static char GROUPING = ',';
+    private final static char MINUS = '-';
+    private final static char PERCENTAGE = '%';
+    private final static char PLUS = '+';
 
     private final static Locale LOCALE = Locale.ENGLISH;
     private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
@@ -144,6 +145,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
                 DecimalNumberSymbols.with(
                         MINUS,
                         PLUS,
+                        ZERO_DIGIT,
                         CURRENCY,
                         DECIMAL,
                         EXPONENT,
