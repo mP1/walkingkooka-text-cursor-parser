@@ -39,7 +39,9 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C>
 
         return new BigIntegerParser<>(
                 radix,
-                10 == radix ? "BigInteger" : "BigInteger(base=" + radix + ")"
+                10 == radix ?
+                        "BigInteger" :
+                        "BigInteger(base=" + radix + ")"
         );
     }
 
@@ -133,13 +135,14 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C>
         return BigIntegerParserToken.with(
                 value,
                 save.textBetween()
-                        .toString());
+                        .toString()
+        );
     }
 
     private final int radix;
     private final BigInteger radixBigInteger;
 
-    // ParserSetToString..........................................................................................................
+    // ParserSetToString................................................................................................
 
     @Override
     BigIntegerParser<C> replaceToString(final String toString) {
