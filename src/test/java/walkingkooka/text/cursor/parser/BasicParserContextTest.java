@@ -23,6 +23,7 @@ import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.reflect.ClassTesting2;
@@ -38,7 +39,8 @@ import java.util.function.BiFunction;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicParserContextTest implements ClassTesting2<BasicParserContext>,
-        ParserContextTesting<BasicParserContext> {
+        ParserContextTesting<BasicParserContext>,
+        DecimalNumberContextDelegator {
 
     private final static BiFunction<Parser<?>, TextCursor, InvalidCharacterException> INVALID_CHARACTER_EXCEPTION_FACTORY =
             (final Parser<?> parser,
@@ -144,7 +146,8 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
         );
     }
 
-    private DecimalNumberContext decimalNumberContext() {
+    @Override
+    public DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic(
                 DecimalNumberSymbols.with(
                         MINUS,
@@ -166,43 +169,8 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     }
 
     @Override
-    public String currencySymbol() {
-        return CURRENCY;
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return DECIMAL;
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return EXPONENT;
-    }
-
-    @Override
-    public char groupSeparator() {
-        return GROUPING;
-    }
-
-    @Override
     public MathContext mathContext() {
-        return MathContext.DECIMAL32;
-    }
-
-    @Override
-    public char negativeSign() {
-        return MINUS;
-    }
-
-    @Override
-    public char percentSymbol() {
-        return PERCENT;
-    }
-
-    @Override
-    public char positiveSign() {
-        return PLUS;
+        return DecimalNumberContextDelegator.super.mathContext();
     }
 
     // toString.........................................................................................................
