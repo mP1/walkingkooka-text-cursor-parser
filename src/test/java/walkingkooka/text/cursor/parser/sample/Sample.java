@@ -59,7 +59,11 @@ public class Sample {
                                                         '.',
                                                         "E",
                                                         ',',
-                                                        '%'
+                                                        "Infinity",
+                                                        '.',
+                                                        "Nan",
+                                                        '%',
+                                                        '\u2030'
                                                 ),
                                                 Locale.forLanguageTag("en-AU"),
                                                 MathContext.DECIMAL32

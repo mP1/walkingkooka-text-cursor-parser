@@ -63,7 +63,11 @@ public class JunitTest {
                                                         '.',
                                                         "E",
                                                         ',',
-                                                        '%'
+                                                        "Infinity",
+                                                        '.',
+                                                        "Nan",
+                                                        '%',
+                                                        '\u2030'
                                                 ),
                                                 Locale.forLanguageTag("en-AU"),
                                                 MathContext.DECIMAL32

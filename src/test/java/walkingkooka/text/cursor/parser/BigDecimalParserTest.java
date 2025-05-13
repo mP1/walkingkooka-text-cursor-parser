@@ -435,7 +435,11 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                                         '*', // decimalPoint
                                         "X", // exponentSymbol
                                         '/', // groupSeparator
-                                        '$' // percent
+                                        "Infinity", // infinity
+                                        '*', // monetary decimal separator
+                                        "NaN",
+                                        '$', // percent
+                                        '^' // permill
                                 ),
                                 Locale.ENGLISH,
                                 MathContext.DECIMAL32
@@ -464,7 +468,11 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                                         '*', // decimalPoint
                                         "XYZ", // exponentSymbol
                                         '/', // groupSeparator
-                                        '$' // percent
+                                        "INFINITY",
+                                        '#', // monetaryDecimal
+                                        "NAN",
+                                        '$', // percent
+                                        '^' // permill
                                 ),
                                 Locale.ENGLISH,
                                 MathContext.DECIMAL32

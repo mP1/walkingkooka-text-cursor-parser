@@ -54,8 +54,12 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     private final static char ZERO_DIGIT = '0';
     private final static String EXPONENT = "XX";
     private final static char GROUPING = ',';
+    private final static String INFINITY = "INFINITY";
     private final static char MINUS = '-';
+    private final static char MONETARY_DECIMAL = '.';
+    private final static String NAN = "NAN";
     private final static char PERCENTAGE = '%';
+    private final static char PERMILL = '\u2030';
     private final static char PLUS = '+';
 
     private final static Locale LOCALE = Locale.ENGLISH;
@@ -150,7 +154,11 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
                         DECIMAL,
                         EXPONENT,
                         GROUPING,
-                        PERCENTAGE
+                        INFINITY,
+                        MONETARY_DECIMAL,
+                        NAN,
+                        PERCENTAGE,
+                        PERMILL
                 ),
                 LOCALE,
                 MATH_CONTEXT
