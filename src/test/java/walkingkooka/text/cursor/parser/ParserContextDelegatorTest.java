@@ -20,6 +20,7 @@ package walkingkooka.text.cursor.parser;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
+import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.text.cursor.parser.ParserContextDelegatorTest.TestParserContextDelegator;
 
@@ -28,55 +29,25 @@ import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-public final class ParserContextDelegatorTest implements ParserContextTesting<TestParserContextDelegator> {
-
+public final class ParserContextDelegatorTest implements ParserContextTesting<TestParserContextDelegator>,
+        DecimalNumberContextDelegator {
 
     @Override
     public TestParserContextDelegator createContext() {
         return new TestParserContextDelegator();
     }
 
-    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.american(MathContext.DECIMAL32);
-
     @Override
-    public String currencySymbol() {
-        return DECIMAL_NUMBER_CONTEXT.currencySymbol();
-    }
-
-    @Override
-    public char decimalSeparator() {
-        return DECIMAL_NUMBER_CONTEXT.decimalSeparator();
-    }
-
-    @Override
-    public String exponentSymbol() {
-        return DECIMAL_NUMBER_CONTEXT.exponentSymbol();
-    }
-
-    @Override
-    public char groupSeparator() {
-        return DECIMAL_NUMBER_CONTEXT.groupSeparator();
+    public DecimalNumberContext decimalNumberContext() {
+        return DECIMAL_NUMBER_CONTEXT;
     }
 
     @Override
     public MathContext mathContext() {
-        return DECIMAL_NUMBER_CONTEXT.mathContext();
+        return DecimalNumberContextDelegator.super.mathContext();
     }
 
-    @Override
-    public char negativeSign() {
-        return DECIMAL_NUMBER_CONTEXT.negativeSign();
-    }
-
-    @Override
-    public char percentSymbol() {
-        return DECIMAL_NUMBER_CONTEXT.percentSymbol();
-    }
-
-    @Override
-    public char positiveSign() {
-        return DECIMAL_NUMBER_CONTEXT.positiveSign();
-    }
+    private final static DecimalNumberContext DECIMAL_NUMBER_CONTEXT = DecimalNumberContexts.american(MathContext.DECIMAL32);
 
     static final class TestParserContextDelegator implements ParserContextDelegator {
         @Override
