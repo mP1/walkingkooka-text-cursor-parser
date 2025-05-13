@@ -58,7 +58,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     private final static char MINUS = '-';
     private final static char MONETARY_DECIMAL = '.';
     private final static String NAN = "NAN";
-    private final static char PERCENTAGE = '%';
+    private final static char PERCENT = '%';
     private final static char PERMILL = '\u2030';
     private final static char PLUS = '+';
 
@@ -157,7 +157,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
                         INFINITY,
                         MONETARY_DECIMAL,
                         NAN,
-                        PERCENTAGE,
+                        PERCENT,
                         PERMILL
                 ),
                 LOCALE,
@@ -196,8 +196,8 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     }
 
     @Override
-    public char percentageSymbol() {
-        return PERCENTAGE;
+    public char percentSymbol() {
+        return PERCENT;
     }
 
     @Override
