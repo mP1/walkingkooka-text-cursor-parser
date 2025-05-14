@@ -331,10 +331,136 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
                             public char positiveSign() {
                                 return 'P';
                             }
+
+                            @Override
+                            public char zeroDigit() {
+                                return '0';
+                            }
                         }
                 ),
                 text,
                 ParserTokens.longParserToken(value, text),
+                text,
+                ""
+        );
+    }
+
+    @Test
+    public void testParseRadix16IgnoresDecimalNumberContextZeroNonArabicDigits() {
+        final char zero = '\u0660';
+        final String text = "ff";
+
+        this.parseAndCheck(
+                LongParser.with(16),
+                ParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION,
+                        DateTimeContexts.fake(),
+                        new FakeDecimalNumberContext() {
+
+                            @Override
+                            public char negativeSign() {
+                                return 'M';
+                            }
+
+                            @Override
+                            public char positiveSign() {
+                                return 'P';
+                            }
+
+                            @Override
+                            public char zeroDigit() {
+                                return zero;
+                            }
+                        }
+                ),
+                text,
+                ParserTokens.longParserToken(
+                        0xff,
+                        text
+                ),
+                text,
+                ""
+        );
+    }
+
+    @Test
+    public void testParseRadix10NonArabicDigits() {
+        final char zero = '\u0660';
+        final String text = new StringBuilder()
+                .append((char) (zero + 1))
+                .append((char) (zero + 2))
+                .toString();
+
+        this.parseAndCheck(
+                this.createParser(),
+                ParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION,
+                        DateTimeContexts.fake(),
+                        new FakeDecimalNumberContext() {
+
+                            @Override
+                            public char negativeSign() {
+                                return 'M';
+                            }
+
+                            @Override
+                            public char positiveSign() {
+                                return 'P';
+                            }
+
+                            @Override
+                            public char zeroDigit() {
+                                return zero;
+                            }
+                        }
+                ),
+                text,
+                ParserTokens.longParserToken(
+                        12,
+                        text
+                ),
+                text,
+                ""
+        );
+    }
+
+    @Test
+    public void testParseRadix10NonArabicDigits2() {
+        final char zero = '\u0660';
+        final String text = new StringBuilder()
+                .append('M')
+                .append((char) (zero + 1))
+                .append((char) (zero + 2))
+                .toString();
+
+        this.parseAndCheck(
+                this.createParser(),
+                ParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION,
+                        DateTimeContexts.fake(),
+                        new FakeDecimalNumberContext() {
+
+                            @Override
+                            public char negativeSign() {
+                                return 'M';
+                            }
+
+                            @Override
+                            public char positiveSign() {
+                                return 'P';
+                            }
+
+                            @Override
+                            public char zeroDigit() {
+                                return zero;
+                            }
+                        }
+                ),
+                text,
+                ParserTokens.longParserToken(
+                        -12,
+                        text
+                ),
                 text,
                 ""
         );
