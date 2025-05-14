@@ -19,8 +19,13 @@ package walkingkooka.text.cursor.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.FakeDecimalNumberContext;
 import walkingkooka.text.cursor.TextCursor;
+
+import java.math.MathContext;
+import java.util.Locale;
 
 public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<ParserContext>, DoubleParserToken> {
 
@@ -748,6 +753,11 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
                             public char positiveSign() {
                                 return 'P';
                             }
+
+                            @Override
+                            public char zeroDigit() {
+                                return '0';
+                            }
                         }
                 ),
                 text,
@@ -783,6 +793,11 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
                             @Override
                             public char positiveSign() {
                                 return 'P';
+                            }
+
+                            @Override
+                            public char zeroDigit() {
+                                return '0';
                             }
                         }
                 ),
@@ -827,6 +842,51 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
                 ),
                 text,
                 textAfter
+        );
+    }
+
+    @Test
+    public void testParseNonArabicDigits() {
+        final char zero = '\u0660';
+
+        final String text = new StringBuilder()
+                .append((char) (zero + 1))
+                .append((char) (zero + 2))
+                .append('*')
+                .append((char) (zero + 5))
+                .toString();
+
+        this.parseAndCheck(
+                this.createParser(),
+                ParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION,
+                        DateTimeContexts.fake(),
+                        DecimalNumberContexts.basic(
+                                DecimalNumberSymbols.with(
+                                        '+', // negativeSign
+                                        '-', // positiveSign
+                                        zero, // zeroDigit
+                                        "C", // currency
+                                        '*', // decimalPoint
+                                        "XYZ", // exponentSymbol
+                                        '/', // groupSeparator
+                                        "INFINITY",
+                                        '#', // monetaryDecimal
+                                        "NAN",
+                                        '$', // percent
+                                        '^' // permill
+                                ),
+                                Locale.ENGLISH,
+                                MathContext.DECIMAL32
+                        )
+                ),
+                text,
+                ParserTokens.doubleParserToken(
+                        12.5,
+                        text
+                ),
+                text,
+                ""
         );
     }
 
