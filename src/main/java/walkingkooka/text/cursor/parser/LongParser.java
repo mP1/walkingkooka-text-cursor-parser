@@ -61,8 +61,6 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> implem
         final char negativeSign = context.negativeSign();
         final char positiveSign = context.positiveSign();
 
-        LongParserToken token;
-
         final int radix = this.radix;
         final boolean radix10 = 10 == radix;
         long number = 0;
@@ -70,14 +68,7 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> implem
         boolean overflow = false;
         boolean signed = false;
 
-        for (; ; ) {
-            if (cursor.isEmpty()) {
-                token = empty ?
-                        null :
-                        this.longParserToken(number, save);
-                break;
-            }
-
+        while (cursor.isNotEmpty()) {
             final char c = cursor.at();
             if (empty && radix10) {
                 if (negativeSign == c) {
@@ -95,9 +86,6 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> implem
                     context.digit(c) :
                     Character.digit(c, radix);
             if (-1 == digit) {
-                token = empty ?
-                        null :
-                        this.longParserToken(number, save);
                 break;
             }
             empty = false;
@@ -117,15 +105,14 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> implem
             throw new ParserException("Number overflow " + CharSequences.quote(save.textBetween()));
         }
 
-        return Optional.ofNullable(token);
-    }
-
-    private LongParserToken longParserToken(final Long value,
-                                            final TextCursorSavePoint save) {
-        return LongParserToken.with(
-                value,
-                save.textBetween()
-                        .toString()
+        return Optional.ofNullable(
+                empty ?
+                        null :
+                        LongParserToken.with(
+                                number,
+                                save.textBetween()
+                                        .toString()
+                        )
         );
     }
 
