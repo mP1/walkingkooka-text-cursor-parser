@@ -430,7 +430,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                                 DecimalNumberSymbols.with(
                                         '+', // negativeSign
                                         '-', // positiveSign
-                                        '1', // zero
+                                        '0', // zero
                                         "C", // currency
                                         '*', // decimalPoint
                                         "X", // exponentSymbol
@@ -480,6 +480,51 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                 ),
                 text,
                 ParserTokens.bigDecimal(value, text),
+                text,
+                ""
+        );
+    }
+
+    @Test
+    public void testParseNonArabicDigits() {
+        final char zero = '\u0660';
+
+        final String text = new StringBuilder()
+                .append((char) (zero + 1))
+                .append((char) (zero + 2))
+                .append('*')
+                .append((char) (zero + 5))
+                .toString();
+
+        this.parseAndCheck(
+                this.createParser(),
+                ParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION,
+                        DateTimeContexts.fake(),
+                        DecimalNumberContexts.basic(
+                                DecimalNumberSymbols.with(
+                                        '+', // negativeSign
+                                        '-', // positiveSign
+                                        zero, // zeroDigit
+                                        "C", // currency
+                                        '*', // decimalPoint
+                                        "XYZ", // exponentSymbol
+                                        '/', // groupSeparator
+                                        "INFINITY",
+                                        '#', // monetaryDecimal
+                                        "NAN",
+                                        '$', // percent
+                                        '^' // permill
+                                ),
+                                Locale.ENGLISH,
+                                MathContext.DECIMAL32
+                        )
+                ),
+                text,
+                ParserTokens.bigDecimal(
+                        BigDecimal.valueOf(12.5),
+                        text
+                ),
                 text,
                 ""
         );
