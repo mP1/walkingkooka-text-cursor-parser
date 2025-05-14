@@ -19,6 +19,7 @@ package walkingkooka.text.cursor.parser;
 import walkingkooka.text.Whitespace;
 import walkingkooka.text.cursor.TextCursor;
 
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -28,7 +29,7 @@ final class CustomToStringParser<C extends ParserContext> extends ParserWrapper<
 
     static <C extends ParserContext> Parser<C> wrap(final Parser<C> parser,
                                                     final String toString) {
-        checkParser(parser);
+        Objects.requireNonNull((Parser<?>) parser, "parser");
         Whitespace.failIfNullOrEmptyOrWhitespace(toString, "toString");
 
         Parser<C> parseWithToString;

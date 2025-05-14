@@ -30,7 +30,7 @@ final class TransformingParser<C extends ParserContext> extends ParserWrapper<C>
 
     static <C extends ParserContext> TransformingParser<C> with(final Parser<C> parser,
                                                                 final BiFunction<ParserToken, C, ParserToken> transformer) {
-        checkParser(parser);
+        Objects.requireNonNull((Parser<?>) parser, "parser");
         Objects.requireNonNull(transformer, "transformer");
 
         return new TransformingParser<>(
