@@ -218,17 +218,24 @@ final class BigDecimalParser<C extends ParserContext> extends NonEmptyParser<C>
     private static BigDecimal number(final BigDecimal value,
                                      final int digit,
                                      final MathContext context) {
-        return value.multiply(RADIX_BIGDECIMAL, context)
-                .add(BigDecimal.valueOf(digit));
+        return value.multiply(
+                RADIX_BIGDECIMAL,
+                context
+        ).add(BigDecimal.valueOf(digit));
     }
 
-    private static int exponent(final int value, final int digit) {
+    private static int exponent(final int value,
+                                final int digit) {
         return value * RADIX + digit;
     }
 
-    private static BigDecimalParserToken token(final BigDecimal value, final TextCursorSavePoint save) {
-        return BigDecimalParserToken.with(value,
-                save.textBetween().toString());
+    private static BigDecimalParserToken token(final BigDecimal value,
+                                               final TextCursorSavePoint save) {
+        return BigDecimalParserToken.with(
+                value,
+                save.textBetween()
+                        .toString()
+        );
     }
 
     // ParserSetToString..........................................................................................................
