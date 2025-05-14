@@ -87,6 +87,7 @@ final class DoubleParser<C extends ParserContext> extends NonEmptyParser<C>
         final char negativeSign = context.negativeSign();
         final char positiveSign = context.positiveSign();
         final String exponentSymbol = context.exponentSymbol();
+        final char zero = context.zeroDigit();
 
         Optional<ParserToken> token = Optional.empty();
 
@@ -156,7 +157,7 @@ final class DoubleParser<C extends ParserContext> extends NonEmptyParser<C>
                     }
                 }
                 if ((NUMBER_ZERO & mode) != 0) {
-                    if ('0' == c) {
+                    if (zero == c) {
                         cursor.next();
                         mode = DECIMAL | EXPONENT;
                         empty = false;
@@ -164,7 +165,7 @@ final class DoubleParser<C extends ParserContext> extends NonEmptyParser<C>
                     }
                 }
                 if ((NUMBER_DIGIT & mode) != 0) {
-                    final int digit = digit(c);
+                    final int digit = context.digit(c);
                     if (digit >= 0) {
                         cursor.next();
                         number = number(number, digit);
@@ -181,7 +182,7 @@ final class DoubleParser<C extends ParserContext> extends NonEmptyParser<C>
                     }
                 }
                 if ((DECIMAL_DIGIT & mode) != 0) {
-                    final int digit = digit(c);
+                    final int digit = context.digit(c);
                     if (digit >= 0) {
                         cursor.next();
                         number = number(number, digit);
@@ -220,7 +221,7 @@ final class DoubleParser<C extends ParserContext> extends NonEmptyParser<C>
                     }
                 }
                 if ((EXPONENT_DIGIT & mode) != 0) {
-                    final int digit = digit(c);
+                    final int digit = context.digit(c);
                     if (digit >= 0) {
                         cursor.next();
                         exponent = exponent(exponent, digit);
@@ -326,10 +327,6 @@ final class DoubleParser<C extends ParserContext> extends NonEmptyParser<C>
         }
 
         return token;
-    }
-
-    private static int digit(final char c) {
-        return Character.digit(c, RADIX);
     }
 
     private static double number(final double value, final int digit) {
