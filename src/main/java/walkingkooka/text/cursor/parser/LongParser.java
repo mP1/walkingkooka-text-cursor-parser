@@ -64,6 +64,7 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> implem
         LongParserToken token;
 
         final int radix = this.radix;
+        final boolean radix10 = 10 == radix;
         long number = 0;
         boolean empty = true;
         boolean overflow = false;
@@ -77,8 +78,8 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> implem
                 break;
             }
 
-            char c = cursor.at();
-            if (empty && 10 == radix) {
+            final char c = cursor.at();
+            if (empty && radix10) {
                 if (negativeSign == c) {
                     signed = true;
                     cursor.next();
@@ -90,7 +91,9 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> implem
                     continue;
                 }
             }
-            final int digit = Character.digit(c, radix);
+            final int digit = radix10 ?
+                    context.digit(c) :
+                    Character.digit(c, radix);
             if (-1 == digit) {
                 token = empty ?
                         null :
