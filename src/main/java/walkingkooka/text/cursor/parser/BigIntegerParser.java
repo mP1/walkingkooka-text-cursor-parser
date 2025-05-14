@@ -66,8 +66,6 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C>
         final char negativeSign = context.negativeSign();
         final char positiveSign = context.positiveSign();
 
-        BigIntegerParserToken token;
-
         final int radix = this.radix;
         final boolean radix10 = 10 == radix;
 
@@ -75,18 +73,9 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C>
         boolean empty = true;
         boolean signed = false;
 
-        for (; ; ) {
-            if (cursor.isEmpty()) {
-                token = empty ?
-                        null :
-                        this.bigIntegerParserToken(
-                                number,
-                                save
-                        );
-                break;
-            }
+        while (cursor.isNotEmpty()) {
 
-            char c = cursor.at();
+            final char c = cursor.at();
             if (radix10 && empty) {
                 if (negativeSign == c) {
                     signed = true;
@@ -104,12 +93,6 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C>
                     context.digit(c) :
                     Character.digit(c, radix);
             if (-1 == digit) {
-                token = empty ?
-                        null :
-                        this.bigIntegerParserToken(
-                                number,
-                                save
-                        );
                 break;
             }
             empty = false;
@@ -122,24 +105,16 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C>
                     number.add(digitBigInteger);
 
             cursor.next();
-            if (cursor.isEmpty()) {
-                token = this.bigIntegerParserToken(
-                        number,
-                        save
-                );
-                break;
-            }
         }
 
-        return Optional.ofNullable(token);
-    }
-
-    private BigIntegerParserToken bigIntegerParserToken(final BigInteger value,
-                                                        final TextCursorSavePoint save) {
-        return BigIntegerParserToken.with(
-                value,
-                save.textBetween()
-                        .toString()
+        return Optional.ofNullable(
+                empty ?
+                        null :
+                        ParserTokens.bigInteger(
+                                number,
+                                save.textBetween()
+                                        .toString()
+                        )
         );
     }
 
