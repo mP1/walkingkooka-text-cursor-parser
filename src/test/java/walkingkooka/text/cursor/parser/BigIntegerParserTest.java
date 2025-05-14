@@ -250,10 +250,67 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
         );
     }
 
-    private TextCursor parseAndCheck3(final String text,
-                                      final int value) {
-        return this.parseAndCheck(
+    private final static char ARABIC_INDIC_ZERO = '\u0660';
+
+    @Test
+    public void testParseRadix16IgnoresDecimalNumberContextZeroNonArabicDigits() {
+        final String text = "ff";
+
+        this.parseAndCheck3(
+                BigIntegerParser.with(16),
+                text,
+                ARABIC_INDIC_ZERO,
+                0xff
+        );
+    }
+
+    @Test
+    public void testParseRadix10NonArabicDigits() {
+        final String text = new StringBuilder()
+                .append((char) (ARABIC_INDIC_ZERO + 1))
+                .append((char) (ARABIC_INDIC_ZERO + 2))
+                .toString();
+
+        this.parseAndCheck3(
                 this.createParser(),
+                text,
+                ARABIC_INDIC_ZERO,
+                12
+        );
+    }
+
+    @Test
+    public void testParseRadix10NonArabicDigits2() {
+        final String text = new StringBuilder()
+                .append('M')
+                .append((char) (ARABIC_INDIC_ZERO + 1))
+                .append((char) (ARABIC_INDIC_ZERO + 2))
+                .toString();
+
+        this.parseAndCheck3(
+                this.createParser(),
+                text,
+                ARABIC_INDIC_ZERO,
+                -12
+        );
+    }
+
+    private TextCursor parseAndCheck3(final String text,
+                                      final long expected) {
+        return this.parseAndCheck3(
+                this.createParser(),
+                text,
+                '0',
+                expected
+        );
+    }
+
+    private TextCursor parseAndCheck3(final Parser<ParserContext> parser,
+                                      final String text,
+                                      final char zeroDigit,
+                                      final long expected) {
+        return this.parseAndCheck(
+                parser,
                 ParserContexts.basic(
                         InvalidCharacterExceptionFactory.POSITION,
                         DateTimeContexts.fake(),
@@ -267,11 +324,16 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
                             public char positiveSign() {
                                 return 'P';
                             }
+
+                            @Override
+                            public char zeroDigit() {
+                                return zeroDigit;
+                            }
                         }
                 ),
                 text,
                 ParserTokens.bigInteger(
-                        BigInteger.valueOf(value),
+                        BigInteger.valueOf(expected),
                         text
                 ),
                 text,

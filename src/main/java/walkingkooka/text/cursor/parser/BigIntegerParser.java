@@ -69,6 +69,8 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C>
         BigIntegerParserToken token;
 
         final int radix = this.radix;
+        final boolean radix10 = 10 == radix;
+
         BigInteger number = BigInteger.ZERO;
         boolean empty = true;
         boolean signed = false;
@@ -85,7 +87,7 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C>
             }
 
             char c = cursor.at();
-            if (empty && 10 == radix) {
+            if (radix10 && empty) {
                 if (negativeSign == c) {
                     signed = true;
                     cursor.next();
@@ -98,7 +100,9 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C>
                 }
             }
 
-            final int digit = Character.digit(c, radix);
+            final int digit = radix10 ?
+                    context.digit(c) :
+                    Character.digit(c, radix);
             if (-1 == digit) {
                 token = empty ?
                         null :
