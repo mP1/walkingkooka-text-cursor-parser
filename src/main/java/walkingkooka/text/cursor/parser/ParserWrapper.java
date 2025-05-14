@@ -21,10 +21,6 @@ import java.util.Objects;
 
 abstract class ParserWrapper<C extends ParserContext> extends ParserSetToString<C> {
 
-    static void checkParser(final Parser<?> parser) {
-        Objects.requireNonNull(parser, "parser");
-    }
-
     ParserWrapper(final Parser<C> parser,
                   final String toString) {
         super(toString);

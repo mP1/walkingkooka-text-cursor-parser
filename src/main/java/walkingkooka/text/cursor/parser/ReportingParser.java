@@ -40,7 +40,7 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
                                                              final Parser<C> parser) {
         Objects.requireNonNull(condition, "condition");
         Objects.requireNonNull(reporter, "reporter");
-        checkParser(parser);
+        Objects.requireNonNull((Parser<?>) parser, "parser");
 
         Parser<C> wrapped = parser;
         if (parser instanceof ReportingParser) {
