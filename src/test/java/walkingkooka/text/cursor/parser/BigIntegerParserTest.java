@@ -250,8 +250,6 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
         );
     }
 
-    private final static char ARABIC_INDIC_ZERO = '\u0660';
-
     @Test
     public void testParseRadix16IgnoresDecimalNumberContextZeroNonArabicDigits() {
         final String text = "ff";
@@ -259,38 +257,30 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
         this.parseAndCheck3(
                 BigIntegerParser.with(16),
                 text,
-                ARABIC_INDIC_ZERO,
+                ARABIC_ZERO_DIGIT,
                 0xff
         );
     }
 
     @Test
     public void testParseRadix10NonArabicDigits() {
-        final String text = new StringBuilder()
-                .append((char) (ARABIC_INDIC_ZERO + 1))
-                .append((char) (ARABIC_INDIC_ZERO + 2))
-                .toString();
-
         this.parseAndCheck3(
                 this.createParser(),
-                text,
-                ARABIC_INDIC_ZERO,
+                arabicDigit(1) +
+                        arabicDigit(2),
+                ARABIC_ZERO_DIGIT,
                 12
         );
     }
 
     @Test
     public void testParseRadix10NonArabicDigits2() {
-        final String text = new StringBuilder()
-                .append('M')
-                .append((char) (ARABIC_INDIC_ZERO + 1))
-                .append((char) (ARABIC_INDIC_ZERO + 2))
-                .toString();
-
         this.parseAndCheck3(
                 this.createParser(),
-                text,
-                ARABIC_INDIC_ZERO,
+                "M" +
+                        arabicDigit(1) +
+                        arabicDigit(2),
+                ARABIC_ZERO_DIGIT,
                 -12
         );
     }

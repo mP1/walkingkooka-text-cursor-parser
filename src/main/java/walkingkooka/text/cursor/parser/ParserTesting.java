@@ -22,6 +22,7 @@ import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
+import walkingkooka.math.MathTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
@@ -45,7 +46,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * Mixin that includes numerous helpers to assist parsing and verifying the outcome for success and failures.
  */
-public interface ParserTesting extends TreePrintableTesting {
+public interface ParserTesting extends TreePrintableTesting,
+        MathTesting {
 
     // parseAndCheck....................................................................................................
 

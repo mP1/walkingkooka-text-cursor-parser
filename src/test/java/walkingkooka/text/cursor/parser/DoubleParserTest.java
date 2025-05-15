@@ -847,7 +847,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
 
     @Test
     public void testParseNonArabicDigits() {
-        final char zero = '\u0660';
+        final char zero = ARABIC_ZERO_DIGIT;
 
         final String text = new StringBuilder()
                 .append((char) (zero + 1))

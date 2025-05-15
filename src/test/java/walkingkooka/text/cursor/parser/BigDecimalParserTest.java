@@ -487,7 +487,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
 
     @Test
     public void testParseNonArabicDigits() {
-        final char zero = '\u0660';
+        final char zero = ARABIC_ZERO_DIGIT;
 
         final String text = new StringBuilder()
                 .append((char) (zero + 1))
