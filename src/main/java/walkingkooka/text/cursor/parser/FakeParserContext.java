@@ -18,6 +18,7 @@
 package walkingkooka.text.cursor.parser;
 
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.FakeDecimalNumberContext;
 import walkingkooka.text.cursor.TextCursor;
 
@@ -102,6 +103,11 @@ public class FakeParserContext extends FakeDecimalNumberContext implements Parse
 
     @Override
     public String weekDayNameAbbreviation(final int day) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public DateTimeSymbols dateTimeSymbols() {
         throw new UnsupportedOperationException();
     }
 }
