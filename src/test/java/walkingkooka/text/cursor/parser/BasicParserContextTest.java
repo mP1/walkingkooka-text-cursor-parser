@@ -105,7 +105,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
 
     @Test
     public void testLocale() {
-        this.hasLocaleAndCheck(
+        this.localeAndCheck(
                 this.createContext(),
                 LOCALE
         );
