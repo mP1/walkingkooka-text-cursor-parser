@@ -27,6 +27,7 @@ import walkingkooka.text.cursor.TextCursor;
 import java.math.MathContext;
 import java.util.Locale;
 
+strictfp
 public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<ParserContext>, DoubleParserToken> {
 
     @Test
@@ -494,16 +495,16 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
     @Test
     public void testParseNumberDecimalFractionEExponent() {
         this.parseAndCheck2(
-                "123.5E-67",
-                123.5E-67
+                "128.5E-67",
+                128.5E-67
         );
     }
 
     @Test
     public void testParseNumberDecimalFractionEExponent2() {
         this.parseAndCheck2(
-                "123.5E-67",
-                123.5E-67,
+                "128.5E-67",
+                128.5E-67,
                 "~"
         );
     }
@@ -511,16 +512,16 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
     @Test
     public void testParseNumberDecimalFractionEExponent3() {
         this.parseAndCheck2(
-                "-123.5E-67",
-                -123.5E-67
+                "-128.5E-67",
+                -128.5E-67
         );
     }
 
     @Test
     public void testParseNumberDecimalFractionEExponent4() {
         this.parseAndCheck2(
-                "-123.5E-67",
-                -123.5E-67,
+                "-128.5E-67",
+                -128.5E-67,
                 "~"
         );
     }
