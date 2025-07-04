@@ -270,7 +270,6 @@
                     <invokerPropertiesFile>src/it/invoker.properties</invokerPropertiesFile>
                     <invokerTest>gwt-jar-test</invokerTest>
                     <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
-                    <invokerTest>gwt-jar-test</invokerTest>
                     <settingsFile>src/it/settings.xml</settingsFile>
                     <streamLogs>false</streamLogs>
                 </configuration>
