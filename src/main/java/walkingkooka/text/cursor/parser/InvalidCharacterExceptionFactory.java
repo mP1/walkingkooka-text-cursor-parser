@@ -73,8 +73,7 @@ public enum InvalidCharacterExceptionFactory implements BiFunction<Parser<?>, Te
         Objects.requireNonNull(cursor, "cursor");
 
         final TextCursorLineInfo lineInfo = cursor.lineInfo();
-        final String text = lineInfo.text()
-                .toString();
+        final String text = cursor.text();
 
         int position = cursor.isEmpty() ?
                 0 :

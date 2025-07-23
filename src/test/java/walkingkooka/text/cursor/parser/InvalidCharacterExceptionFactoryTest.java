@@ -163,6 +163,36 @@ public final class InvalidCharacterExceptionFactoryTest implements BiFunctionTes
         );
     }
 
+    @Test
+    public void testColumnAndLineAndExpectedApplyNotFirstLine() {
+        final String text = "xyz\nabc\n";
+
+        final TextCursor cursor = TextCursors.charSequence(text);
+        cursor.next();
+        cursor.next();
+        cursor.next();
+        cursor.next();
+        cursor.next();
+
+        this.applyAndCheck(
+                InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
+                new FakeParser() {
+                    @Override
+                    public String toString() {
+                        return "PARSER456";
+                    }
+                },
+                cursor,
+                new InvalidCharacterException(
+                        text,
+                        5
+                ).setColumnAndLine(
+                        2,
+                        2
+                ).appendToMessage("expected PARSER456")
+        );
+    }
+
     @Override
     public InvalidCharacterExceptionFactory createBiFunction() {
         return InvalidCharacterExceptionFactory.POSITION;
