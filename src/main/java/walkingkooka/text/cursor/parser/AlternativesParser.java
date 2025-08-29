@@ -46,7 +46,7 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
 
         // visit all parsers, flattening any that are themselves AlternativesParser
         parsers.forEach(
-                p -> tryFlatten(p, unique)
+            p -> tryFlatten(p, unique)
         );
 
         final Parser<C> result;
@@ -59,9 +59,9 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
                 break;
             default:
                 result = new AlternativesParser<>(
-                        unique,
-                        buildToString(unique),
-                        false // customToString=false
+                    unique,
+                    buildToString(unique),
+                    false // customToString=false
                 );
         }
 
@@ -78,8 +78,8 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
             final AlternativesParser<C> alt = parser.cast();
             for (final Parser<C> p : alt.parsers) {
                 tryFlatten(
-                        p,
-                        unique
+                    p,
+                    unique
                 );
             }
         } else {
@@ -91,10 +91,10 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
 
     private static <CC extends ParserContext> String buildToString(final List<Parser<CC>> parsers) {
         return parsers.stream()
-                .map(AlternativesParser::parserToString)
-                .collect(
-                        Collectors.joining(" | ")
-                );
+            .map(AlternativesParser::parserToString)
+            .collect(
+                Collectors.joining(" | ")
+            );
     }
 
     /**
@@ -163,9 +163,9 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
     @Override
     AlternativesParser<C> replaceToString(final String toString) {
         return new AlternativesParser<>(
-                this.parsers,
-                toString,
-                true // customToString=true
+            this.parsers,
+            toString,
+            true // customToString=true
         );
     }
 
@@ -181,7 +181,7 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
         final AlternativesParser<?> otherAlternativeParser = other.cast();
 
         return this.parsers.equals(
-                otherAlternativeParser.parsers
+            otherAlternativeParser.parsers
         );
     }
 

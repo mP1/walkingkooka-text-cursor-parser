@@ -36,28 +36,28 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
-        ParseStringTesting<ParserToken>,
-        ParserTesting {
+    ParseStringTesting<ParserToken>,
+    ParserTesting {
 
     // parseText........................................................................................................
 
     @Test
     public void testParseTextWithNullTextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.parseString(null)
+            NullPointerException.class,
+            () -> this.parseString(null)
         );
     }
 
     @Test
     public void testParseTextWithNullContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> Parsers.longParser(10)
-                        .parseText(
-                                "1",
-                                null
-                        )
+            NullPointerException.class,
+            () -> Parsers.longParser(10)
+                .parseText(
+                    "1",
+                    null
+                )
         );
     }
 
@@ -66,11 +66,11 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
         final String text = "1X2";
 
         this.parseStringFails(
+            text,
+            new InvalidCharacterException(
                 text,
-                new InvalidCharacterException(
-                        text,
-                        1
-                )
+                1
+            )
         );
     }
 
@@ -79,11 +79,11 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
         final String text = "'un-closed";
 
         assertThrows(
-                IllegalArgumentException.class,
-                () -> Parsers.singleQuoted().parseText(
-                        text,
-                        ParserContexts.fake()
-                )
+            IllegalArgumentException.class,
+            () -> Parsers.singleQuoted().parseText(
+                text,
+                ParserContexts.fake()
+            )
         );
     }
 
@@ -92,27 +92,27 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
         final String text = "ABC123";
 
         final InvalidCharacterException thrown = assertThrows(
-                InvalidCharacterException.class,
-                () -> new FakeParser<>() {
+            InvalidCharacterException.class,
+            () -> new FakeParser<>() {
 
-                    @Override
-                    public Optional<ParserToken> parse(final TextCursor cursor,
-                                                       final ParserContext context) {
-                        cursor.end();
-                        return Optional.empty();
-                    }
-                }.parseText(
-                        text,
-                        ParserContexts.fake()
-                )
+                @Override
+                public Optional<ParserToken> parse(final TextCursor cursor,
+                                                   final ParserContext context) {
+                    cursor.end();
+                    return Optional.empty();
+                }
+            }.parseText(
+                text,
+                ParserContexts.fake()
+            )
         );
 
         this.checkEquals(
-                new InvalidCharacterException(
-                        text,
-                        0
-                ).getMessage(),
-                thrown.getMessage()
+            new InvalidCharacterException(
+                text,
+                0
+            ).getMessage(),
+            thrown.getMessage()
         );
     }
 
@@ -121,38 +121,38 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
         final String text = "ABC123";
 
         final InvalidCharacterException ice = new InvalidCharacterException(
-                "Hello",
-                2
+            "Hello",
+            2
         );
 
         final InvalidCharacterException thrown = assertThrows(
-                InvalidCharacterException.class,
-                () -> new FakeParser<>() {
+            InvalidCharacterException.class,
+            () -> new FakeParser<>() {
 
-                    @Override
-                    public Optional<ParserToken> parse(final TextCursor cursor,
-                                                       final ParserContext context) {
-                        return Optional.empty();
-                    }
+                @Override
+                public Optional<ParserToken> parse(final TextCursor cursor,
+                                                   final ParserContext context) {
+                    return Optional.empty();
+                }
 
+                @Override
+                public String toString() {
+                    return "PARSER123";
+                }
+            }.parseText(
+                text,
+                new FakeParserContext() {
                     @Override
-                    public String toString() {
-                        return "PARSER123";
+                    public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                                               final TextCursor cursor) {
+                        return ice;
                     }
-                }.parseText(
-                        text,
-                        new FakeParserContext() {
-                            @Override
-                            public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
-                                                                                       final TextCursor cursor) {
-                                return ice;
-                            }
-                        }
-                )
+                }
+            )
         );
         assertSame(
-                ice,
-                thrown
+            ice,
+            thrown
         );
     }
 
@@ -161,53 +161,53 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
         final String text = "ABC123";
 
         final InvalidCharacterException ice = new InvalidCharacterException(
-                "Hello",
-                2
+            "Hello",
+            2
         );
 
         assertSame(
-                ice,
-                assertThrows(
-                        InvalidCharacterException.class,
-                        () -> new FakeParser<>() {
+            ice,
+            assertThrows(
+                InvalidCharacterException.class,
+                () -> new FakeParser<>() {
 
-                            @Override
-                            public Optional<ParserToken> parse(final TextCursor cursor,
-                                                               final ParserContext context) {
-                                cursor.next();
-                                return Optional.empty();
-                            }
+                    @Override
+                    public Optional<ParserToken> parse(final TextCursor cursor,
+                                                       final ParserContext context) {
+                        cursor.next();
+                        return Optional.empty();
+                    }
 
-                            @Override
-                            public String toString() {
-                                return "PARSER123";
-                            }
-                        }.parseText(
-                                text,
-                                new FakeParserContext() {
+                    @Override
+                    public String toString() {
+                        return "PARSER123";
+                    }
+                }.parseText(
+                    text,
+                    new FakeParserContext() {
 
-                                    @Override
-                                    public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
-                                                                                               final TextCursor cursor) {
-                                        return ice;
-                                    }
-                                }
-                        )
+                        @Override
+                        public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
+                                                                                   final TextCursor cursor) {
+                            return ice;
+                        }
+                    }
                 )
+            )
         );
     }
 
     @Override
     public ParserToken parseString(final String text) {
         return Parsers.longParser(10)
-                .parseText(
-                        text,
-                        ParserContexts.basic(
-                                InvalidCharacterExceptionFactory.POSITION,
-                                DateTimeContexts.fake(),
-                                DecimalNumberContexts.american(MathContext.DECIMAL32)
-                        )
-                );
+            .parseText(
+                text,
+                ParserContexts.basic(
+                    InvalidCharacterExceptionFactory.POSITION,
+                    DateTimeContexts.fake(),
+                    DecimalNumberContexts.american(MathContext.DECIMAL32)
+                )
+            );
     }
 
     @Override
@@ -228,14 +228,14 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
         final Parser<ParserContext> and = Parsers.string("BBB", CaseSensitivity.SENSITIVE);
 
         this.andAndCheck(
-                parser,
-                and,
-                Parsers.sequence(
-                        Lists.of(
-                                parser,
-                                and
-                        )
+            parser,
+            and,
+            Parsers.sequence(
+                Lists.of(
+                    parser,
+                    and
                 )
+            )
         );
     }
 
@@ -246,26 +246,26 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
         final Parser<ParserContext> required = Parsers.string("Hello", CaseSensitivity.SENSITIVE);
 
         this.optionalAndCheck(
-                required,
-                Parsers.repeating(
-                        0,
-                        1,
-                        required
-                )
+            required,
+            Parsers.repeating(
+                0,
+                1,
+                required
+            )
         );
     }
 
     @Test
     public void testOptionalWhenOptional() {
         final Parser<ParserContext> required = Parsers.string("Hello", CaseSensitivity.SENSITIVE);
-        
+
         this.optionalAndCheck(
-                required.optional(),
-                Parsers.repeating(
-                        0,
-                        1,
-                        required
-                )
+            required.optional(),
+            Parsers.repeating(
+                0,
+                1,
+                required
+            )
         );
     }
 
@@ -277,17 +277,17 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
         final Parser<ParserContext> optional = required.optional();
 
         this.isOptionalAndCheck(
-                optional,
-                true
+            optional,
+            true
         );
 
         this.requiredAndCheck(
-                optional,
-                Parsers.repeating(
-                        0,
-                        1,
-                        required
-                )
+            optional,
+            Parsers.repeating(
+                0,
+                1,
+                required
+            )
         );
     }
 
@@ -296,8 +296,8 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
         final Parser<ParserContext> required = Parsers.string("Hello", CaseSensitivity.SENSITIVE);
 
         this.requiredAndCheck(
-                required,
-                required
+            required,
+            required
         );
     }
 

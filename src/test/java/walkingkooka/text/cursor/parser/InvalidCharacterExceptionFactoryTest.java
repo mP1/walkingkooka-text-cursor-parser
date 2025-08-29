@@ -29,28 +29,28 @@ public final class InvalidCharacterExceptionFactoryTest implements BiFunctionTes
     @Test
     public void testPositionApply() {
         this.applyAndCheck(
-                InvalidCharacterExceptionFactory.POSITION,
-                Parsers.fake(),
-                TextCursors.charSequence("xyz")
-                        .next(),
-                new InvalidCharacterException(
-                        "xyz",
-                        1
-                )
+            InvalidCharacterExceptionFactory.POSITION,
+            Parsers.fake(),
+            TextCursors.charSequence("xyz")
+                .next(),
+            new InvalidCharacterException(
+                "xyz",
+                1
+            )
         );
     }
 
     @Test
     public void testPositionApplyWhenCursorEmpty() {
         this.applyAndCheck(
-                InvalidCharacterExceptionFactory.POSITION,
-                Parsers.fake(),
-                TextCursors.charSequence("xyz")
-                        .end(),
-                new InvalidCharacterException(
-                        "xyz",
-                        0
-                )
+            InvalidCharacterExceptionFactory.POSITION,
+            Parsers.fake(),
+            TextCursors.charSequence("xyz")
+                .end(),
+            new InvalidCharacterException(
+                "xyz",
+                0
+            )
         );
     }
 
@@ -59,7 +59,7 @@ public final class InvalidCharacterExceptionFactoryTest implements BiFunctionTes
         final String text = "abcdef";
 
         final TextCursor cursor = TextCursors.maxPosition(
-                TextCursors.charSequence(text)
+            TextCursors.charSequence(text)
         );
 
         cursor.next();
@@ -71,13 +71,13 @@ public final class InvalidCharacterExceptionFactoryTest implements BiFunctionTes
         save.restore();
 
         this.applyAndCheck(
-                InvalidCharacterExceptionFactory.POSITION,
-                Parsers.fake(),
-                cursor,
-                new InvalidCharacterException(
-                        text,
-                        2
-                )
+            InvalidCharacterExceptionFactory.POSITION,
+            Parsers.fake(),
+            cursor,
+            new InvalidCharacterException(
+                text,
+                2
+            )
         );
     }
 
@@ -86,7 +86,7 @@ public final class InvalidCharacterExceptionFactoryTest implements BiFunctionTes
         final String text = "abcdef";
 
         final TextCursor cursor = TextCursors.maxPosition(
-                TextCursors.charSequence(text)
+            TextCursors.charSequence(text)
         );
 
         cursor.next();
@@ -98,68 +98,68 @@ public final class InvalidCharacterExceptionFactoryTest implements BiFunctionTes
         save.restore();
 
         this.applyAndCheck(
-                InvalidCharacterExceptionFactory.POSITION,
-                Parsers.fake(),
-                cursor,
-                new InvalidCharacterException(
-                        text,
-                        text.length() - 1
-                )
+            InvalidCharacterExceptionFactory.POSITION,
+            Parsers.fake(),
+            cursor,
+            new InvalidCharacterException(
+                text,
+                text.length() - 1
+            )
         );
     }
 
     @Test
     public void testColumnAndLineApply() {
         this.applyAndCheck(
-                InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
-                Parsers.fake(),
-                TextCursors.charSequence("xyz"),
-                new InvalidCharacterException(
-                        "xyz",
-                        0
-                ).setColumnAndLine(
-                        1,
-                        1
-                )
+            InvalidCharacterExceptionFactory.COLUMN_AND_LINE,
+            Parsers.fake(),
+            TextCursors.charSequence("xyz"),
+            new InvalidCharacterException(
+                "xyz",
+                0
+            ).setColumnAndLine(
+                1,
+                1
+            )
         );
     }
 
     @Test
     public void testPositionAndExpectedApply() {
         this.applyAndCheck(
-                InvalidCharacterExceptionFactory.POSITION_EXPECTED,
-                new FakeParser() {
-                    @Override
-                    public String toString() {
-                        return "PARSER123";
-                    }
-                },
-                TextCursors.charSequence("xyz"),
-                new InvalidCharacterException(
-                        "xyz",
-                        0
-                ).appendToMessage("expected PARSER123")
+            InvalidCharacterExceptionFactory.POSITION_EXPECTED,
+            new FakeParser() {
+                @Override
+                public String toString() {
+                    return "PARSER123";
+                }
+            },
+            TextCursors.charSequence("xyz"),
+            new InvalidCharacterException(
+                "xyz",
+                0
+            ).appendToMessage("expected PARSER123")
         );
     }
 
     @Test
     public void testColumnAndLineAndExpectedApply() {
         this.applyAndCheck(
-                InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
-                new FakeParser() {
-                    @Override
-                    public String toString() {
-                        return "PARSER456";
-                    }
-                },
-                TextCursors.charSequence("xyz"),
-                new InvalidCharacterException(
-                        "xyz",
-                        0
-                ).setColumnAndLine(
-                        1,
-                        1
-                ).appendToMessage("expected PARSER456")
+            InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
+            new FakeParser() {
+                @Override
+                public String toString() {
+                    return "PARSER456";
+                }
+            },
+            TextCursors.charSequence("xyz"),
+            new InvalidCharacterException(
+                "xyz",
+                0
+            ).setColumnAndLine(
+                1,
+                1
+            ).appendToMessage("expected PARSER456")
         );
     }
 
@@ -175,21 +175,21 @@ public final class InvalidCharacterExceptionFactoryTest implements BiFunctionTes
         cursor.next();
 
         this.applyAndCheck(
-                InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
-                new FakeParser() {
-                    @Override
-                    public String toString() {
-                        return "PARSER456";
-                    }
-                },
-                cursor,
-                new InvalidCharacterException(
-                        text,
-                        5
-                ).setColumnAndLine(
-                        2,
-                        2
-                ).appendToMessage("expected PARSER456")
+            InvalidCharacterExceptionFactory.COLUMN_AND_LINE_EXPECTED,
+            new FakeParser() {
+                @Override
+                public String toString() {
+                    return "PARSER456";
+                }
+            },
+            cursor,
+            new InvalidCharacterException(
+                text,
+                5
+            ).setColumnAndLine(
+                2,
+                2
+            ).appendToMessage("expected PARSER456")
         );
     }
 

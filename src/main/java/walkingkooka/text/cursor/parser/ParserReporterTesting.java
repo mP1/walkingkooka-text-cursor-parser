@@ -31,8 +31,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public interface ParserReporterTesting<R extends ParserReporter<C>, C extends ParserContext>
-        extends ToStringTesting<R>,
-        TypeNameTesting<R> {
+    extends ToStringTesting<R>,
+    TypeNameTesting<R> {
 
     @Test
     default void testNullTextCursorFails() {
@@ -89,18 +89,18 @@ public interface ParserReporterTesting<R extends ParserReporter<C>, C extends Pa
         final TextCursorSavePoint save = cursor.save();
         try {
             this.report(
-                    reporter,
-                    cursor,
-                    context,
-                    parser
+                reporter,
+                cursor,
+                context,
+                parser
             );
             fail("Reporter should have reported exception");
         } catch (final RuntimeException expected) {
             save.restore();
             final String message = expected.getMessage();
             assertTrue(
-                    message.contains(messageContains),
-                    () -> "report message: " + CharSequences.quoteAndEscape(message) + " missing contains: " + CharSequences.quoteAndEscape(messageContains)
+                message.contains(messageContains),
+                () -> "report message: " + CharSequences.quoteAndEscape(message) + " missing contains: " + CharSequences.quoteAndEscape(messageContains)
             );
         }
     }

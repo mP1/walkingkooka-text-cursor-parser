@@ -38,8 +38,8 @@ import java.util.stream.Collectors;
  * Represents a result of a parser attempt to consume a {@link walkingkooka.text.cursor.TextCursor}
  */
 public interface ParserToken extends CanBeEmpty,
-        HasText,
-        TreePrintable {
+    HasText,
+    TreePrintable {
 
     /**
      * A empty list, useful for parent {@link ParserToken} without children.
@@ -51,8 +51,8 @@ public interface ParserToken extends CanBeEmpty,
      */
     static List<ParserToken> filterWithoutNoise(final List<ParserToken> value) {
         return value.stream()
-                .filter(t -> !t.isNoise())
-                .collect(Collectors.toList());
+            .filter(t -> !t.isNoise())
+            .collect(Collectors.toList());
     }
 
     /**
@@ -62,8 +62,8 @@ public interface ParserToken extends CanBeEmpty,
         Objects.requireNonNull(tokens, "tokens");
 
         return tokens.stream()
-                .map(HasText::text)
-                .collect(Collectors.joining());
+            .map(HasText::text)
+            .collect(Collectors.joining());
     }
 
     /**
@@ -101,8 +101,8 @@ public interface ParserToken extends CanBeEmpty,
      */
     default List<ParserToken> children() {
         return this.isLeaf() ?
-                Lists.empty() :
-                ((Value<List<ParserToken>>) this).value();
+            Lists.empty() :
+            ((Value<List<ParserToken>>) this).value();
     }
 
     /**
@@ -121,10 +121,10 @@ public interface ParserToken extends CanBeEmpty,
 
         if (false == children.isEmpty()) {
             throw new IllegalArgumentException(
-                    "Expected zero children for leaf parser token but got " +
-                            children.size() +
-                            " children=" +
-                            children
+                "Expected zero children for leaf parser token but got " +
+                    children.size() +
+                    " children=" +
+                    children
             );
         }
 
@@ -146,11 +146,11 @@ public interface ParserToken extends CanBeEmpty,
         Objects.requireNonNull(factory, "factory");
 
         return token.children().equals(copy) ?
-                token :
-                factory.apply(
-                        copy,
-                        ParserToken.text(copy)
-                );
+            token :
+            factory.apply(
+                copy,
+                ParserToken.text(copy)
+            );
     }
 
     // findFirst........................................................................................................
@@ -206,14 +206,14 @@ public interface ParserToken extends CanBeEmpty,
      */
     default Optional<ParserToken> removeFirstIf(final Predicate<ParserToken> predicate) {
         return this.isLeaf() ?
-                ParserTokens.removeFirstIfLeaf(
-                        this,
-                        predicate
-                ) :
-                ParserTokens.removeFirstIfParent(
-                        this,
-                        predicate
-                );
+            ParserTokens.removeFirstIfLeaf(
+                this,
+                predicate
+            ) :
+            ParserTokens.removeFirstIfParent(
+                this,
+                predicate
+            );
     }
 
     // removeIf.........................................................................................................
@@ -225,14 +225,14 @@ public interface ParserToken extends CanBeEmpty,
      */
     default Optional<ParserToken> removeIf(final Predicate<ParserToken> predicate) {
         return this.isLeaf() ?
-                ParserTokens.removeIfLeaf(
-                        this,
-                        predicate
-                ) :
-                ParserTokens.removeIfParent(
-                        this,
-                        predicate
-                );
+            ParserTokens.removeIfLeaf(
+                this,
+                predicate
+            ) :
+            ParserTokens.removeIfParent(
+                this,
+                predicate
+            );
     }
 
     // replaceFirstIf....................................................................................................
@@ -244,9 +244,9 @@ public interface ParserToken extends CanBeEmpty,
     default ParserToken replaceFirstIf(final Predicate<ParserToken> predicate,
                                        final Function<ParserToken, ParserToken> mapper) {
         return ParserTokens.replaceFirstIf(
-                this,
-                predicate,
-                mapper
+            this,
+            predicate,
+            mapper
         );
     }
 
@@ -259,9 +259,9 @@ public interface ParserToken extends CanBeEmpty,
     default ParserToken replaceIf(final Predicate<ParserToken> predicate,
                                   final Function<ParserToken, ParserToken> mapper) {
         return ParserTokens.replaceIf(
-                this,
-                predicate,
-                mapper
+            this,
+            predicate,
+            mapper
         );
     }
 
@@ -329,9 +329,9 @@ public interface ParserToken extends CanBeEmpty,
                         break;
                     default:
                         toString = CharSequences.quoteIfChars(value) +
-                                " (" +
-                                typeName +
-                                ")";
+                            " (" +
+                            typeName +
+                            ")";
                         break;
                 }
             } else {
@@ -339,20 +339,20 @@ public interface ParserToken extends CanBeEmpty,
             }
 
             printer.println(
-                    ParserTokenTypeName.typeName(this) +
-                            " " +
-                            quotedText +
-                            " " +
-                            toString
+                ParserTokenTypeName.typeName(this) +
+                    " " +
+                    quotedText +
+                    " " +
+                    toString
             );
         }
         if (this.isParent()) {
             final List<ParserToken> children = this.children();
 
             printer.println(
-                    ParserTokenTypeName.typeName(this) +
-                            " " +
-                            quotedText
+                ParserTokenTypeName.typeName(this) +
+                    " " +
+                    quotedText
             );
 
             printer.indent();

@@ -34,8 +34,8 @@ abstract class LeafParserToken<V> extends ValueParserToken<V> {
     @Override
     public final ParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.leafSetChildren(
-                this,
-                children
+            this,
+            children
         );
     }
 }

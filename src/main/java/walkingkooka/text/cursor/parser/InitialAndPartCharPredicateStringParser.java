@@ -28,7 +28,7 @@ import java.util.Optional;
  * The final matched token must have a length between min and max.
  */
 final class InitialAndPartCharPredicateStringParser<C extends ParserContext> extends NonEmptyParser<C>
-        implements RequiredParser<C> {
+    implements RequiredParser<C> {
 
     /**
      * Factory that creates a new {@link InitialAndPartCharPredicateStringParser}
@@ -47,11 +47,11 @@ final class InitialAndPartCharPredicateStringParser<C extends ParserContext> ext
         }
 
         return new InitialAndPartCharPredicateStringParser<>(
-                initial,
-                part,
-                minLength,
-                maxLength,
-                initial + " " + part + "{" + minLength + "," + maxLength + "}"
+            initial,
+            part,
+            minLength,
+            maxLength,
+            initial + " " + part + "{" + minLength + "," + maxLength + "}"
         );
     }
 
@@ -115,8 +115,8 @@ final class InitialAndPartCharPredicateStringParser<C extends ParserContext> ext
 
     private StringParserToken stringParserToken(final StringBuilder text) {
         return text.length() < this.minLength ?
-                null :
-                stringParserToken0(text);
+            null :
+            stringParserToken0(text);
     }
 
     private static StringParserToken stringParserToken0(final StringBuilder text) {
@@ -135,11 +135,11 @@ final class InitialAndPartCharPredicateStringParser<C extends ParserContext> ext
     @Override
     InitialAndPartCharPredicateStringParser<C> replaceToString(final String toString) {
         return new InitialAndPartCharPredicateStringParser<>(
-                this.initial,
-                this.part,
-                this.minLength,
-                this.maxLength,
-                toString
+            this.initial,
+            this.part,
+            this.minLength,
+            this.maxLength,
+            toString
         );
     }
 
@@ -148,10 +148,10 @@ final class InitialAndPartCharPredicateStringParser<C extends ParserContext> ext
     @Override //
     int hashCode0() {
         return Objects.hash(
-                this.initial,
-                this.part,
-                this.minLength,
-                this.maxLength
+            this.initial,
+            this.part,
+            this.minLength,
+            this.maxLength
         );
     }
 
@@ -160,9 +160,9 @@ final class InitialAndPartCharPredicateStringParser<C extends ParserContext> ext
         final InitialAndPartCharPredicateStringParser<?> otherInitial = other.cast();
 
         return this.initial.equals(otherInitial.initial) &&
-                this.part.equals(otherInitial.part) &&
-                this.minLength == otherInitial.minLength &&
-                this.maxLength == otherInitial.maxLength &&
-                this.toString.equals(otherInitial.toString);
+            this.part.equals(otherInitial.part) &&
+            this.minLength == otherInitial.minLength &&
+            this.maxLength == otherInitial.maxLength &&
+            this.toString.equals(otherInitial.toString);
     }
 }

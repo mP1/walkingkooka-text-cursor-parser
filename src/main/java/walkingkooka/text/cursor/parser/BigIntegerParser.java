@@ -27,7 +27,7 @@ import java.util.Optional;
  * Note this only parses numeric digits and not any leading minus sign.
  */
 final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C>
-        implements RequiredParser<C> {
+    implements RequiredParser<C> {
 
     /**
      * Factory that creates a {@link BigIntegerParser}
@@ -38,10 +38,10 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C>
         }
 
         return new BigIntegerParser<>(
-                radix,
-                10 == radix ?
-                        "BigInteger" :
-                        "BigInteger(base=" + radix + ")"
+            radix,
+            10 == radix ?
+                "BigInteger" :
+                "BigInteger(base=" + radix + ")"
         );
     }
 
@@ -90,8 +90,8 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C>
             }
 
             final int digit = radix10 ?
-                    context.digit(c) :
-                    Character.digit(c, radix);
+                context.digit(c) :
+                Character.digit(c, radix);
             if (-1 == digit) {
                 break;
             }
@@ -101,20 +101,20 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C>
 
             final BigInteger digitBigInteger = BigInteger.valueOf(digit);
             number = signed ?
-                    number.subtract(digitBigInteger) :
-                    number.add(digitBigInteger);
+                number.subtract(digitBigInteger) :
+                number.add(digitBigInteger);
 
             cursor.next();
         }
 
         return Optional.ofNullable(
-                empty ?
-                        null :
-                        ParserTokens.bigInteger(
-                                number,
-                                save.textBetween()
-                                        .toString()
-                        )
+            empty ?
+                null :
+                ParserTokens.bigInteger(
+                    number,
+                    save.textBetween()
+                        .toString()
+                )
         );
     }
 
@@ -126,8 +126,8 @@ final class BigIntegerParser<C extends ParserContext> extends NonEmptyParser<C>
     @Override
     BigIntegerParser<C> replaceToString(final String toString) {
         return new BigIntegerParser<>(
-                this.radix,
-                toString
+            this.radix,
+            toString
         );
     }
 

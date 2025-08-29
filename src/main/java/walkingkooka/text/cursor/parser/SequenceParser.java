@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * A {@link Parser} that requires all parsers are matched in order returning all tokens within a {@link SequenceParserToken}
  */
 final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
-        implements RequiredParser<C> {
+    implements RequiredParser<C> {
 
     /**
      * Factory method only called by {@link Parser#or(Parser)}
@@ -41,7 +41,7 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
 
         // visit all parsers, flattening any that are themselves AlternativesParser
         parsers.forEach(
-                p -> tryFlatten(p, flat)
+            p -> tryFlatten(p, flat)
         );
 
         final Parser<C> result;
@@ -54,8 +54,8 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
                 break;
             default:
                 result = new SequenceParser<>(
-                        flat,
-                        buildToString(flat)
+                    flat,
+                    buildToString(flat)
                 );
         }
 
@@ -72,8 +72,8 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
             final SequenceParser<C> sequence = parser.cast();
             for (final Parser<C> p : sequence.parsers) {
                 tryFlatten(
-                        p,
-                        flat
+                    p,
+                    flat
                 );
             }
         } else {
@@ -89,11 +89,11 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
      */
     static <C extends ParserContext> String buildToString(final List<Parser<C>> parsers) {
         return parsers.stream()
-                .map(SequenceParser::parserToString)
-                .collect(Collectors.joining(
-                        ", "
-                        )
-                );
+            .map(SequenceParser::parserToString)
+            .collect(Collectors.joining(
+                    ", "
+                )
+            );
     }
 
     /**
@@ -140,11 +140,11 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
 
         if (false == tokens.isEmpty()) {
             result = Optional.of(
-                    SequenceParserToken.with(
-                            tokens,
-                            start.textBetween()
-                                    .toString()
-                    )
+                SequenceParserToken.with(
+                    tokens,
+                    start.textBetween()
+                        .toString()
+                )
             );
         }
 
@@ -160,8 +160,8 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
     @Override
     SequenceParser<C> replaceToString(final String toString) {
         return new SequenceParser<>(
-                this.parsers,
-                toString
+            this.parsers,
+            toString
         );
     }
 

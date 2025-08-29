@@ -22,7 +22,7 @@ import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 
 public abstract class ParserTokenTestCase<T extends ParserToken> implements ClassTesting2<T>,
-        ParserTokenTesting<T> {
+    ParserTokenTesting<T> {
 
     ParserTokenTestCase() {
         super();

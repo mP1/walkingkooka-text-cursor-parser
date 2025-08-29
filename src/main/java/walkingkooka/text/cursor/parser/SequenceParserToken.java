@@ -49,7 +49,7 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
     @Override
     public SequenceParserToken flat() {
         return this.setValue(RepeatedOrSequenceParserTokenFlatParserTokenVisitor.flat(this))
-                .cast(SequenceParserToken.class);
+            .cast(SequenceParserToken.class);
     }
 
     public <T extends ParserToken> T required(final int index, final Class<T> type) {
@@ -72,13 +72,13 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
 
         final List<ParserToken> flat = RepeatedOrSequenceParserTokenFlatParserTokenVisitor.flat(this);
         return flat.stream()
-                .filter(SequenceParserToken::isNotWhitespace)
-                .findFirst()
-                .map(
-                        t -> t.isSymbol() ?
-                                this :
-                                tryOperatorAwareBinaryOperator(flat, transformer)
-                ).orElse(this);
+            .filter(SequenceParserToken::isNotWhitespace)
+            .findFirst()
+            .map(
+                t -> t.isSymbol() ?
+                    this :
+                    tryOperatorAwareBinaryOperator(flat, transformer)
+            ).orElse(this);
     }
 
     private static boolean isNotWhitespace(final ParserToken token) {
@@ -111,11 +111,11 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
                         final List<ParserToken> withBinary = Lists.array();
                         withBinary.addAll(result.subList(0, begin));
                         withBinary.add(
-                                transformer.binaryOperand(
-                                        binaryOperandTokens,
-                                        ParserToken.text(binaryOperandTokens),
-                                        t
-                                )
+                            transformer.binaryOperand(
+                                binaryOperandTokens,
+                                ParserToken.text(binaryOperandTokens),
+                                t
+                            )
                         );
                         withBinary.addAll(result.subList(end + 1, result.size()));
 
@@ -128,8 +128,8 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
         }
 
         return result.size() == 1 ?
-                result.get(0) :
-                ParserTokens.sequence(result, this.text());
+            result.get(0) :
+            ParserTokens.sequence(result, this.text());
     }
 
     private static int findNextNonWhitespace(final List<ParserToken> tokens,
@@ -151,9 +151,9 @@ public final class SequenceParserToken extends RepeatedOrSequenceParserToken {
     @Override
     public SequenceParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                SequenceParserToken::new
+            this,
+            children,
+            SequenceParserToken::new
         );
     }
 

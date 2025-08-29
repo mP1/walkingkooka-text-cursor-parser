@@ -32,9 +32,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * Base for numerous parsers in this package.
  */
 public abstract class ParserTestCase<P extends Parser<ParserContext>> implements ClassTesting2<P>,
-        ParserTesting2<P, ParserContext>,
-        ToStringTesting<P>,
-        TypeNameTesting<P> {
+    ParserTesting2<P, ParserContext>,
+    ToStringTesting<P>,
+    TypeNameTesting<P> {
 
     ParserTestCase() {
         super();
@@ -70,8 +70,8 @@ public abstract class ParserTestCase<P extends Parser<ParserContext>> implements
             public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                        final TextCursor cursor) {
                 return InvalidCharacterExceptionFactory.POSITION.apply(
-                        parser,
-                        cursor
+                    parser,
+                    cursor
                 );
             }
         };
@@ -85,16 +85,16 @@ public abstract class ParserTestCase<P extends Parser<ParserContext>> implements
 
         final String differentToString = "different123";
         final ParserSetToString<ParserContext> differentParser = Cast.to(
-                parser.setToString(differentToString)
+            parser.setToString(differentToString)
         );
         this.checkEquals(
-                differentToString,
-                differentParser.toString
+            differentToString,
+            differentParser.toString
         );
 
         this.checkEquals(
-                differentToString,
-                differentParser.toString()
+            differentToString,
+            differentParser.toString()
         );
     }
 

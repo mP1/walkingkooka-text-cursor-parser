@@ -24,7 +24,7 @@ import walkingkooka.text.CaseSensitivity;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<AndEmptyTextCursorParser<ParserContext>>
-        implements HashCodeEqualsDefinedTesting2<AndEmptyTextCursorParser<ParserContext>> {
+    implements HashCodeEqualsDefinedTesting2<AndEmptyTextCursorParser<ParserContext>> {
 
     private final static String STRING = "abc";
     private final static Parser<ParserContext> WRAPPED = Parsers.string(STRING, CaseSensitivity.SENSITIVE);
@@ -34,8 +34,8 @@ public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<An
         final AndEmptyTextCursorParser<ParserContext> parser = AndEmptyTextCursorParser.with(WRAPPED);
 
         assertSame(
-                parser,
-                AndEmptyTextCursorParser.with(parser)
+            parser,
+            AndEmptyTextCursorParser.with(parser)
         );
     }
 
@@ -44,8 +44,8 @@ public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<An
         final AndEmptyTextCursorParser<ParserContext> parser = AndEmptyTextCursorParser.with(WRAPPED);
 
         assertSame(
-                parser,
-                parser.andEmptyTextCursor()
+            parser,
+            parser.andEmptyTextCursor()
         );
     }
 
@@ -54,9 +54,9 @@ public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<An
         final Parser<ParserContext> parser = WRAPPED.andEmptyTextCursor();
 
         assertSame(
-                AndEmptyTextCursorParser.class.getName(),
-                parser.getClass().getName(),
-                () -> "" + parser
+            AndEmptyTextCursorParser.class.getName(),
+            parser.getClass().getName(),
+            () -> "" + parser
         );
     }
 
@@ -65,9 +65,9 @@ public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<An
     @Test
     public void testParseWrapperEmpties() {
         this.parseAndCheck(
-                STRING,
-                ParserTokens.string(STRING, STRING),
-                STRING
+            STRING,
+            ParserTokens.string(STRING, STRING),
+            STRING
         );
     }
 
@@ -91,16 +91,16 @@ public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<An
     @Test
     public void testEqualsDifferentParser() {
         this.checkNotEquals(
-                AndEmptyTextCursorParser.with(Parsers.fake()),
-                AndEmptyTextCursorParser.with(Parsers.fake())
+            AndEmptyTextCursorParser.with(Parsers.fake()),
+            AndEmptyTextCursorParser.with(Parsers.fake())
         );
     }
 
     @Test
     public void testEqualsDifferentToString() {
         this.checkNotEquals(
-                AndEmptyTextCursorParser.with(WRAPPED),
-                AndEmptyTextCursorParser.with(WRAPPED).setToString("different")
+            AndEmptyTextCursorParser.with(WRAPPED),
+            AndEmptyTextCursorParser.with(WRAPPED).setToString("different")
         );
     }
 

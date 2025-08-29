@@ -171,8 +171,8 @@ public final class ParserTokens implements PublicStaticHelper {
         checkPredicate(predicate);
 
         return predicate.test(token) ?
-                Optional.empty() :
-                Optional.of(token);
+            Optional.empty() :
+            Optional.of(token);
     }
 
     /**
@@ -204,7 +204,7 @@ public final class ParserTokens implements PublicStaticHelper {
                         newChildren.addAll(children.subList(i + 1, count));
 
                         result = Optional.of(
-                                parent.setChildren(newChildren)
+                            parent.setChildren(newChildren)
                         );
                         break; // child changed, must have been a remove so stop
                     }
@@ -221,7 +221,7 @@ public final class ParserTokens implements PublicStaticHelper {
                         without.addAll(children.subList(i + 1, count));
 
                         result = Optional.of(
-                                parent.setChildren(without)
+                            parent.setChildren(without)
                         );
                     }
                     break;
@@ -246,8 +246,8 @@ public final class ParserTokens implements PublicStaticHelper {
         checkPredicate(predicate);
 
         return predicate.test(token) ?
-                Optional.empty() :
-                Optional.of(token);
+            Optional.empty() :
+            Optional.of(token);
     }
 
     /**
@@ -278,7 +278,7 @@ public final class ParserTokens implements PublicStaticHelper {
                 result = Optional.empty();
             } else {
                 result = Optional.of(
-                        parent.setChildren(newChildren)
+                    parent.setChildren(newChildren)
                 );
             }
         }
@@ -296,10 +296,10 @@ public final class ParserTokens implements PublicStaticHelper {
         checkMapper(mapper);
 
         return ParserTokens.replaceFirstIf0(
-                token,
-                predicate,
-                mapper,
-                new boolean[1]
+            token,
+            predicate,
+            mapper,
+            new boolean[1]
         );
     }
 
@@ -320,25 +320,25 @@ public final class ParserTokens implements PublicStaticHelper {
 
             for (final ParserToken child : children) {
                 final ParserToken childAfter = replaceFirstIf0(
-                        child,
-                        predicate,
-                        mapper,
-                        stop
+                    child,
+                    predicate,
+                    mapper,
+                    stop
                 );
                 if (stop[0]) {
                     final List<ParserToken> newChildren = Lists.array();
                     newChildren.addAll(
-                            children.subList(
-                                    0,
-                                    i
-                            )
+                        children.subList(
+                            0,
+                            i
+                        )
                     );
                     newChildren.add(childAfter);
                     newChildren.addAll(
-                            children.subList(
-                                    i + 1,
-                                    children.size()
-                            )
+                        children.subList(
+                            i + 1,
+                            children.size()
+                        )
                     );
                     result = token.setChildren(newChildren);
                     break;
@@ -363,9 +363,9 @@ public final class ParserTokens implements PublicStaticHelper {
         checkMapper(mapper);
 
         return replaceIf0(
-                token,
-                predicate,
-                mapper
+            token,
+            predicate,
+            mapper
         );
     }
 
@@ -378,15 +378,15 @@ public final class ParserTokens implements PublicStaticHelper {
             result = mapper.apply(token);
         } else {
             result = token.setChildren(
-                    token.children()
-                            .stream()
-                            .map(
-                                    t -> replaceIf0(
-                                            t,
-                                            predicate,
-                                            mapper
-                                    )
-                            ).collect(Collectors.toList())
+                token.children()
+                    .stream()
+                    .map(
+                        t -> replaceIf0(
+                            t,
+                            predicate,
+                            mapper
+                        )
+                    ).collect(Collectors.toList())
             );
         }
 

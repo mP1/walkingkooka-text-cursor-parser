@@ -39,17 +39,17 @@ import java.util.function.BiFunction;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicParserContextTest implements ClassTesting2<BasicParserContext>,
-        ParserContextTesting<BasicParserContext>,
-        DecimalNumberContextDelegator {
+    ParserContextTesting<BasicParserContext>,
+    DecimalNumberContextDelegator {
 
     private final static BiFunction<Parser<?>, TextCursor, InvalidCharacterException> INVALID_CHARACTER_EXCEPTION_FACTORY =
-            (final Parser<?> parser,
-             final TextCursor cursor) -> new InvalidCharacterException(
-                    cursor.lineInfo()
-                            .text()
-                            .toString(),
-                    cursor.at()
-            );
+        (final Parser<?> parser,
+         final TextCursor cursor) -> new InvalidCharacterException(
+            cursor.lineInfo()
+                .text()
+                .toString(),
+            cursor.at()
+        );
 
     private final static String CURRENCY = "$$";
     private final static char DECIMAL = '.';
@@ -70,52 +70,52 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     @Test
     public void testWithNullInvalidCharacterExceptionFactoryFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicParserContext.with(
-                        null,
-                        DateTimeContexts.fake(),
-                        DecimalNumberContexts.fake()
-                )
+            NullPointerException.class,
+            () -> BasicParserContext.with(
+                null,
+                DateTimeContexts.fake(),
+                DecimalNumberContexts.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullDateTimeContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicParserContext.with(
-                        INVALID_CHARACTER_EXCEPTION_FACTORY,
-                        null,
-                        DecimalNumberContexts.fake()
-                )
+            NullPointerException.class,
+            () -> BasicParserContext.with(
+                INVALID_CHARACTER_EXCEPTION_FACTORY,
+                null,
+                DecimalNumberContexts.fake()
+            )
         );
     }
 
     @Test
     public void testWithNullDecimalNumberContextFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> BasicParserContext.with(
-                        INVALID_CHARACTER_EXCEPTION_FACTORY,
-                        DateTimeContexts.fake(),
-                        null
-                )
+            NullPointerException.class,
+            () -> BasicParserContext.with(
+                INVALID_CHARACTER_EXCEPTION_FACTORY,
+                DateTimeContexts.fake(),
+                null
+            )
         );
     }
 
     @Test
     public void testLocale() {
         this.localeAndCheck(
-                this.createContext(),
-                LOCALE
+            this.createContext(),
+            LOCALE
         );
     }
 
     @Test
     public void testMathContext2() {
         this.hasMathContextAndCheck(
-                this.createContext(),
-                MATH_CONTEXT
+            this.createContext(),
+            MATH_CONTEXT
         );
     }
 
@@ -127,44 +127,44 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     @Override
     public BasicParserContext createContext() {
         return BasicParserContext.with(
-                INVALID_CHARACTER_EXCEPTION_FACTORY,
-                this.dateTimeContext(),
-                this.decimalNumberContext()
+            INVALID_CHARACTER_EXCEPTION_FACTORY,
+            this.dateTimeContext(),
+            this.decimalNumberContext()
         );
     }
 
     private DateTimeContext dateTimeContext() {
         final Locale locale = Locale.ENGLISH;
         return DateTimeContexts.basic(
-                DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(locale)
-                ),
-                locale,
-                1900,
-                50,
-                LocalDateTime::now
+            DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(locale)
+            ),
+            locale,
+            1900,
+            50,
+            LocalDateTime::now
         );
     }
 
     @Override
     public DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic(
-                DecimalNumberSymbols.with(
-                        MINUS,
-                        PLUS,
-                        ZERO_DIGIT,
-                        CURRENCY,
-                        DECIMAL,
-                        EXPONENT,
-                        GROUPING,
-                        INFINITY,
-                        MONETARY_DECIMAL,
-                        NAN,
-                        PERCENT,
-                        PERMILL
-                ),
-                LOCALE,
-                MATH_CONTEXT
+            DecimalNumberSymbols.with(
+                MINUS,
+                PLUS,
+                ZERO_DIGIT,
+                CURRENCY,
+                DECIMAL,
+                EXPONENT,
+                GROUPING,
+                INFINITY,
+                MONETARY_DECIMAL,
+                NAN,
+                PERCENT,
+                PERMILL
+            ),
+            LOCALE,
+            MATH_CONTEXT
         );
     }
 
@@ -178,8 +178,8 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createContext(),
-                this.dateTimeContext() + " " + this.decimalNumberContext()
+            this.createContext(),
+            this.dateTimeContext() + " " + this.decimalNumberContext()
         );
     }
 

@@ -77,16 +77,16 @@ abstract class ValueParserToken<V> implements ParserToken, Value<V> {
     @Override
     public final boolean equals(final Object other) {
         return this == other ||
-                (
-                        null != other &&
-                                this.getClass() == other.getClass() &&
-                                this.equals0((ValueParserToken<?>) other)
-                );
+            (
+                null != other &&
+                    this.getClass() == other.getClass() &&
+                    this.equals0((ValueParserToken<?>) other)
+            );
     }
 
     private boolean equals0(final ValueParserToken<?> other) {
         return this.value.equals(other.value) &&
-                this.text.equals(other.text);
+            this.text.equals(other.text);
     }
 
     @Override

@@ -99,36 +99,36 @@ public final class DateTimeFormatterParserLocalDateTimeTest extends DateTimeForm
     @Test
     public void testYearSeparatorMonthInvalidFails() {
         this.parseThrows2(
-                "yyyy-MM-dd HH:mm",
-                "2000-99-31 12:58",
-                "Invalid value for MonthOfYear (valid values 1 - 12): 99"
+            "yyyy-MM-dd HH:mm",
+            "2000-99-31 12:58",
+            "Invalid value for MonthOfYear (valid values 1 - 12): 99"
         );
     }
 
     @Test
     public void testYearSeparatorMonthSeparatorDayInvalidFails() {
         this.parseThrows2(
-                "yyyy-MM-dd HH:mm",
-                "2000-12-99 12:58",
-                "Invalid value for DayOfMonth (valid values 1 - 28/31): 99"
+            "yyyy-MM-dd HH:mm",
+            "2000-12-99 12:58",
+            "Invalid value for DayOfMonth (valid values 1 - 28/31): 99"
         );
     }
 
     @Test
     public void testYearSeparatorMonthSeparatorDaySeparatorHourInvalidFails() {
         this.parseThrows2(
-                "yyyy-MM-dd HH:mm",
-                "2000-12-31 99:58",
-                "Invalid value for HourOfDay (valid values 0 - 23): 99"
+            "yyyy-MM-dd HH:mm",
+            "2000-12-31 99:58",
+            "Invalid value for HourOfDay (valid values 0 - 23): 99"
         );
     }
 
     @Test
     public void testYearSeparatorMonthSeparatorDaySeparatorHourSeparatorMinuteInvalidFails() {
         this.parseThrows2(
-                "yyyy-MM-dd HH:mm",
-                "2000-12-31 12:99",
-                "Invalid value for MinuteOfHour (valid values 0 - 59): 99"
+            "yyyy-MM-dd HH:mm",
+            "2000-12-31 12:99",
+            "Invalid value for MinuteOfHour (valid values 0 - 59): 99"
         );
     }
 

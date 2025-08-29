@@ -26,17 +26,17 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursors;
 
 public final class BasicParserReporterTest implements ClassTesting2<BasicParserReporter<FakeParserContext>>,
-        ParserReporterTesting<BasicParserReporter<FakeParserContext>, FakeParserContext> {
+    ParserReporterTesting<BasicParserReporter<FakeParserContext>, FakeParserContext> {
 
     @Test
     public void testReport() {
         // has a dependency on the results of TextCursorLineInfo methods...
         this.reportAndCheck(
-                "abc def ghi",
-                Parsers.fake()
-                        .setToString("ABC")
-                        .cast(),
-                "Invalid character 'l' at 2"
+            "abc def ghi",
+            Parsers.fake()
+                .setToString("ABC")
+                .cast(),
+            "Invalid character 'l' at 2"
         );
     }
 
@@ -45,11 +45,11 @@ public final class BasicParserReporterTest implements ClassTesting2<BasicParserR
         final TextCursor cursor = TextCursors.charSequence("abc");
         cursor.end();
         this.reportAndCheck(
-                cursor,
-                Parsers.fake()
-                        .setToString("XYZ")
-                        .cast(),
-                "End of text at (4,1) expected XYZ"
+            cursor,
+            Parsers.fake()
+                .setToString("XYZ")
+                .cast(),
+            "End of text at (4,1) expected XYZ"
         );
     }
 
@@ -65,8 +65,8 @@ public final class BasicParserReporterTest implements ClassTesting2<BasicParserR
             public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                        final TextCursor cursor) {
                 return new InvalidCharacterException(
-                        "Hello",
-                        2
+                    "Hello",
+                    2
                 );
             }
         };

@@ -60,8 +60,8 @@ public final class StringParserTokenTest extends ValueParserTokenTestCase<String
     @Test
     public void testPrintTree() {
         this.treePrintAndCheck(
-                this.createToken(),
-                "String \"abc\" \"abc\"\n"
+            this.createToken(),
+            "String \"abc\" \"abc\"\n"
         );
     }
 

@@ -27,8 +27,8 @@ import walkingkooka.text.cursor.TextCursor;
 import java.util.Locale;
 
 public interface ParserContextDelegator extends ParserContext,
-        DateTimeContextDelegator,
-        DecimalNumberContextDelegator {
+    DateTimeContextDelegator,
+    DecimalNumberContextDelegator {
 
     @Override
     default DateTimeContext dateTimeContext() {
@@ -44,10 +44,10 @@ public interface ParserContextDelegator extends ParserContext,
     default InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                 final TextCursor cursor) {
         return this.parserContext()
-                .invalidCharacterException(
-                        parser,
-                        cursor
-                );
+            .invalidCharacterException(
+                parser,
+                cursor
+            );
     }
 
     @Override

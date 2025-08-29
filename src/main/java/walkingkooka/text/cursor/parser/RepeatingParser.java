@@ -56,12 +56,12 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
             Parser<C> wrapped = repeatingParser.parser;
 
             newRepeatingMinCount = saturatedMultiply(
-                    minCount,
-                    repeatingMinCount
+                minCount,
+                repeatingMinCount
             );
             newRepeatingMaxCount = saturatedMultiply(
-                    maxCount,
-                    repeatingMaxCount
+                maxCount,
+                repeatingMaxCount
             );
 
             // not repeating just return the original wrapped Parser
@@ -71,9 +71,9 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
                 // new RepeatingParser is different so create
                 if (repeatingMinCount != newRepeatingMinCount || repeatingMaxCount != newRepeatingMaxCount) {
                     result = with0(
-                            newRepeatingMinCount,
-                            newRepeatingMaxCount,
-                            wrapped
+                        newRepeatingMinCount,
+                        newRepeatingMaxCount,
+                        wrapped
                     );
                 } else {
                     // no change in min/max return the original parser
@@ -87,9 +87,9 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
             } else {
                 // wrap parser and repeat it
                 result = with0(
-                        newRepeatingMinCount,
-                        newRepeatingMaxCount,
-                        parser
+                    newRepeatingMinCount,
+                    newRepeatingMaxCount,
+                    parser
                 );
             }
         }
@@ -106,10 +106,10 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
         } else {
             final long d = a * b;
             c = d < Integer.MIN_VALUE ?
-                    Integer.MIN_VALUE :
-                    d > Integer.MAX_VALUE ?
-                            Integer.MAX_VALUE :
-                            (int) d;
+                Integer.MIN_VALUE :
+                d > Integer.MAX_VALUE ?
+                    Integer.MAX_VALUE :
+                    (int) d;
         }
 
         return c;
@@ -119,14 +119,14 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
                                                              final int maxCount,
                                                              final Parser<C> parser) {
         return new RepeatingParser<>(
+            minCount,
+            maxCount,
+            parser,
+            buildRepeatingToString(
                 minCount,
                 maxCount,
-                parser,
-                buildRepeatingToString(
-                        minCount,
-                        maxCount,
-                        parser
-                )
+                parser
+            )
         );
     }
 
@@ -162,9 +162,9 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
                         builder.append(',');
                     }
                     builder.append(
-                            DEFAULT_REPEAT_MAX_COUNT == maxCount ?
-                                    "*" :
-                                    String.valueOf(maxCount)
+                        DEFAULT_REPEAT_MAX_COUNT == maxCount ?
+                            "*" :
+                            String.valueOf(maxCount)
                     );
                 }
 
@@ -197,8 +197,8 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
 
         for (; ; ) {
             final Optional<ParserToken> maybe = parser.parse(
-                    cursor,
-                    context
+                cursor,
+                context
             );
             if (false == maybe.isPresent()) {
                 break;
@@ -213,15 +213,15 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
         }
 
         return Optional.ofNullable(
-                null == tokens || tokens.size() < this.minCount ?
-                        null :
-                        // if this parser is optional min=0 & max=1 DONT wrap the only matched token in a RepeatingParserToken
-                        this.isOptional() && 1 == maxCount ?
-                                optionalResult(tokens) :
-                                nonOptionalResult(
-                                        tokens,
-                                        start
-                                )
+            null == tokens || tokens.size() < this.minCount ?
+                null :
+                // if this parser is optional min=0 & max=1 DONT wrap the only matched token in a RepeatingParserToken
+                this.isOptional() && 1 == maxCount ?
+                    optionalResult(tokens) :
+                    nonOptionalResult(
+                        tokens,
+                        start
+                    )
         );
     }
 
@@ -232,9 +232,9 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
     private static RepeatedParserToken nonOptionalResult(final List<ParserToken> tokens,
                                                          final TextCursorSavePoint start) {
         return RepeatedParserToken.with(
-                tokens,
-                start.textBetween()
-                        .toString()
+            tokens,
+            start.textBetween()
+                .toString()
         );
     }
 
@@ -261,10 +261,10 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
     @Override
     RepeatingParser<C> replaceToString(final String toString) {
         return new RepeatingParser<>(
-                this.minCount,
-                this.maxCount,
-                this.parser,
-                toString
+            this.minCount,
+            this.maxCount,
+            this.parser,
+            toString
         );
     }
 
@@ -273,8 +273,8 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
     @Override //
     int hashCode0() {
         return Objects.hash(
-                this.minCount,
-                this.maxCount
+            this.minCount,
+            this.maxCount
         );
     }
 
@@ -283,6 +283,6 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
         final RepeatingParser<?> otherRepeatingParser = other.cast();
 
         return this.minCount == otherRepeatingParser.minCount &&
-                this.maxCount == otherRepeatingParser.maxCount;
+            this.maxCount == otherRepeatingParser.maxCount;
     }
 }

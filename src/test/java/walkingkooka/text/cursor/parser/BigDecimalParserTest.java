@@ -422,66 +422,66 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
     private TextCursor parseAndCheck3(final String text,
                                       final BigDecimal value) {
         return this.parseAndCheck(
-                this.createParser(),
-                ParserContexts.basic(
-                        InvalidCharacterExceptionFactory.POSITION,
-                        DateTimeContexts.fake(),
-                        DecimalNumberContexts.basic(
-                                DecimalNumberSymbols.with(
-                                        '+', // negativeSign
-                                        '-', // positiveSign
-                                        '0', // zero
-                                        "C", // currency
-                                        '*', // decimalPoint
-                                        "X", // exponentSymbol
-                                        '/', // groupSeparator
-                                        "Infinity", // infinity
-                                        '*', // monetary decimal separator
-                                        "NaN",
-                                        '$', // percent
-                                        '^' // permill
-                                ),
-                                Locale.ENGLISH,
-                                MathContext.DECIMAL32
-                        )
-                ),
-                text,
-                ParserTokens.bigDecimal(value, text),
-                text,
-                ""
+            this.createParser(),
+            ParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
+                DateTimeContexts.fake(),
+                DecimalNumberContexts.basic(
+                    DecimalNumberSymbols.with(
+                        '+', // negativeSign
+                        '-', // positiveSign
+                        '0', // zero
+                        "C", // currency
+                        '*', // decimalPoint
+                        "X", // exponentSymbol
+                        '/', // groupSeparator
+                        "Infinity", // infinity
+                        '*', // monetary decimal separator
+                        "NaN",
+                        '$', // percent
+                        '^' // permill
+                    ),
+                    Locale.ENGLISH,
+                    MathContext.DECIMAL32
+                )
+            ),
+            text,
+            ParserTokens.bigDecimal(value, text),
+            text,
+            ""
         );
     }
 
     private TextCursor parseAndCheck4(final String text,
                                       final BigDecimal value) {
         return this.parseAndCheck(
-                this.createParser(),
-                ParserContexts.basic(
-                        InvalidCharacterExceptionFactory.POSITION,
-                        DateTimeContexts.fake(),
-                        DecimalNumberContexts.basic(
-                                DecimalNumberSymbols.with(
-                                        '+', // negativeSign
-                                        '-', // positiveSign
-                                        '0', // zeroDigit
-                                        "C", // currency
-                                        '*', // decimalPoint
-                                        "XYZ", // exponentSymbol
-                                        '/', // groupSeparator
-                                        "INFINITY",
-                                        '#', // monetaryDecimal
-                                        "NAN",
-                                        '$', // percent
-                                        '^' // permill
-                                ),
-                                Locale.ENGLISH,
-                                MathContext.DECIMAL32
-                        )
-                ),
-                text,
-                ParserTokens.bigDecimal(value, text),
-                text,
-                ""
+            this.createParser(),
+            ParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
+                DateTimeContexts.fake(),
+                DecimalNumberContexts.basic(
+                    DecimalNumberSymbols.with(
+                        '+', // negativeSign
+                        '-', // positiveSign
+                        '0', // zeroDigit
+                        "C", // currency
+                        '*', // decimalPoint
+                        "XYZ", // exponentSymbol
+                        '/', // groupSeparator
+                        "INFINITY",
+                        '#', // monetaryDecimal
+                        "NAN",
+                        '$', // percent
+                        '^' // permill
+                    ),
+                    Locale.ENGLISH,
+                    MathContext.DECIMAL32
+                )
+            ),
+            text,
+            ParserTokens.bigDecimal(value, text),
+            text,
+            ""
         );
     }
 
@@ -490,43 +490,43 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
         final char zero = ARABIC_ZERO_DIGIT;
 
         final String text = new StringBuilder()
-                .append((char) (zero + 1))
-                .append((char) (zero + 2))
-                .append('*')
-                .append((char) (zero + 5))
-                .toString();
+            .append((char) (zero + 1))
+            .append((char) (zero + 2))
+            .append('*')
+            .append((char) (zero + 5))
+            .toString();
 
         this.parseAndCheck(
-                this.createParser(),
-                ParserContexts.basic(
-                        InvalidCharacterExceptionFactory.POSITION,
-                        DateTimeContexts.fake(),
-                        DecimalNumberContexts.basic(
-                                DecimalNumberSymbols.with(
-                                        '+', // negativeSign
-                                        '-', // positiveSign
-                                        zero, // zeroDigit
-                                        "C", // currency
-                                        '*', // decimalPoint
-                                        "XYZ", // exponentSymbol
-                                        '/', // groupSeparator
-                                        "INFINITY",
-                                        '#', // monetaryDecimal
-                                        "NAN",
-                                        '$', // percent
-                                        '^' // permill
-                                ),
-                                Locale.ENGLISH,
-                                MathContext.DECIMAL32
-                        )
-                ),
-                text,
-                ParserTokens.bigDecimal(
-                        BigDecimal.valueOf(12.5),
-                        text
-                ),
-                text,
-                ""
+            this.createParser(),
+            ParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
+                DateTimeContexts.fake(),
+                DecimalNumberContexts.basic(
+                    DecimalNumberSymbols.with(
+                        '+', // negativeSign
+                        '-', // positiveSign
+                        zero, // zeroDigit
+                        "C", // currency
+                        '*', // decimalPoint
+                        "XYZ", // exponentSymbol
+                        '/', // groupSeparator
+                        "INFINITY",
+                        '#', // monetaryDecimal
+                        "NAN",
+                        '$', // percent
+                        '^' // permill
+                    ),
+                    Locale.ENGLISH,
+                    MathContext.DECIMAL32
+                )
+            ),
+            text,
+            ParserTokens.bigDecimal(
+                BigDecimal.valueOf(12.5),
+                text
+            ),
+            text,
+            ""
         );
     }
 
@@ -538,9 +538,9 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
     @Override
     public ParserContext createContext() {
         return ParserContexts.basic(
-                InvalidCharacterExceptionFactory.POSITION,
-                DateTimeContexts.fake(),
-                this.decimalNumberContext()
+            InvalidCharacterExceptionFactory.POSITION,
+            DateTimeContexts.fake(),
+            this.decimalNumberContext()
         );
     }
 
@@ -551,18 +551,18 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
     private TextCursor parseAndCheck2(final String text,
                                       final long value) {
         return this.parseAndCheck2(
-                text,
-                BigDecimal.valueOf(value),
-                ""
+            text,
+            BigDecimal.valueOf(value),
+            ""
         );
     }
 
     private TextCursor parseAndCheck2(final String text,
                                       final String textAfter) {
         return this.parseAndCheck2(
-                text,
-                new BigDecimal(text),
-                textAfter
+            text,
+            new BigDecimal(text),
+            textAfter
         );
     }
 
@@ -570,9 +570,9 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                                       final long value,
                                       final String textAfter) {
         return this.parseAndCheck2(
-                text,
-                BigDecimal.valueOf(value),
-                textAfter
+            text,
+            BigDecimal.valueOf(value),
+            textAfter
         );
     }
 
@@ -580,10 +580,10 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                                       final BigDecimal value,
                                       final String textAfter) {
         return this.parseAndCheck(
-                text + textAfter,
-                ParserTokens.bigDecimal(value, text),
-                text,
-                textAfter
+            text + textAfter,
+            ParserTokens.bigDecimal(value, text),
+            text,
+            textAfter
         );
     }
 

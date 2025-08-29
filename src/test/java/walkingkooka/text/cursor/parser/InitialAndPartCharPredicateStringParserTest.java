@@ -25,7 +25,7 @@ import walkingkooka.predicate.character.CharPredicates;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class InitialAndPartCharPredicateStringParserTest extends NonEmptyParserTestCase<InitialAndPartCharPredicateStringParser<ParserContext>, StringParserToken>
-        implements HashCodeEqualsDefinedTesting2<InitialAndPartCharPredicateStringParser<ParserContext>> {
+    implements HashCodeEqualsDefinedTesting2<InitialAndPartCharPredicateStringParser<ParserContext>> {
 
     private final static CharPredicate INITIAL = CharPredicates.letter();
     private final static CharPredicate PART = CharPredicates.digit();
@@ -35,52 +35,52 @@ public final class InitialAndPartCharPredicateStringParserTest extends NonEmptyP
     @Test
     public void testWithNullInitialCharPredicateFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> InitialAndPartCharPredicateStringParser.with(
-                        null,
-                        PART,
-                        MIN_LENGTH,
-                        MAX_LENGTH
-                )
+            NullPointerException.class,
+            () -> InitialAndPartCharPredicateStringParser.with(
+                null,
+                PART,
+                MIN_LENGTH,
+                MAX_LENGTH
+            )
         );
     }
 
     @Test
     public void testWithNullInitialPartPredicateFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> InitialAndPartCharPredicateStringParser.with(
-                        INITIAL,
-                        null,
-                        MIN_LENGTH,
-                        MAX_LENGTH
-                )
+            NullPointerException.class,
+            () -> InitialAndPartCharPredicateStringParser.with(
+                INITIAL,
+                null,
+                MIN_LENGTH,
+                MAX_LENGTH
+            )
         );
     }
 
     @Test
     public void testWithInvalidMinLengthFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> InitialAndPartCharPredicateStringParser.with(
-                        INITIAL,
-                        PART,
-                        0,
-                        MAX_LENGTH
-                )
+            IllegalArgumentException.class,
+            () -> InitialAndPartCharPredicateStringParser.with(
+                INITIAL,
+                PART,
+                0,
+                MAX_LENGTH
+            )
         );
     }
 
     @Test
     public void testWithInvalidMaxLengthFails2() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> InitialAndPartCharPredicateStringParser.with(
-                        INITIAL,
-                        PART,
-                        MIN_LENGTH,
-                        MIN_LENGTH - 1
-                )
+            IllegalArgumentException.class,
+            () -> InitialAndPartCharPredicateStringParser.with(
+                INITIAL,
+                PART,
+                MIN_LENGTH,
+                MIN_LENGTH - 1
+            )
         );
     }
 
@@ -104,46 +104,46 @@ public final class InitialAndPartCharPredicateStringParserTest extends NonEmptyP
     @Test
     public void testParseInitialAndPart() {
         this.parseAndCheck2(
-                "a12345",
-                "a12345"
+            "a12345",
+            "a12345"
         );
     }
 
     @Test
     public void testParseInitialAndPart2() {
         this.parseAndCheck2(
-                "a12345-=",
-                "a12345",
-                "-="
+            "a12345-=",
+            "a12345",
+            "-="
         );
     }
 
     @Test
     public void testParseHonourMaxLength() {
         this.parseAndCheck2(
-                "a12345678",
-                "a12345",
-                "678"
+            "a12345678",
+            "a12345",
+            "678"
         );
     }
 
     @Test
     public void testParseHonourMaxLength2() {
         this.parseAndCheck(
-                this.createParser(1, 2),
-                "a12345678",
-                this.string("a1"),
-                "a1",
-                "2345678"
+            this.createParser(1, 2),
+            "a12345678",
+            this.string("a1"),
+            "a1",
+            "2345678"
         );
     }
 
     private void parseAndCheck2(final String text,
                                 final String expected) {
         this.parseAndCheck2(
-                text,
-                expected,
-                ""
+            text,
+            expected,
+            ""
         );
     }
 
@@ -151,10 +151,10 @@ public final class InitialAndPartCharPredicateStringParserTest extends NonEmptyP
                                 final String expected,
                                 final String textAfter) {
         this.parseAndCheck(
-                text,
-                this.string(expected),
-                expected,
-                textAfter
+            text,
+            this.string(expected),
+            expected,
+            textAfter
         );
     }
 
@@ -163,14 +163,14 @@ public final class InitialAndPartCharPredicateStringParserTest extends NonEmptyP
         final String text = "ab";
 
         this.parseAndCheck(
-                InitialAndPartCharPredicateStringParser.with(
-                        CharPredicates.is('a'),
-                        CharPredicates.is('b'),
-                        2,
-                        2),
-                text,
-                string(text),
-                text
+            InitialAndPartCharPredicateStringParser.with(
+                CharPredicates.is('a'),
+                CharPredicates.is('b'),
+                2,
+                2),
+            text,
+            string(text),
+            text
         );
     }
 
@@ -180,15 +180,15 @@ public final class InitialAndPartCharPredicateStringParserTest extends NonEmptyP
         final String after = "b";
 
         this.parseAndCheck(
-                InitialAndPartCharPredicateStringParser.with(
-                        CharPredicates.is('a'),
-                        CharPredicates.is('b'),
-                        2,
-                        2),
-                text + after,
-                string(text),
-                text,
-                after
+            InitialAndPartCharPredicateStringParser.with(
+                CharPredicates.is('a'),
+                CharPredicates.is('b'),
+                2,
+                2),
+            text + after,
+            string(text),
+            text,
+            after
         );
     }
 
@@ -210,48 +210,48 @@ public final class InitialAndPartCharPredicateStringParserTest extends NonEmptyP
     @Test
     public void testEqualsDifferentInitialCharPredicate() {
         this.checkNotEquals(
-                InitialAndPartCharPredicateStringParser.with(
-                        CharPredicates.fake(),
-                        PART,
-                        MIN_LENGTH,
-                        MAX_LENGTH
-                )
+            InitialAndPartCharPredicateStringParser.with(
+                CharPredicates.fake(),
+                PART,
+                MIN_LENGTH,
+                MAX_LENGTH
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentPartCharPredicate() {
         this.checkNotEquals(
-                InitialAndPartCharPredicateStringParser.with(
-                        INITIAL,
-                        CharPredicates.fake(),
-                        MIN_LENGTH,
-                        MAX_LENGTH
-                )
+            InitialAndPartCharPredicateStringParser.with(
+                INITIAL,
+                CharPredicates.fake(),
+                MIN_LENGTH,
+                MAX_LENGTH
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentMinLength() {
         this.checkNotEquals(
-                InitialAndPartCharPredicateStringParser.with(
-                        INITIAL,
-                        PART,
-                        MIN_LENGTH + 1,
-                        MAX_LENGTH
-                )
+            InitialAndPartCharPredicateStringParser.with(
+                INITIAL,
+                PART,
+                MIN_LENGTH + 1,
+                MAX_LENGTH
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentMaxLength() {
         this.checkNotEquals(
-                InitialAndPartCharPredicateStringParser.with(
-                        INITIAL,
-                        PART,
-                        MIN_LENGTH,
-                        MAX_LENGTH + 1
-                )
+            InitialAndPartCharPredicateStringParser.with(
+                INITIAL,
+                PART,
+                MIN_LENGTH,
+                MAX_LENGTH + 1
+            )
         );
     }
 
@@ -265,8 +265,8 @@ public final class InitialAndPartCharPredicateStringParserTest extends NonEmptyP
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createParser(),
-                INITIAL + " " + PART + "{4,6}"
+            this.createParser(),
+            INITIAL + " " + PART + "{4,6}"
         );
     }
 

@@ -40,17 +40,17 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     @Test
     public void testFindFirstWithNullPredicateFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> stringParserToken("Hello")
-                        .findFirst(null)
+            NullPointerException.class,
+            () -> stringParserToken("Hello")
+                .findFirst(null)
         );
     }
 
     @Test
     public void testFindFirstNever() {
         this.findFirstAndCheck(
-                stringParserToken("Hello"),
-                Predicates.never()
+            stringParserToken("Hello"),
+            Predicates.never()
         );
     }
 
@@ -58,9 +58,9 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     public void testFindFirstThis() {
         final StringParserToken token = stringParserToken("Hello");
         this.findFirstAndCheck(
-                token,
-                Predicates.always(),
-                token
+            token,
+            Predicates.always(),
+            token
         );
     }
 
@@ -80,12 +80,12 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         };
 
         this.findFirstAndCheck(
-                sequenceParserToken(
-                        matched,
-                        fake
-                ),
-                Predicates.is(matched),
-                matched
+            sequenceParserToken(
+                matched,
+                fake
+            ),
+            Predicates.is(matched),
+            matched
         );
     }
 
@@ -97,17 +97,17 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final ParserToken grandChild1 = stringParserToken("grand-child-1");
         final ParserToken grandChild2 = stringParserToken("grand-child-2");
         final ParserToken child3 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.findFirstAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2,
-                        child3
-                ),
-                Predicates.never()
+            sequenceParserToken(
+                child1,
+                child2,
+                child3
+            ),
+            Predicates.never()
         );
     }
 
@@ -119,18 +119,18 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final ParserToken grandChild1 = stringParserToken("grand-child-1");
         final ParserToken grandChild2 = stringParserToken("grand-child-2");
         final ParserToken child3 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.findFirstAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2,
-                        child3
-                ),
-                Predicates.is(grandChild1),
-                grandChild1
+            sequenceParserToken(
+                child1,
+                child2,
+                child3
+            ),
+            Predicates.is(grandChild1),
+            grandChild1
         );
     }
 
@@ -142,27 +142,27 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final ParserToken grandChild1 = stringParserToken("grand-child-1");
         final ParserToken grandChild2 = stringParserToken("grand-child-2");
         final ParserToken child3 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.findFirstAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2,
-                        child3
-                ),
-                (t) -> t.isLeaf() && t.text().contains("grand"),
-                grandChild1
+            sequenceParserToken(
+                child1,
+                child2,
+                child3
+            ),
+            (t) -> t.isLeaf() && t.text().contains("grand"),
+            grandChild1
         );
     }
 
     private void findFirstAndCheck(final ParserToken start,
                                    final Predicate<ParserToken> predicate) {
         this.findFirstAndCheck(
-                start,
-                predicate,
-                Optional.empty()
+            start,
+            predicate,
+            Optional.empty()
         );
     }
 
@@ -170,9 +170,9 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                                    final Predicate<ParserToken> predicate,
                                    final ParserToken expected) {
         this.findFirstAndCheck(
-                start,
-                predicate,
-                Optional.of(expected)
+            start,
+            predicate,
+            Optional.of(expected)
         );
     }
 
@@ -180,9 +180,9 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                                    final Predicate<ParserToken> predicate,
                                    final Optional<ParserToken> expected) {
         this.checkEquals(
-                expected,
-                start.findFirst(predicate),
-                () -> start + " findFirst " + predicate
+            expected,
+            start.findFirst(predicate),
+            () -> start + " findFirst " + predicate
         );
     }
 
@@ -191,33 +191,33 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     @Test
     public void testFindIfWithNullPredicateFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> stringParserToken("Hello")
-                        .findIf(
-                                null,
-                                (t) -> {
-                                }
-                        )
+            NullPointerException.class,
+            () -> stringParserToken("Hello")
+                .findIf(
+                    null,
+                    (t) -> {
+                    }
+                )
         );
     }
 
     @Test
     public void testFindIfWithNullConsumerFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> stringParserToken("Hello")
-                        .findIf(
-                                Predicates.fake(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> stringParserToken("Hello")
+                .findIf(
+                    Predicates.fake(),
+                    null
+                )
         );
     }
 
     @Test
     public void testFindIfNever() {
         this.findIfAndCheck(
-                stringParserToken("Hello"),
-                Predicates.never()
+            stringParserToken("Hello"),
+            Predicates.never()
         );
     }
 
@@ -229,17 +229,17 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final ParserToken grandChild1 = stringParserToken("grand-child-1");
         final ParserToken grandChild2 = stringParserToken("grand-child-2");
         final ParserToken child3 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.findIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2,
-                        child3
-                ),
-                Predicates.never()
+            sequenceParserToken(
+                child1,
+                child2,
+                child3
+            ),
+            Predicates.never()
         );
     }
 
@@ -251,18 +251,18 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final ParserToken grandChild1 = stringParserToken("grand-child-1");
         final ParserToken grandChild2 = stringParserToken("grand-child-2");
         final ParserToken child3 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.findIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2,
-                        child3
-                ),
-                Predicates.is(grandChild1),
-                grandChild1
+            sequenceParserToken(
+                child1,
+                child2,
+                child3
+            ),
+            Predicates.is(grandChild1),
+            grandChild1
         );
     }
 
@@ -274,19 +274,19 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final ParserToken grandChild1 = stringParserToken("grand-child-1");
         final ParserToken grandChild2 = stringParserToken("grand-child-2");
         final ParserToken child3 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.findIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2,
-                        child3
-                ),
-                (t) -> t.isLeaf() && t.text().contains("grand"),
-                grandChild1,
-                grandChild2
+            sequenceParserToken(
+                child1,
+                child2,
+                child3
+            ),
+            (t) -> t.isLeaf() && t.text().contains("grand"),
+            grandChild1,
+            grandChild2
         );
     }
 
@@ -298,19 +298,19 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final ParserToken grandChild1 = stringParserToken("grand-child-1");
         final ParserToken grandChild2 = stringParserToken("grand-child-2");
         final ParserToken child3 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.findIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2,
-                        child3
-                ),
-                (t) -> t.isLeaf() && t.text().contains("1"),
+            sequenceParserToken(
                 child1,
-                grandChild1
+                child2,
+                child3
+            ),
+            (t) -> t.isLeaf() && t.text().contains("1"),
+            child1,
+            grandChild1
         );
     }
 
@@ -319,13 +319,13 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                                 final ParserToken... expected) {
         final List<ParserToken> consumer = Lists.array();
         start.findIf(
-                predicate,
-                consumer::add
+            predicate,
+            consumer::add
         );
         this.checkEquals(
-                Lists.of(expected),
-                consumer,
-                () -> start + " findIf " + predicate
+            Lists.of(expected),
+            consumer,
+            () -> start + " findIf " + predicate
         );
     }
 
@@ -335,20 +335,20 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     public void testRemoveFirstIfFirstChildOnlyGrandChild() {
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final SequenceParserToken child1 = sequenceParserToken(
-                grandChild1
+            grandChild1
         );
 
         final StringParserToken child2 = stringParserToken("child-1");
 
         this.removeFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(grandChild1),
-                sequenceParserToken(
-                        child2
-                )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(grandChild1),
+            sequenceParserToken(
+                child2
+            )
         );
     }
 
@@ -358,18 +358,18 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
 
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1
+            grandChild1
         );
 
         this.removeFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(grandChild1),
-                sequenceParserToken(
-                        child1
-                )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(grandChild1),
+            sequenceParserToken(
+                child1
+            )
         );
     }
 
@@ -378,23 +378,23 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child1 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
         final StringParserToken child2 = stringParserToken("child-2");
 
         this.removeFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(grandChild1),
+            sequenceParserToken(
+                child1.setChildren(
+                    Lists.of(grandChild2)
                 ),
-                Predicates.is(grandChild1),
-                sequenceParserToken(
-                        child1.setChildren(
-                                Lists.of(grandChild2)
-                        ),
-                        child2
-                )
+                child2
+            )
         );
     }
 
@@ -403,23 +403,23 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child1 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
         final StringParserToken child2 = stringParserToken("child-1");
 
         this.removeFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(grandChild2),
+            sequenceParserToken(
+                child1.setChildren(
+                    Lists.of(grandChild1)
                 ),
-                Predicates.is(grandChild2),
-                sequenceParserToken(
-                        child1.setChildren(
-                                Lists.of(grandChild1)
-                        ),
-                        child2
-                )
+                child2
+            )
         );
     }
 
@@ -429,22 +429,22 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.removeFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(grandChild1),
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(grandChild2)
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(grandChild1),
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(grandChild2)
                 )
+            )
         );
     }
 
@@ -454,22 +454,22 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.removeFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(grandChild2),
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(grandChild1)
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(grandChild2),
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(grandChild1)
                 )
+            )
         );
     }
 
@@ -482,37 +482,37 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken greatGrandChild3 = stringParserToken("great-grand-child-3");
 
         final SequenceParserToken grandChild1 = sequenceParserToken(
-                greatGrandChild1,
-                greatGrandChild2,
-                greatGrandChild3
+            greatGrandChild1,
+            greatGrandChild2,
+            greatGrandChild3
         );
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
 
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.removeFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(greatGrandChild2),
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(
-                                        grandChild1.setChildren(
-                                                Lists.of(
-                                                        greatGrandChild1,
-                                                        greatGrandChild3
-                                                )
-                                        ),
-                                        grandChild2
-                                )
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(greatGrandChild2),
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(
+                        grandChild1.setChildren(
+                            Lists.of(
+                                greatGrandChild1,
+                                greatGrandChild3
+                            )
+                        ),
+                        grandChild2
+                    )
                 )
+            )
         );
     }
 
@@ -522,11 +522,11 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken child2 = stringParserToken("child-2");
 
         this.removeFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.always()
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.always()
         );
     }
 
@@ -536,14 +536,14 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken child2 = stringParserToken("child-2");
 
         this.removeFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                t -> t.equals(child1) || t.equals(child2),
-                sequenceParserToken(
-                        child2
-                )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            t -> t.equals(child1) || t.equals(child2),
+            sequenceParserToken(
+                child2
+            )
         );
     }
 
@@ -554,31 +554,31 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.removeFirstIfAndCheck(
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            t -> t.equals(grandChild1) || t.equals(grandChild2),
+            sequenceParserToken(
+                child1,
                 sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                t -> t.equals(grandChild1) || t.equals(grandChild2),
-                sequenceParserToken(
-                        child1,
-                        sequenceParserToken(
-                                grandChild2
-                        )
+                    grandChild2
                 )
+            )
         );
     }
 
     private void removeFirstIfAndCheck(final ParserToken token,
                                        final Predicate<ParserToken> predicate) {
         this.removeFirstIfAndCheck(
-                token,
-                predicate,
-                Optional.empty()
+            token,
+            predicate,
+            Optional.empty()
         );
     }
 
@@ -586,9 +586,9 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                                        final Predicate<ParserToken> predicate,
                                        final ParserToken expected) {
         this.removeFirstIfAndCheck(
-                token,
-                predicate,
-                Optional.of(expected)
+            token,
+            predicate,
+            Optional.of(expected)
         );
     }
 
@@ -596,9 +596,9 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                                        final Predicate<ParserToken> predicate,
                                        final Optional<ParserToken> expected) {
         this.checkEquals(
-                expected,
-                token.removeFirstIf(predicate),
-                () -> token + " removeFirstIf " + predicate
+            expected,
+            token.removeFirstIf(predicate),
+            () -> token + " removeFirstIf " + predicate
         );
     }
 
@@ -610,33 +610,33 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken child2 = stringParserToken("child-2");
 
         this.removeIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(child1),
-                sequenceParserToken(
-                        child2
-                )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(child1),
+            sequenceParserToken(
+                child2
+            )
         );
     }
 
     @Test
     public void testRemoveIfFirstChild2() {
         final ParserToken child1 = sequenceParserToken(
-                stringParserToken("child-1")
+            stringParserToken("child-1")
         );
         final StringParserToken child2 = stringParserToken("child-2");
 
         this.removeIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(child1),
-                sequenceParserToken(
-                        child2
-                )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(child1),
+            sequenceParserToken(
+                child2
+            )
         );
     }
 
@@ -646,14 +646,14 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken child2 = stringParserToken("child-2");
 
         this.removeIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(child2),
-                sequenceParserToken(
-                        child1
-                )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(child2),
+            sequenceParserToken(
+                child1
+            )
         );
     }
 
@@ -661,18 +661,18 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     public void testRemoveIfLastChild2() {
         final StringParserToken child1 = stringParserToken("child-1");
         final ParserToken child2 = sequenceParserToken(
-                stringParserToken("child-2")
+            stringParserToken("child-2")
         );
 
         this.removeIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(child2),
-                sequenceParserToken(
-                        child1
-                )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(child2),
+            sequenceParserToken(
+                child1
+            )
         );
     }
 
@@ -682,11 +682,11 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken child2 = stringParserToken("child-2");
 
         this.removeIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                t -> t.equals(child1) || t.equals(child2)
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            t -> t.equals(child1) || t.equals(child2)
         );
     }
 
@@ -696,22 +696,22 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.removeIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(grandChild1),
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(grandChild2)
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(grandChild1),
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(grandChild2)
                 )
+            )
         );
     }
 
@@ -721,22 +721,22 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.removeIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(grandChild2),
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(grandChild1)
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(grandChild2),
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(grandChild1)
                 )
+            )
         );
     }
 
@@ -749,37 +749,37 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken greatGrandChild3 = stringParserToken("great-grand-child-3");
 
         final SequenceParserToken grandChild1 = sequenceParserToken(
-                greatGrandChild1,
-                greatGrandChild2,
-                greatGrandChild3
+            greatGrandChild1,
+            greatGrandChild2,
+            greatGrandChild3
         );
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
 
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.removeIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(greatGrandChild2),
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(
-                                        grandChild1.setChildren(
-                                                Lists.of(
-                                                        greatGrandChild1,
-                                                        greatGrandChild3
-                                                )
-                                        ),
-                                        grandChild2
-                                )
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(greatGrandChild2),
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(
+                        grandChild1.setChildren(
+                            Lists.of(
+                                greatGrandChild1,
+                                greatGrandChild3
+                            )
+                        ),
+                        grandChild2
+                    )
                 )
+            )
         );
     }
 
@@ -792,42 +792,42 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken greatGrandChild3 = stringParserToken("great-grand-child-3");
 
         final SequenceParserToken grandChild1 = sequenceParserToken(
-                greatGrandChild1,
-                greatGrandChild2,
-                greatGrandChild3
+            greatGrandChild1,
+            greatGrandChild2,
+            greatGrandChild3
         );
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
 
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.removeIfAndCheck(
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            t -> t.equals(greatGrandChild1) || t.equals(greatGrandChild2) || t.equals(greatGrandChild3),
+            sequenceParserToken(
+                child1,
                 sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                t -> t.equals(greatGrandChild1) || t.equals(greatGrandChild2) || t.equals(greatGrandChild3),
-                sequenceParserToken(
-                        child1,
-                        sequenceParserToken(
-                                grandChild2
-                        )
+                    grandChild2
                 )
+            )
         );
     }
 
     @Test
     public void testRemoveIfAllGrandChildren() {
         this.removeIfAndCheck(
+            sequenceParserToken(
                 sequenceParserToken(
-                        sequenceParserToken(
-                                stringParserToken("grand-child-1"),
-                                stringParserToken("grand-child-2")
-                        )
-                ),
-                ParserToken::isLeaf
+                    stringParserToken("grand-child-1"),
+                    stringParserToken("grand-child-2")
+                )
+            ),
+            ParserToken::isLeaf
         );
     }
 
@@ -837,11 +837,11 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken child2 = stringParserToken("child-2");
 
         this.removeIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                ParserToken::isLeaf
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            ParserToken::isLeaf
         );
     }
 
@@ -853,16 +853,16 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final ParserToken grandChild2 = stringParserToken("grand-child-2");
 
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.removeIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                ParserToken::isLeaf
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            ParserToken::isLeaf
         );
     }
 
@@ -875,23 +875,23 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken greatGrandChild3 = stringParserToken("great-grand-child-3");
 
         final SequenceParserToken grandChild1 = sequenceParserToken(
-                greatGrandChild1,
-                greatGrandChild2,
-                greatGrandChild3
+            greatGrandChild1,
+            greatGrandChild2,
+            greatGrandChild3
         );
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
 
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.removeIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                ParserToken::isLeaf
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            ParserToken::isLeaf
         );
     }
 
@@ -901,23 +901,23 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         this.removeIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                t -> t == child1 || t == grandChild2,
-                sequenceParserToken(
-                        child2.setChildren(
-                                Lists.of(
-                                        grandChild1
-                                )
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            t -> t == child1 || t == grandChild2,
+            sequenceParserToken(
+                child2.setChildren(
+                    Lists.of(
+                        grandChild1
+                    )
                 )
+            )
         );
     }
 
@@ -928,41 +928,41 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         final StringParserToken grandChild3 = stringParserToken("grand-child-3");
         final StringParserToken grandChild4 = stringParserToken("grand-child-4");
         final SequenceParserToken child3 = sequenceParserToken(
-                grandChild3,
-                grandChild4
+            grandChild3,
+            grandChild4
         );
 
         this.removeIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2,
-                        child3
-                ),
-                t -> t == grandChild2 || t == child3,
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(
-                                        grandChild1
-                                )
-                        )
+            sequenceParserToken(
+                child1,
+                child2,
+                child3
+            ),
+            t -> t == grandChild2 || t == child3,
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(
+                        grandChild1
+                    )
                 )
+            )
         );
     }
 
     private void removeIfAndCheck(final ParserToken token,
                                   final Predicate<ParserToken> predicate) {
         this.removeIfAndCheck(
-                token,
-                predicate,
-                Optional.empty()
+            token,
+            predicate,
+            Optional.empty()
         );
     }
 
@@ -970,9 +970,9 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                                   final Predicate<ParserToken> predicate,
                                   final ParserToken expected) {
         this.removeIfAndCheck(
-                token,
-                predicate,
-                Optional.of(expected)
+            token,
+            predicate,
+            Optional.of(expected)
         );
     }
 
@@ -980,9 +980,9 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                                   final Predicate<ParserToken> predicate,
                                   final Optional<ParserToken> expected) {
         this.checkEquals(
-                expected,
-                token.removeIf(predicate),
-                () -> token + " removeIf " + predicate
+            expected,
+            token.removeIf(predicate),
+            () -> token + " removeIf " + predicate
         );
     }
 
@@ -996,16 +996,16 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(child1),
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        replacement,
-                        child2
-                )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(child1),
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                replacement,
+                child2
+            )
         );
     }
 
@@ -1017,16 +1017,16 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(child2),
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        child1,
-                        replacement
-                )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(child2),
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                child1,
+                replacement
+            )
         );
     }
 
@@ -1036,23 +1036,23 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(child2),
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        child1,
-                        replacement
-                )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(child2),
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                child1,
+                replacement
+            )
         );
     }
 
@@ -1062,28 +1062,28 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(grandChild1),
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(
-                                        replacement,
-                                        grandChild2
-                                )
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(grandChild1),
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(
+                        replacement,
+                        grandChild2
+                    )
                 )
+            )
         );
     }
 
@@ -1093,28 +1093,28 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(grandChild2),
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(
-                                        grandChild1,
-                                        replacement
-                                )
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(grandChild2),
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(
+                        grandChild1,
+                        replacement
+                    )
                 )
+            )
         );
     }
 
@@ -1127,41 +1127,41 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken greatGrandChild3 = stringParserToken("great-grand-child-3");
 
         final SequenceParserToken grandChild1 = sequenceParserToken(
-                greatGrandChild1,
-                greatGrandChild2,
-                greatGrandChild3
+            greatGrandChild1,
+            greatGrandChild2,
+            greatGrandChild3
         );
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
 
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(greatGrandChild2),
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(
-                                        grandChild1.setChildren(
-                                                Lists.of(
-                                                        greatGrandChild1,
-                                                        replacement,
-                                                        greatGrandChild3
-                                                )
-                                        ),
-                                        grandChild2
-                                )
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(greatGrandChild2),
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(
+                        grandChild1.setChildren(
+                            Lists.of(
+                                greatGrandChild1,
+                                replacement,
+                                greatGrandChild3
+                            )
+                        ),
+                        grandChild2
+                    )
                 )
+            )
         );
     }
 
@@ -1171,28 +1171,28 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                t -> t == child1 || t == grandChild2,
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        replacement,
-                        child2.setChildren(
-                                Lists.of(
-                                        grandChild1,
-                                        grandChild2
-                                )
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            t -> t == child1 || t == grandChild2,
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                replacement,
+                child2.setChildren(
+                    Lists.of(
+                        grandChild1,
+                        grandChild2
+                    )
                 )
+            )
         );
     }
 
@@ -1203,37 +1203,37 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         final StringParserToken grandChild3 = stringParserToken("grand-child-3");
         final StringParserToken grandChild4 = stringParserToken("grand-child-4");
         final SequenceParserToken child3 = sequenceParserToken(
-                grandChild3,
-                grandChild4
+            grandChild3,
+            grandChild4
         );
 
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceFirstIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2,
-                        child3
+            sequenceParserToken(
+                child1,
+                child2,
+                child3
+            ),
+            t -> t == grandChild2 || t == child3,
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(
+                        grandChild1,
+                        replacement
+                    )
                 ),
-                t -> t == grandChild2 || t == child3,
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(
-                                        grandChild1,
-                                        replacement
-                                )
-                        ),
-                        child3
-                )
+                child3
+            )
         );
     }
 
@@ -1242,12 +1242,12 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                                         final Function<ParserToken, ParserToken> mapper,
                                         final ParserToken expected) {
         this.checkEquals(
-                expected,
-                token.replaceFirstIf(
-                        predicate,
-                        mapper
-                ),
-                () -> token + " replaceFirstIf " + predicate + "," + mapper
+            expected,
+            token.replaceFirstIf(
+                predicate,
+                mapper
+            ),
+            () -> token + " replaceFirstIf " + predicate + "," + mapper
         );
     }
 
@@ -1261,16 +1261,16 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(child1),
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        replacement,
-                        child2
-                )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(child1),
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                replacement,
+                child2
+            )
         );
     }
 
@@ -1282,16 +1282,16 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(child2),
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        child1,
-                        replacement
-                )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(child2),
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                child1,
+                replacement
+            )
         );
     }
 
@@ -1301,23 +1301,23 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(child2),
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        child1,
-                        replacement
-                )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(child2),
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                child1,
+                replacement
+            )
         );
     }
 
@@ -1327,28 +1327,28 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(grandChild1),
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(
-                                        replacement,
-                                        grandChild2
-                                )
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(grandChild1),
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(
+                        replacement,
+                        grandChild2
+                    )
                 )
+            )
         );
     }
 
@@ -1358,28 +1358,28 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(grandChild2),
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(
-                                        grandChild1,
-                                        replacement
-                                )
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(grandChild2),
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(
+                        grandChild1,
+                        replacement
+                    )
                 )
+            )
         );
     }
 
@@ -1392,41 +1392,41 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken greatGrandChild3 = stringParserToken("great-grand-child-3");
 
         final SequenceParserToken grandChild1 = sequenceParserToken(
-                greatGrandChild1,
-                greatGrandChild2,
-                greatGrandChild3
+            greatGrandChild1,
+            greatGrandChild2,
+            greatGrandChild3
         );
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
 
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                Predicates.is(greatGrandChild2),
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(
-                                        grandChild1.setChildren(
-                                                Lists.of(
-                                                        greatGrandChild1,
-                                                        replacement,
-                                                        greatGrandChild3
-                                                )
-                                        ),
-                                        grandChild2
-                                )
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            Predicates.is(greatGrandChild2),
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(
+                        grandChild1.setChildren(
+                            Lists.of(
+                                greatGrandChild1,
+                                replacement,
+                                greatGrandChild3
+                            )
+                        ),
+                        grandChild2
+                    )
                 )
+            )
         );
     }
 
@@ -1436,28 +1436,28 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2
-                ),
-                t -> t == child1 || t == grandChild2,
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        replacement,
-                        child2.setChildren(
-                                Lists.of(
-                                        grandChild1,
-                                        replacement
-                                )
-                        )
+            sequenceParserToken(
+                child1,
+                child2
+            ),
+            t -> t == child1 || t == grandChild2,
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                replacement,
+                child2.setChildren(
+                    Lists.of(
+                        grandChild1,
+                        replacement
+                    )
                 )
+            )
         );
     }
 
@@ -1468,37 +1468,37 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken grandChild1 = stringParserToken("grand-child-1");
         final StringParserToken grandChild2 = stringParserToken("grand-child-2");
         final SequenceParserToken child2 = sequenceParserToken(
-                grandChild1,
-                grandChild2
+            grandChild1,
+            grandChild2
         );
 
         final StringParserToken grandChild3 = stringParserToken("grand-child-3");
         final StringParserToken grandChild4 = stringParserToken("grand-child-4");
         final SequenceParserToken child3 = sequenceParserToken(
-                grandChild3,
-                grandChild4
+            grandChild3,
+            grandChild4
         );
 
         final StringParserToken replacement = stringParserToken("REPLACEMENT");
 
         this.replaceIfAndCheck(
-                sequenceParserToken(
-                        child1,
-                        child2,
-                        child3
-                ),
-                t -> t == grandChild2 || t == child3,
-                (t) -> replacement, // mapper
-                sequenceParserToken(
-                        child1,
-                        child2.setChildren(
-                                Lists.of(
-                                        grandChild1,
-                                        replacement
-                                )
-                        ),
+            sequenceParserToken(
+                child1,
+                child2,
+                child3
+            ),
+            t -> t == grandChild2 || t == child3,
+            (t) -> replacement, // mapper
+            sequenceParserToken(
+                child1,
+                child2.setChildren(
+                    Lists.of(
+                        grandChild1,
                         replacement
-                )
+                    )
+                ),
+                replacement
+            )
         );
     }
 
@@ -1507,12 +1507,12 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
                                    final Function<ParserToken, ParserToken> mapper,
                                    final ParserToken expected) {
         this.checkEquals(
-                expected,
-                token.replaceIf(
-                        predicate,
-                        mapper
-                ),
-                () -> token + " replaceIf " + predicate + "," + mapper
+            expected,
+            token.replaceIf(
+                predicate,
+                mapper
+            ),
+            () -> token + " replaceIf " + predicate + "," + mapper
         );
     }
     // removeFirstIf & removeIf helpers.................................................................................
@@ -1523,14 +1523,14 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
 
     private SequenceParserToken sequenceParserToken(final ParserToken... children) {
         return sequenceParserToken(
-                Lists.of(children)
+            Lists.of(children)
         );
     }
 
     private SequenceParserToken sequenceParserToken(final List<ParserToken> children) {
         return ParserTokens.sequence(
-                children,
-                ParserToken.text(children)
+            children,
+            ParserToken.text(children)
         );
     }
 
@@ -1540,8 +1540,8 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     public void testCollectLeaf() {
         final StringParserToken parserToken = ParserTokens.string("Hello", "Goodbye");
         this.collectAndCheck(
-                parserToken,
-                parserToken
+            parserToken,
+            parserToken
         );
     }
 
@@ -1549,15 +1549,15 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     public void testCollectParent() {
         final StringParserToken child = ParserTokens.string("Hello", "Goodbye");
         final RepeatedParserToken parent = ParserTokens.repeated(
-                Lists.of(
-                        child
-                ),
-                "Dont care"
+            Lists.of(
+                child
+            ),
+            "Dont care"
         );
         this.collectAndCheck(
-                parent,
-                parent,
-                child
+            parent,
+            parent,
+            child
         );
     }
 
@@ -1567,17 +1567,17 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken child2 = ParserTokens.string("Hello2", "Goodbye2");
 
         final RepeatedParserToken parent = ParserTokens.repeated(
-                Lists.of(
-                        child1,
-                        child2
-                ),
-                "Dont care"
-        );
-        this.collectAndCheck(
-                parent,
-                parent,
+            Lists.of(
                 child1,
                 child2
+            ),
+            "Dont care"
+        );
+        this.collectAndCheck(
+            parent,
+            parent,
+            child1,
+            child2
         );
     }
 
@@ -1586,25 +1586,25 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken child1 = ParserTokens.string("Hello1", "Goodbye1");
 
         final RepeatedParserToken parent1 = ParserTokens.repeated(
-                Lists.of(
-                        child1
-                ),
-                "Dont care"
+            Lists.of(
+                child1
+            ),
+            "Dont care"
         );
         final StringParserToken child2 = ParserTokens.string("Hello2", "Goodbye2");
         final RepeatedParserToken parent2 = ParserTokens.repeated(
-                Lists.of(
-                        parent1,
-                        child2
-                ),
-                "Dont care"
+            Lists.of(
+                parent1,
+                child2
+            ),
+            "Dont care"
         );
         this.collectAndCheck(
-                parent2,
-                parent2,
-                parent1,
-                child1,
-                child2
+            parent2,
+            parent2,
+            parent1,
+            child1,
+            child2
         );
     }
 
@@ -1613,53 +1613,53 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         final StringParserToken child1 = ParserTokens.string("Hello1", "Goodbye1");
 
         final RepeatedParserToken parent1 = ParserTokens.repeated(
-                Lists.of(
-                        child1
-                ),
-                "Dont care"
+            Lists.of(
+                child1
+            ),
+            "Dont care"
         );
         final StringParserToken child2 = ParserTokens.string("Hello2", "Goodbye2");
         final RepeatedParserToken parent2 = ParserTokens.repeated(
-                Lists.of(
-                        child2,
-                        parent1
-                ),
-                "Dont care"
+            Lists.of(
+                child2,
+                parent1
+            ),
+            "Dont care"
         );
         this.collectAndCheck(
-                parent2,
-                parent2,
-                child2,
-                parent1,
-                child1
+            parent2,
+            parent2,
+            child2,
+            parent1,
+            child1
         );
     }
 
     private void collectAndCheck(final ParserToken token,
                                  final ParserToken... expected) {
         this.collectAndCheck(
-                token,
-                Lists.of(expected)
+            token,
+            Lists.of(expected)
         );
     }
 
     private void collectAndCheck(final ParserToken token,
                                  final List<ParserToken> expected) {
         this.checkNotEquals(
-                Lists.empty(),
-                expected
+            Lists.empty(),
+            expected
         );
 
         this.checkEquals(
-                token,
-                expected.get(0),
-                () -> "Expected first to be starting token"
+            token,
+            expected.get(0),
+            () -> "Expected first to be starting token"
         );
 
         this.checkEquals(
-                expected,
-                Lists.of(new LinkedHashSet<>(expected).toArray()),
-                () -> "Expected no duplicates"
+            expected,
+            Lists.of(new LinkedHashSet<>(expected).toArray()),
+            () -> "Expected no duplicates"
         );
     }
 
@@ -1668,99 +1668,99 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
     @Test
     public void testTreePrintBigDecimal() {
         this.treePrintAndCheck(
-                new TestLeafParserToken<>(
-                        new BigDecimal("123.5"),
-                        "123.5"
-                ),
-                "TestLeaf \"123.5\" 123.5 (java.math.BigDecimal)\n"
+            new TestLeafParserToken<>(
+                new BigDecimal("123.5"),
+                "123.5"
+            ),
+            "TestLeaf \"123.5\" 123.5 (java.math.BigDecimal)\n"
         );
     }
 
     @Test
     public void testTreePrintBoolean() {
         this.treePrintAndCheck(
-                new TestLeafParserToken<>(
-                        true,
-                        "true"
-                ),
-                "TestLeaf \"true\" true\n"
+            new TestLeafParserToken<>(
+                true,
+                "true"
+            ),
+            "TestLeaf \"true\" true\n"
         );
     }
 
     @Test
     public void testTreePrintCharacter() {
         this.treePrintAndCheck(
-                new TestLeafParserToken<>(
-                        'A',
-                        "A"
-                ),
-                "TestLeaf \"A\" 'A'\n"
+            new TestLeafParserToken<>(
+                'A',
+                "A"
+            ),
+            "TestLeaf \"A\" 'A'\n"
         );
     }
 
     @Test
     public void testTreePrintDouble() {
         this.treePrintAndCheck(
-                new TestLeafParserToken<>(
-                        1.5,
-                        "1.5"
-                ),
-                "TestLeaf \"1.5\" 1.5\n"
+            new TestLeafParserToken<>(
+                1.5,
+                "1.5"
+            ),
+            "TestLeaf \"1.5\" 1.5\n"
         );
     }
 
     @Test
     public void testTreePrintFloat() {
         this.treePrintAndCheck(
-                new TestLeafParserToken<>(
-                        1.25f,
-                        "1.25"
-                ),
-                "TestLeaf \"1.25\" 1.25F\n"
+            new TestLeafParserToken<>(
+                1.25f,
+                "1.25"
+            ),
+            "TestLeaf \"1.25\" 1.25F\n"
         );
     }
 
     @Test
     public void testTreePrintInteger() {
         this.treePrintAndCheck(
-                new TestLeafParserToken<>(
-                        123,
-                        "123"
-                ),
-                "TestLeaf \"123\" 123\n"
+            new TestLeafParserToken<>(
+                123,
+                "123"
+            ),
+            "TestLeaf \"123\" 123\n"
         );
     }
 
     @Test
     public void testTreePrintLong() {
         this.treePrintAndCheck(
-                new TestLeafParserToken<>(
-                        234L,
-                        "234"
-                ),
-                "TestLeaf \"234\" 234L\n"
+            new TestLeafParserToken<>(
+                234L,
+                "234"
+            ),
+            "TestLeaf \"234\" 234L\n"
         );
     }
 
     @Test
     public void testTreePrintString() {
         this.treePrintAndCheck(
-                new TestLeafParserToken<>(
-                        "abc",
-                        "\"abc\""
-                ),
-                "TestLeaf \"abc\" \"abc\"\n"
+            new TestLeafParserToken<>(
+                "abc",
+                "\"abc\""
+            ),
+            "TestLeaf \"abc\" \"abc\"\n"
         );
     }
 
     @Test
     public void testTreePrintStringBuilder() {
         this.treePrintAndCheck(
-                new TestLeafParserToken<>(
-                        new StringBuilder("def"),
-                        "\"def\""
-                ),
-                "TestLeaf \"def\" \"def\" (java.lang.StringBuilder)\n"
+            new TestLeafParserToken<>(
+                new StringBuilder("def"),
+                "\"def\""
+            ),
+            "TestLeaf \"def\" \"def\" (java.lang.StringBuilder)\n"
         );
     }
 
@@ -1769,8 +1769,8 @@ public final class ParserTokenTest implements ClassTesting<ParserToken>, TreePri
         TestLeafParserToken(final T value,
                             final String text) {
             super(
-                    value,
-                    text
+                value,
+                text
             );
         }
 

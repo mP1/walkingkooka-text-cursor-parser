@@ -30,30 +30,30 @@ public abstract class ParserWrapperTestCase<P extends ParserWrapper<ParserContex
     @Test
     public final void testWrapNullParserFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createParser(null));
+            NullPointerException.class,
+            () -> this.createParser(null));
     }
 
     @Test
     public final void testMinCount() {
         this.minCountAndCheck(
-                this.createParser(),
-                1
+            this.createParser(),
+            1
         );
     }
 
     @Test
     public final void testMaxCount() {
         this.maxCountAndCheck(
-                this.createParser(),
-                1
+            this.createParser(),
+            1
         );
     }
 
     @Override
     public final P createParser() {
         return this.createParser(
-                this.wrappedParser()
+            this.wrappedParser()
         );
     }
 

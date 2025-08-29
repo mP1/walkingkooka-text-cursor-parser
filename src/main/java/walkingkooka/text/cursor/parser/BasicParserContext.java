@@ -32,8 +32,8 @@ import java.util.function.BiFunction;
  * An adaptor for {@link DecimalNumberContext} to {@link ParserContext}.
  */
 final class BasicParserContext implements ParserContext,
-        DateTimeContextDelegator,
-        DecimalNumberContextDelegator {
+    DateTimeContextDelegator,
+    DecimalNumberContextDelegator {
 
     /**
      * Creates a new {@link BasicParserContext}.
@@ -46,9 +46,9 @@ final class BasicParserContext implements ParserContext,
         Objects.requireNonNull(decimalNumberContext, "decimalNumberContext");
 
         return new BasicParserContext(
-                invalidCharacterExceptionFactory,
-                dateTimeContext,
-                decimalNumberContext
+            invalidCharacterExceptionFactory,
+            dateTimeContext,
+            decimalNumberContext
         );
     }
 
@@ -69,8 +69,8 @@ final class BasicParserContext implements ParserContext,
     public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                final TextCursor cursor) {
         return this.invalidCharacterExceptionFactory.apply(
-                parser,
-                cursor
+            parser,
+            cursor
         );
     }
 

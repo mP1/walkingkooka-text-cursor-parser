@@ -30,7 +30,7 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 
 public final class ParserContextDelegatorTest implements ParserContextTesting<TestParserContextDelegator>,
-        DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator {
 
     @Override
     public TestParserContextDelegator createContext() {
@@ -55,17 +55,17 @@ public final class ParserContextDelegatorTest implements ParserContextTesting<Te
             final Locale locale = Locale.ENGLISH;
 
             return ParserContexts.basic(
-                    InvalidCharacterExceptionFactory.POSITION,
-                    DateTimeContexts.basic(
-                            DateTimeSymbols.fromDateFormatSymbols(
-                                    new DateFormatSymbols(locale)
-                            ),
-                            locale,
-                            1950, // defaultYear
-                            50, // twoDigitYear
-                            LocalDateTime::now
+                InvalidCharacterExceptionFactory.POSITION,
+                DateTimeContexts.basic(
+                    DateTimeSymbols.fromDateFormatSymbols(
+                        new DateFormatSymbols(locale)
                     ),
-                    DECIMAL_NUMBER_CONTEXT
+                    locale,
+                    1950, // defaultYear
+                    50, // twoDigitYear
+                    LocalDateTime::now
+                ),
+                DECIMAL_NUMBER_CONTEXT
             );
         }
 

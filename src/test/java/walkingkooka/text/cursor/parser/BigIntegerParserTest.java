@@ -32,25 +32,25 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
     private final static int RADIX = 10;
 
     // with.............................................................................................................
-    
+
     @Test
     public void testWithNegativeRadixFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> BigIntegerParser.with(-1)
+            IllegalArgumentException.class,
+            () -> BigIntegerParser.with(-1)
         );
     }
 
     @Test
     public void testWithZeroRadixFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> BigIntegerParser.with(0)
+            IllegalArgumentException.class,
+            () -> BigIntegerParser.with(0)
         );
     }
 
     // parse............................................................................................................
-    
+
     @Test
     public void testParseFailure() {
         this.parseFailAndCheck("a");
@@ -74,151 +74,151 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
     @Test
     public void testParseZero() {
         this.parseAndCheck2(
-                "0",
-                0,
-                "0",
-                ""
+            "0",
+            0,
+            "0",
+            ""
         );
     }
 
     @Test
     public void testParseZeroZero() {
         this.parseAndCheck2(
-                "00",
-                0,
-                "00",
-                ""
+            "00",
+            0,
+            "00",
+            ""
         );
     }
 
     @Test
     public void testParseZeroZeroZero() {
         this.parseAndCheck2(
-                "000",
-                0,
-                "000",
-                ""
+            "000",
+            0,
+            "000",
+            ""
         );
     }
 
     @Test
     public void testParseDecimal() {
         this.parseAndCheck2(
-                "1",
-                1,
-                "1",
-                ""
+            "1",
+            1,
+            "1",
+            ""
         );
     }
 
     @Test
     public void testParseDecimal2() {
         this.parseAndCheck2(
-                "123",
-                123,
-                "123",
-                ""
+            "123",
+            123,
+            "123",
+            ""
         );
     }
 
     @Test
     public void testParseDecimal3() {
         this.parseAndCheck2(
-                "12305",
-                12305,
-                "12305",
-                ""
+            "12305",
+            12305,
+            "12305",
+            ""
         );
     }
 
     @Test
     public void testParseZeroDecimal() {
         this.parseAndCheck2(
-                "0123",
-                123,
-                "0123",
-                ""
+            "0123",
+            123,
+            "0123",
+            ""
         );
     }
 
     @Test
     public void testParseZeroZeroDecimal() {
         this.parseAndCheck2(
-                "00123",
-                123,
-                "00123",
-                ""
+            "00123",
+            123,
+            "00123",
+            ""
         );
     }
 
     @Test
     public void testParsePlusSignDecimal() {
         this.parseAndCheck2(
-                "+1",
-                1,
-                "+1",
-                ""
+            "+1",
+            1,
+            "+1",
+            ""
         );
     }
 
     @Test
     public void testParsePlusSignDecimal2() {
         this.parseAndCheck2(
-                "+0",
-                0,
-                "+0",
-                ""
+            "+0",
+            0,
+            "+0",
+            ""
         );
     }
 
     @Test
     public void testParsePlusSignDecimal3() {
         this.parseAndCheck2(
-                "+123",
-                123,
-                "+123",
-                ""
+            "+123",
+            123,
+            "+123",
+            ""
         );
     }
 
     @Test
     public void testParseMinusSignDecimal() {
         this.parseAndCheck2(
-                "-1",
-                -1,
-                "-1",
-                ""
+            "-1",
+            -1,
+            "-1",
+            ""
         );
     }
 
     @Test
     public void testParseMinusSignDecimal2() {
         this.parseAndCheck2(
-                "-123",
-                -123,
-                "-123",
-                ""
+            "-123",
+            -123,
+            "-123",
+            ""
         );
     }
 
     @Test
     public void testParseUntilNonDigit() {
         this.parseAndCheck2(
-                "123abc",
-                123,
-                "123",
-                "abc"
+            "123abc",
+            123,
+            "123",
+            "abc"
         );
     }
 
     @Test
     public void testParseHex() {
         this.parseAndCheck3(
-                16,
-                "1234xyz",
-                0x1234,
-                "1234",
-                "xyz"
+            16,
+            "1234xyz",
+            0x1234,
+            "1234",
+            "xyz"
         );
     }
 
@@ -226,27 +226,27 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
     @Test
     public void testParseOctal() {
         this.parseAndCheck3(
-                8,
-                "012345678xyz",
-                01234567,
-                "01234567",
-                "8xyz"
+            8,
+            "012345678xyz",
+            01234567,
+            "01234567",
+            "8xyz"
         );
     }
 
     @Test
     public void testParseDifferentMinusSign() {
         this.parseAndCheck3(
-                "M123",
-                -123
+            "M123",
+            -123
         );
     }
 
     @Test
     public void testParseDifferentPlusSign() {
         this.parseAndCheck3(
-                "P123",
-                123
+            "P123",
+            123
         );
     }
 
@@ -255,43 +255,43 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
         final String text = "ff";
 
         this.parseAndCheck3(
-                BigIntegerParser.with(16),
-                text,
-                ARABIC_ZERO_DIGIT,
-                0xff
+            BigIntegerParser.with(16),
+            text,
+            ARABIC_ZERO_DIGIT,
+            0xff
         );
     }
 
     @Test
     public void testParseRadix10NonArabicDigits() {
         this.parseAndCheck3(
-                this.createParser(),
-                arabicDigit(1) +
-                        arabicDigit(2),
-                ARABIC_ZERO_DIGIT,
-                12
+            this.createParser(),
+            arabicDigit(1) +
+                arabicDigit(2),
+            ARABIC_ZERO_DIGIT,
+            12
         );
     }
 
     @Test
     public void testParseRadix10NonArabicDigits2() {
         this.parseAndCheck3(
-                this.createParser(),
-                "M" +
-                        arabicDigit(1) +
-                        arabicDigit(2),
-                ARABIC_ZERO_DIGIT,
-                -12
+            this.createParser(),
+            "M" +
+                arabicDigit(1) +
+                arabicDigit(2),
+            ARABIC_ZERO_DIGIT,
+            -12
         );
     }
 
     private TextCursor parseAndCheck3(final String text,
                                       final long expected) {
         return this.parseAndCheck3(
-                this.createParser(),
-                text,
-                '0',
-                expected
+            this.createParser(),
+            text,
+            '0',
+            expected
         );
     }
 
@@ -300,34 +300,34 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
                                       final char zeroDigit,
                                       final long expected) {
         return this.parseAndCheck(
-                parser,
-                ParserContexts.basic(
-                        InvalidCharacterExceptionFactory.POSITION,
-                        DateTimeContexts.fake(),
-                        new FakeDecimalNumberContext() {
-                            @Override
-                            public char negativeSign() {
-                                return 'M';
-                            }
+            parser,
+            ParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
+                DateTimeContexts.fake(),
+                new FakeDecimalNumberContext() {
+                    @Override
+                    public char negativeSign() {
+                        return 'M';
+                    }
 
-                            @Override
-                            public char positiveSign() {
-                                return 'P';
-                            }
+                    @Override
+                    public char positiveSign() {
+                        return 'P';
+                    }
 
-                            @Override
-                            public char zeroDigit() {
-                                return zeroDigit;
-                            }
-                        }
-                ),
-                text,
-                ParserTokens.bigInteger(
-                        BigInteger.valueOf(expected),
-                        text
-                ),
-                text,
-                ""
+                    @Override
+                    public char zeroDigit() {
+                        return zeroDigit;
+                    }
+                }
+            ),
+            text,
+            ParserTokens.bigInteger(
+                BigInteger.valueOf(expected),
+                text
+            ),
+            text,
+            ""
         );
     }
 
@@ -339,9 +339,9 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
     @Override
     public ParserContext createContext() {
         return ParserContexts.basic(
-                InvalidCharacterExceptionFactory.POSITION,
-                DateTimeContexts.fake(),
-                this.decimalNumberContext()
+            InvalidCharacterExceptionFactory.POSITION,
+            DateTimeContexts.fake(),
+            this.decimalNumberContext()
         );
     }
 
@@ -350,10 +350,10 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
                                       final String text,
                                       final String textAfter) {
         return this.parseAndCheck2(
-                in,
-                BigInteger.valueOf(value),
-                text,
-                textAfter
+            in,
+            BigInteger.valueOf(value),
+            text,
+            textAfter
         );
     }
 
@@ -362,13 +362,13 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
                                       final String text,
                                       final String textAfter) {
         return this.parseAndCheck(
-                in,
-                BigIntegerParserToken.with(
-                        value,
-                        text
-                ),
-                text,
-                textAfter
+            in,
+            BigIntegerParserToken.with(
+                value,
+                text
+            ),
+            text,
+            textAfter
         );
     }
 
@@ -378,15 +378,15 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
                                       final String text,
                                       final String textAfter) {
         return this.parseAndCheck(
-                BigIntegerParser.with(radix),
-                this.createContext(),
-                TextCursors.charSequence(from),
-                BigIntegerParserToken.with(
-                        BigInteger.valueOf(value),
-                        text
-                ),
-                text,
-                textAfter
+            BigIntegerParser.with(radix),
+            this.createContext(),
+            TextCursors.charSequence(from),
+            BigIntegerParserToken.with(
+                BigInteger.valueOf(value),
+                text
+            ),
+            text,
+            textAfter
         );
     }
 
@@ -395,16 +395,16 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createParser(),
-                "BigInteger"
+            this.createParser(),
+            "BigInteger"
         );
     }
 
     @Test
     public void testToString2() {
         this.toStringAndCheck(
-                BigIntegerParser.with(8),
-                "BigInteger(base=8)"
+            BigIntegerParser.with(8),
+            "BigInteger(base=8)"
         );
     }
 

@@ -76,28 +76,28 @@ public enum InvalidCharacterExceptionFactory implements BiFunction<Parser<?>, Te
         final String text = cursor.text();
 
         int position = cursor.isEmpty() ?
-                0 :
-                lineInfo.textOffset();
+            0 :
+            lineInfo.textOffset();
         if (cursor instanceof MaxPositionTextCursor) {
             final MaxPositionTextCursor max = (MaxPositionTextCursor) cursor;
             position = Math.max(
-                    Math.min(
-                            max.max(),
-                            text.length() - 1
-                    ),
-                    position
+                Math.min(
+                    max.max(),
+                    text.length() - 1
+                ),
+                position
             );
         }
 
         InvalidCharacterException ice = new InvalidCharacterException(
-                text,
-                position
+            text,
+            position
         );
 
         if (this == COLUMN_AND_LINE || this == COLUMN_AND_LINE_EXPECTED) {
             ice = ice.setColumnAndLine(
-                    lineInfo.column(),
-                    lineInfo.lineNumber()
+                lineInfo.column(),
+                lineInfo.lineNumber()
             );
         }
 

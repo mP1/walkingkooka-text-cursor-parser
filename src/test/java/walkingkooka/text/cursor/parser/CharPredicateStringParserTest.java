@@ -26,7 +26,7 @@ import walkingkooka.text.cursor.TextCursor;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CharPredicateStringParserTest extends NonEmptyParserTestCase<CharPredicateStringParser<ParserContext>, StringParserToken>
-        implements HashCodeEqualsDefinedTesting2<CharPredicateStringParser<ParserContext>> {
+    implements HashCodeEqualsDefinedTesting2<CharPredicateStringParser<ParserContext>> {
 
     private final static CharPredicate DIGITS = CharPredicates.digit();
     private final static int MIN_LENGTH = 2;
@@ -35,47 +35,47 @@ public class CharPredicateStringParserTest extends NonEmptyParserTestCase<CharPr
     @Test
     public void testWithNullCharPredicateFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> CharPredicateStringParser.with(null, MIN_LENGTH, MAX_LENGTH)
+            NullPointerException.class,
+            () -> CharPredicateStringParser.with(null, MIN_LENGTH, MAX_LENGTH)
         );
     }
 
     @Test
     public void testWithInvalidMinLengthFails() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> CharPredicateStringParser.with(DIGITS, -1, MAX_LENGTH)
+            IllegalArgumentException.class,
+            () -> CharPredicateStringParser.with(DIGITS, -1, MAX_LENGTH)
         );
         this.checkEquals(
-                "Invalid min length -1 <= 0",
-                thrown.getMessage(),
-                "message"
+            "Invalid min length -1 <= 0",
+            thrown.getMessage(),
+            "message"
         );
     }
 
     @Test
     public void testWithInvalidMinLengthFails2() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> CharPredicateStringParser.with(DIGITS, 0, MAX_LENGTH)
+            IllegalArgumentException.class,
+            () -> CharPredicateStringParser.with(DIGITS, 0, MAX_LENGTH)
         );
         this.checkEquals(
-                "Invalid min length 0 <= 0",
-                thrown.getMessage(),
-                "message"
+            "Invalid min length 0 <= 0",
+            thrown.getMessage(),
+            "message"
         );
     }
 
     @Test
     public void testWithInvalidMaxLengthFails2() {
         final IllegalArgumentException thrown = assertThrows(
-                IllegalArgumentException.class,
-                () -> CharPredicateStringParser.with(DIGITS, MIN_LENGTH, MIN_LENGTH - 1)
+            IllegalArgumentException.class,
+            () -> CharPredicateStringParser.with(DIGITS, MIN_LENGTH, MIN_LENGTH - 1)
         );
         this.checkEquals(
-                "Invalid max length 1 < min length 2",
-                thrown.getMessage(),
-                "message"
+            "Invalid max length 1 < min length 2",
+            thrown.getMessage(),
+            "message"
         );
     }
 
@@ -99,67 +99,67 @@ public class CharPredicateStringParserTest extends NonEmptyParserTestCase<CharPr
     @Test
     public void testParseSuccess() {
         this.parseAndCheck2(
-                "1",
-                "1",
-                "1"
+            "1",
+            "1",
+            "1"
         );
     }
 
     @Test
     public void testParseSuccess2() {
         this.parseAndCheck2(
-                "2",
-                "2",
-                "2"
+            "2",
+            "2",
+            "2"
         );
     }
 
     @Test
     public void testParseSuccess3() {
         this.parseAndCheck2(
-                "2abc",
-                "2",
-                "2",
-                "abc"
+            "2abc",
+            "2",
+            "2",
+            "abc"
         );
     }
 
     @Test
     public void testParseSuccess4() {
         this.parseAndCheck3(
-                "123abc",
-                "123",
-                "123",
-                "abc"
+            "123abc",
+            "123",
+            "123",
+            "abc"
         );
     }
 
     @Test
     public void testParseSuccessTerminatedByMismatch() {
         this.parseAndCheck3(
-                "123abc",
-                "123",
-                "123",
-                "abc"
+            "123abc",
+            "123",
+            "123",
+            "abc"
         );
     }
 
     @Test
     public void testParseSuccessTerminatedEof() {
         this.parseAndCheck3(
-                "123",
-                "123",
-                "123"
+            "123",
+            "123",
+            "123"
         );
     }
 
     @Test
     public void testParseMultipleAttempts() {
         final TextCursor cursor = this.parseAndCheck3(
-                "123abc",
-                "123",
-                "123",
-                "abc"
+            "123abc",
+            "123",
+            "123",
+            "abc"
         );
         this.parseFailAndCheck(cursor);
     }
@@ -172,9 +172,9 @@ public class CharPredicateStringParserTest extends NonEmptyParserTestCase<CharPr
     protected CharPredicateStringParser<ParserContext> createParser(final int min,
                                                                     final int max) {
         return CharPredicateStringParser.with(
-                DIGITS,
-                min,
-                max
+            DIGITS,
+            min,
+            max
         );
     }
 
@@ -182,10 +182,10 @@ public class CharPredicateStringParserTest extends NonEmptyParserTestCase<CharPr
                                       final String value,
                                       final String text) {
         return this.parseAndCheck2(
-                in,
-                value,
-                text,
-                ""
+            in,
+            value,
+            text,
+            ""
         );
     }
 
@@ -194,11 +194,11 @@ public class CharPredicateStringParserTest extends NonEmptyParserTestCase<CharPr
                                       final String text,
                                       final String textAfter) {
         return this.parseAndCheck(
-                this.createParser(1, 4),
-                in,
-                StringParserToken.with(value, text),
-                text,
-                textAfter
+            this.createParser(1, 4),
+            in,
+            StringParserToken.with(value, text),
+            text,
+            textAfter
         );
     }
 
@@ -206,10 +206,10 @@ public class CharPredicateStringParserTest extends NonEmptyParserTestCase<CharPr
                                       final String value,
                                       final String text) {
         return this.parseAndCheck3(
-                in,
-                value,
-                text,
-                ""
+            in,
+            value,
+            text,
+            ""
         );
     }
 
@@ -218,10 +218,10 @@ public class CharPredicateStringParserTest extends NonEmptyParserTestCase<CharPr
                                       final String text,
                                       final String textAfter) {
         return this.parseAndCheck(
-                in,
-                StringParserToken.with(value, text),
-                text,
-                textAfter
+            in,
+            StringParserToken.with(value, text),
+            text,
+            textAfter
         );
     }
 
@@ -230,64 +230,64 @@ public class CharPredicateStringParserTest extends NonEmptyParserTestCase<CharPr
     @Test
     public void testEqualsDifferentPredicate() {
         this.checkNotEquals(
-                CharPredicateStringParser.with(
-                        DIGITS,
-                        MIN_LENGTH,
-                        MAX_LENGTH
-                ),
-                CharPredicateStringParser.with(
-                        CharPredicates.fake(),
-                        MIN_LENGTH,
-                        MAX_LENGTH
-                )
+            CharPredicateStringParser.with(
+                DIGITS,
+                MIN_LENGTH,
+                MAX_LENGTH
+            ),
+            CharPredicateStringParser.with(
+                CharPredicates.fake(),
+                MIN_LENGTH,
+                MAX_LENGTH
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentMinLength() {
         this.checkNotEquals(
-                CharPredicateStringParser.with(
-                        DIGITS,
-                        MIN_LENGTH,
-                        MAX_LENGTH
-                ),
-                CharPredicateStringParser.with(
-                        DIGITS,
-                        MIN_LENGTH + 1,
-                        MAX_LENGTH
-                )
+            CharPredicateStringParser.with(
+                DIGITS,
+                MIN_LENGTH,
+                MAX_LENGTH
+            ),
+            CharPredicateStringParser.with(
+                DIGITS,
+                MIN_LENGTH + 1,
+                MAX_LENGTH
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentMaxLength() {
         this.checkNotEquals(
-                CharPredicateStringParser.with(
-                        DIGITS,
-                        MIN_LENGTH,
-                        MAX_LENGTH
-                ),
-                CharPredicateStringParser.with(
-                        DIGITS,
-                        MIN_LENGTH,
-                        MAX_LENGTH + 1
-                )
+            CharPredicateStringParser.with(
+                DIGITS,
+                MIN_LENGTH,
+                MAX_LENGTH
+            ),
+            CharPredicateStringParser.with(
+                DIGITS,
+                MIN_LENGTH,
+                MAX_LENGTH + 1
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentToString() {
         this.checkNotEquals(
-                CharPredicateStringParser.with(
-                        DIGITS,
-                        MIN_LENGTH,
-                        MAX_LENGTH
-                ),
-                CharPredicateStringParser.with(
-                        DIGITS,
-                        MIN_LENGTH,
-                        MAX_LENGTH
-                ).setToString("Different")
+            CharPredicateStringParser.with(
+                DIGITS,
+                MIN_LENGTH,
+                MAX_LENGTH
+            ),
+            CharPredicateStringParser.with(
+                DIGITS,
+                MIN_LENGTH,
+                MAX_LENGTH
+            ).setToString("Different")
         );
     }
 
@@ -301,8 +301,8 @@ public class CharPredicateStringParserTest extends NonEmptyParserTestCase<CharPr
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createParser(),
-                DIGITS + "{2,4}"
+            this.createParser(),
+            DIGITS + "{2,4}"
         );
     }
 

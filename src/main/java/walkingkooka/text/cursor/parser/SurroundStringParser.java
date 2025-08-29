@@ -27,15 +27,15 @@ import java.util.Optional;
  * A {@link Parser} that only requires an opening string and is terminated by another closing string.
  */
 final class SurroundStringParser<C extends ParserContext> extends NonEmptyParser<C>
-        implements RequiredParser<C> {
+    implements RequiredParser<C> {
 
     static <C extends ParserContext> SurroundStringParser<C> with(final String open, final String close) {
         return new SurroundStringParser<>(
-                CharSequences.failIfNullOrEmpty(open, "open"),
-                CharSequences.failIfNullOrEmpty(close, "close"),
-                CharSequences.quoteAndEscape(open) +
-                        "*" +
-                        CharSequences.quoteAndEscape(close)
+            CharSequences.failIfNullOrEmpty(open, "open"),
+            CharSequences.failIfNullOrEmpty(close, "close"),
+            CharSequences.quoteAndEscape(open) +
+                "*" +
+                CharSequences.quoteAndEscape(close)
         );
     }
 
@@ -117,9 +117,9 @@ final class SurroundStringParser<C extends ParserContext> extends NonEmptyParser
     @Override
     SurroundStringParser<C> replaceToString(final String toString) {
         return new SurroundStringParser<>(
-                this.open,
-                this.close,
-                toString
+            this.open,
+            this.close,
+            toString
         );
     }
 
@@ -128,8 +128,8 @@ final class SurroundStringParser<C extends ParserContext> extends NonEmptyParser
     @Override //
     int hashCode0() {
         return Objects.hash(
-                this.open,
-                this.close
+            this.open,
+            this.close
         );
     }
 
@@ -138,6 +138,6 @@ final class SurroundStringParser<C extends ParserContext> extends NonEmptyParser
         final SurroundStringParser<?> otherSurroundingStringParser = other.cast();
 
         return this.open.equals(otherSurroundingStringParser.open) &&
-                this.close.equals(otherSurroundingStringParser.close);
+            this.close.equals(otherSurroundingStringParser.close);
     }
 }

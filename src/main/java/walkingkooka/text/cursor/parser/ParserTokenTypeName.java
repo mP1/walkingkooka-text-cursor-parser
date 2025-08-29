@@ -21,8 +21,8 @@ final class ParserTokenTypeName {
     static String typeName(final ParserToken token) {
         final String typeName = token.getClass().getSimpleName();
         return typeName.endsWith(PARSER_TOKEN) ?
-                typeName.substring(0, typeName.length() - PARSER_TOKEN.length()) :
-                typeName;
+            typeName.substring(0, typeName.length() - PARSER_TOKEN.length()) :
+            typeName;
     }
 
     private final static String PARSER_TOKEN = ParserToken.class.getSimpleName();

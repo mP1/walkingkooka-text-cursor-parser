@@ -26,7 +26,7 @@ import java.util.Optional;
  * A {@link Parser} that always returns {@link Optional#empty() nothing}
  */
 final class NeverParser<C extends ParserContext> extends ParserSetToString<C>
-        implements RequiredParser<C> {
+    implements RequiredParser<C> {
 
     static <C extends ParserContext> NeverParser<C> instance() {
         return Cast.to(INSTANCE);

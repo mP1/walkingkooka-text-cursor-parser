@@ -29,31 +29,31 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class ReportingParserTest extends ParserWrapperTestCase<ReportingParser<ParserContext>>
-        implements HashCodeEqualsDefinedTesting2<ReportingParser<ParserContext>> {
+    implements HashCodeEqualsDefinedTesting2<ReportingParser<ParserContext>> {
 
     private final static ParserReporterCondition CONDITION = ParserReporterCondition.ALWAYS;
 
     @Test
     public void testWithNullConditionFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> ReportingParser.with(
-                        null,
-                        this.reporter(),
-                        this.wrappedParser()
-                )
+            NullPointerException.class,
+            () -> ReportingParser.with(
+                null,
+                this.reporter(),
+                this.wrappedParser()
+            )
         );
     }
 
     @Test
     public void testWithNullReporterFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> ReportingParser.with(
-                        CONDITION,
-                        null,
-                        this.wrappedParser()
-                )
+            NullPointerException.class,
+            () -> ReportingParser.with(
+                CONDITION,
+                null,
+                this.wrappedParser()
+            )
         );
     }
 
@@ -63,40 +63,40 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
         final ParserReporter<FakeParserContext> reporter = ParserReporters.fake();
 
         final ReportingParser<FakeParserContext> reportingParser = ReportingParser.with(
-                ParserReporterCondition.ALWAYS,
-                reporter,
-                parser
+            ParserReporterCondition.ALWAYS,
+            reporter,
+            parser
         );
 
         final ParserReporterCondition condition = ParserReporterCondition.NOT_EMPTY;
 
         final ReportingParser<FakeParserContext> reportingParser2 = ReportingParser.with(
-                condition,
-                reporter,
-                reportingParser
+            condition,
+            reporter,
+            reportingParser
         );
 
         assertNotSame(
-                reportingParser,
-                reportingParser2
+            reportingParser,
+            reportingParser2
         );
 
         this.checkEquals(
-                parser,
-                reportingParser2.parser,
-                "parser"
+            parser,
+            reportingParser2.parser,
+            "parser"
         );
 
         this.checkEquals(
-                condition,
-                reportingParser2.condition,
-                "condition"
+            condition,
+            reportingParser2.condition,
+            "condition"
         );
 
         this.checkEquals(
-                reporter,
-                reportingParser2.reporter,
-                "reporter"
+            reporter,
+            reportingParser2.reporter,
+            "reporter"
         );
     }
 
@@ -105,38 +105,38 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
     @Test
     public void testParseReportFails() {
         this.parseThrows(
-                "!",
-                "Invalid character '!'"
+            "!",
+            "Invalid character '!'"
         );
     }
 
     @Test
     public void testParseNotEmptyConditionCursorEmptyNotFails() {
         this.parseThrows(
-                this.createParser(ParserReporterCondition.NOT_EMPTY),
-                "!",
-                "Invalid character '!'"
+            this.createParser(ParserReporterCondition.NOT_EMPTY),
+            "!",
+            "Invalid character '!'"
         );
     }
 
     @Test
     public void testParseNotEmptyConditionCursorNotEmptyParserSuccessful() {
         this.parseAndCheck(
-                this.createParser(ParserReporterCondition.NOT_EMPTY),
-                "A",
-                ParserTokens.character('A', "A"),
-                "A"
+            this.createParser(ParserReporterCondition.NOT_EMPTY),
+            "A",
+            ParserTokens.character('A', "A"),
+            "A"
         );
     }
 
     @Test
     public void testParseNotEmptyConditionCursorEmpty() {
         this.checkEquals(
-                Optional.empty(),
-                this.createParser(ParserReporterCondition.NOT_EMPTY)
-                        .parse(TextCursors.charSequence(""),
-                                this.createContext()
-                        )
+            Optional.empty(),
+            this.createParser(ParserReporterCondition.NOT_EMPTY)
+                .parse(TextCursors.charSequence(""),
+                    this.createContext()
+                )
         );
     }
 
@@ -144,8 +144,8 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
     @Override
     public void testParseEmptyCursorFail() {
         this.parseThrows(
-                "!",
-                "Invalid character \'!\'"
+            "!",
+            "Invalid character \'!\'"
         );
     }
 
@@ -156,18 +156,18 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
 
     private ReportingParser<ParserContext> createParser(final ParserReporterCondition condition) {
         return ReportingParser.with(
-                condition,
-                this.reporter(),
-                this.wrappedParser()
+            condition,
+            this.reporter(),
+            this.wrappedParser()
         );
     }
 
     @Override
     ReportingParser<ParserContext> createParser(final Parser<ParserContext> parser) {
         return ReportingParser.with(
-                ParserReporterCondition.ALWAYS,
-                this.reporter(),
-                parser
+            ParserReporterCondition.ALWAYS,
+            this.reporter(),
+            parser
         );
     }
 
@@ -180,55 +180,55 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
     @Test
     public void testEqualsDifferentCondition() {
         this.checkNotEquals(
-                ReportingParser.with(
-                        ParserReporterCondition.ALWAYS,
-                        this.reporter(),
-                        this.wrappedParser()
-                ),
-                ReportingParser.with(
-                        ParserReporterCondition.NOT_EMPTY,
-                        this.reporter(),
-                        this.wrappedParser()
-                )
+            ReportingParser.with(
+                ParserReporterCondition.ALWAYS,
+                this.reporter(),
+                this.wrappedParser()
+            ),
+            ReportingParser.with(
+                ParserReporterCondition.NOT_EMPTY,
+                this.reporter(),
+                this.wrappedParser()
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentReporter() {
         this.checkNotEquals(
-                ReportingParser.with(
-                        ParserReporterCondition.ALWAYS,
-                        this.reporter(),
-                        this.wrappedParser()
-                ),
-                ReportingParser.with(
-                        ParserReporterCondition.ALWAYS,
-                        ParserReporters.fake(),
-                        this.wrappedParser()
-                )
+            ReportingParser.with(
+                ParserReporterCondition.ALWAYS,
+                this.reporter(),
+                this.wrappedParser()
+            ),
+            ReportingParser.with(
+                ParserReporterCondition.ALWAYS,
+                ParserReporters.fake(),
+                this.wrappedParser()
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentParser() {
         this.checkNotEquals(
-                ReportingParser.with(
-                        ParserReporterCondition.ALWAYS,
-                        this.reporter(),
-                        this.wrappedParser()
-                ),
-                ReportingParser.with(
-                        ParserReporterCondition.ALWAYS,
-                        this.reporter(),
-                        Parsers.fake()
-                )
+            ReportingParser.with(
+                ParserReporterCondition.ALWAYS,
+                this.reporter(),
+                this.wrappedParser()
+            ),
+            ReportingParser.with(
+                ParserReporterCondition.ALWAYS,
+                this.reporter(),
+                Parsers.fake()
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentToString() {
         this.checkNotEquals(
-                this.createParser().setToString("Different")
+            this.createParser().setToString("Different")
         );
     }
 
@@ -242,8 +242,8 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createParser(),
-                "letter | Fail"
+            this.createParser(),
+            "letter | Fail"
         );
     }
 

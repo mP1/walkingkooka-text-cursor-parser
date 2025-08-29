@@ -80,9 +80,9 @@ public final class Parsers implements PublicStaticHelper {
                                                                           final int minLength,
                                                                           final int maxLength) {
         return CharPredicateStringParser.with(
-                predicate,
-                minLength,
-                maxLength
+            predicate,
+            minLength,
+            maxLength
         );
     }
 
@@ -180,9 +180,9 @@ public final class Parsers implements PublicStaticHelper {
                                                                 final int maxCount,
                                                                 final Parser<C> parser) {
         return RepeatingParser.with(
-                minCount,
-                maxCount,
-                parser
+            minCount,
+            maxCount,
+            parser
         );
     }
 
