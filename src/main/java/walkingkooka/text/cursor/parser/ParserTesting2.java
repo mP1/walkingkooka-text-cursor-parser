@@ -215,35 +215,19 @@ public interface ParserTesting2<P extends Parser<C>,
     }
 
     default void parseThrowsEndOfText(final String cursorText) {
-        this.parseThrowsEndOfText(
-            cursorText,
-            cursorText.length() + 1,
-            1
-        );
-    }
-
-    default void parseThrowsEndOfText(final String cursorText,
-                                      final int column,
-                                      final int row) {
         // Message format from BasicParserReporter
         this.parseThrowsEndOfText(
             this.createParser(),
-            cursorText,
-            column,
-            row
+            cursorText
         );
     }
 
     default void parseThrowsEndOfText(final Parser<C> parser,
-                                      final String cursorText,
-                                      final int column,
-                                      final int row) {
+                                      final String cursorText) {
         this.parseThrowsEndOfText(
             parser,
             this.createContext(),
-            cursorText,
-            column,
-            row
+            cursorText
         );
     }
 
