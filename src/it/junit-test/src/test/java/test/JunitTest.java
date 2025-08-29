@@ -42,38 +42,38 @@ public class JunitTest {
         final String text = "123";
 
         Assert.assertEquals(
-                Optional.of(
-                        ParserTokens.bigInteger(
-                                BigInteger.valueOf(123),
-                                text
+            Optional.of(
+                ParserTokens.bigInteger(
+                    BigInteger.valueOf(123),
+                    text
+                )
+            ),
+            Parsers.bigInteger(10)
+                .parse(
+                    TextCursors.charSequence(text),
+                    ParserContexts.basic(
+                        InvalidCharacterExceptionFactory.POSITION,
+                        DateTimeContexts.fake(),
+                        DecimalNumberContexts.basic(
+                            DecimalNumberSymbols.with(
+                                '-',
+                                '+',
+                                '0',
+                                "$",
+                                '.',
+                                "E",
+                                ',',
+                                "Infinity",
+                                '.',
+                                "Nan",
+                                '%',
+                                '\u2030'
+                            ),
+                            Locale.forLanguageTag("en-AU"),
+                            MathContext.DECIMAL32
                         )
-                ),
-                Parsers.bigInteger(10)
-                        .parse(
-                                TextCursors.charSequence(text),
-                                ParserContexts.basic(
-                                        InvalidCharacterExceptionFactory.POSITION,
-                                        DateTimeContexts.fake(),
-                                        DecimalNumberContexts.basic(
-                                                DecimalNumberSymbols.with(
-                                                        '-',
-                                                        '+',
-                                                        '0',
-                                                        "$",
-                                                        '.',
-                                                        "E",
-                                                        ',',
-                                                        "Infinity",
-                                                        '.',
-                                                        "Nan",
-                                                        '%',
-                                                        '\u2030'
-                                                ),
-                                                Locale.forLanguageTag("en-AU"),
-                                                MathContext.DECIMAL32
-                                        )
-                                )
-                        )
+                    )
+                )
         );
     }
 }

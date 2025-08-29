@@ -40,8 +40,8 @@ public final class QuotedParserSingleTest extends QuotedParserTestCase<QuotedPar
     SingleQuotedParserToken createToken(final String content,
                                         final String text) {
         return SingleQuotedParserToken.with(
-                content,
-                text
+            content,
+            text
         );
     }
 
@@ -50,8 +50,8 @@ public final class QuotedParserSingleTest extends QuotedParserTestCase<QuotedPar
     @Test
     public void testToStringSingleQuoted() {
         this.toStringAndCheck(
-                this.createParser(),
-                "single quoted string"
+            this.createParser(),
+            "single quoted string"
         );
     }
 

@@ -44,7 +44,7 @@ public final class RepeatedParserToken extends RepeatedOrSequenceParserToken {
     @Override
     public RepeatedParserToken flat() {
         return this.setValue(RepeatedOrSequenceParserTokenFlatParserTokenVisitor.flat(this))
-                .cast(RepeatedParserToken.class);
+            .cast(RepeatedParserToken.class);
     }
 
     // children.........................................................................................................
@@ -52,9 +52,9 @@ public final class RepeatedParserToken extends RepeatedOrSequenceParserToken {
     @Override
     public RepeatedParserToken setChildren(final List<ParserToken> children) {
         return ParserToken.parentSetChildren(
-                this,
-                children,
-                RepeatedParserToken::new
+            this,
+            children,
+            RepeatedParserToken::new
         );
     }
 

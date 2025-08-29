@@ -18,8 +18,8 @@
 package walkingkooka.text.cursor.parser;
 
 public abstract class DateTimeFormatterParserOffsetTestCase<P extends DateTimeFormatterParser<ParserContext>,
-        T extends ParserToken>
-        extends DateTimeFormatterParserTestCase2<P, T> {
+    T extends ParserToken>
+    extends DateTimeFormatterParserTestCase2<P, T> {
 
     DateTimeFormatterParserOffsetTestCase() {
         super();

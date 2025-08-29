@@ -30,24 +30,24 @@ public interface ParserContextTesting<C extends ParserContext> extends DecimalNu
     @Test
     default void testInvalidCharacterExceptionWithNullParserFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .invalidCharacterException(
-                                null,
-                                TextCursors.fake()
-                        )
+            NullPointerException.class,
+            () -> this.createContext()
+                .invalidCharacterException(
+                    null,
+                    TextCursors.fake()
+                )
         );
     }
 
     @Test
     default void testInvalidCharacterExceptionWithNullTextCursorFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createContext()
-                        .invalidCharacterException(
-                                Parsers.fake(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createContext()
+                .invalidCharacterException(
+                    Parsers.fake(),
+                    null
+                )
         );
     }
 

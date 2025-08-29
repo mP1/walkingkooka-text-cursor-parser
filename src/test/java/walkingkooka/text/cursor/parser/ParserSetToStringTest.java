@@ -29,14 +29,14 @@ public final class ParserSetToStringTest implements ClassTesting<ParserSetToStri
         final Parser<FakeParserContext> wrapped = Parsers.fake();
 
         final AndEmptyTextCursorParser<FakeParserContext> parser = Cast.to(
-                wrapped.andEmptyTextCursor()
-                        .setToString("Custom1")
-                        .setToString("Custom2")
+            wrapped.andEmptyTextCursor()
+                .setToString("Custom1")
+                .setToString("Custom2")
         );
 
         this.checkEquals(
-                wrapped,
-                parser.parser
+            wrapped,
+            parser.parser
         );
     }
 

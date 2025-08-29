@@ -64,8 +64,8 @@ public final class LongParserTokenTest extends ValueParserTokenTestCase<LongPars
     @Override
     public LongParserToken createToken(final String text) {
         return LongParserToken.with(null != text ?
-                Long.parseLong(text) :
-                null, text);
+            Long.parseLong(text) :
+            null, text);
     }
 
     @Override

@@ -43,10 +43,10 @@ public interface Parser<C extends ParserContext> {
                                   final C context) {
         try {
             return this.orFailIfCursorNotEmpty(
-                    ParserReporters.basic()
+                ParserReporters.basic()
             ).parse(
-                    TextCursors.charSequence(text),
-                    context
+                TextCursors.charSequence(text),
+                context
             ).orElseThrow(() -> new InvalidCharacterException(text, 0));
         } catch (final InvalidCharacterException cause) {
             throw cause.clearColumnAndLine();
@@ -95,10 +95,10 @@ public interface Parser<C extends ParserContext> {
         Objects.requireNonNull(next, "next");
 
         return Parsers.sequence(
-                Lists.of(
-                        this,
-                        next
-                )
+            Lists.of(
+                this,
+                next
+            )
         );
     }
 
@@ -122,8 +122,8 @@ public interface Parser<C extends ParserContext> {
      */
     default Parser<C> optional() {
         return this.repeat(
-                OPTIONAL_MIN_COUNT,
-                1
+            OPTIONAL_MIN_COUNT,
+            1
         );
     }
 
@@ -132,8 +132,8 @@ public interface Parser<C extends ParserContext> {
      */
     default Parser<C> required() {
         return this.repeat(
-                1,
-                1
+            1,
+            1
         );
     }
 
@@ -144,10 +144,10 @@ public interface Parser<C extends ParserContext> {
         Objects.requireNonNull(parser, "parser");
 
         return Parsers.alternatives(
-                Lists.of(
-                        this.cast(),
-                        parser.cast()
-                )
+            Lists.of(
+                this.cast(),
+                parser.cast()
+            )
         );
     }
 
@@ -157,9 +157,9 @@ public interface Parser<C extends ParserContext> {
     default Parser<C> repeat(final int minCount,
                              final int maxCount) {
         return Parsers.repeating(
-                minCount,
-                maxCount,
-                this
+            minCount,
+            maxCount,
+            this
         );
     }
 
@@ -172,8 +172,8 @@ public interface Parser<C extends ParserContext> {
      */
     default Parser<C> repeating() {
         return this.repeat(
-                DEFAULT_REPEAT_MIN_COUNT,
-                DEFAULT_REPEAT_MAX_COUNT
+            DEFAULT_REPEAT_MIN_COUNT,
+            DEFAULT_REPEAT_MAX_COUNT
         );
     }
 
@@ -182,8 +182,8 @@ public interface Parser<C extends ParserContext> {
      */
     default Parser<C> setToString(final String toString) {
         return Parsers.customToString(
-                this,
-                toString
+            this,
+            toString
         );
     }
 
@@ -192,8 +192,8 @@ public interface Parser<C extends ParserContext> {
      */
     default Parser<C> transform(final BiFunction<ParserToken, C, ParserToken> transformer) {
         return TransformingParser.with(
-                this,
-                transformer
+            this,
+            transformer
         );
     }
 
@@ -202,11 +202,11 @@ public interface Parser<C extends ParserContext> {
      */
     default Parser<C> orReport(final ParserReporter<C> reporter) {
         return this.or(
-                Parsers.report(
-                        ParserReporterCondition.ALWAYS,
-                        reporter,
-                        this.cast()
-                )
+            Parsers.report(
+                ParserReporterCondition.ALWAYS,
+                reporter,
+                this.cast()
+            )
         );
     }
 
@@ -215,9 +215,9 @@ public interface Parser<C extends ParserContext> {
      */
     default Parser<C> orFailIfCursorNotEmpty(final ParserReporter<C> reporter) {
         return Parsers.report(
-                ParserReporterCondition.NOT_EMPTY,
-                reporter,
-                this
+            ParserReporterCondition.NOT_EMPTY,
+            reporter,
+            this
         );
     }
 

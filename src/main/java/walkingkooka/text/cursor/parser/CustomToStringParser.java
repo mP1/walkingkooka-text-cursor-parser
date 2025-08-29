@@ -60,8 +60,8 @@ final class CustomToStringParser<C extends ParserContext> extends ParserWrapper<
     public Optional<ParserToken> parse(final TextCursor cursor,
                                        final C context) {
         return this.parser.parse(
-                cursor,
-                context
+            cursor,
+            context
         );
     }
 
@@ -70,8 +70,8 @@ final class CustomToStringParser<C extends ParserContext> extends ParserWrapper<
     @Override
     Parser<C> replaceToString(final String toString) {
         return wrap(
-                this.parser,
-                toString
+            this.parser,
+            toString
         );
     }
 

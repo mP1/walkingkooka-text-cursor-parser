@@ -31,8 +31,8 @@ final class DateTimeFormatterParserLocalDateTime<C extends ParserContext> extend
 
     static <C extends ParserContext> DateTimeFormatterParserLocalDateTime<C> with(final Function<DateTimeContext, DateTimeFormatter> formatter) {
         return new DateTimeFormatterParserLocalDateTime<>(
-                check(formatter),
-                formatter.toString()
+            check(formatter),
+            formatter.toString()
         );
     }
 
@@ -51,8 +51,8 @@ final class DateTimeFormatterParserLocalDateTime<C extends ParserContext> extend
     @Override
     DateTimeFormatterParserLocalDateTime<C> replaceToString(final String toString) {
         return new DateTimeFormatterParserLocalDateTime<>(
-                this.formatter,
-                toString
+            this.formatter,
+            toString
         );
     }
 }

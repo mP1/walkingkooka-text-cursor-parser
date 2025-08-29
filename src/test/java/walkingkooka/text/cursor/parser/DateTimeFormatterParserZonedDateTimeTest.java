@@ -66,18 +66,18 @@ public final class DateTimeFormatterParserZonedDateTimeTest extends DateTimeForm
     @Test
     public void testYearSeparatorMonthSeparatorInvalidDayThrows() {
         this.parseThrows2(
-                "uuuu-MM-dd",
-                "2001-12-99",
-                "Invalid value for DayOfMonth (valid values 1 - 28/31): 99"
+            "uuuu-MM-dd",
+            "2001-12-99",
+            "Invalid value for DayOfMonth (valid values 1 - 28/31): 99"
         );
     }
 
     @Test
     public void testYearSeparatorMonthSeparatorInvalidDayThrows2() {
         this.parseThrows2(
-                "uuuu-MM-dd",
-                "2001-12-99Q",
-                "Invalid value for DayOfMonth (valid values 1 - 28/31): 99"
+            "uuuu-MM-dd",
+            "2001-12-99Q",
+            "Invalid value for DayOfMonth (valid values 1 - 28/31): 99"
         );
     }
 
@@ -96,9 +96,9 @@ public final class DateTimeFormatterParserZonedDateTimeTest extends DateTimeForm
     @Test
     public void testYearSeparatorHoursInvalidFails() {
         this.parseThrows2(
-                "uuuu-HH",
-                "2001-99",
-                "Invalid value for HourOfDay (valid values 0 - 23): 99"
+            "uuuu-HH",
+            "2001-99",
+            "Invalid value for HourOfDay (valid values 0 - 23): 99"
         );
     }
 
@@ -117,9 +117,9 @@ public final class DateTimeFormatterParserZonedDateTimeTest extends DateTimeForm
     @Test
     public void testYearSeparatorMinutesInvalidFails() {
         this.parseThrows2(
-                "uuuu-mm",
-                "2001-99",
-                "Invalid value for MinuteOfHour (valid values 0 - 59): 99"
+            "uuuu-mm",
+            "2001-99",
+            "Invalid value for MinuteOfHour (valid values 0 - 59): 99"
         );
     }
 
@@ -138,9 +138,9 @@ public final class DateTimeFormatterParserZonedDateTimeTest extends DateTimeForm
     @Test
     public void testYearSeparatorSecondsInvalidFails() {
         this.parseThrows2(
-                "uuuu-ss",
-                "2001-99",
-                "Invalid value for SecondOfMinute (valid values 0 - 59): 99"
+            "uuuu-ss",
+            "2001-99",
+            "Invalid value for SecondOfMinute (valid values 0 - 59): 99"
         );
     }
 
@@ -159,27 +159,27 @@ public final class DateTimeFormatterParserZonedDateTimeTest extends DateTimeForm
     @Test
     public void testYearSeparatorSecondsMillisInvalidFails() {
         this.parseThrows2(
-                "uuuu-ss.SS",
-                "2001-98.7Q",
-                "Invalid value for SecondOfMinute (valid values 0 - 59): 98"
+            "uuuu-ss.SS",
+            "2001-98.7Q",
+            "Invalid value for SecondOfMinute (valid values 0 - 59): 98"
         );
     }
 
     @Test
     public void testYearSeparatorSecondsMillisInvalidFails2() {
         this.parseThrows2(
-                "uuuu-ss.SS",
-                "2001-98.76Q",
-                "Invalid value for SecondOfMinute (valid values 0 - 59): 98"
+            "uuuu-ss.SS",
+            "2001-98.76Q",
+            "Invalid value for SecondOfMinute (valid values 0 - 59): 98"
         );
     }
 
     @Test
     public void testYearSeparatorSecondsMillisInvalidFails3() {
         this.parseThrows2(
-                "uuuu-ss.SS",
-                "2001-98.76QQ",
-                "Invalid value for SecondOfMinute (valid values 0 - 59): 98"
+            "uuuu-ss.SS",
+            "2001-98.76QQ",
+            "Invalid value for SecondOfMinute (valid values 0 - 59): 98"
         );
     }
 

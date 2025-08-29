@@ -49,10 +49,10 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
         }
 
         return new ReportingParser<>(
-                condition,
-                reporter,
-                wrapped,
-                wrapped + " | " + reporter
+            condition,
+            reporter,
+            wrapped,
+            wrapped + " | " + reporter
         );
     }
 
@@ -81,8 +81,8 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
     Optional<ParserToken> reportIfNotEmpty(final TextCursor cursor, final C context) {
         final Optional<ParserToken> result = this.parser.parse(cursor, context);
         return cursor.isEmpty() ?
-                result :
-                this.report(cursor, context);
+            result :
+            this.report(cursor, context);
     }
 
     // @VisibleForTesting
@@ -96,10 +96,10 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
     @Override
     ReportingParser<C> replaceToString(final String toString) {
         return new ReportingParser<>(
-                this.condition,
-                this.reporter,
-                this.parser,
-                toString
+            this.condition,
+            this.reporter,
+            this.parser,
+            toString
         );
     }
 
@@ -108,8 +108,8 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
     @Override //
     int hashCode1() {
         return Objects.hash(
-                this.condition,
-                this.reporter
+            this.condition,
+            this.reporter
         );
     }
 
@@ -117,6 +117,6 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
     boolean equalsParserWrapper(final ParserWrapper<?> other) {
         final ReportingParser<?> otherReportingParser = other.cast();
         return this.condition.equals(otherReportingParser.condition) &&
-                this.reporter.equals(otherReportingParser.reporter);
+            this.reporter.equals(otherReportingParser.reporter);
     }
 }

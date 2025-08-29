@@ -118,8 +118,8 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
     private void requiredAndGet(final int index, final ParserToken result) {
         final SequenceParserToken sequence = this.createToken();
         this.checkEquals(result,
-                sequence.required(index, StringParserToken.class),
-                "failed to get required " + index + " from " + sequence);
+            sequence.required(index, StringParserToken.class),
+            "failed to get required " + index + " from " + sequence);
     }
 
     // BinaryOperator...................................................................................................
@@ -127,52 +127,52 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
     @Test
     public void testBinaryOperatorWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createDifferentToken()
-                        .binaryOperator(null)
+            NullPointerException.class,
+            () -> this.createDifferentToken()
+                .binaryOperator(null)
         );
     }
 
     @Test
     public void testBinaryOperatorWithWhitespace() {
         this.binaryOperatorAndCheck(
-                this.createToken(WHITESPACE)
+            this.createToken(WHITESPACE)
         );
     }
 
     @Test
     public void testBinaryOperatorWithWhitespaceWhitespace() {
         this.binaryOperatorAndCheck(
-                this.createToken(WHITESPACE, WHITESPACE)
+            this.createToken(WHITESPACE, WHITESPACE)
         );
     }
 
     @Test
     public void testBinaryOperatorWithSymbol() {
         this.binaryOperatorAndCheck(
-                this.createToken(
-                        this.symbol('%')
-                )
+            this.createToken(
+                this.symbol('%')
+            )
         );
     }
 
     @Test
     public void testBinaryOperatorWithSymbolSymbol() {
         this.binaryOperatorAndCheck(
-                this.createToken(
-                        this.symbol('%'),
-                        this.symbol('!')
-                )
+            this.createToken(
+                this.symbol('%'),
+                this.symbol('!')
+            )
         );
     }
 
     @Test
     public void testBinaryOperatorWithWhitespaceSymbol() {
         this.binaryOperatorAndCheck(
-                this.createToken(
-                        WHITESPACE,
-                        this.symbol('%')
-                )
+            this.createToken(
+                WHITESPACE,
+                this.symbol('%')
+            )
         );
     }
 
@@ -181,13 +181,13 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final ParserToken minus = symbol('-');
         final ParserToken right = integer(2);
         final ParserToken negative = negative(
-                Lists.of(minus, right),
-                "-2"
+            Lists.of(minus, right),
+            "-2"
         );
 
         this.binaryOperatorAndCheck(
-                sequence(negative),
-                negative
+            sequence(negative),
+            negative
         );
     }
 
@@ -196,17 +196,17 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final ParserToken minus = symbol('-');
         final ParserToken right = integer(2);
         final ParserToken negative = negative(
-                Lists.of(
-                        minus,
-                        WHITESPACE,
-                        right
-                ),
-                "-2"
+            Lists.of(
+                minus,
+                WHITESPACE,
+                right
+            ),
+            "-2"
         );
 
         this.binaryOperatorAndCheck(
-                sequence(negative),
-                negative
+            sequence(negative),
+            negative
         );
     }
 
@@ -217,16 +217,16 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final ParserToken right = integer(2);
 
         this.binaryOperatorAndCheck(
-                sequence(
-                        left,
-                        plus,
-                        right
-                ),
-                add(
-                        left,
-                        plus,
-                        right
-                )
+            sequence(
+                left,
+                plus,
+                right
+            ),
+            add(
+                left,
+                plus,
+                right
+            )
         );
     }
 
@@ -237,20 +237,20 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final ParserToken right = integer(2);
 
         this.binaryOperatorAndCheck(
-                sequence(
-                        WHITESPACE,
-                        left,
-                        plus,
-                        right
-                ),
-                sequence(
-                        WHITESPACE,
-                        add(
-                                left,
-                                plus,
-                                right
-                        )
+            sequence(
+                WHITESPACE,
+                left,
+                plus,
+                right
+            ),
+            sequence(
+                WHITESPACE,
+                add(
+                    left,
+                    plus,
+                    right
                 )
+            )
         );
     }
 
@@ -261,22 +261,22 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final ParserToken right = integer(2);
 
         this.binaryOperatorAndCheck(
-                sequence(
-                        WHITESPACE,
-                        left,
-                        WHITESPACE,
-                        plus,
-                        right
-                ),
-                sequence(
-                        WHITESPACE,
-                        add(
-                                left,
-                                WHITESPACE,
-                                plus,
-                                right
-                        )
+            sequence(
+                WHITESPACE,
+                left,
+                WHITESPACE,
+                plus,
+                right
+            ),
+            sequence(
+                WHITESPACE,
+                add(
+                    left,
+                    WHITESPACE,
+                    plus,
+                    right
                 )
+            )
         );
     }
 
@@ -287,18 +287,18 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final ParserToken right = integer(2);
 
         this.binaryOperatorAndCheck(
-                sequence(
-                        left,
-                        plus,
-                        WHITESPACE,
-                        right
-                ),
-                add(
-                        left,
-                        plus,
-                        WHITESPACE,
-                        right
-                )
+            sequence(
+                left,
+                plus,
+                WHITESPACE,
+                right
+            ),
+            add(
+                left,
+                plus,
+                WHITESPACE,
+                right
+            )
         );
     }
 
@@ -309,39 +309,39 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final ParserToken right = integer(2);
 
         this.binaryOperatorAndCheck(
-                sequence(
-                        left,
-                        minus,
-                        right
-                ),
-                subtract(
-                        left,
-                        minus,
-                        right
-                )
+            sequence(
+                left,
+                minus,
+                right
+            ),
+            subtract(
+                left,
+                minus,
+                right
+            )
         );
     }
 
     @Test
     public void testBinaryOperatorWithMinusNumberPlusNumber() {
         final ParserToken left = negative(
-                symbol('-'),
-                integer(1)
+            symbol('-'),
+            integer(1)
         );
         final ParserToken plus = symbol('+');
         final ParserToken right = integer(2);
 
         this.binaryOperatorAndCheck(
-                sequence(
-                        left,
-                        plus,
-                        right
-                ),
-                add(
-                        left,
-                        plus,
-                        right
-                )
+            sequence(
+                left,
+                plus,
+                right
+            ),
+            add(
+                left,
+                plus,
+                right
+            )
         );
     }
 
@@ -350,47 +350,47 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final ParserToken left = integer(1);
         final ParserToken plus = symbol('+');
         final ParserToken right = negative(
-                symbol('-'),
-                integer(2)
+            symbol('-'),
+            integer(2)
         );
 
         this.binaryOperatorAndCheck(
-                sequence(
-                        left,
-                        plus,
-                        right
-                ),
-                add(
-                        left,
-                        plus,
-                        right
-                )
+            sequence(
+                left,
+                plus,
+                right
+            ),
+            add(
+                left,
+                plus,
+                right
+            )
         );
     }
 
     @Test
     public void testBinaryOperatorWithMinusNumberPlusMinusNumber() {
         final ParserToken left = negative(
-                symbol('-'),
-                integer(1)
+            symbol('-'),
+            integer(1)
         );
         final ParserToken plus = symbol('+');
         final ParserToken right = negative(
-                symbol('-'),
-                integer(2)
+            symbol('-'),
+            integer(2)
         );
 
         this.binaryOperatorAndCheck(
-                sequence(
-                        left,
-                        plus,
-                        right
-                ),
-                add(
-                        left,
-                        plus,
-                        right
-                )
+            sequence(
+                left,
+                plus,
+                right
+            ),
+            add(
+                left,
+                plus,
+                right
+            )
         );
     }
 
@@ -403,22 +403,22 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final ParserToken right = integer(3);
 
         this.binaryOperatorAndCheck(
-                sequence(
-                        left,
-                        plus,
-                        center,
-                        multiply,
-                        right
-                ),
-                add(
-                        left,
-                        plus,
-                        multiply(
-                                center,
-                                multiply,
-                                right
-                        )
+            sequence(
+                left,
+                plus,
+                center,
+                multiply,
+                right
+            ),
+            add(
+                left,
+                plus,
+                multiply(
+                    center,
+                    multiply,
+                    right
                 )
+            )
         );
     }
 
@@ -431,22 +431,22 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final ParserToken right = integer(3);
 
         this.binaryOperatorAndCheck(
-                sequence(
-                        left,
-                        multiply,
-                        center,
-                        plus,
-                        right
+            sequence(
+                left,
+                multiply,
+                center,
+                plus,
+                right
+            ),
+            add(
+                multiply(
+                    left,
+                    multiply,
+                    center
                 ),
-                add(
-                        multiply(
-                                left,
-                                multiply,
-                                center
-                        ),
-                        plus,
-                        right
-                )
+                plus,
+                right
+            )
         );
     }
 
@@ -461,28 +461,28 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         final ParserToken right2 = integer(4);
 
         this.binaryOperatorAndCheck(
-                sequence(
-                        left,
-                        plus,
+            sequence(
+                left,
+                plus,
+                left2,
+                multiply,
+                right1,
+                minus,
+                right2
+            ),
+            subtract(
+                add(
+                    left,
+                    plus,
+                    multiply(
                         left2,
                         multiply,
-                        right1,
-                        minus,
-                        right2
+                        right1
+                    )
                 ),
-                subtract(
-                        add(
-                                left,
-                                plus,
-                                multiply(
-                                        left2,
-                                        multiply,
-                                        right1
-                                )
-                        ),
-                        minus,
-                        right2
-                )
+                minus,
+                right2
+            )
         );
     }
 
@@ -493,8 +493,8 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
     private void binaryOperatorAndCheck(final SequenceParserToken token,
                                         final ParserToken expected) {
         this.checkEquals(expected,
-                token.binaryOperator(new TestBinaryOperatorTransformer()),
-                token::toString);
+            token.binaryOperator(new TestBinaryOperatorTransformer()),
+            token::toString);
     }
 
     private ParserToken integer(final int value) {
@@ -762,8 +762,8 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
         }.accept(token);
         this.checkEquals("1316216242", b.toString());
         this.checkEquals(Lists.<Object>of(token, token, STRING1, STRING1, STRING1, STRING2, STRING2, STRING2, token, token),
-                visited,
-                "visited tokens");
+            visited,
+            "visited tokens");
     }
 
     @Test
@@ -809,10 +809,10 @@ public final class SequenceParserTokenTest extends RepeatedOrSequenceParserToken
     @Test
     public void testPrintTree() {
         this.treePrintAndCheck(
-                this.createToken(),
-                "Sequence \"a1b2\"\n" +
-                        "  String \"a1\" \"a1\"\n" +
-                        "  String \"b2\" \"b2\"\n"
+            this.createToken(),
+            "Sequence \"a1b2\"\n" +
+                "  String \"a1\" \"a1\"\n" +
+                "  String \"b2\" \"b2\"\n"
         );
     }
 

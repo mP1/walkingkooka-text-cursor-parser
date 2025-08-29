@@ -47,7 +47,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * Mixin that includes numerous helpers to assist parsing and verifying the outcome for success and failures.
  */
 public interface ParserTesting extends TreePrintableTesting,
-        MathTesting {
+    MathTesting {
 
     // parseAndCheck....................................................................................................
 
@@ -104,11 +104,11 @@ public interface ParserTesting extends TreePrintableTesting,
 
         final String textRemaining = after.textBetween().toString();
         this.checkEquals(
-                token,
-                result,
-                () -> "text:\n" + CharSequences.quoteAndEscape(consumed.length() == 0 ?
-                        after.textBetween() :
-                        consumed) + "\nunconsumed text:\n" + textRemaining
+            token,
+            result,
+            () -> "text:\n" + CharSequences.quoteAndEscape(consumed.length() == 0 ?
+                after.textBetween() :
+                consumed) + "\nunconsumed text:\n" + textRemaining
         );
 
         this.checkEquals(text, consumed, "incorrect consumed text");
@@ -136,9 +136,9 @@ public interface ParserTesting extends TreePrintableTesting,
             final TextCursorSavePoint after = cursor.save();
 
             this.checkEquals(
-                    null,
-                    result.orElse(null),
-                    () -> "Expected no token from parsing text consumed:\n" + before.textBetween() + "\ntext left: " + after.textBetween()
+                null,
+                result.orElse(null),
+                () -> "Expected no token from parsing text consumed:\n" + before.textBetween() + "\ntext left: " + after.textBetween()
             );
         }
         return cursor;
@@ -150,9 +150,9 @@ public interface ParserTesting extends TreePrintableTesting,
                              final Optional<? extends ParserToken> actual,
                              final Supplier<String> message) {
         this.checkEquals(
-                expected.orElse(null),
-                actual.orElse(null),
-                message
+            expected.orElse(null),
+            actual.orElse(null),
+            message
         );
     }
 
@@ -161,9 +161,9 @@ public interface ParserTesting extends TreePrintableTesting,
                              final Supplier<String> message) {
         final Function<ParserToken, String> mapper = (t) -> t.treeToString(INDENTATION, EOL);
         this.checkEquals(
-                expected.stream().map(mapper).collect(Collectors.joining()),
-                actual.stream().map(mapper).collect(Collectors.joining()),
-                message
+            expected.stream().map(mapper).collect(Collectors.joining()),
+            actual.stream().map(mapper).collect(Collectors.joining()),
+            message
         );
     }
 
@@ -175,21 +175,21 @@ public interface ParserTesting extends TreePrintableTesting,
                                                                  final int column,
                                                                  final int row) {
         final RuntimeException thrown = assertThrows(
-                RuntimeException.class,
-                () -> this.parse(
-                        parser,
-                        TextCursors.charSequence(text),
-                        context
-                )
+            RuntimeException.class,
+            () -> this.parse(
+                parser,
+                TextCursors.charSequence(text),
+                context
+            )
         );
 
         final String message = endOfText(column, row);
         final String thrownMessage = thrown.getMessage();
 
         this.checkEquals(
-                true,
-                thrownMessage.startsWith(message),
-                () -> "parse " + text
+            true,
+            thrownMessage.startsWith(message),
+            () -> "parse " + text
         );
     }
 
@@ -201,22 +201,22 @@ public interface ParserTesting extends TreePrintableTesting,
         cursor.end();
 
         final String text = save.textBetween()
-                .toString();
+            .toString();
         save.restore();
 
         final RuntimeException thrown = assertThrows(
-                RuntimeException.class,
-                () -> this.parse(
-                        parser,
-                        cursor,
-                        context
-                )
+            RuntimeException.class,
+            () -> this.parse(
+                parser,
+                cursor,
+                context
+            )
         );
 
         this.checkEquals(
-                expected,
-                thrown.getMessage(),
-                () -> "parse " + text
+            expected,
+            thrown.getMessage(),
+            () -> "parse " + text
         );
     }
 
@@ -231,9 +231,9 @@ public interface ParserTesting extends TreePrintableTesting,
 
         final Optional<ParserToken> result = parser.parse(cursor, context);
         this.checkNotEquals(
-                null,
-                result,
-                () -> "parser " + parser + " returned null result"
+            null,
+            result,
+            () -> "parser " + parser + " returned null result"
         );
         return result;
     }
@@ -242,13 +242,13 @@ public interface ParserTesting extends TreePrintableTesting,
         final Locale locale = Locale.ENGLISH;
 
         return DateTimeContexts.basic(
-                DateTimeSymbols.fromDateFormatSymbols(
-                        new DateFormatSymbols(locale)
-                ),
-                locale,
-                1900,
-                20,
-                LocalDateTime::now
+            DateTimeSymbols.fromDateFormatSymbols(
+                new DateFormatSymbols(locale)
+            ),
+            locale,
+            1900,
+            20,
+            LocalDateTime::now
         );
     }
 
@@ -265,9 +265,9 @@ public interface ParserTesting extends TreePrintableTesting,
     default void isOptionalAndCheck(final Parser<?> parser,
                                     final boolean expected) {
         this.checkEquals(
-                expected,
-                parser.isOptional(),
-                parser::toString
+            expected,
+            parser.isOptional(),
+            parser::toString
         );
     }
 
@@ -276,9 +276,9 @@ public interface ParserTesting extends TreePrintableTesting,
     default void isRequiredAndCheck(final Parser<?> parser,
                                     final boolean expected) {
         this.checkEquals(
-                expected,
-                parser.isRequired(),
-                parser::toString
+            expected,
+            parser.isRequired(),
+            parser::toString
         );
     }
 
@@ -287,9 +287,9 @@ public interface ParserTesting extends TreePrintableTesting,
     default void minCountAndCheck(final Parser<?> parser,
                                   final int expected) {
         this.checkEquals(
-                expected,
-                parser.minCount(),
-                parser::toString
+            expected,
+            parser.minCount(),
+            parser::toString
         );
     }
 
@@ -298,9 +298,9 @@ public interface ParserTesting extends TreePrintableTesting,
     default void maxCountAndCheck(final Parser<?> parser,
                                   final int expected) {
         this.checkEquals(
-                expected,
-                parser.maxCount(),
-                parser::toString
+            expected,
+            parser.maxCount(),
+            parser::toString
         );
     }
 
@@ -310,9 +310,9 @@ public interface ParserTesting extends TreePrintableTesting,
                                                        final Parser<C> and,
                                                        final Parser<C> expected) {
         this.checkEquals(
-                expected,
-                parser.and(and),
-                () -> parser + " AND " + and
+            expected,
+            parser.and(and),
+            () -> parser + " AND " + and
         );
     }
 
@@ -324,14 +324,14 @@ public interface ParserTesting extends TreePrintableTesting,
 
         if (actual.equals(parser)) {
             assertSame(
-                    parser,
-                    parser
+                parser,
+                parser
             );
         } else {
             this.checkEquals(
-                    expected,
-                    actual,
-                    () -> parser + " -> optional"
+                expected,
+                actual,
+                () -> parser + " -> optional"
             );
         }
     }
@@ -344,14 +344,14 @@ public interface ParserTesting extends TreePrintableTesting,
 
         if (actual.equals(parser)) {
             assertSame(
-                    parser,
-                    parser
+                parser,
+                parser
             );
         } else {
             this.checkEquals(
-                    expected,
-                    actual,
-                    () -> parser + " -> required"
+                expected,
+                actual,
+                () -> parser + " -> required"
             );
         }
     }

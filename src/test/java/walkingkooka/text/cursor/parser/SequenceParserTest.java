@@ -25,7 +25,7 @@ import walkingkooka.text.CaseSensitivity;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class SequenceParserTest extends NonEmptyParserTestCase<SequenceParser<ParserContext>, SequenceParserToken>
-        implements HashCodeEqualsDefinedTesting2<SequenceParser<ParserContext>> {
+    implements HashCodeEqualsDefinedTesting2<SequenceParser<ParserContext>> {
 
     private final static String TEXT1 = "abc";
     private final static String TEXT2 = "xyz";
@@ -43,44 +43,44 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     private final static StringParserToken TOKEN4 = string(TEXT4);
 
     private final static SequenceParserToken SEQUENCE_MISSING = ParserTokens.sequence(
-            Lists.of(TOKEN1, TOKEN2),
-            TEXT1 + TEXT2);
+        Lists.of(TOKEN1, TOKEN2),
+        TEXT1 + TEXT2);
     private final static SequenceParserToken SEQUENCE_TOKEN3 = ParserTokens.sequence(
-            Lists.of(TOKEN1, TOKEN2, TOKEN3),
-            TEXT1 + TEXT2 + TEXT3);
+        Lists.of(TOKEN1, TOKEN2, TOKEN3),
+        TEXT1 + TEXT2 + TEXT3);
 
     @Test
     public void testWithNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SequenceParser.with(null)
+            NullPointerException.class,
+            () -> SequenceParser.with(null)
         );
     }
 
     @Test
     public void testWithFlattens() {
         final Parser<ParserContext> wrapped = SequenceParser.with(
-                Lists.of(
-                        PARSER2,
-                        PARSER3
-                )
+            Lists.of(
+                PARSER2,
+                PARSER3
+            )
         );
         final SequenceParser<ParserContext> wrapper = SequenceParser.with(
-                Lists.of(
-                        PARSER1,
-                        wrapped,
-                        PARSER4
-                )
+            Lists.of(
+                PARSER1,
+                wrapped,
+                PARSER4
+            )
         ).cast();
 
         this.checkEquals(
-                Lists.of(
-                        PARSER1,
-                        PARSER2,
-                        PARSER3,
-                        PARSER4
-                ),
-                wrapper.parsers
+            Lists.of(
+                PARSER1,
+                PARSER2,
+                PARSER3,
+                PARSER4
+            ),
+            wrapper.parsers
         );
     }
 
@@ -121,32 +121,32 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
         final String text = TEXT2 + TEXT1;
 
         this.parseAndCheck(
-                PARSER3.optional()
-                        .and(PARSER2)
-                        .and(PARSER1),
-                this.createContext(),
-                text,
-                ParserTokens.sequence(
-                        Lists.of(
-                                TOKEN2,
-                                TOKEN1
-                        ),
-                        text
+            PARSER3.optional()
+                .and(PARSER2)
+                .and(PARSER1),
+            this.createContext(),
+            text,
+            ParserTokens.sequence(
+                Lists.of(
+                    TOKEN2,
+                    TOKEN1
                 ),
                 text
+            ),
+            text
         );
     }
 
     @Test
     public void testParseAllOptionalFail() {
         this.parseFailAndCheck(
-                PARSER3.optional()
-                        .and(
-                                PARSER2.optional()
-                        ).and(
-                                PARSER1.optional()
-                        ),
-                "!@#"
+            PARSER3.optional()
+                .and(
+                    PARSER2.optional()
+                ).and(
+                    PARSER1.optional()
+                ),
+            "!@#"
         );
     }
 
@@ -164,10 +164,10 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     public void testParseAllRequiredMissingOptional() {
         final String text = TEXT1 + TEXT2;
         this.parseAndCheck(
-                text,
-                SEQUENCE_MISSING,
-                text,
-                ""
+            text,
+            SEQUENCE_MISSING,
+            text,
+            ""
         );
     }
 
@@ -176,10 +176,10 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
         final String text = TEXT1 + TEXT2;
         final String textAfter = "...";
         this.parseAndCheck(
-                text + textAfter,
-                SEQUENCE_MISSING,
-                text,
-                textAfter
+            text + textAfter,
+            SEQUENCE_MISSING,
+            text,
+            textAfter
         );
     }
 
@@ -188,10 +188,10 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
         final String text = TEXT1 + TEXT2;
         final String textAfter = "12";
         this.parseAndCheck(
-                text + textAfter,
-                SEQUENCE_MISSING,
-                text,
-                textAfter
+            text + textAfter,
+            SEQUENCE_MISSING,
+            text,
+            textAfter
         );
     }
 
@@ -199,10 +199,10 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     public void testParseAllRequiredAndOptional() {
         final String text = TEXT1 + TEXT2 + TEXT3;
         this.parseAndCheck(
-                text,
-                SEQUENCE_TOKEN3,
-                text,
-                ""
+            text,
+            SEQUENCE_TOKEN3,
+            text,
+            ""
         );
     }
 
@@ -211,23 +211,23 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
         final String text = TEXT1 + TEXT2 + TEXT3;
         final String textAfter = "...";
         this.parseAndCheck(
-                text + textAfter,
-                SEQUENCE_TOKEN3,
-                text,
-                textAfter
+            text + textAfter,
+            SEQUENCE_TOKEN3,
+            text,
+            textAfter
         );
     }
 
     @Override
     public SequenceParser<ParserContext> createParser() {
         return Cast.to(
-                SequenceParser.with(
-                        Lists.of(
-                                PARSER1,
-                                PARSER2,
-                                PARSER3.optional()
-                        )
+            SequenceParser.with(
+                Lists.of(
+                    PARSER1,
+                    PARSER2,
+                    PARSER3.optional()
                 )
+            )
         );
     }
 
@@ -240,20 +240,20 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
         final Parser<ParserContext> and = parser("ZZZ");
 
         this.andAndCheck(
-                SequenceParser.with(
-                        Lists.of(
-                                aaa,
-                                bbb
-                        )
-                ),
-                and,
-                Parsers.sequence(
-                        Lists.of(
-                                aaa,
-                                bbb,
-                                and
-                        )
+            SequenceParser.with(
+                Lists.of(
+                    aaa,
+                    bbb
                 )
+            ),
+            and,
+            Parsers.sequence(
+                Lists.of(
+                    aaa,
+                    bbb,
+                    and
+                )
+            )
         );
     }
 
@@ -265,33 +265,33 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
         final Parser<ParserContext> ddd = parser("DDD");
 
         this.andAndCheck(
-                SequenceParser.with(
-                        Lists.of(
-                                aaa,
-                                bbb
-                        )
-                ),
-                Parsers.sequence(
-                        Lists.of(
-                                ccc,
-                                ddd
-                        )
-                ),
-                Parsers.sequence(
-                        Lists.of(
-                                aaa,
-                                bbb,
-                                ccc,
-                                ddd
-                        )
+            SequenceParser.with(
+                Lists.of(
+                    aaa,
+                    bbb
                 )
+            ),
+            Parsers.sequence(
+                Lists.of(
+                    ccc,
+                    ddd
+                )
+            ),
+            Parsers.sequence(
+                Lists.of(
+                    aaa,
+                    bbb,
+                    ccc,
+                    ddd
+                )
+            )
         );
     }
 
     private static Parser<ParserContext> parser(final String string) {
         return Parsers.string(
-                string,
-                CaseSensitivity.SENSITIVE
+            string,
+            CaseSensitivity.SENSITIVE
         );
     }
 
@@ -304,42 +304,42 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     @Test
     public void testEqualWithoutNames() {
         this.checkEquals(
-                SequenceParser.with(
-                        Lists.of(
-                                PARSER1,
-                                PARSER2,
-                                PARSER3.optional()
-                        )
-
+            SequenceParser.with(
+                Lists.of(
+                    PARSER1,
+                    PARSER2,
+                    PARSER3.optional()
                 )
+
+            )
         );
     }
 
     @Test
     public void testEqualsReversed() {
         this.checkNotEquals(
-                SequenceParser.with(
-                        Lists.of(
-                                PARSER3,
-                                PARSER2,
-                                PARSER1
-                        )
-
+            SequenceParser.with(
+                Lists.of(
+                    PARSER3,
+                    PARSER2,
+                    PARSER1
                 )
+
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentOptionalness() {
         this.checkNotEquals(
-                SequenceParser.with(
-                        Lists.of(
-                                PARSER1.optional(),
-                                PARSER2,
-                                PARSER3
-                        )
-
+            SequenceParser.with(
+                Lists.of(
+                    PARSER1.optional(),
+                    PARSER2,
+                    PARSER3
                 )
+
+            )
         );
     }
 
@@ -353,70 +353,70 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createParser(),
-                PARSER1 + ", " + PARSER2 + ", [" + PARSER3 + "]"
+            this.createParser(),
+            PARSER1 + ", " + PARSER2 + ", [" + PARSER3 + "]"
         );
     }
 
     @Test
     public void testToStringWrappedSequenceParser() {
         this.toStringAndCheck(
-                SequenceParser.with(
+            SequenceParser.with(
+                Lists.of(
+                    PARSER1,
+                    SequenceParser.with(
                         Lists.of(
-                                PARSER1,
-                                SequenceParser.with(
-                                        Lists.of(
-                                                PARSER2,
-                                                PARSER3
-                                        )
-                                ),
-                                PARSER4
+                            PARSER2,
+                            PARSER3
                         )
-                ),
-                PARSER1 + ", " + PARSER2 + ", " + PARSER3 + ", " + PARSER4
+                    ),
+                    PARSER4
+                )
+            ),
+            PARSER1 + ", " + PARSER2 + ", " + PARSER3 + ", " + PARSER4
         );
     }
 
     @Test
     public void testToStringWrappedSequenceParser2() {
         this.toStringAndCheck(
-                SequenceParser.with(
+            SequenceParser.with(
+                Lists.of(
+                    PARSER1,
+                    SequenceParser.with(
                         Lists.of(
-                                PARSER1,
-                                SequenceParser.with(
-                                        Lists.of(
-                                                PARSER2,
-                                                SequenceParser.with(
-                                                        Lists.of(
-                                                                PARSER3,
-                                                                PARSER4
-                                                        )
-                                                )
-                                        )
-                                ),
-                                parser("@@@")
+                            PARSER2,
+                            SequenceParser.with(
+                                Lists.of(
+                                    PARSER3,
+                                    PARSER4
+                                )
+                            )
                         )
-                ),
-                PARSER1 + ", " + PARSER2 + ", " + PARSER3 + ", " + PARSER4 + ", \"@@@\""
+                    ),
+                    parser("@@@")
+                )
+            ),
+            PARSER1 + ", " + PARSER2 + ", " + PARSER3 + ", " + PARSER4 + ", \"@@@\""
         );
     }
 
     @Test
     public void testToStringSurroundAlternativeParser() {
         this.toStringAndCheck(
-                SequenceParser.with(
+            SequenceParser.with(
+                Lists.of(
+                    PARSER1,
+                    AlternativesParser.with(
                         Lists.of(
-                                PARSER1,
-                                AlternativesParser.with(
-                                        Lists.of(
-                                                PARSER2,
-                                                PARSER3
-                                        )
-                                ),
-                                PARSER4
+                            PARSER2,
+                            PARSER3
                         )
-                ),
-                PARSER1 + ", (" + PARSER2 + " | " + PARSER3 + "), " + PARSER4
+                    ),
+                    PARSER4
+                )
+            ),
+            PARSER1 + ", (" + PARSER2 + " | " + PARSER3 + "), " + PARSER4
         );
     }
 

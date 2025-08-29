@@ -34,8 +34,8 @@ abstract class ParserSetToString<C extends ParserContext> implements Parser<C> {
         Objects.requireNonNull(toString, "toString");
 
         return this.toString.equals(toString) ?
-                this :
-                this.replaceToString(toString);
+            this :
+            this.replaceToString(toString);
     }
 
     /**
@@ -49,8 +49,8 @@ abstract class ParserSetToString<C extends ParserContext> implements Parser<C> {
     @Override
     public final int hashCode() {
         return Objects.hash(
-                this.toString,
-                this.hashCode0()
+            this.toString,
+            this.hashCode0()
         );
     }
 
@@ -59,12 +59,12 @@ abstract class ParserSetToString<C extends ParserContext> implements Parser<C> {
     @Override
     public final boolean equals(final Object other) {
         return this == other ||
-                null != other && this.getClass() == other.getClass() && this.equals0((ParserSetToString<?>) other);
+            null != other && this.getClass() == other.getClass() && this.equals0((ParserSetToString<?>) other);
     }
 
     private boolean equals0(final ParserSetToString<?> other) {
         return this.toString.equals(other.toString) &&
-                this.equalsParserSetToString(other);
+            this.equalsParserSetToString(other);
     }
 
     abstract boolean equalsParserSetToString(final ParserSetToString<?> other);

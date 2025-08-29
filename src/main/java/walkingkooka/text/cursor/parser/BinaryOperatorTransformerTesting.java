@@ -25,8 +25,8 @@ import walkingkooka.test.Testing;
  * Mixing testing interface for {@link BinaryOperatorTransformer}
  */
 public interface BinaryOperatorTransformerTesting<T extends BinaryOperatorTransformer> extends Testing,
-        ToStringTesting<T>,
-        TypeNameTesting<T> {
+    ToStringTesting<T>,
+    TypeNameTesting<T> {
 
     @Test
     default void testHighestGreaterThanLowestPriority() {

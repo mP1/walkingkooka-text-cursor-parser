@@ -26,8 +26,8 @@ import java.util.Objects;
  * A common base class for both {@link RepeatedParserToken} and {@link SequenceParserToken}.
  */
 abstract public class RepeatedOrSequenceParserToken extends ValueParserToken<List<ParserToken>>
-        implements ParserToken,
-        Value<List<ParserToken>> {
+    implements ParserToken,
+    Value<List<ParserToken>> {
 
     /**
      * Private ctor to limit subclassing.
@@ -48,8 +48,8 @@ abstract public class RepeatedOrSequenceParserToken extends ValueParserToken<Lis
 
         final List<ParserToken> copy = Lists.immutable(value);
         return this.value().equals(copy) ?
-                this :
-                this.replaceValue(copy);
+            this :
+            this.replaceValue(copy);
     }
 
     abstract ValueParserToken<List<ParserToken>> replaceValue(final List<ParserToken> value);

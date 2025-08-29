@@ -25,16 +25,16 @@ public final class NeverParserTest extends ParserTestCase<NeverParser<ParserCont
     @Test
     public void testMinCount() {
         this.minCountAndCheck(
-                this.createParser(),
-                1
+            this.createParser(),
+            1
         );
     }
 
     @Test
     public void testMaxCount() {
         this.maxCountAndCheck(
-                this.createParser(),
-                1
+            this.createParser(),
+            1
         );
     }
 

@@ -56,12 +56,12 @@ import static org.junit.jupiter.api.Assertions.fail;
  * @param <T>
  */
 public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertiesTesting,
-        CanBeEmptyTesting,
-        HashCodeEqualsDefinedTesting2<T>,
-        HasTextTesting,
-        TreePrintableTesting,
-        ToStringTesting<T>,
-        TypeNameTesting<T> {
+    CanBeEmptyTesting,
+    HashCodeEqualsDefinedTesting2<T>,
+    HasTextTesting,
+    TreePrintableTesting,
+    ToStringTesting<T>,
+    TypeNameTesting<T> {
 
     @Test
     default void testIsLeafDifferentIsParent() {
@@ -71,9 +71,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
         final boolean parent = token.isParent();
 
         this.checkNotEquals(
-                leaf,
-                parent,
-                () -> token + " isLeaf should be different from isParent"
+            leaf,
+            parent,
+            () -> token + " isLeaf should be different from isParent"
         );
     }
 
@@ -84,16 +84,16 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
             if (token.isLeaf()) {
                 final Object value = ((Value<?>) token).value();
                 assertFalse(
-                        value instanceof Collection,
-                        () -> token + " value must not be a Collection but was " + value.getClass() + "=" + value
+                    value instanceof Collection,
+                    () -> token + " value must not be a Collection but was " + value.getClass() + "=" + value
                 );
                 break;
             }
             if (token.isParent()) {
                 final Object value = ((Value<?>) token).value();
                 assertTrue(
-                        value instanceof Collection,
-                        () -> token + " value must be a Collection but was " + value.getClass() + "=" + value
+                    value instanceof Collection,
+                    () -> token + " value must be a Collection but was " + value.getClass() + "=" + value
                 );
                 break;
             }
@@ -110,15 +110,15 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
 
         if (type.contains(WHITESPACE)) {
             this.checkEquals(
-                    true,
-                    token.isSymbol(),
-                    () -> "Token " + token + " is whitespace=true so isSymbol must also be true"
+                true,
+                token.isSymbol(),
+                () -> "Token " + token + " is whitespace=true so isSymbol must also be true"
             );
         } else {
             this.checkEquals(
-                    symbol,
-                    token.isSymbol(),
-                    () -> "Token " + token + " name includes " + SYMBOL + " so isSymbol should be true"
+                symbol,
+                token.isSymbol(),
+                () -> "Token " + token + " name includes " + SYMBOL + " so isSymbol should be true"
             );
         }
     }
@@ -135,21 +135,21 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
 
         final T token = this.createToken();
         this.checkEquals(
-                whitespace,
-                token.isWhitespace(),
-                () -> token + " isWhitespace must be true if " + type + " contains " + CharSequences.quote(WHITESPACE)
+            whitespace,
+            token.isWhitespace(),
+            () -> token + " isWhitespace must be true if " + type + " contains " + CharSequences.quote(WHITESPACE)
         );
 
         if (whitespace) {
             this.checkEquals(
-                    whitespace,
-                    token.isNoise(),
-                    () -> token + " isWhitespace==true, isNoise must also be true"
+                whitespace,
+                token.isNoise(),
+                () -> token + " isWhitespace==true, isNoise must also be true"
             );
             this.checkEquals(
-                    whitespace,
-                    token.isSymbol(),
-                    () -> token + " isWhitespace==true, isSymbol must also be true"
+                whitespace,
+                token.isSymbol(),
+                () -> token + " isWhitespace==true, isSymbol must also be true"
             );
         }
     }
@@ -173,7 +173,7 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
 
         final String name = type.getSimpleName();
         final String without = Character.toLowerCase(name.charAt("".length())) +
-                name.substring("".length() + 1, name.length() - suffix.length());
+            name.substring("".length() + 1, name.length() - suffix.length());
 
         String factoryMethodName1 = without;
         for (final String possible : new String[]{"boolean", "byte", "double", "equals", "int", "long", "null", "short"}) {
@@ -185,22 +185,22 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
         final String factoryMethodName = factoryMethodName1;
 
         final List<Method> publicStaticMethods = Arrays.stream(ParserTokens.class.getMethods())
-                .filter(m -> MethodAttributes.STATIC.is(m) && JavaVisibility.PUBLIC == JavaVisibility.of(m))
-                .collect(Collectors.toList());
+            .filter(m -> MethodAttributes.STATIC.is(m) && JavaVisibility.PUBLIC == JavaVisibility.of(m))
+            .collect(Collectors.toList());
 
         final List<Method> factoryMethods = publicStaticMethods.stream()
-                .filter(m -> m.getName().equals(factoryMethodName) &&
-                        m.getReturnType().equals(type))
-                .collect(Collectors.toList());
+            .filter(m -> m.getName().equals(factoryMethodName) &&
+                m.getReturnType().equals(type))
+            .collect(Collectors.toList());
 
         final String publicStaticMethodsToString = publicStaticMethods.stream()
-                .map(Method::toGenericString)
-                .collect(Collectors.joining(LineEnding.SYSTEM.toString()));
+            .map(Method::toGenericString)
+            .collect(Collectors.joining(LineEnding.SYSTEM.toString()));
         this.checkEquals(
-                1,
-                factoryMethods.size(),
-                () -> "Expected only a single factory method called " + CharSequences.quote(factoryMethodName) +
-                        " for " + type + " on " + ParserTokens.class.getName() + " but got " + factoryMethods + "\n" + publicStaticMethodsToString
+            1,
+            factoryMethods.size(),
+            () -> "Expected only a single factory method called " + CharSequences.quote(factoryMethodName) +
+                " for " + type + " on " + ParserTokens.class.getName() + " but got " + factoryMethods + "\n" + publicStaticMethodsToString
         );
     }
 
@@ -211,15 +211,15 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
         final T token = this.createToken();
         if (token.isLeaf()) {
             this.checkEquals(
-                    Lists.empty(),
-                    token.children(),
-                    token + " children"
+                Lists.empty(),
+                token.children(),
+                token + " children"
             );
         } else {
             this.checkEquals(
-                    ((Value<List<ParserToken>>) token).value(),
-                    token.children(),
-                    token + " children"
+                ((Value<List<ParserToken>>) token).value(),
+                token.children(),
+                token + " children"
             );
         }
     }
@@ -227,8 +227,8 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
     @Test
     default void testSetChildrenNullFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createToken().setChildren(null)
+            NullPointerException.class,
+            () -> this.createToken().setChildren(null)
         );
     }
 
@@ -237,8 +237,8 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
         final T token = this.createToken();
 
         assertSame(
-                token,
-                token.setChildren(token.children())
+            token,
+            token.setChildren(token.children())
         );
     }
 
@@ -250,8 +250,8 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
         children.addAll(token.children());
 
         assertSame(
-                token,
-                token.setChildren(children)
+            token,
+            token.setChildren(children)
         );
     }
 
@@ -260,15 +260,15 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
         final T token = this.createToken();
         if (token.isLeaf()) {
             assertThrows(
-                    IllegalArgumentException.class,
-                    () -> token.setChildren(
-                            Lists.of(
-                                    ParserTokens.string(
-                                            "Hello",
-                                            "123"
-                                    )
-                            )
+                IllegalArgumentException.class,
+                () -> token.setChildren(
+                    Lists.of(
+                        ParserTokens.string(
+                            "Hello",
+                            "123"
+                        )
                     )
+                )
             );
         }
     }
@@ -278,11 +278,11 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
     @Test
     default void testRemoveFirstIfNullPredicateFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createToken()
-                        .removeIf(
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createToken()
+                .removeIf(
+                    null
+                )
         );
     }
 
@@ -291,17 +291,17 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
         final T token = this.createToken();
 
         this.removeFirstIfAndCheck(
-                token,
-                Predicates.never(),
-                token
+            token,
+            Predicates.never(),
+            token
         );
     }
 
     @Test
     default void testRemoveFirstIfSelf() {
         this.removeFirstIfAndCheck(
-                this.createToken(),
-                Predicates.always()
+            this.createToken(),
+            Predicates.always()
         );
     }
 
@@ -328,9 +328,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
 
                 if (false == skip) {
                     this.removeFirstIfAndCheck(
-                            token,
-                            (t) -> t == removed,
-                            token.setChildren(without)
+                        token,
+                        (t) -> t == removed,
+                        token.setChildren(without)
                     );
                 }
             }
@@ -360,9 +360,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
 
                 if (false == skip) {
                     this.removeFirstIfAndCheck(
-                            token,
-                            (t) -> t == removed,
-                            token.setChildren(without)
+                        token,
+                        (t) -> t == removed,
+                        token.setChildren(without)
                     );
                 }
             }
@@ -392,9 +392,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
 
                 if (false == skip) {
                     this.removeFirstIfAndCheck(
-                            token,
-                            (t) -> t == removed,
-                            token.setChildren(without)
+                        token,
+                        (t) -> t == removed,
+                        token.setChildren(without)
                     );
                 }
             }
@@ -404,9 +404,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
     default void removeFirstIfAndCheck(final ParserToken token,
                                        final Predicate<ParserToken> predicate) {
         this.removeFirstIfAndCheck(
-                token,
-                predicate,
-                Optional.empty()
+            token,
+            predicate,
+            Optional.empty()
         );
     }
 
@@ -414,9 +414,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
                                        final Predicate<ParserToken> predicate,
                                        final ParserToken expected) {
         this.removeFirstIfAndCheck(
-                token,
-                predicate,
-                Optional.of(expected)
+            token,
+            predicate,
+            Optional.of(expected)
         );
     }
 
@@ -424,9 +424,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
                                        final Predicate<ParserToken> predicate,
                                        final Optional<ParserToken> expected) {
         this.checkEquals(
-                expected,
-                token.removeFirstIf(predicate),
-                () -> token + " removeFirstIf " + predicate
+            expected,
+            token.removeFirstIf(predicate),
+            () -> token + " removeFirstIf " + predicate
         );
     }
 
@@ -436,9 +436,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
     default void testRemoveIfNone() {
         final T token = this.createToken();
         this.removeIfAndCheck(
-                token,
-                Predicates.never(),
-                token
+            token,
+            Predicates.never(),
+            token
         );
     }
 
@@ -446,8 +446,8 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
     default void testRemoveIfMatched() {
         final T token = this.createToken();
         this.removeIfAndCheck(
-                token,
-                Predicates.always()
+            token,
+            Predicates.always()
         );
     }
 
@@ -474,9 +474,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
 
                 if (false == skip) {
                     this.removeIfAndCheck(
-                            token,
-                            (t) -> t == removed,
-                            token.setChildren(without)
+                        token,
+                        (t) -> t == removed,
+                        token.setChildren(without)
                     );
                 }
             }
@@ -506,9 +506,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
 
                 if (false == skip) {
                     this.removeIfAndCheck(
-                            token,
-                            (t) -> t == removed,
-                            token.setChildren(without)
+                        token,
+                        (t) -> t == removed,
+                        token.setChildren(without)
                     );
                 }
             }
@@ -538,9 +538,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
 
                 if (false == skip) {
                     this.removeIfAndCheck(
-                            token,
-                            (t) -> t == removed,
-                            token.setChildren(without)
+                        token,
+                        (t) -> t == removed,
+                        token.setChildren(without)
                     );
                 }
             }
@@ -565,9 +565,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
 
                 if (false == skip) {
                     this.removeIfAndCheck(
-                            token,
-                            Predicates.always(),
-                            token.setChildren(without)
+                        token,
+                        Predicates.always(),
+                        token.setChildren(without)
                     );
                 }
             }
@@ -577,9 +577,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
     default void removeIfAndCheck(final ParserToken token,
                                   final Predicate<ParserToken> predicate) {
         this.removeIfAndCheck(
-                token,
-                predicate,
-                Optional.empty()
+            token,
+            predicate,
+            Optional.empty()
         );
     }
 
@@ -587,9 +587,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
                                   final Predicate<ParserToken> predicate,
                                   final ParserToken expected) {
         this.removeIfAndCheck(
-                token,
-                predicate,
-                Optional.of(expected)
+            token,
+            predicate,
+            Optional.of(expected)
         );
     }
 
@@ -597,9 +597,9 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
                                   final Predicate<ParserToken> predicate,
                                   final Optional<ParserToken> expected) {
         this.checkEquals(
-                expected,
-                token.removeIf(predicate),
-                () -> token + " removeIf " + predicate
+            expected,
+            token.removeIf(predicate),
+            () -> token + " removeIf " + predicate
         );
     }
 
@@ -608,48 +608,48 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
     @Test
     default void testReplaceFirstIfNullPredicateFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createToken()
-                        .replaceFirstIf(
-                                null, // predicate
-                                Function.identity() // mapper
-                        )
+            NullPointerException.class,
+            () -> this.createToken()
+                .replaceFirstIf(
+                    null, // predicate
+                    Function.identity() // mapper
+                )
         );
     }
 
     @Test
     default void testReplaceFirstIfNullMapperFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createToken()
-                        .replaceFirstIf(
-                                Predicates.fake(),
-                                null
-                        )
+            NullPointerException.class,
+            () -> this.createToken()
+                .replaceFirstIf(
+                    Predicates.fake(),
+                    null
+                )
         );
     }
 
     @Test
     default void testReplaceIfNullPredicateFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createToken()
-                        .replaceIf(
-                                null,
-                                Function.identity() // mapper
-                        )
+            NullPointerException.class,
+            () -> this.createToken()
+                .replaceIf(
+                    null,
+                    Function.identity() // mapper
+                )
         );
     }
 
     @Test
     default void testReplaceIfNullMapperFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createToken()
-                        .replaceIf(
-                                Predicates.fake(),
-                                null // mapper
-                        )
+            NullPointerException.class,
+            () -> this.createToken()
+                .replaceIf(
+                    Predicates.fake(),
+                    null // mapper
+                )
         );
     }
 
@@ -658,11 +658,11 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
         final T token = this.createToken();
         if (token.isLeaf()) {
             assertSame(
-                    token,
-                    token.replaceIf(
-                            Predicates.always(),
-                            Function.identity() // mapper
-                    )
+                token,
+                token.replaceIf(
+                    Predicates.always(),
+                    Function.identity() // mapper
+                )
             );
         }
     }
@@ -681,8 +681,8 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
                 final List<ParserToken> newChildren = Lists.array();
                 newChildren.addAll(children);
                 newChildren.set(
-                        index,
-                        with
+                    index,
+                    with
                 );
 
                 boolean skip;
@@ -695,10 +695,10 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
 
                 if (false == skip) {
                     this.replaceIfAndCheck(
-                            token,
-                            (t) -> t == replaced,
-                            (t) -> with,
-                            token.setChildren(newChildren)
+                        token,
+                        (t) -> t == replaced,
+                        (t) -> with,
+                        token.setChildren(newChildren)
                     );
                 }
             }
@@ -718,8 +718,8 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
                 final List<ParserToken> newChildren = Lists.array();
                 newChildren.addAll(children);
                 newChildren.set(
-                        index,
-                        with
+                    index,
+                    with
                 );
 
                 boolean skip;
@@ -732,10 +732,10 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
 
                 if (false == skip) {
                     this.replaceIfAndCheck(
-                            token,
-                            (t) -> t == replaced,
-                            (t) -> with,
-                            token.setChildren(newChildren)
+                        token,
+                        (t) -> t == replaced,
+                        (t) -> with,
+                        token.setChildren(newChildren)
                     );
                 }
             }
@@ -755,8 +755,8 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
                 final List<ParserToken> newChildren = Lists.array();
                 newChildren.addAll(children);
                 newChildren.set(
-                        index,
-                        with
+                    index,
+                    with
                 );
 
                 boolean skip;
@@ -769,10 +769,10 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
 
                 if (false == skip) {
                     this.replaceIfAndCheck(
-                            token,
-                            (t) -> t == replaced,
-                            (t) -> with,
-                            token.setChildren(newChildren)
+                        token,
+                        (t) -> t == replaced,
+                        (t) -> with,
+                        token.setChildren(newChildren)
                     );
                 }
             }
@@ -787,12 +787,12 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
             if (children.size() > 2) {
                 final int count = children.size();
                 final ParserToken replacement = ParserTokens.string(
-                        "replacement",
-                        "replacement"
+                    "replacement",
+                    "replacement"
                 );
                 final List<ParserToken> newChildren = Collections.nCopies(
-                        count,
-                        replacement
+                    count,
+                    replacement
                 );
 
                 boolean skip;
@@ -805,10 +805,10 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
 
                 if (false == skip) {
                     this.replaceIfAndCheck(
-                            token,
-                            children::contains,
-                            (t) -> replacement,
-                            token.setChildren(newChildren)
+                        token,
+                        children::contains,
+                        (t) -> replacement,
+                        token.setChildren(newChildren)
                     );
                 }
             }
@@ -820,12 +820,12 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
                                    final Function<ParserToken, ParserToken> mapper,
                                    final ParserToken expected) {
         this.checkEquals(
-                expected,
-                token.replaceIf(
-                        predicate,
-                        mapper
-                ),
-                () -> token + " replaceIf " + predicate + "," + mapper
+            expected,
+            token.replaceIf(
+                predicate,
+                mapper
+            ),
+            () -> token + " replaceIf " + predicate + "," + mapper
         );
     }
 
@@ -862,8 +862,8 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
         final T token = this.createToken();
         final String className = token.getClass().getSimpleName();
         this.checkEquals(
-                className.contains("Whitespace") | className.contains("Symbol") | className.contains("Comment"),
-                token.isNoise()
+            className.contains("Whitespace") | className.contains("Symbol") | className.contains("Comment"),
+            token.isNoise()
         );
     }
 

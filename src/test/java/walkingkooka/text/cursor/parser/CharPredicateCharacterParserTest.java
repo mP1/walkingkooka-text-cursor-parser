@@ -26,15 +26,15 @@ import walkingkooka.text.cursor.TextCursor;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class CharPredicateCharacterParserTest extends NonEmptyParserTestCase<CharPredicateCharacterParser<ParserContext>, CharacterParserToken>
-        implements HashCodeEqualsDefinedTesting2<CharPredicateCharacterParser<ParserContext>> {
+    implements HashCodeEqualsDefinedTesting2<CharPredicateCharacterParser<ParserContext>> {
 
     private final static CharPredicate DIGITS = CharPredicates.digit();
 
     @Test
     public void testWithNullCharPredicateFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> CharPredicateCharacterParser.with(null)
+            NullPointerException.class,
+            () -> CharPredicateCharacterParser.with(null)
         );
     }
 
@@ -81,10 +81,10 @@ public final class CharPredicateCharacterParserTest extends NonEmptyParserTestCa
                                       final char value,
                                       final String text) {
         return this.parseAndCheck2(
-                in,
-                value,
-                text,
-                ""
+            in,
+            value,
+            text,
+            ""
         );
     }
 
@@ -93,10 +93,10 @@ public final class CharPredicateCharacterParserTest extends NonEmptyParserTestCa
                                       final String text,
                                       final String textAfter) {
         return this.parseAndCheck(
-                in,
-                CharacterParserToken.with(value, text),
-                text,
-                textAfter
+            in,
+            CharacterParserToken.with(value, text),
+            text,
+            textAfter
         );
     }
 
@@ -105,10 +105,10 @@ public final class CharPredicateCharacterParserTest extends NonEmptyParserTestCa
                                       final String text,
                                       final String textAfter) {
         return this.parseAndCheck(
-                cursor,
-                CharacterParserToken.with(value, text),
-                text,
-                textAfter
+            cursor,
+            CharacterParserToken.with(value, text),
+            text,
+            textAfter
         );
     }
 
@@ -117,12 +117,12 @@ public final class CharPredicateCharacterParserTest extends NonEmptyParserTestCa
     @Test
     public void testEqualsDifferentCharPredicate() {
         this.checkNotEquals(
-                CharPredicateCharacterParser.with(
-                        CharPredicates.fake()
-                ),
-                CharPredicateCharacterParser.with(
-                        CharPredicates.fake()
-                )
+            CharPredicateCharacterParser.with(
+                CharPredicates.fake()
+            ),
+            CharPredicateCharacterParser.with(
+                CharPredicates.fake()
+            )
         );
     }
 

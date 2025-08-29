@@ -70,9 +70,9 @@ public final class SingleQuotedParserTokenTest extends ValueParserTokenTestCase<
     @Override
     public SingleQuotedParserToken createToken(final String text) {
         return SingleQuotedParserToken.with(null == text ?
-                        String.valueOf(null) :
-                        text.substring(1, text.length() - 1),
-                text);
+                String.valueOf(null) :
+                text.substring(1, text.length() - 1),
+            text);
     }
 
     @Override

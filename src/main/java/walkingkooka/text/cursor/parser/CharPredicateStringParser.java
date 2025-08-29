@@ -27,7 +27,7 @@ import java.util.Optional;
  * A {@link Parser} that continues to consume characters that are matched by a given {@link CharPredicate}.
  */
 final class CharPredicateStringParser<C extends ParserContext> extends NonEmptyParser<C>
-        implements RequiredParser<C> {
+    implements RequiredParser<C> {
 
     static <C extends ParserContext> CharPredicateStringParser<C> with(final CharPredicate predicate, final int minLength, final int maxLength) {
         Objects.requireNonNull(predicate, "predicate");
@@ -39,15 +39,15 @@ final class CharPredicateStringParser<C extends ParserContext> extends NonEmptyP
         }
 
         return new CharPredicateStringParser<>(
-                predicate,
-                minLength,
-                maxLength,
-                predicate.toString() +
-                        '{' +
-                        minLength +
-                        ',' +
-                        maxLength +
-                        '}'
+            predicate,
+            minLength,
+            maxLength,
+            predicate.toString() +
+                '{' +
+                minLength +
+                ',' +
+                maxLength +
+                '}'
         );
     }
 
@@ -97,10 +97,10 @@ final class CharPredicateStringParser<C extends ParserContext> extends NonEmptyP
     @Override
     CharPredicateStringParser<C> replaceToString(final String toString) {
         return new CharPredicateStringParser<>(
-                this.predicate,
-                this.minLength,
-                this.maxLength,
-                toString
+            this.predicate,
+            this.minLength,
+            this.maxLength,
+            toString
         );
     }
 
@@ -109,9 +109,9 @@ final class CharPredicateStringParser<C extends ParserContext> extends NonEmptyP
     @Override //
     int hashCode0() {
         return Objects.hash(
-                this.predicate,
-                this.minLength,
-                this.maxLength
+            this.predicate,
+            this.minLength,
+            this.maxLength
         );
     }
 
@@ -120,8 +120,8 @@ final class CharPredicateStringParser<C extends ParserContext> extends NonEmptyP
         final CharPredicateStringParser<?> otherCharPredicateStringParser = other.cast();
 
         return this.predicate.equals(otherCharPredicateStringParser.predicate) &&
-                this.minLength == otherCharPredicateStringParser.minLength &&
-                this.maxLength == otherCharPredicateStringParser.maxLength &&
-                this.toString.equals(otherCharPredicateStringParser.toString);
+            this.minLength == otherCharPredicateStringParser.minLength &&
+            this.maxLength == otherCharPredicateStringParser.maxLength &&
+            this.toString.equals(otherCharPredicateStringParser.toString);
     }
 }

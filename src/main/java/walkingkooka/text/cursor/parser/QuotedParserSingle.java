@@ -42,8 +42,8 @@ final class QuotedParserSingle<C extends ParserContext> extends QuotedParser<C> 
     SingleQuotedParserToken token(final String content,
                                   final String rawText) {
         return SingleQuotedParserToken.with(
-                content,
-                rawText
+            content,
+            rawText
         );
     }
 
@@ -52,7 +52,7 @@ final class QuotedParserSingle<C extends ParserContext> extends QuotedParser<C> 
     @Override
     QuotedParserSingle<C> replaceToString(final String toString) {
         return new QuotedParserSingle<>(
-                toString
+            toString
         );
     }
 }

@@ -25,7 +25,7 @@ import walkingkooka.text.CharSequences;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class StringParserTest extends NonEmptyParserTestCase<StringParser<ParserContext>, StringParserToken>
-        implements HashCodeEqualsDefinedTesting2<StringParser<ParserContext>> {
+    implements HashCodeEqualsDefinedTesting2<StringParser<ParserContext>> {
 
     private final static String STRING = "abcd";
     private final static CaseSensitivity CASE_SENSITIVITY = CaseSensitivity.SENSITIVE;
@@ -35,24 +35,24 @@ public class StringParserTest extends NonEmptyParserTestCase<StringParser<Parser
     @Test
     public void testWithNullStringFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> StringParser.with(null, CASE_SENSITIVITY)
+            NullPointerException.class,
+            () -> StringParser.with(null, CASE_SENSITIVITY)
         );
     }
 
     @Test
     public void testWithEmptyStringFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> StringParser.with("", CASE_SENSITIVITY)
+            IllegalArgumentException.class,
+            () -> StringParser.with("", CASE_SENSITIVITY)
         );
     }
 
     @Test
     public void testWithNullCaseSensitivityFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> StringParser.with(STRING, null)
+            NullPointerException.class,
+            () -> StringParser.with(STRING, null)
         );
     }
 
@@ -71,16 +71,16 @@ public class StringParserTest extends NonEmptyParserTestCase<StringParser<Parser
     @Test
     public void testParseIncompleteCaseInsensitive() {
         this.parseFailAndCheck(
-                this.createParserCaseInsensitive(),
-                "a"
+            this.createParserCaseInsensitive(),
+            "a"
         );
     }
 
     @Test
     public void testParseIncompleteInsensitive2() {
         this.parseFailAndCheck(
-                this.createParserCaseInsensitive(),
-                "ab"
+            this.createParserCaseInsensitive(),
+            "ab"
         );
     }
 
@@ -93,21 +93,21 @@ public class StringParserTest extends NonEmptyParserTestCase<StringParser<Parser
     public void testParseStringEocCaseInsensitive() {
         final String text = "abCD";
         this.parseAndCheck(
-                this.createParserCaseInsensitive(),
-                text,
-                this.token(text),
-                text,
-                ""
+            this.createParserCaseInsensitive(),
+            text,
+            this.token(text),
+            text,
+            ""
         );
     }
 
     @Test
     public void testParseStringIgnoresRemainder() {
         this.parseAndCheck(
-                STRING + "xyz",
-                this.token(),
-                STRING,
-                "xyz"
+            STRING + "xyz",
+            this.token(),
+            STRING,
+            "xyz"
         );
     }
 
@@ -115,11 +115,11 @@ public class StringParserTest extends NonEmptyParserTestCase<StringParser<Parser
     public void testParseStringIgnoresRemainderCaseInsensitive() {
         final String text = "abCD";
         this.parseAndCheck(
-                this.createParserCaseInsensitive(),
-                text + "xyz",
-                this.token(text),
-                text,
-                "xyz"
+            this.createParserCaseInsensitive(),
+            text + "xyz",
+            this.token(text),
+            text,
+            "xyz"
         );
     }
 
@@ -130,8 +130,8 @@ public class StringParserTest extends NonEmptyParserTestCase<StringParser<Parser
 
     private StringParser<ParserContext> createParserCaseInsensitive() {
         return StringParser.with(
-                STRING,
-                CaseSensitivity.INSENSITIVE
+            STRING,
+            CaseSensitivity.INSENSITIVE
         );
     }
 
@@ -171,8 +171,8 @@ public class StringParserTest extends NonEmptyParserTestCase<StringParser<Parser
     @Test
     public void testToStringCaseInsensitive() {
         this.toStringAndCheck(
-                this.createParserCaseInsensitive(),
-                CharSequences.quoteAndEscape(STRING) + " (CaseInsensitive)"
+            this.createParserCaseInsensitive(),
+            CharSequences.quoteAndEscape(STRING) + " (CaseInsensitive)"
         );
     }
 

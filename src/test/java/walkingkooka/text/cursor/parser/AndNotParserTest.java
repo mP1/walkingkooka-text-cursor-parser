@@ -31,22 +31,22 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
     @Test
     public void testWithNullLeftFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createParser(
-                        null,
-                        this.right()
-                )
+            NullPointerException.class,
+            () -> this.createParser(
+                null,
+                this.right()
+            )
         );
     }
 
     @Test
     public void testWithNullRightFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> this.createParser(
-                        this.left(),
-                        null
-                )
+            NullPointerException.class,
+            () -> this.createParser(
+                this.left(),
+                null
+            )
         );
     }
 
@@ -60,11 +60,11 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
     @Test
     public void testParseLeftMissingFailed() {
         this.parseFailAndCheck(
-                AndNotParser.with(
-                        Parsers.never(),
-                        Parsers.fake()
-                ),
-                "A"
+            AndNotParser.with(
+                Parsers.never(),
+                Parsers.fake()
+            ),
+            "A"
         );
     }
 
@@ -76,8 +76,8 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
     @Test
     public void testParseLeftMatchRightFail() {
         this.parseAndCheck(LEFT,
-                this.leftToken(),
-                LEFT);
+            this.leftToken(),
+            LEFT);
     }
 
     private StringParserToken leftToken() {
@@ -87,44 +87,44 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
     @Test
     public void testParseLeftMatchRightMissing() {
         this.parseAndCheck(
-                this.createParser(
-                        this.left(),
-                        Parsers.never()
-                ),
-                LEFT,
-                this.leftToken(),
-                LEFT
+            this.createParser(
+                this.left(),
+                Parsers.never()
+            ),
+            LEFT,
+            this.leftToken(),
+            LEFT
         );
     }
 
     @Test
     public void testParseLeftMatchRightMatch() {
         this.parseFailAndCheck(this.createParser(string(LEFT), string(LEFT)),
-                LEFT);
+            LEFT);
     }
 
     @Test
     public void testParseLeftMatchRightFail2() {
         final String after = "123";
         this.parseAndCheck(LEFT + after,
-                this.leftToken(),
-                LEFT,
-                after);
+            this.leftToken(),
+            LEFT,
+            after);
     }
 
     @Test
     public void testSetToString() {
         this.checkEquals(
-                new AndNotParser<>(
-                        left(),
-                        right(),
-                        "Hello"
-                ),
-                new AndNotParser<>(
-                        left(),
-                        right(),
-                        "Old"
-                ).setToString("Hello")
+            new AndNotParser<>(
+                left(),
+                right(),
+                "Hello"
+            ),
+            new AndNotParser<>(
+                left(),
+                right(),
+                "Old"
+            ).setToString("Hello")
         );
     }
 

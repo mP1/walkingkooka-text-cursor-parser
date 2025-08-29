@@ -27,16 +27,16 @@ import java.util.Optional;
  * A parser that implements a only returns a token if the first matches and the second fails.
  */
 final class AndNotParser<C extends ParserContext> extends ParserSetToString<C>
-        implements RequiredParser<C> {
+    implements RequiredParser<C> {
 
     static <T extends ParserToken, C extends ParserContext> AndNotParser<C> with(final Parser<C> left, final Parser<C> right) {
         Objects.requireNonNull(left, "left");
         Objects.requireNonNull(right, "right");
 
         return new AndNotParser<>(
-                left,
-                right,
-                left + " - " + right
+            left,
+            right,
+            left + " - " + right
         );
     }
 
@@ -79,9 +79,9 @@ final class AndNotParser<C extends ParserContext> extends ParserSetToString<C>
     @Override
     AndNotParser<C> replaceToString(final String toString) {
         return new AndNotParser<>(
-                this.left,
-                this.right,
-                toString
+            this.left,
+            this.right,
+            toString
         );
     }
 
@@ -93,8 +93,8 @@ final class AndNotParser<C extends ParserContext> extends ParserSetToString<C>
     @Override //
     int hashCode0() {
         return Objects.hash(
-                this.left,
-                this.right
+            this.left,
+            this.right
         );
     }
 
@@ -103,6 +103,6 @@ final class AndNotParser<C extends ParserContext> extends ParserSetToString<C>
         final AndNotParser<?> otherAndNotParser = other.cast();
 
         return this.left.equals(otherAndNotParser.left) &&
-                this.right.equals(otherAndNotParser.right);
+            this.right.equals(otherAndNotParser.right);
     }
 }

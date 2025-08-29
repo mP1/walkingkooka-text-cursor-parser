@@ -80,29 +80,29 @@ public final class UnicodeEscapeCharacterParserTest extends NonEmptyParserTestCa
     @Test
     public void testParseComplete() {
         this.parseAndCheck2(
-                "\\u1234",
-                '\u1234',
-                "\\u1234"
+            "\\u1234",
+            '\u1234',
+            "\\u1234"
         );
     }
 
     @Test
     public void testParseComplete2() {
         this.parseAndCheck2(
-                "\\u12345",
-                '\u1234',
-                "\\u1234",
-                "5"
+            "\\u12345",
+            '\u1234',
+            "\\u1234",
+            "5"
         );
     }
 
     @Test
     public void testParseComplete3() {
         this.parseAndCheck2(
-                "\\u1234ABC",
-                '\u1234',
-                "\\u1234",
-                "ABC"
+            "\\u1234ABC",
+            '\u1234',
+            "\\u1234",
+            "ABC"
         );
     }
 
@@ -115,10 +115,10 @@ public final class UnicodeEscapeCharacterParserTest extends NonEmptyParserTestCa
                                       final char value,
                                       final String text) {
         return this.parseAndCheck2(
-                in,
-                value,
-                text,
-                ""
+            in,
+            value,
+            text,
+            ""
         );
     }
 
@@ -127,13 +127,13 @@ public final class UnicodeEscapeCharacterParserTest extends NonEmptyParserTestCa
                                       final String text,
                                       final String textAfter) {
         return this.parseAndCheck(
-                in,
-                CharacterParserToken.with(
-                        value,
-                        text
-                ),
-                text,
-                textAfter
+            in,
+            CharacterParserToken.with(
+                value,
+                text
+            ),
+            text,
+            textAfter
         );
     }
 

@@ -42,8 +42,8 @@ final class QuotedParserDouble<C extends ParserContext> extends QuotedParser<C> 
     DoubleQuotedParserToken token(final String content,
                                   final String rawText) {
         return DoubleQuotedParserToken.with(
-                content,
-                rawText
+            content,
+            rawText
         );
     }
 
@@ -52,7 +52,7 @@ final class QuotedParserDouble<C extends ParserContext> extends QuotedParser<C> 
     @Override
     QuotedParserDouble<C> replaceToString(final String toString) {
         return new QuotedParserDouble<>(
-                toString
+            toString
         );
     }
 }

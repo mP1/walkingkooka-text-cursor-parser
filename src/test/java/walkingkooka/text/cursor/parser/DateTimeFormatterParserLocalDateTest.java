@@ -69,45 +69,45 @@ public final class DateTimeFormatterParserLocalDateTest extends DateTimeFormatte
     @Test
     public void testYearMonthDayInvalidMonthThrows() {
         this.parseThrows2(
-                "yyyy-MM-dd",
-                "2001-99-11",
-                "Invalid value for MonthOfYear (valid values 1 - 12): 99"
+            "yyyy-MM-dd",
+            "2001-99-11",
+            "Invalid value for MonthOfYear (valid values 1 - 12): 99"
         );
     }
 
     @Test
     public void testYearMonthDayInvalidMonthThrows2() {
         this.parseThrows2(
-                "yyyy-MM-dd",
-                "2001-99-11!",
-                "Invalid value for MonthOfYear (valid values 1 - 12): 99"
+            "yyyy-MM-dd",
+            "2001-99-11!",
+            "Invalid value for MonthOfYear (valid values 1 - 12): 99"
         );
     }
 
     @Test
     public void testYearMonthDayInvalidDayThrows() {
         this.parseThrows2(
-                "yyyy-MM-dd",
-                "2001-12-99",
-                "Invalid value for DayOfMonth (valid values 1 - 28/31): 99"
+            "yyyy-MM-dd",
+            "2001-12-99",
+            "Invalid value for DayOfMonth (valid values 1 - 28/31): 99"
         );
     }
 
     @Test
     public void testYearSeparatorMonthNameSeparatorDayInvalidDaysFails() {
         this.parseThrows2(
-                "yyyy-MMMM-dd",
-                "2001-December-99",
-                "Invalid value for DayOfMonth (valid values 1 - 28/31): 99"
+            "yyyy-MMMM-dd",
+            "2001-December-99",
+            "Invalid value for DayOfMonth (valid values 1 - 28/31): 99"
         );
     }
 
     @Test
     public void testYearSeparatorMonthNameSeparatorDayInvalidDaysFails2() {
         this.parseThrows2(
-                "yyyy-MMMM-dd",
-                "2001-December-99X",
-                "Invalid value for DayOfMonth (valid values 1 - 28/31): 99"
+            "yyyy-MMMM-dd",
+            "2001-December-99X",
+            "Invalid value for DayOfMonth (valid values 1 - 28/31): 99"
         );
     }
 

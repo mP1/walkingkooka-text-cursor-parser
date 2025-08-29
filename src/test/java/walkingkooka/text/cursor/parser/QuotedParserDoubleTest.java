@@ -40,8 +40,8 @@ public final class QuotedParserDoubleTest extends QuotedParserTestCase<QuotedPar
     DoubleQuotedParserToken createToken(final String content,
                                         final String text) {
         return DoubleQuotedParserToken.with(
-                content,
-                text
+            content,
+            text
         );
     }
 
@@ -50,8 +50,8 @@ public final class QuotedParserDoubleTest extends QuotedParserTestCase<QuotedPar
     @Test
     public void testToStringDoubleQuoted() {
         this.toStringAndCheck(
-                this.createParser(),
-                "double quoted string"
+            this.createParser(),
+            "double quoted string"
         );
     }
 

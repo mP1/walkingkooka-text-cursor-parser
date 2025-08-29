@@ -28,7 +28,7 @@ import java.util.Optional;
  * A {@link Parser} that only matches the given {@link String} which must not be null or empty.
  */
 final class StringParser<C extends ParserContext> extends NonEmptyParser<C>
-        implements RequiredParser<C> {
+    implements RequiredParser<C> {
 
     static <C extends ParserContext> StringParser<C> with(final String string, final CaseSensitivity caseSensitivity) {
         CharSequences.failIfNullOrEmpty(string, "string");
@@ -42,9 +42,9 @@ final class StringParser<C extends ParserContext> extends NonEmptyParser<C>
         }
 
         return new StringParser<>(
-                string,
-                caseSensitivity,
-                b.toString()
+            string,
+            caseSensitivity,
+            b.toString()
         );
     }
 
@@ -92,9 +92,9 @@ final class StringParser<C extends ParserContext> extends NonEmptyParser<C>
     @Override
     StringParser<C> replaceToString(final String toString) {
         return new StringParser<>(
-                this.string,
-                this.caseSensitivity,
-                toString
+            this.string,
+            this.caseSensitivity,
+            toString
         );
     }
 
@@ -103,8 +103,8 @@ final class StringParser<C extends ParserContext> extends NonEmptyParser<C>
     @Override //
     int hashCode0() {
         return Objects.hash(
-                this.string,
-                this.caseSensitivity
+            this.string,
+            this.caseSensitivity
         );
     }
 
@@ -113,6 +113,6 @@ final class StringParser<C extends ParserContext> extends NonEmptyParser<C>
         final StringParser<?> otherStringParser = other.cast();
 
         return this.string.equals(otherStringParser.string) &&
-                this.caseSensitivity == otherStringParser.caseSensitivity;
+            this.caseSensitivity == otherStringParser.caseSensitivity;
     }
 }

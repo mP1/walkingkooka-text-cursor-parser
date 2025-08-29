@@ -28,8 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  * Mixin that includes numerous helpers to assist parsing and verifying the outcome for success and failures.
  */
 public interface ParserTesting2<P extends Parser<C>,
-        C extends ParserContext>
-        extends ParserTesting {
+    C extends ParserContext>
+    extends ParserTesting {
 
     /**
      * Provides or creates the {@link Parser} being tested.
@@ -47,10 +47,10 @@ public interface ParserTesting2<P extends Parser<C>,
                                      final ParserToken token,
                                      final String text) {
         return this.parseAndCheck(
-                cursorText,
-                token,
-                text,
-                ""
+            cursorText,
+            token,
+            text,
+            ""
         );
     }
 
@@ -59,10 +59,10 @@ public interface ParserTesting2<P extends Parser<C>,
                                      final String text,
                                      final String textAfter) {
         return this.parseAndCheck(
-                TextCursors.charSequence(cursorText),
-                token,
-                text,
-                textAfter
+            TextCursors.charSequence(cursorText),
+            token,
+            text,
+            textAfter
         );
     }
 
@@ -70,10 +70,10 @@ public interface ParserTesting2<P extends Parser<C>,
                                      final ParserToken token,
                                      final String text) {
         return this.parseAndCheck(
-                cursor,
-                token,
-                text,
-                ""
+            cursor,
+            token,
+            text,
+            ""
         );
     }
 
@@ -82,12 +82,12 @@ public interface ParserTesting2<P extends Parser<C>,
                                      final String text,
                                      final String textAfter) {
         return this.parseAndCheck(
-                this.createParser(),
-                this.createContext(),
-                cursor,
-                token,
-                text,
-                textAfter
+            this.createParser(),
+            this.createContext(),
+            cursor,
+            token,
+            text,
+            textAfter
         );
     }
 
@@ -96,11 +96,11 @@ public interface ParserTesting2<P extends Parser<C>,
                                      final ParserToken token,
                                      final String text) {
         return this.parseAndCheck(
-                parser,
-                cursorText,
-                token,
-                text,
-                ""
+            parser,
+            cursorText,
+            token,
+            text,
+            ""
         );
     }
 
@@ -110,12 +110,12 @@ public interface ParserTesting2<P extends Parser<C>,
                                      final String text,
                                      final String textAfter) {
         return this.parseAndCheck(
-                parser,
-                this.createContext(),
-                cursorText,
-                token,
-                text,
-                textAfter
+            parser,
+            this.createContext(),
+            cursorText,
+            token,
+            text,
+            textAfter
         );
     }
 
@@ -123,24 +123,24 @@ public interface ParserTesting2<P extends Parser<C>,
 
     default TextCursor parseFailAndCheck(final String cursorText) {
         return this.parseFailAndCheck(
-                TextCursors.charSequence(cursorText)
+            TextCursors.charSequence(cursorText)
         );
     }
 
     default TextCursor parseFailAndCheck(final TextCursor cursor) {
         return this.parseFailAndCheck(
-                this.createParser(),
-                this.createContext(),
-                cursor
+            this.createParser(),
+            this.createContext(),
+            cursor
         );
     }
 
     default TextCursor parseFailAndCheck(final Parser<C> parser,
                                          final String cursorText) {
         return this.parseFailAndCheck(
-                parser,
-                this.createContext(),
-                cursorText
+            parser,
+            this.createContext(),
+            cursorText
         );
     }
 
@@ -151,10 +151,10 @@ public interface ParserTesting2<P extends Parser<C>,
                                                       final String column,
                                                       final int row) {
         this.parseThrowsInvalidCharacterException(
-                cursorText,
-                c,
-                column.length(),
-                row
+            cursorText,
+            c,
+            column.length(),
+            row
         );
     }
 
@@ -163,12 +163,12 @@ public interface ParserTesting2<P extends Parser<C>,
                                                       final int column,
                                                       final int row) {
         this.parseThrowsInvalidCharacterException(
-                this.createParser(),
-                this.createContext(),
-                text,
-                c,
-                column,
-                row
+            this.createParser(),
+            this.createContext(),
+            text,
+            c,
+            column,
+            row
         );
     }
 
@@ -179,12 +179,12 @@ public interface ParserTesting2<P extends Parser<C>,
                                                       final int column,
                                                       final int row) {
         this.parseThrowsInvalidCharacterException(
-                parser,
-                context,
-                TextCursors.charSequence(text),
-                c,
-                column,
-                row
+            parser,
+            context,
+            TextCursors.charSequence(text),
+            c,
+            column,
+            row
         );
     }
 
@@ -196,29 +196,29 @@ public interface ParserTesting2<P extends Parser<C>,
                                                       final int row) {
         // Message format from BasicParserReporter
         final RuntimeException thrown = assertThrows(
-                RuntimeException.class,
-                () -> this.parse(
-                        parser,
-                        text,
-                        context
-                )
+            RuntimeException.class,
+            () -> this.parse(
+                parser,
+                text,
+                context
+            )
         );
 
         final String message = "Invalid character " + CharSequences.quoteAndEscape(c) + " at (" + column + "," + row + ")";
         final String thrownMessage = thrown.getMessage();
 
         this.checkEquals(
-                true,
-                thrownMessage.startsWith(message),
-                () -> "parse " + text
+            true,
+            thrownMessage.startsWith(message),
+            () -> "parse " + text
         );
     }
 
     default void parseThrowsEndOfText(final String cursorText) {
         this.parseThrowsEndOfText(
-                cursorText,
-                cursorText.length() + 1,
-                1
+            cursorText,
+            cursorText.length() + 1,
+            1
         );
     }
 
@@ -227,10 +227,10 @@ public interface ParserTesting2<P extends Parser<C>,
                                       final int row) {
         // Message format from BasicParserReporter
         this.parseThrowsEndOfText(
-                this.createParser(),
-                cursorText,
-                column,
-                row
+            this.createParser(),
+            cursorText,
+            column,
+            row
         );
     }
 
@@ -239,29 +239,29 @@ public interface ParserTesting2<P extends Parser<C>,
                                       final int column,
                                       final int row) {
         this.parseThrowsEndOfText(
-                parser,
-                this.createContext(),
-                cursorText,
-                column,
-                row
+            parser,
+            this.createContext(),
+            cursorText,
+            column,
+            row
         );
     }
 
     default void parseThrows(final String cursorText,
                              final String expected) {
         this.parseThrows(
-                TextCursors.charSequence(cursorText),
-                expected
+            TextCursors.charSequence(cursorText),
+            expected
         );
     }
 
     default void parseThrows(final TextCursor cursor,
                              final String expected) {
         this.parseThrows(
-                this.createParser(),
-                this.createContext(),
-                cursor,
-                expected
+            this.createParser(),
+            this.createContext(),
+            cursor,
+            expected
         );
     }
 
@@ -269,9 +269,9 @@ public interface ParserTesting2<P extends Parser<C>,
                              final String cursor,
                              final String expected) {
         this.parseThrows(
-                parser,
-                TextCursors.charSequence(cursor),
-                expected
+            parser,
+            TextCursors.charSequence(cursor),
+            expected
         );
     }
 
@@ -279,10 +279,10 @@ public interface ParserTesting2<P extends Parser<C>,
                              final TextCursor cursor,
                              final String expected) {
         this.parseThrows(
-                parser,
-                this.createContext(),
-                cursor,
-                expected
+            parser,
+            this.createContext(),
+            cursor,
+            expected
         );
     }
 
@@ -293,15 +293,15 @@ public interface ParserTesting2<P extends Parser<C>,
         final P parser = this.createParser();
 
         this.isOptionalAndCheck(
-                parser,
-                parser.minCount() == 0
+            parser,
+            parser.minCount() == 0
         );
     }
 
     default void isOptionalAndCheck(final boolean expected) {
         this.isOptionalAndCheck(
-                this.createParser(),
-                expected
+            this.createParser(),
+            expected
         );
     }
 
@@ -312,15 +312,15 @@ public interface ParserTesting2<P extends Parser<C>,
         final P parser = this.createParser();
 
         this.isRequiredAndCheck(
-                parser,
-                parser.minCount() >= 1
+            parser,
+            parser.minCount() >= 1
         );
     }
 
     default void isRequiredAndCheck(final boolean expected) {
         this.isRequiredAndCheck(
-                this.createParser(),
-                expected
+            this.createParser(),
+            expected
         );
     }
 
@@ -332,16 +332,16 @@ public interface ParserTesting2<P extends Parser<C>,
         final int minCount = parser.minCount();
 
         this.checkNotEquals(
-                -1,
-                Math.signum(minCount),
-                () -> parser + " minCount=" + minCount
+            -1,
+            Math.signum(minCount),
+            () -> parser + " minCount=" + minCount
         );
     }
 
     default void minCountAndCheck(final int expected) {
         this.minCountAndCheck(
-                this.createParser(),
-                expected
+            this.createParser(),
+            expected
         );
     }
 
@@ -354,16 +354,16 @@ public interface ParserTesting2<P extends Parser<C>,
         final int maxCount = parser.maxCount();
 
         this.checkNotEquals(
-                -1,
-                Math.signum(maxCount - minCount),
-                () -> parser + " maxCount " + maxCount + " < minCount=" + minCount
+            -1,
+            Math.signum(maxCount - minCount),
+            () -> parser + " maxCount " + maxCount + " < minCount=" + minCount
         );
     }
 
     default void maxCountAndCheck(final int expected) {
         this.maxCountAndCheck(
-                this.createParser(),
-                expected
+            this.createParser(),
+            expected
         );
     }
 }

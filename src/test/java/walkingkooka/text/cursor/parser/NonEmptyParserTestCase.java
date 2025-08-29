@@ -27,16 +27,16 @@ public abstract class NonEmptyParserTestCase<P extends NonEmptyParser<ParserCont
     @Test
     public void testMinCount() {
         this.minCountAndCheck(
-                this.createParser(),
-                1
+            this.createParser(),
+            1
         );
     }
 
     @Test
     public void testMaxCount() {
         this.maxCountAndCheck(
-                this.createParser(),
-                1
+            this.createParser(),
+            1
         );
     }
 }

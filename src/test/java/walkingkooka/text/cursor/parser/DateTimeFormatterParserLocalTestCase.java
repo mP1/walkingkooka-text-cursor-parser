@@ -20,8 +20,8 @@ package walkingkooka.text.cursor.parser;
 import org.junit.jupiter.api.Test;
 
 public abstract class DateTimeFormatterParserLocalTestCase<P extends DateTimeFormatterParser<ParserContext>,
-        T extends ParserToken>
-        extends DateTimeFormatterParserTestCase2<P, T> {
+    T extends ParserToken>
+    extends DateTimeFormatterParserTestCase2<P, T> {
 
     DateTimeFormatterParserLocalTestCase() {
         super();

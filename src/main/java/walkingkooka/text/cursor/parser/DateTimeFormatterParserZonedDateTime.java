@@ -31,8 +31,8 @@ final class DateTimeFormatterParserZonedDateTime<C extends ParserContext> extend
 
     static <C extends ParserContext> DateTimeFormatterParserZonedDateTime<C> with(final Function<DateTimeContext, DateTimeFormatter> formatter) {
         return new DateTimeFormatterParserZonedDateTime<>(
-                check(formatter),
-                formatter.toString()
+            check(formatter),
+            formatter.toString()
         );
     }
 
@@ -51,8 +51,8 @@ final class DateTimeFormatterParserZonedDateTime<C extends ParserContext> extend
     @Override
     DateTimeFormatterParserZonedDateTime<C> replaceToString(final String toString) {
         return new DateTimeFormatterParserZonedDateTime<>(
-                this.formatter,
-                toString
+            this.formatter,
+            toString
         );
     }
 }

@@ -38,9 +38,9 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatterParser<ParserContext>, T extends ParserToken>
-        extends DateTimeFormatterParserTestCase<P>
-        implements ParserTesting2<P, ParserContext>,
-        HashCodeEqualsDefinedTesting2<P> {
+    extends DateTimeFormatterParserTestCase<P>
+    implements ParserTesting2<P, ParserContext>,
+    HashCodeEqualsDefinedTesting2<P> {
 
     DateTimeFormatterParserTestCase2() {
         super();
@@ -59,7 +59,7 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
     final P createParser(final String pattern) {
         // JAPAN will be overridden by DateTimeFormatterParser
         return this.createParser(
-                new TestFunction(pattern)
+            new TestFunction(pattern)
         );
     }
 
@@ -73,7 +73,7 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
         @Override
         public DateTimeFormatter apply(final DateTimeContext context) {
             return DateTimeFormatter.ofPattern(this.pattern)
-                    .withLocale(context.locale());
+                .withLocale(context.locale());
         }
 
         @Override
@@ -115,24 +115,24 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
     @Override
     public ParserContext createContext() {
         return ParserContexts.basic(
-                InvalidCharacterExceptionFactory.POSITION,
-                DateTimeContexts.basic(
-                        DateTimeSymbols.fromDateFormatSymbols(
-                                new DateFormatSymbols(LOCALE)
-                        ),
-                        LOCALE,
-                        1900,
-                        50,
-                        LocalDateTime::now
+            InvalidCharacterExceptionFactory.POSITION,
+            DateTimeContexts.basic(
+                DateTimeSymbols.fromDateFormatSymbols(
+                    new DateFormatSymbols(LOCALE)
                 ),
-                DecimalNumberContexts.basic(
-                        DecimalNumberSymbols.fromDecimalFormatSymbols(
-                                '+',
-                                new DecimalFormatSymbols(LOCALE)
-                        ),
-                        LOCALE,
-                        MathContext.UNLIMITED
-                )
+                LOCALE,
+                1900,
+                50,
+                LocalDateTime::now
+            ),
+            DecimalNumberContexts.basic(
+                DecimalNumberSymbols.fromDecimalFormatSymbols(
+                    '+',
+                    new DecimalFormatSymbols(LOCALE)
+                ),
+                LOCALE,
+                MathContext.UNLIMITED
+            )
         );
     }
 
@@ -150,10 +150,10 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
         formatter2.parse(text);
 
         this.parseAndCheck(this.createParser(formatter2),
-                text + after,
-                this.createParserToken(formatter2, text),
-                text,
-                after);
+            text + after,
+            this.createParserToken(formatter2, text),
+            text,
+            after);
     }
 
     final TextCursor parseFailAndCheck2(final String pattern, final String cursorText) {
@@ -164,20 +164,20 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
                             final String text,
                             final String expected) {
         final ParserException thrown = assertThrows(
-                ParserException.class,
-                () -> this.parse(
-                        this.createParser(pattern),
-                        TextCursors.charSequence(text),
-                        this.createContext()
-                )
+            ParserException.class,
+            () -> this.parse(
+                this.createParser(pattern),
+                TextCursors.charSequence(text),
+                this.createContext()
+            )
         );
 
         final String thrownMessage = thrown.getMessage();
 
         this.checkEquals(
-                true,
-                thrownMessage.startsWith(expected),
-                () -> "parse " + text
+            true,
+            thrownMessage.startsWith(expected),
+            () -> "parse " + text
         );
     }
 
@@ -186,24 +186,24 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
     @Test
     public final void testEqualsDifferentFormatter() {
         this.checkNotEquals(
-                this.createParser(
-                        (c) -> {
-                            throw new UnsupportedOperationException();
-                        }
-                ),
-                this.createParser(
-                        (c) -> {
-                            throw new UnsupportedOperationException();
-                        }
-                )
+            this.createParser(
+                (c) -> {
+                    throw new UnsupportedOperationException();
+                }
+            ),
+            this.createParser(
+                (c) -> {
+                    throw new UnsupportedOperationException();
+                }
+            )
         );
     }
 
     @Test
     public final void testEqualsDifferentToString() {
         this.checkNotEquals(
-                this.createParser(),
-                this.createParser().setToString("Different")
+            this.createParser(),
+            this.createParser().setToString("Different")
         );
     }
 

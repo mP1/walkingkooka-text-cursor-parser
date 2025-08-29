@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AlternativesParserTest extends ParserTestCase<AlternativesParser<ParserContext>
-        > {
+    > {
 
     private final static String TEXT1 = "abc";
     private final static String TEXT2 = "xyz";
@@ -43,30 +43,30 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
     @Test
     public void testWithNullParsersFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> AlternativesParser.with(null)
+            NullPointerException.class,
+            () -> AlternativesParser.with(null)
         );
     }
 
     @Test
     public void testWithZeroParsersFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> AlternativesParser.with(
-                        Lists.empty()
-                )
+            IllegalArgumentException.class,
+            () -> AlternativesParser.with(
+                Lists.empty()
+            )
         );
     }
 
     @Test
     public void testWithOneNeverWrapped() {
         assertSame(
-                PARSER1,
-                AlternativesParser.with(
-                        Lists.of(
-                                PARSER1.cast()
-                        )
+            PARSER1,
+            AlternativesParser.with(
+                Lists.of(
+                    PARSER1.cast()
                 )
+            )
         );
     }
 
@@ -75,36 +75,36 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
         final List<Parser<ParserContext>> parsers = Lists.of(PARSER1, PARSER2);
         final AlternativesParser<ParserContext> parser = AlternativesParser.with(parsers).cast();
         assertNotSame(
-                parsers,
-                parser.parsers
+            parsers,
+            parser.parsers
         );
         this.checkEquals(
-                parsers,
-                parser.parsers
+            parsers,
+            parser.parsers
         );
     }
 
     @Test
     public void testWithAllCustomToStringParsers() {
         final List<Parser<ParserContext>> parsers = Lists.of(
-                PARSER1.setToString("1"),
-                PARSER2.setToString("2")
+            PARSER1.setToString("1"),
+            PARSER2.setToString("2")
         );
         final AlternativesParser<ParserContext> custom = AlternativesParser.with(parsers)
-                .cast();
+            .cast();
 
         this.checkNotEquals(
-                Lists.of(
-                        PARSER1,
-                        PARSER2
-                ),
-                custom.parsers,
-                "parsers"
+            Lists.of(
+                PARSER1,
+                PARSER2
+            ),
+            custom.parsers,
+            "parsers"
         );
         this.checkEquals(
-                "1 | 2",
-                custom.toString(),
-                "custom toString"
+            "1 | 2",
+            custom.toString(),
+            "custom toString"
         );
     }
 
@@ -123,20 +123,20 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
     @Test
     public void testParseFirstMatch() {
         this.parseAndCheck(
-                TEXT1,
-                string(TEXT1),
-                TEXT1,
-                ""
+            TEXT1,
+            string(TEXT1),
+            TEXT1,
+            ""
         );
     }
 
     @Test
     public void testParseSecondMatch() {
         this.parseAndCheck(
-                TEXT2,
-                string(TEXT2),
-                TEXT2,
-                ""
+            TEXT2,
+            string(TEXT2),
+            TEXT2,
+            ""
         );
     }
 
@@ -144,10 +144,10 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
     public void testParseSecondIgnoreExtra() {
         final String extra = "!!!";
         this.parseAndCheck(
-                TEXT2 + extra,
-                string(TEXT2),
-                TEXT2,
-                extra
+            TEXT2 + extra,
+            string(TEXT2),
+            TEXT2,
+            extra
         );
     }
 
@@ -155,10 +155,10 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
     public void testParseEmptyParserReporter() {
         // AlternativesParser must not short circuit and skip trying all its parsers when its empty.
         this.parseThrowsEndOfText(
-                PARSER1.orReport(ParserReporters.basic()).cast(),
-                "",
-                1,
-                1
+            PARSER1.orReport(ParserReporters.basic()).cast(),
+            "",
+            1,
+            1
         );
     }
 
@@ -174,29 +174,29 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
 
     private void testParseAllCustomToStringParsers(final String text) {
         this.parseAndCheck(
-                this.createParser1(
-                        PARSER1.setToString("1"),
-                        PARSER2.setToString("2")
-                ),
-                text,
-                string(text),
-                text
+            this.createParser1(
+                PARSER1.setToString("1"),
+                PARSER2.setToString("2")
+            ),
+            text,
+            string(text),
+            text
         );
     }
 
     @Test
     public void testMinCount() {
         this.minCountAndCheck(
-                this.createParser(),
-                1
+            this.createParser(),
+            1
         );
     }
 
     @Test
     public void testMaxCount() {
         this.maxCountAndCheck(
-                this.createParser(),
-                1
+            this.createParser(),
+            1
         );
     }
 
@@ -207,20 +207,20 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
 
         final Parser<ParserContext> parser3 = parser("text3");
         this.checkEquals(
-                this.createParser0(
-                        PARSER1,
-                        PARSER2,
-                        parser3
-                ),
-                parser.or(parser3)
+            this.createParser0(
+                PARSER1,
+                PARSER2,
+                parser3
+            ),
+            parser.or(parser3)
         );
     }
 
     @Override
     public AlternativesParser<ParserContext> createParser() {
         return this.createParser0(
-                PARSER1,
-                PARSER2
+            PARSER1,
+            PARSER2
         );
     }
 
@@ -232,9 +232,9 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
     @SafeVarargs
     private Parser<ParserContext> createParser1(final Parser<ParserContext>... parsers) {
         return AlternativesParser.with(
-                Cast.to(
-                        Lists.of(parsers)
-                )
+            Cast.to(
+                Lists.of(parsers)
+            )
         );
     }
 
@@ -244,8 +244,8 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
 
     private static Parser<ParserContext> parser(final String string) {
         return Parsers.string(
-                string,
-                CaseSensitivity.SENSITIVE
+            string,
+            CaseSensitivity.SENSITIVE
         );
     }
 
@@ -254,27 +254,27 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createParser(),
-                PARSER1 + " | " + PARSER2
+            this.createParser(),
+            PARSER1 + " | " + PARSER2
         );
     }
 
     @Test
     public void testToStringSurroundSequenceParser() {
         this.toStringAndCheck(
-                AlternativesParser.with(
+            AlternativesParser.with(
+                Lists.of(
+                    PARSER1,
+                    SequenceParser.with(
                         Lists.of(
-                                PARSER1,
-                                SequenceParser.with(
-                                        Lists.of(
-                                                PARSER2,
-                                                PARSER3
-                                        )
-                                ),
-                                PARSER4
+                            PARSER2,
+                            PARSER3
                         )
-                ),
-                PARSER1 + " | (" + PARSER2 + ", " + PARSER3 + ") | " + PARSER4
+                    ),
+                    PARSER4
+                )
+            ),
+            PARSER1 + " | (" + PARSER2 + ", " + PARSER3 + ") | " + PARSER4
         );
     }
 

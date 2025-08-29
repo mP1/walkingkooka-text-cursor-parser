@@ -24,7 +24,7 @@ import walkingkooka.text.CharSequences;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStringParser<ParserContext>, StringParserToken>
-        implements HashCodeEqualsDefinedTesting2<SurroundStringParser<ParserContext>> {
+    implements HashCodeEqualsDefinedTesting2<SurroundStringParser<ParserContext>> {
 
     private final static String OPEN = "<123";
     private final static String CLOSE = "456";
@@ -34,32 +34,32 @@ public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStr
     @Test
     public void testWithNullOpenFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SurroundStringParser.with(null, CLOSE)
+            NullPointerException.class,
+            () -> SurroundStringParser.with(null, CLOSE)
         );
     }
 
     @Test
     public void testWithEmptyOpenFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SurroundStringParser.with("", CLOSE)
+            IllegalArgumentException.class,
+            () -> SurroundStringParser.with("", CLOSE)
         );
     }
 
     @Test
     public void testWithNullCloseFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> SurroundStringParser.with(OPEN, null)
+            NullPointerException.class,
+            () -> SurroundStringParser.with(OPEN, null)
         );
     }
 
     @Test
     public void testWithEmptyCloseFails() {
         assertThrows(
-                IllegalArgumentException.class,
-                () -> SurroundStringParser.with(OPEN, "")
+            IllegalArgumentException.class,
+            () -> SurroundStringParser.with(OPEN, "")
         );
     }
 
@@ -145,20 +145,20 @@ public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStr
     @Test
     public void testEqualsDifferentOpen() {
         this.checkNotEquals(
-                SurroundStringParser.with(
-                        "different",
-                        CLOSE
-                )
+            SurroundStringParser.with(
+                "different",
+                CLOSE
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentClose() {
         this.checkNotEquals(
-                SurroundStringParser.with(
-                        OPEN,
-                        "different"
-                )
+            SurroundStringParser.with(
+                OPEN,
+                "different"
+            )
         );
     }
 
@@ -172,7 +172,7 @@ public class SurroundStringParserTest extends NonEmptyParserTestCase<SurroundStr
     @Test
     public void testToString() {
         this.toStringAndCheck(this.createParser(),
-                CharSequences.quoteAndEscape(OPEN) + "*" + CharSequences.quoteAndEscape(CLOSE));
+            CharSequences.quoteAndEscape(OPEN) + "*" + CharSequences.quoteAndEscape(CLOSE));
     }
 
     // Class............................................................................................................

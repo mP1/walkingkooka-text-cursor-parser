@@ -55,12 +55,12 @@ public abstract class RepeatedOrSequenceParserTokenTestCase<T extends RepeatedOr
     public final void testChildren() {
         final T token = this.createToken(STRING1, STRING2, STRING4);
         this.checkEquals(
-                Lists.of(
-                        STRING1,
-                        STRING2,
-                        STRING4
-                ),
-                token.children()
+            Lists.of(
+                STRING1,
+                STRING2,
+                STRING4
+            ),
+            token.children()
         );
     }
 
@@ -68,15 +68,15 @@ public abstract class RepeatedOrSequenceParserTokenTestCase<T extends RepeatedOr
     public final void testSetChildrenDifferent() {
         final T token = this.createToken();
         final List<ParserToken> different = Lists.of(
-                STRING5,
-                STRING6
+            STRING5,
+            STRING6
         );
 
         this.checkEquals(
-                this.createToken(
-                        different.toArray(new ParserToken[0])
-                ),
-                token.setChildren(different)
+            this.createToken(
+                different.toArray(new ParserToken[0])
+            ),
+            token.setChildren(different)
         );
     }
 
@@ -144,8 +144,8 @@ public abstract class RepeatedOrSequenceParserTokenTestCase<T extends RepeatedOr
 
     final T createToken(final ParserToken... tokens) {
         return this.createToken(Lists.of(tokens), Arrays.stream(tokens)
-                .map(HasText::text)
-                .collect(Collectors.joining()));
+            .map(HasText::text)
+            .collect(Collectors.joining()));
     }
 
     final T createToken(final String text, final ParserToken... tokens) {

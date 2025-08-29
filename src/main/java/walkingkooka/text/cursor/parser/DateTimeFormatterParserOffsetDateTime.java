@@ -31,8 +31,8 @@ final class DateTimeFormatterParserOffsetDateTime<C extends ParserContext> exten
 
     static <C extends ParserContext> DateTimeFormatterParserOffsetDateTime<C> with(final Function<DateTimeContext, DateTimeFormatter> formatter) {
         return new DateTimeFormatterParserOffsetDateTime<>(
-                check(formatter),
-                formatter.toString()
+            check(formatter),
+            formatter.toString()
         );
     }
 
@@ -51,8 +51,8 @@ final class DateTimeFormatterParserOffsetDateTime<C extends ParserContext> exten
     @Override
     DateTimeFormatterParserOffsetDateTime<C> replaceToString(final String toString) {
         return new DateTimeFormatterParserOffsetDateTime<>(
-                this.formatter,
-                toString
+            this.formatter,
+            toString
         );
     }
 }

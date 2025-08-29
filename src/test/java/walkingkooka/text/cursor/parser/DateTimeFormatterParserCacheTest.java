@@ -24,14 +24,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public final class DateTimeFormatterParserCacheTest extends DateTimeFormatterParserTestCase<DateTimeFormatterParserCache>
-        implements ToStringTesting<DateTimeFormatterParserCache> {
+    implements ToStringTesting<DateTimeFormatterParserCache> {
 
     @Test
     public void testToString() {
         final DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
         this.toStringAndCheck(DateTimeFormatterParserCache.with(Locale.ENGLISH, 123, formatter),
-                "en 123 " + formatter);
+            "en 123 " + formatter);
     }
 
     @Override

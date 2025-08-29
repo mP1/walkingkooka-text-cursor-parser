@@ -26,7 +26,7 @@ import java.util.Optional;
  * A {@link Parser} that matches unicode escape sequences returning the decoded character.
  */
 final class UnicodeEscapeCharacterParser<C extends ParserContext> extends NonEmptyParser<C>
-        implements RequiredParser<C> {
+    implements RequiredParser<C> {
 
     /**
      * Type safe singleton getter.
@@ -39,7 +39,7 @@ final class UnicodeEscapeCharacterParser<C extends ParserContext> extends NonEmp
      * Singleton
      */
     private final static UnicodeEscapeCharacterParser<?> INSTANCE = new UnicodeEscapeCharacterParser<>(
-            "Unicode escape char sequence"
+        "Unicode escape char sequence"
     );
 
     private UnicodeEscapeCharacterParser(final String toString) {
@@ -95,7 +95,7 @@ final class UnicodeEscapeCharacterParser<C extends ParserContext> extends NonEmp
     @Override
     UnicodeEscapeCharacterParser<C> replaceToString(final String toString) {
         return new UnicodeEscapeCharacterParser<>(
-                toString
+            toString
         );
     }
 

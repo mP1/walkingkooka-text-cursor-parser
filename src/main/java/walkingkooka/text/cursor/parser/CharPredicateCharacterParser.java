@@ -27,14 +27,14 @@ import java.util.Optional;
  * A {@link Parser} that matches a single character using the provided {@link CharPredicate}
  */
 final class CharPredicateCharacterParser<C extends ParserContext> extends NonEmptyParser<C>
-        implements RequiredParser<C> {
+    implements RequiredParser<C> {
 
     static <C extends ParserContext> CharPredicateCharacterParser<C> with(final CharPredicate predicate) {
         Objects.requireNonNull(predicate, "predicate");
 
         return new CharPredicateCharacterParser<>(
-                predicate,
-                predicate.toString()
+            predicate,
+            predicate.toString()
         );
     }
 
@@ -50,12 +50,12 @@ final class CharPredicateCharacterParser<C extends ParserContext> extends NonEmp
                                    final TextCursorSavePoint save) {
         final char first = cursor.at();
         return Optional.ofNullable(
-                this.predicate.test(first) ?
-                        this.characterParserTokenAndAdvance(
-                                first,
-                                cursor
-                        ) :
-                        null
+            this.predicate.test(first) ?
+                this.characterParserTokenAndAdvance(
+                    first,
+                    cursor
+                ) :
+                null
         );
     }
 
@@ -65,8 +65,8 @@ final class CharPredicateCharacterParser<C extends ParserContext> extends NonEmp
                                                        final TextCursor cursor) {
         cursor.next();
         return CharacterParserToken.with(
-                c,
-                String.valueOf(c)
+            c,
+            String.valueOf(c)
         );
     }
 
@@ -75,8 +75,8 @@ final class CharPredicateCharacterParser<C extends ParserContext> extends NonEmp
     @Override
     CharPredicateCharacterParser<C> replaceToString(final String toString) {
         return new CharPredicateCharacterParser<>(
-                this.predicate,
-                toString
+            this.predicate,
+            toString
         );
     }
 
@@ -85,7 +85,7 @@ final class CharPredicateCharacterParser<C extends ParserContext> extends NonEmp
     @Override //
     int hashCode0() {
         return Objects.hash(
-                this.predicate
+            this.predicate
         );
     }
 

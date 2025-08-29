@@ -25,7 +25,7 @@ import java.util.Optional;
  * This parser matches quoted strings, with support backslash escaping and unicode sequences in the form of backlash-u-4-hex-digits
  */
 abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C>
-        implements RequiredParser<C> {
+    implements RequiredParser<C> {
 
     QuotedParser(final String toString) {
         super(toString);
@@ -87,7 +87,7 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C>
                         break;
                     default:
                         throw new ParserException(
-                                invalidBackslashEscapeChar(c)
+                            invalidBackslashEscapeChar(c)
                         );
                 }
                 continue;
@@ -96,7 +96,7 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C>
                 final int hex = Character.digit(c, 16);
                 if (-1 == hex) {
                     throw new ParserException(
-                            invalidUnicodeEscapeChar(c)
+                        invalidUnicodeEscapeChar(c)
                     );
                 }
                 unicodeCharValue = (char) (unicodeCharValue * 16 + hex);
@@ -111,9 +111,9 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C>
             if (quote == c) {
                 cursor.next();
                 result = this.token(
-                        raw.toString(),
-                        start.textBetween()
-                                .toString()
+                    raw.toString(),
+                    start.textBetween()
+                        .toString()
                 );
                 break;
             }
@@ -126,7 +126,7 @@ abstract class QuotedParser<C extends ParserContext> extends NonEmptyParser<C>
 
         if (null == result) {
             throw new ParserException(
-                    missingClosingQuote(quote)
+                missingClosingQuote(quote)
             );
         }
 

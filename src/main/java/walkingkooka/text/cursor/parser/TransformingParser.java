@@ -34,9 +34,9 @@ final class TransformingParser<C extends ParserContext> extends ParserWrapper<C>
         Objects.requireNonNull(transformer, "transformer");
 
         return new TransformingParser<>(
-                parser,
-                transformer,
-                parser.toString()
+            parser,
+            transformer,
+            parser.toString()
         );
     }
 
@@ -66,9 +66,9 @@ final class TransformingParser<C extends ParserContext> extends ParserWrapper<C>
     @Override
     TransformingParser<C> replaceToString(final String toString) {
         return new TransformingParser<>(
-                this.parser,
-                this.transformer,
-                toString
+            this.parser,
+            this.transformer,
+            toString
         );
     }
 
@@ -77,7 +77,7 @@ final class TransformingParser<C extends ParserContext> extends ParserWrapper<C>
     @Override //
     int hashCode1() {
         return Objects.hash(
-                this.transformer
+            this.transformer
         );
     }
 

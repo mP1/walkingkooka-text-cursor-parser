@@ -83,8 +83,8 @@ final class BasicParserReporter<C extends ParserContext> implements ParserReport
             throw new EndOfTextException(message.toString());
         } else {
             throw context.invalidCharacterException(
-                    parser,
-                    cursor
+                parser,
+                cursor
             );
         }
     }

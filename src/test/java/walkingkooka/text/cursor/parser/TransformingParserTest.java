@@ -29,7 +29,7 @@ import java.util.function.BiFunction;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class TransformingParserTest extends ParserWrapperTestCase<TransformingParser<ParserContext>>
-        implements HashCodeEqualsDefinedTesting2<TransformingParser<ParserContext>> {
+    implements HashCodeEqualsDefinedTesting2<TransformingParser<ParserContext>> {
 
     private final static int RADIX = 10;
     private final static Parser<ParserContext> WRAPPED_PARSER = Parsers.charPredicateString(CharPredicates.digit(), 1, 10);
@@ -38,8 +38,8 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
     @Test
     public void testWithNullTransformerFails() {
         assertThrows(
-                NullPointerException.class,
-                () -> TransformingParser.with(WRAPPED_PARSER, null)
+            NullPointerException.class,
+            () -> TransformingParser.with(WRAPPED_PARSER, null)
         );
     }
 
@@ -58,41 +58,41 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
     @Test
     public void testParseSuccessEoc() {
         this.parseAndCheck2(
-                "1",
-                1,
-                "1",
-                ""
+            "1",
+            1,
+            "1",
+            ""
         );
     }
 
     @Test
     public void testParseSuccessEoc2() {
         this.parseAndCheck2(
-                "123",
-                123,
-                "123",
-                ""
+            "123",
+            123,
+            "123",
+            ""
         );
     }
 
     @Test
     public void testParseSuccessTokenAfter() {
         this.parseAndCheck2(
-                "123abc",
-                123,
-                "123",
-                "abc"
+            "123abc",
+            123,
+            "123",
+            "abc"
         );
     }
 
     @Test
     public void testParseWithDefaultMethodTransform() {
         this.parseAndCheck4(
-                WRAPPED_PARSER.transform(TRANSFORMER),
-                "123abc",
-                123,
-                "123",
-                "abc"
+            WRAPPED_PARSER.transform(TRANSFORMER),
+            "123abc",
+            123,
+            "123",
+            "abc"
         );
     }
 
@@ -101,8 +101,8 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
     @Override
     TransformingParser<ParserContext> createParser(final Parser<ParserContext> parser) {
         return TransformingParser.with(
-                parser,
-                TRANSFORMER
+            parser,
+            TRANSFORMER
         );
     }
 
@@ -116,10 +116,10 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
                                       final String text,
                                       final String textAfter) {
         return this.parseAndCheck3(
-                in,
-                value,
-                text,
-                textAfter
+            in,
+            value,
+            text,
+            textAfter
         );
     }
 
@@ -128,11 +128,11 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
                                       final String text,
                                       final String textAfter) {
         return this.parseAndCheck4(
-                this.createParser(),
-                from,
-                value,
-                text,
-                textAfter
+            this.createParser(),
+            from,
+            value,
+            text,
+            textAfter
         );
     }
 
@@ -142,15 +142,15 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
                                       final String text,
                                       final String textAfter) {
         return this.parseAndCheck(
-                parser,
-                this.createContext(),
-                TextCursors.charSequence(from),
-                ParserTokens.bigInteger(
-                        BigInteger.valueOf(value),
-                        text
-                ),
-                text,
-                textAfter
+            parser,
+            this.createContext(),
+            TextCursors.charSequence(from),
+            ParserTokens.bigInteger(
+                BigInteger.valueOf(value),
+                text
+            ),
+            text,
+            textAfter
         );
     }
 
@@ -159,29 +159,29 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
     @Test
     public void testEqualsDifferentParser() {
         this.checkNotEquals(
-                TransformingParser.with(
-                        Parsers.fake(),
-                        TRANSFORMER
-                )
+            TransformingParser.with(
+                Parsers.fake(),
+                TRANSFORMER
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentTransformer() {
         this.checkNotEquals(
-                TransformingParser.with(
-                        WRAPPED_PARSER,
-                        (i, ii) -> {
-                            throw new UnsupportedOperationException();
-                        }
-                )
+            TransformingParser.with(
+                WRAPPED_PARSER,
+                (i, ii) -> {
+                    throw new UnsupportedOperationException();
+                }
+            )
         );
     }
 
     @Test
     public void testEqualsDifferentToString() {
         this.checkNotEquals(
-                this.createParser().setToString("Different")
+            this.createParser().setToString("Different")
         );
     }
 
@@ -195,8 +195,8 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
     @Test
     public void testToString() {
         this.toStringAndCheck(
-                this.createParser(),
-                WRAPPED_PARSER.toString()
+            this.createParser(),
+            WRAPPED_PARSER.toString()
         );
     }
 
