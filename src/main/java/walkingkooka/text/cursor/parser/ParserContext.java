@@ -26,7 +26,7 @@ import walkingkooka.text.cursor.TextCursor;
  * A {@link Context} that accompanies a parser invocation. This may be used to hold state that is used during parsing.
  */
 public interface ParserContext extends DateTimeContext,
-        DecimalNumberContext {
+    DecimalNumberContext {
 
     /**
      * Factory that creates a {@link InvalidCharacterException} for the current {@link TextCursor#at()}.
