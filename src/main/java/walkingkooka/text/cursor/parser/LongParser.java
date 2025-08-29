@@ -37,8 +37,8 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> implem
         }
 
         return new LongParser<>(
-                radix,
-                10 == radix ? "Long" : "Long(base=" + radix + ")"
+            radix,
+            10 == radix ? "Long" : "Long(base=" + radix + ")"
         );
     }
 
@@ -83,8 +83,8 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> implem
                 }
             }
             final int digit = radix10 ?
-                    context.digit(c) :
-                    Character.digit(c, radix);
+                context.digit(c) :
+                Character.digit(c, radix);
             if (-1 == digit) {
                 break;
             }
@@ -93,8 +93,8 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> implem
             try {
                 number = Math.multiplyExact(number, radix);
                 number = signed ?
-                        Math.subtractExact(number, digit) :
-                        Math.addExact(number, digit);
+                    Math.subtractExact(number, digit) :
+                    Math.addExact(number, digit);
             } catch (final ArithmeticException cause) {
                 overflow = true;
             }
@@ -106,13 +106,13 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> implem
         }
 
         return Optional.ofNullable(
-                empty ?
-                        null :
-                        LongParserToken.with(
-                                number,
-                                save.textBetween()
-                                        .toString()
-                        )
+            empty ?
+                null :
+                LongParserToken.with(
+                    number,
+                    save.textBetween()
+                        .toString()
+                )
         );
     }
 
@@ -123,8 +123,8 @@ final class LongParser<C extends ParserContext> extends NonEmptyParser<C> implem
     @Override
     LongParser<C> replaceToString(final String toString) {
         return new LongParser<>(
-                this.radix,
-                toString
+            this.radix,
+            toString
         );
     }
 
