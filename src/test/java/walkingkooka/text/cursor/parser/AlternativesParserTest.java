@@ -156,9 +156,7 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
         // AlternativesParser must not short circuit and skip trying all its parsers when its empty.
         this.parseThrowsEndOfText(
             PARSER1.orReport(ParserReporters.basic()).cast(),
-            "",
-            1,
-            1
+            ""
         );
     }
 

@@ -49,7 +49,7 @@ public final class BasicParserReporterTest implements ClassTesting2<BasicParserR
             Parsers.fake()
                 .setToString("XYZ")
                 .cast(),
-            "End of text at (4,1) expected XYZ"
+            "End of text, expected XYZ"
         );
     }
 

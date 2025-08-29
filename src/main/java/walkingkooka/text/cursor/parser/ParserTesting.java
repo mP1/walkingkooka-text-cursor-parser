@@ -171,9 +171,7 @@ public interface ParserTesting extends TreePrintableTesting,
 
     default <CC extends ParserContext> void parseThrowsEndOfText(final Parser<CC> parser,
                                                                  final CC context,
-                                                                 final String text,
-                                                                 final int column,
-                                                                 final int row) {
+                                                                 final String text) {
         final RuntimeException thrown = assertThrows(
             RuntimeException.class,
             () -> this.parse(
@@ -183,12 +181,11 @@ public interface ParserTesting extends TreePrintableTesting,
             )
         );
 
-        final String message = endOfText(column, row);
         final String thrownMessage = thrown.getMessage();
 
         this.checkEquals(
             true,
-            thrownMessage.startsWith(message),
+            thrownMessage.startsWith("End of text, "),
             () -> "parse " + text
         );
     }
@@ -254,10 +251,6 @@ public interface ParserTesting extends TreePrintableTesting,
 
     default DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.american(MathContext.DECIMAL32);
-    }
-
-    default String endOfText(final int column, final int row) {
-        return "End of text at (" + column + "," + row + ")";
     }
 
     // isOptional.......................................................................................................
