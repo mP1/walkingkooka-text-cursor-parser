@@ -486,7 +486,92 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
     }
 
     @Test
-    public void testParseNonArabicDigits() {
+    public void testParseZeroWithNonArabicDigits() {
+        final char zero = ARABIC_ZERO_DIGIT;
+
+        final String text = "" + zero;
+
+        this.parseAndCheck(
+            this.createParser(),
+            ParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
+                DateTimeContexts.fake(),
+                DecimalNumberContexts.basic(
+                    DecimalNumberSymbols.with(
+                        '+', // negativeSign
+                        '-', // positiveSign
+                        zero, // zeroDigit
+                        "C", // currency
+                        '*', // decimalPoint
+                        "XYZ", // exponentSymbol
+                        '/', // groupSeparator
+                        "INFINITY",
+                        '#', // monetaryDecimal
+                        "NAN",
+                        '$', // percent
+                        '^' // permill
+                    ),
+                    Locale.ENGLISH,
+                    MathContext.DECIMAL32
+                )
+            ),
+            text,
+            ParserTokens.bigDecimal(
+                BigDecimal.ZERO,
+                text
+            ),
+            text,
+            ""
+        );
+    }
+
+    @Test
+    public void testParseNumberExponentZeroWithNonArabicDigits() {
+        final char zero = ARABIC_ZERO_DIGIT;
+
+        final String text = new StringBuilder()
+            .append((char) (zero + 1))
+            .append((char) (zero + 2))
+            .append("XYZ")
+            .append(zero)
+            .toString();
+
+        this.parseAndCheck(
+            this.createParser(),
+            ParserContexts.basic(
+                InvalidCharacterExceptionFactory.POSITION,
+                DateTimeContexts.fake(),
+                DecimalNumberContexts.basic(
+                    DecimalNumberSymbols.with(
+                        '+', // negativeSign
+                        '-', // positiveSign
+                        zero, // zeroDigit
+                        "C", // currency
+                        '*', // decimalPoint
+                        "XYZ", // exponentSymbol
+                        '/', // groupSeparator
+                        "INFINITY",
+                        '#', // monetaryDecimal
+                        "NAN",
+                        '$', // percent
+                        '^' // permill
+                    ),
+                    Locale.ENGLISH,
+                    MathContext.DECIMAL32
+                )
+            ),
+            text,
+            ParserTokens.bigDecimal(
+                BigDecimal.valueOf(12),
+                text
+            ),
+            text,
+            ""
+        );
+    }
+
+    @Test
+    public void testParseDecimalNumberWithNonArabicDigits() {
         final char zero = ARABIC_ZERO_DIGIT;
 
         final String text = new StringBuilder()

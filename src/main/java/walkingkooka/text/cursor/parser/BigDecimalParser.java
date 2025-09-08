@@ -75,6 +75,7 @@ final class BigDecimalParser<C extends ParserContext> extends NonEmptyParser<C>
         final int negativeSign = context.negativeSign();
         final int positiveSign = context.positiveSign();
         final String exponentSymbol = context.exponentSymbol();
+        final char zeroDigit = context.zeroDigit();
 
         final MathContext mathContext = context.mathContext();
 
@@ -118,7 +119,7 @@ final class BigDecimalParser<C extends ParserContext> extends NonEmptyParser<C>
                     }
                 }
                 if ((NUMBER_ZERO & mode) != 0) {
-                    if ('0' == c) {
+                    if (zeroDigit == c) {
                         cursor.next();
                         mode = NUMBER_ZERO | NUMBER_DIGIT | DECIMAL | EXPONENT;
                         empty = false;
@@ -162,7 +163,7 @@ final class BigDecimalParser<C extends ParserContext> extends NonEmptyParser<C>
                     }
                 }
                 if ((EXPONENT_ZERO & mode) != 0) {
-                    if ('0' == c) {
+                    if (zeroDigit == c) {
                         cursor.next();
                         mode = FINISH;
                         break;
