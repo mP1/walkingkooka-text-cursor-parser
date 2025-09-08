@@ -48,6 +48,7 @@ public class Sample {
             Parsers.bigInteger(10)
                 .parse(TextCursors.charSequence(text),
                     ParserContexts.basic(
+                        false, // false == isGroupSeparatorWithinNumbersSupported
                         InvalidCharacterExceptionFactory.POSITION,
                         DateTimeContexts.fake(),
                         DecimalNumberContexts.basic(

@@ -47,6 +47,7 @@ public class TestGwtTest extends GWTTestCase {
                         InvalidCharacterExceptionFactory.POSITION,
                         DateTimeContexts.fake(),
                         DecimalNumberContexts.basic(
+                            false, // false == isGroupSeparatorWithinNumbersSupported
                             DecimalNumberSymbols.with(
                                 '-',
                                 '+',

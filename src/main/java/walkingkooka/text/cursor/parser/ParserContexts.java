@@ -32,10 +32,12 @@ public final class ParserContexts implements PublicStaticHelper {
     /**
      * {@see BasicParserContext}
      */
-    public static ParserContext basic(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+    public static ParserContext basic(final boolean isGroupSeparatorWithinNumbersSupported,
+                                      final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
                                       final DateTimeContext dateTimeContext,
                                       final DecimalNumberContext decimalNumberContext) {
         return BasicParserContext.with(
+            isGroupSeparatorWithinNumbersSupported,
             invalidCharacterExceptionFactory,
             dateTimeContext,
             decimalNumberContext

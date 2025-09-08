@@ -38,7 +38,8 @@ final class BasicParserContext implements ParserContext,
     /**
      * Creates a new {@link BasicParserContext}.
      */
-    static BasicParserContext with(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+    static BasicParserContext with(final boolean isGroupSeparatorWithinNumbersSupported,
+                                   final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
                                    final DateTimeContext dateTimeContext,
                                    final DecimalNumberContext decimalNumberContext) {
         Objects.requireNonNull(invalidCharacterExceptionFactory, "invalidCharacterExceptionFactory");
@@ -46,6 +47,7 @@ final class BasicParserContext implements ParserContext,
         Objects.requireNonNull(decimalNumberContext, "decimalNumberContext");
 
         return new BasicParserContext(
+            isGroupSeparatorWithinNumbersSupported,
             invalidCharacterExceptionFactory,
             dateTimeContext,
             decimalNumberContext
@@ -55,15 +57,24 @@ final class BasicParserContext implements ParserContext,
     /**
      * Private ctor use factory
      */
-    private BasicParserContext(final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+    private BasicParserContext(final boolean isGroupSeparatorWithinNumbersSupported,
+                               final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
                                final DateTimeContext dateTimeContext,
                                final DecimalNumberContext decimalNumberContext) {
         super();
 
+        this.isGroupSeparatorWithinNumbersSupported = isGroupSeparatorWithinNumbersSupported;
         this.invalidCharacterExceptionFactory = invalidCharacterExceptionFactory;
         this.dateTimeContext = dateTimeContext;
         this.decimalNumberContext = decimalNumberContext;
     }
+
+    @Override
+    public boolean isGroupSeparatorWithinNumbersSupported() {
+        return this.isGroupSeparatorWithinNumbersSupported;
+    }
+
+    private final boolean isGroupSeparatorWithinNumbersSupported;
 
     @Override
     public InvalidCharacterException invalidCharacterException(final Parser<?> parser,
@@ -101,6 +112,10 @@ final class BasicParserContext implements ParserContext,
 
     @Override
     public String toString() {
-        return this.dateTimeContext + " " + this.decimalNumberContext;
+        return "isGroupSeparatorWithinNumbersSupported: " + isGroupSeparatorWithinNumbersSupported +
+            " " +
+            this.dateTimeContext +
+            " " +
+            this.decimalNumberContext;
     }
 }
