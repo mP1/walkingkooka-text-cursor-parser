@@ -42,6 +42,8 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     ParserContextTesting<BasicParserContext>,
     DecimalNumberContextDelegator {
 
+    private final static boolean IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED = false;
+
     private final static BiFunction<Parser<?>, TextCursor, InvalidCharacterException> INVALID_CHARACTER_EXCEPTION_FACTORY =
         (final Parser<?> parser,
          final TextCursor cursor) -> new InvalidCharacterException(
@@ -72,6 +74,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
         assertThrows(
             NullPointerException.class,
             () -> BasicParserContext.with(
+                IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED,
                 null,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.fake()
@@ -84,6 +87,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
         assertThrows(
             NullPointerException.class,
             () -> BasicParserContext.with(
+                IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED,
                 INVALID_CHARACTER_EXCEPTION_FACTORY,
                 null,
                 DecimalNumberContexts.fake()
@@ -96,6 +100,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
         assertThrows(
             NullPointerException.class,
             () -> BasicParserContext.with(
+                IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED,
                 INVALID_CHARACTER_EXCEPTION_FACTORY,
                 DateTimeContexts.fake(),
                 null
@@ -127,6 +132,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     @Override
     public BasicParserContext createContext() {
         return BasicParserContext.with(
+            IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED,
             INVALID_CHARACTER_EXCEPTION_FACTORY,
             this.dateTimeContext(),
             this.decimalNumberContext()
@@ -179,7 +185,10 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            this.dateTimeContext() + " " + this.decimalNumberContext()
+            "isGroupSeparatorWithinNumbersSupported: false " +
+                this.dateTimeContext() +
+                " " +
+                this.decimalNumberContext()
         );
     }
 

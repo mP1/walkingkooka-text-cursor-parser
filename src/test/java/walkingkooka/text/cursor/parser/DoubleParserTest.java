@@ -732,6 +732,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
         return this.parseAndCheck(
             this.createParser(),
             ParserContexts.basic(
+                false, // isGroupSeparatorWithinNumbersSupported
                 InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
                 new FakeDecimalNumberContext() {
@@ -773,6 +774,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
         return this.parseAndCheck(
             this.createParser(),
             ParserContexts.basic(
+                false, // isGroupSeparatorWithinNumbersSupported
                 InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
                 new FakeDecimalNumberContext() {
@@ -817,6 +819,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
     @Override
     public ParserContext createContext() {
         return ParserContexts.basic(
+            false, // isGroupSeparatorWithinNumbersSupported,
             InvalidCharacterExceptionFactory.POSITION,
             this.dateTimeContext(),
             this.decimalNumberContext()
@@ -860,6 +863,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
         this.parseAndCheck(
             this.createParser(),
             ParserContexts.basic(
+                false, // isGroupSeparatorWithinNumbersSupported
                 InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(

@@ -16,6 +16,8 @@
  */
 package walkingkooka.text.cursor.parser;
 
+import walkingkooka.predicate.character.CharPredicate;
+import walkingkooka.predicate.character.CharPredicates;
 import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
@@ -77,6 +79,10 @@ final class BigDecimalParser<C extends ParserContext> extends NonEmptyParser<C>
         final String exponentSymbol = context.exponentSymbol();
         final char zeroDigit = context.zeroDigit();
 
+        final CharPredicate groupSeparator = context.isGroupSeparatorWithinNumbersSupported() ?
+            CharPredicates.is(context.groupSeparator()) :
+            CharPredicates.never();
+
         final MathContext mathContext = context.mathContext();
 
         BigDecimalParserToken token = null;
@@ -119,7 +125,7 @@ final class BigDecimalParser<C extends ParserContext> extends NonEmptyParser<C>
                     }
                 }
                 if ((NUMBER_ZERO & mode) != 0) {
-                    if (zeroDigit == c) {
+                    if (zeroDigit == c || groupSeparator.test(c)) {
                         cursor.next();
                         mode = NUMBER_ZERO | NUMBER_DIGIT | DECIMAL | EXPONENT;
                         empty = false;
@@ -131,6 +137,13 @@ final class BigDecimalParser<C extends ParserContext> extends NonEmptyParser<C>
                     if (digit >= 0) {
                         cursor.next();
                         number = number(number, digit, mathContext);
+                        mode = NUMBER_DIGIT | DECIMAL | EXPONENT;
+                        empty = false;
+                        break;
+                    }
+                    // ignore groupSeparator test
+                    if (groupSeparator.test(c)) {
+                        cursor.next();
                         mode = NUMBER_DIGIT | DECIMAL | EXPONENT;
                         empty = false;
                         break;

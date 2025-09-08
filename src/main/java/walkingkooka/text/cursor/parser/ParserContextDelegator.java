@@ -41,6 +41,12 @@ public interface ParserContextDelegator extends ParserContext,
     }
 
     @Override
+    default boolean isGroupSeparatorWithinNumbersSupported() {
+        return this.parserContext()
+            .isGroupSeparatorWithinNumbersSupported();
+    }
+
+    @Override
     default InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                                 final TextCursor cursor) {
         return this.parserContext()

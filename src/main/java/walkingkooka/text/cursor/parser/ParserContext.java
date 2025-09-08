@@ -29,6 +29,12 @@ public interface ParserContext extends DateTimeContext,
     DecimalNumberContext {
 
     /**
+     * When true numbers may contain the {@link #groupSeparator()} which will be ignored when computing the actual
+     * numeric value.
+     */
+    boolean isGroupSeparatorWithinNumbersSupported();
+
+    /**
      * Factory that creates a {@link InvalidCharacterException} for the current {@link TextCursor#at()}.
      * The context is able to custom whether the message will include the position or text offset or column and line.
      */
