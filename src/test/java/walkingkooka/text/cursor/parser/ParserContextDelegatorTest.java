@@ -57,6 +57,7 @@ public final class ParserContextDelegatorTest implements ParserContextTesting<Te
             return ParserContexts.basic(
                 false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
+                ',', // valueSeparator
                 DateTimeContexts.basic(
                     DateTimeSymbols.fromDateFormatSymbols(
                         new DateFormatSymbols(locale)

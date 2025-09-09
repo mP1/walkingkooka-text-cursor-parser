@@ -40,6 +40,7 @@ final class BasicParserContext implements ParserContext,
      */
     static BasicParserContext with(final boolean canNumbersHaveGroupSeparator,
                                    final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+                                   final char valueSeparator,
                                    final DateTimeContext dateTimeContext,
                                    final DecimalNumberContext decimalNumberContext) {
         Objects.requireNonNull(invalidCharacterExceptionFactory, "invalidCharacterExceptionFactory");
@@ -49,6 +50,7 @@ final class BasicParserContext implements ParserContext,
         return new BasicParserContext(
             canNumbersHaveGroupSeparator,
             invalidCharacterExceptionFactory,
+            valueSeparator,
             dateTimeContext,
             decimalNumberContext
         );
@@ -59,12 +61,14 @@ final class BasicParserContext implements ParserContext,
      */
     private BasicParserContext(final boolean canNumbersHaveGroupSeparator,
                                final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+                               final char valueSeparator,
                                final DateTimeContext dateTimeContext,
                                final DecimalNumberContext decimalNumberContext) {
         super();
 
         this.canNumbersHaveGroupSeparator = canNumbersHaveGroupSeparator;
         this.invalidCharacterExceptionFactory = invalidCharacterExceptionFactory;
+        this.valueSeparator = valueSeparator;
         this.dateTimeContext = dateTimeContext;
         this.decimalNumberContext = decimalNumberContext;
     }
@@ -86,6 +90,15 @@ final class BasicParserContext implements ParserContext,
     }
 
     private final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory;
+
+    @Override
+    public char valueSeparator() {
+        return this.valueSeparator;
+    }
+
+    private final char valueSeparator;
+
+    // HasLocale........................................................................................................
 
     @Override
     public Locale locale() {

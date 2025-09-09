@@ -61,5 +61,11 @@ public interface ParserContextDelegator extends ParserContext,
         return this.parserContext().locale();
     }
 
+    @Override
+    default char valueSeparator() {
+        return this.parserContext()
+            .valueSeparator();
+    }
+
     ParserContext parserContext();
 }
