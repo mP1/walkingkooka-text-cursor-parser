@@ -34,7 +34,7 @@ public class FakeParserContext extends FakeDecimalNumberContext implements Parse
     // ParserContext....................................................................................................
 
     @Override
-    public boolean isGroupSeparatorWithinNumbersSupported() {
+    public boolean canNumbersHaveGroupSeparator() {
         throw new UnsupportedOperationException();
     }
 

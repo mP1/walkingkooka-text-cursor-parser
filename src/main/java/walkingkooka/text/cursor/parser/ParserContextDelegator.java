@@ -41,9 +41,9 @@ public interface ParserContextDelegator extends ParserContext,
     }
 
     @Override
-    default boolean isGroupSeparatorWithinNumbersSupported() {
+    default boolean canNumbersHaveGroupSeparator() {
         return this.parserContext()
-            .isGroupSeparatorWithinNumbersSupported();
+            .canNumbersHaveGroupSeparator();
     }
 
     @Override

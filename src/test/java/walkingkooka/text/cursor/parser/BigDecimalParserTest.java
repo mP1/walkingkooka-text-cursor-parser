@@ -95,7 +95,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
     }
 
     @Test
-    public void testParseGroupSeparatorWhenIsGroupSeparatorWithinNumbersSupportedFalseFails() {
+    public void testParseGroupSeparatorWhenCanNumbersHaveGroupSeparatorFalseFails() {
         this.parseAndCheck2(
             "12",
             BigDecimal.valueOf(12),
@@ -136,10 +136,10 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
     // group-separator not consumed.
 
     @Test
-    public void testParseZeroDecimalFractionGroupSeparatorWhenIsGroupSeparatorWithinNumbersSupportedFalse() {
+    public void testParseZeroDecimalFractionGroupSeparatorWhenCanNumbersHaveGroupSeparatorFalse() {
         this.parseAndCheck(
             this.createParser(),
-            this.createContext(false), // isGroupSeparatorWithinNumbersSupported
+            this.createContext(false), // canNumbersHaveGroupSeparator
             "0.5,",
             ParserTokens.bigDecimal(
                 BigDecimal.valueOf(0.5),
@@ -151,10 +151,10 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
     }
 
     @Test
-    public void testParseZeroDecimalFractionGroupSeparatorWhenIsGroupSeparatorWithinNumbersSupportedTrue() {
+    public void testParseZeroDecimalFractionGroupSeparatorWhenCanNumbersHaveGroupSeparatorTrue() {
         this.parseAndCheck(
             this.createParser(),
-            this.createContext(true), // isGroupSeparatorWithinNumbersSupported
+            this.createContext(true), // canNumbersHaveGroupSeparator
             "0.5,",
             ParserTokens.bigDecimal(
                 BigDecimal.valueOf(0.5), "0.5"
@@ -300,12 +300,12 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
     }
 
     @Test
-    public void testParseZeroGroupSeparatorZeroWhenIsGroupSeparatorWithinNumbersSupportedTrue() {
+    public void testParseZeroGroupSeparatorZeroWhenCanNumbersHaveGroupSeparatorTrue() {
         final String text = "1,234";
 
         this.parseAndCheck(
             this.createParser(),
-            this.createContext(true), // IsGroupSeparatorWithinNumbersSupported=true
+            this.createContext(true), // CanNumbersHaveGroupSeparator=true
             text,
             ParserTokens.bigDecimal(
                 BigDecimal.valueOf(1234),
@@ -480,7 +480,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
         return this.parseAndCheck(
             this.createParser(),
             ParserContexts.basic(
-                false, // isGroupSeparatorWithinNumbersSupported
+                false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
@@ -514,7 +514,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
         return this.parseAndCheck(
             this.createParser(),
             ParserContexts.basic(
-                false, // isGroupSeparatorWithinNumbersSupported
+                false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
@@ -552,7 +552,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
         this.parseAndCheck(
             this.createParser(),
             ParserContexts.basic(
-                false, // isGroupSeparatorWithinNumbersSupported
+                false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
@@ -598,7 +598,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
         this.parseAndCheck(
             this.createParser(),
             ParserContexts.basic(
-                false, // isGroupSeparatorWithinNumbersSupported
+                false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
@@ -644,7 +644,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
         this.parseAndCheck(
             this.createParser(),
             ParserContexts.basic(
-                false, // isGroupSeparatorWithinNumbersSupported
+                false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
@@ -684,13 +684,13 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
     @Override
     public ParserContext createContext() {
         return this.createContext(
-            false // isGroupSeparatorWithinNumbersSupported
+            false // canNumbersHaveGroupSeparator
         );
     }
 
-    private ParserContext createContext(final boolean isGroupSeparatorWithinNumbersSupported) {
+    private ParserContext createContext(final boolean canNumbersHaveGroupSeparator) {
         return ParserContexts.basic(
-            isGroupSeparatorWithinNumbersSupported,
+            canNumbersHaveGroupSeparator,
             InvalidCharacterExceptionFactory.POSITION,
             DateTimeContexts.fake(),
             this.decimalNumberContext()
