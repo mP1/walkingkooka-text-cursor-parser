@@ -52,7 +52,7 @@ public class JunitTest {
                 .parse(
                     TextCursors.charSequence(text),
                     ParserContexts.basic(
-                        false, // false == isGroupSeparatorWithinNumbersSupported
+                        false, // false == canNumbersHaveGroupSeparator
                         InvalidCharacterExceptionFactory.POSITION,
                         DateTimeContexts.fake(),
                         DecimalNumberContexts.basic(

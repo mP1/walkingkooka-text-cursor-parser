@@ -115,7 +115,7 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
     @Override
     public ParserContext createContext() {
         return ParserContexts.basic(
-            false, // isGroupSeparatorWithinNumbersSupported
+            false, // canNumbersHaveGroupSeparator
             InvalidCharacterExceptionFactory.POSITION,
             DateTimeContexts.basic(
                 DateTimeSymbols.fromDateFormatSymbols(

@@ -185,7 +185,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     public void testToString() {
         this.toStringAndCheck(
             this.createContext(),
-            "isGroupSeparatorWithinNumbersSupported: false " +
+            "canNumbersHaveGroupSeparator: false " +
                 this.dateTimeContext() +
                 " " +
                 this.decimalNumberContext()

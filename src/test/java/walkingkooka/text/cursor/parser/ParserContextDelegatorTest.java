@@ -55,7 +55,7 @@ public final class ParserContextDelegatorTest implements ParserContextTesting<Te
             final Locale locale = Locale.ENGLISH;
 
             return ParserContexts.basic(
-                false, // isGroupSeparatorWithinNumbersSupported
+                false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
                 DateTimeContexts.basic(
                     DateTimeSymbols.fromDateFormatSymbols(

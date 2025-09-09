@@ -79,7 +79,7 @@ final class BigDecimalParser<C extends ParserContext> extends NonEmptyParser<C>
         final String exponentSymbol = context.exponentSymbol();
         final char zeroDigit = context.zeroDigit();
 
-        final CharPredicate groupSeparator = context.isGroupSeparatorWithinNumbersSupported() ?
+        final CharPredicate groupSeparator = context.canNumbersHaveGroupSeparator() ?
             CharPredicates.is(context.groupSeparator()) :
             CharPredicates.never();
 

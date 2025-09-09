@@ -32,7 +32,7 @@ public interface ParserContext extends DateTimeContext,
      * When true numbers may contain the {@link #groupSeparator()} which will be ignored when computing the actual
      * numeric value.
      */
-    boolean isGroupSeparatorWithinNumbersSupported();
+    boolean canNumbersHaveGroupSeparator();
 
     /**
      * Factory that creates a {@link InvalidCharacterException} for the current {@link TextCursor#at()}.
