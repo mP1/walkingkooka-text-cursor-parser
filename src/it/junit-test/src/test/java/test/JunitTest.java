@@ -54,6 +54,7 @@ public class JunitTest {
                     ParserContexts.basic(
                         false, // false == canNumbersHaveGroupSeparator
                         InvalidCharacterExceptionFactory.POSITION,
+                        ',', // valueSeparator
                         DateTimeContexts.fake(),
                         DecimalNumberContexts.basic(
                             DecimalNumberSymbols.with(

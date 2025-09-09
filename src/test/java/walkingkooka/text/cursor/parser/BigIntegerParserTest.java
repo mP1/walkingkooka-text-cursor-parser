@@ -304,6 +304,7 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
             ParserContexts.basic(
                 false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
+                ',', // valueSeparator
                 DateTimeContexts.fake(),
                 new FakeDecimalNumberContext() {
                     @Override
@@ -342,6 +343,7 @@ public class BigIntegerParserTest extends NonEmptyParserTestCase<BigIntegerParse
         return ParserContexts.basic(
             false, // canNumbersHaveGroupSeparator
             InvalidCharacterExceptionFactory.POSITION,
+            ',', // valueSeparator
             DateTimeContexts.fake(),
             this.decimalNumberContext()
         );

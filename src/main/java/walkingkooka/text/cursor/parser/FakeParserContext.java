@@ -44,6 +44,11 @@ public class FakeParserContext extends FakeDecimalNumberContext implements Parse
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public char valueSeparator() {
+        throw new UnsupportedOperationException();
+    }
+
     // DateTimeContext..................................................................................................
 
     @Override

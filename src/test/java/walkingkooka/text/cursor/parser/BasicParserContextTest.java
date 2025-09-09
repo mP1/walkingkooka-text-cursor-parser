@@ -53,6 +53,8 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
             cursor.at()
         );
 
+    private final static char VALUE_SEPARATOR = ',';
+
     private final static String CURRENCY = "$$";
     private final static char DECIMAL = '.';
     private final static char ZERO_DIGIT = '0';
@@ -76,6 +78,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
             () -> BasicParserContext.with(
                 IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED,
                 null,
+                VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.fake()
             )
@@ -89,6 +92,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
             () -> BasicParserContext.with(
                 IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED,
                 INVALID_CHARACTER_EXCEPTION_FACTORY,
+                VALUE_SEPARATOR,
                 null,
                 DecimalNumberContexts.fake()
             )
@@ -102,6 +106,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
             () -> BasicParserContext.with(
                 IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED,
                 INVALID_CHARACTER_EXCEPTION_FACTORY,
+                VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 null
             )
@@ -134,6 +139,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
         return BasicParserContext.with(
             IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED,
             INVALID_CHARACTER_EXCEPTION_FACTORY,
+            VALUE_SEPARATOR,
             this.dateTimeContext(),
             this.decimalNumberContext()
         );

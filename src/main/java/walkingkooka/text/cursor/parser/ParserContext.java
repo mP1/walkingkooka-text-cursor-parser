@@ -40,4 +40,9 @@ public interface ParserContext extends DateTimeContext,
      */
     InvalidCharacterException invalidCharacterException(final Parser<?> parser,
                                                         final TextCursor cursor);
+
+    /**
+     * The character that separates multiple values, like the comma in a CSV.
+     */
+    char valueSeparator();
 }

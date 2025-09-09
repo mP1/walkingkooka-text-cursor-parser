@@ -34,11 +34,13 @@ public final class ParserContexts implements PublicStaticHelper {
      */
     public static ParserContext basic(final boolean canNumbersHaveGroupSeparator,
                                       final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
+                                      final char valueSeparator,
                                       final DateTimeContext dateTimeContext,
                                       final DecimalNumberContext decimalNumberContext) {
         return BasicParserContext.with(
             canNumbersHaveGroupSeparator,
             invalidCharacterExceptionFactory,
+            valueSeparator,
             dateTimeContext,
             decimalNumberContext
         );

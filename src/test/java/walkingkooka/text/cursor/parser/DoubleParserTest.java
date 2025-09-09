@@ -30,6 +30,8 @@ import java.util.Locale;
 strictfp
 public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<ParserContext>, DoubleParserToken> {
 
+    private final static char VALUE_SEPARATOR = ',';
+
     @Test
     public void testParseFailure() {
         this.parseFailAndCheck("a");
@@ -734,6 +736,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
             ParserContexts.basic(
                 false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
+                VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 new FakeDecimalNumberContext() {
                     @Override
@@ -776,6 +779,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
             ParserContexts.basic(
                 false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
+                VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 new FakeDecimalNumberContext() {
                     @Override
@@ -821,6 +825,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
         return ParserContexts.basic(
             false, // canNumbersHaveGroupSeparator,
             InvalidCharacterExceptionFactory.POSITION,
+            VALUE_SEPARATOR,
             this.dateTimeContext(),
             this.decimalNumberContext()
         );
@@ -865,6 +870,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
             ParserContexts.basic(
                 false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
+                VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
                     DecimalNumberSymbols.with(

@@ -205,6 +205,7 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
                 ParserContexts.basic(
                     false, // canNumbersHaveGroupSeparator
                     InvalidCharacterExceptionFactory.POSITION,
+                    ',', // valueSeparator
                     DateTimeContexts.fake(),
                     DecimalNumberContexts.american(MathContext.DECIMAL32)
                 )

@@ -365,6 +365,7 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
             ParserContexts.basic(
                 false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
+                ',', // valueSeparator
                 DateTimeContexts.fake(),
                 new FakeDecimalNumberContext() {
                     @Override
@@ -403,6 +404,7 @@ public class LongParserTest extends NonEmptyParserTestCase<LongParser<ParserCont
         return ParserContexts.basic(
             false, // canNumbersHaveGroupSeparator
             InvalidCharacterExceptionFactory.POSITION,
+            ',', // valueSeparator
             DateTimeContexts.fake(),
             this.decimalNumberContext()
         );

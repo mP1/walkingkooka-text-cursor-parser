@@ -29,6 +29,8 @@ import java.util.Locale;
 
 public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecimalParser<ParserContext>, BigDecimalParserToken> {
 
+    private final static char VALUE_SEPARATOR = ',';
+
     @Test
     public void testParseFailure() {
         this.parseFailAndCheck("a");
@@ -482,6 +484,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
             ParserContexts.basic(
                 false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
+                VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
                     DecimalNumberSymbols.with(
@@ -516,6 +519,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
             ParserContexts.basic(
                 false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
+                VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
                     DecimalNumberSymbols.with(
@@ -554,6 +558,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
             ParserContexts.basic(
                 false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
+                VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
                     DecimalNumberSymbols.with(
@@ -600,6 +605,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
             ParserContexts.basic(
                 false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
+                VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
                     DecimalNumberSymbols.with(
@@ -646,6 +652,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
             ParserContexts.basic(
                 false, // canNumbersHaveGroupSeparator
                 InvalidCharacterExceptionFactory.POSITION,
+                VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
                     DecimalNumberSymbols.with(
@@ -692,6 +699,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
         return ParserContexts.basic(
             canNumbersHaveGroupSeparator,
             InvalidCharacterExceptionFactory.POSITION,
+            VALUE_SEPARATOR,
             DateTimeContexts.fake(),
             this.decimalNumberContext()
         );
