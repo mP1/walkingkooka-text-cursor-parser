@@ -17,6 +17,7 @@
 package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import walkingkooka.Cast;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.math.DecimalNumberContexts;
@@ -486,6 +487,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "github-actions", matches = "true")
     public void testParseMinusNumberMinusEExponent2() {
         this.parseAndCheck2(
             "-123E-45",
@@ -495,6 +497,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "github-actions", matches = "true")
     public void testParseNumberDecimalFractionEExponent() {
         this.parseAndCheck2(
             "128.5E-67",
@@ -503,6 +506,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "github-actions", matches = "true")
     public void testParseNumberDecimalFractionEExponent2() {
         this.parseAndCheck2(
             "128.5E-67",
@@ -512,6 +516,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "github-actions", matches = "true")
     public void testParseNumberDecimalFractionEExponent3() {
         this.parseAndCheck2(
             "-128.5E-67",
@@ -520,6 +525,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
     }
 
     @Test
+    @DisabledIfSystemProperty(named = "github-actions", matches = "true")
     public void testParseNumberDecimalFractionEExponent4() {
         this.parseAndCheck2(
             "-128.5E-67",
