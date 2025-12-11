@@ -159,8 +159,16 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     }
 
     @Override
+    public int decimalNumberDigitCount() {
+        return this.decimalNumberContext()
+            .decimalNumberDigitCount();
+    }
+
+
+    @Override
     public DecimalNumberContext decimalNumberContext() {
         return DecimalNumberContexts.basic(
+            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
             DecimalNumberSymbols.with(
                 MINUS,
                 PLUS,

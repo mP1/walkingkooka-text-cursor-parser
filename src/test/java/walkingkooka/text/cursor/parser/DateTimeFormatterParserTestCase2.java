@@ -22,6 +22,7 @@ import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.datetime.DateTimeContext;
 import walkingkooka.datetime.DateTimeContexts;
 import walkingkooka.datetime.DateTimeSymbols;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.text.cursor.TextCursor;
@@ -128,6 +129,7 @@ public abstract class DateTimeFormatterParserTestCase2<P extends DateTimeFormatt
                 LocalDateTime::now
             ),
             DecimalNumberContexts.basic(
+                DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                 DecimalNumberSymbols.fromDecimalFormatSymbols(
                     '+',
                     new DecimalFormatSymbols(LOCALE)

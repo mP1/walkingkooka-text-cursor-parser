@@ -19,6 +19,7 @@ package walkingkooka.text.cursor.parser;
 import org.junit.jupiter.api.Test;
 import walkingkooka.Cast;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.text.cursor.TextCursor;
@@ -487,6 +488,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                 VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
+                    DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                     DecimalNumberSymbols.with(
                         '+', // negativeSign
                         '-', // positiveSign
@@ -522,6 +524,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                 VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
+                    DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                     DecimalNumberSymbols.with(
                         '+', // negativeSign
                         '-', // positiveSign
@@ -561,6 +564,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                 VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
+                    DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                     DecimalNumberSymbols.with(
                         '+', // negativeSign
                         '-', // positiveSign
@@ -608,6 +612,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                 VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
+                    DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                     DecimalNumberSymbols.with(
                         '+', // negativeSign
                         '-', // positiveSign
@@ -655,6 +660,7 @@ public final class BigDecimalParserTest extends NonEmptyParserTestCase<BigDecima
                 VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
+                    DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                     DecimalNumberSymbols.with(
                         '+', // negativeSign
                         '-', // positiveSign
