@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import walkingkooka.Cast;
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.FakeDecimalNumberContext;
@@ -879,6 +880,7 @@ public final class DoubleParserTest extends NonEmptyParserTestCase<DoubleParser<
                 VALUE_SEPARATOR,
                 DateTimeContexts.fake(),
                 DecimalNumberContexts.basic(
+                    DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                     DecimalNumberSymbols.with(
                         '+', // negativeSign
                         '-', // positiveSign

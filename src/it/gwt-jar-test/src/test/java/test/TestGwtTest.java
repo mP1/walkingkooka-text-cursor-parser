@@ -3,6 +3,7 @@ package test;
 import com.google.gwt.junit.client.GWTTestCase;
 
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.text.cursor.TextCursors;
@@ -48,6 +49,7 @@ public class TestGwtTest extends GWTTestCase {
                         ',', // valueSeparator
                         DateTimeContexts.fake(),
                         DecimalNumberContexts.basic(
+                            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                             false, // false == canNumbersHaveGroupSeparator
                             DecimalNumberSymbols.with(
                                 '-',

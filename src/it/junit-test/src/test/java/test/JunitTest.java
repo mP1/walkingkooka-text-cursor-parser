@@ -21,6 +21,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import walkingkooka.datetime.DateTimeContexts;
+import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.text.cursor.TextCursors;
@@ -57,6 +58,7 @@ public class JunitTest {
                         ',', // valueSeparator
                         DateTimeContexts.fake(),
                         DecimalNumberContexts.basic(
+                            DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
                             DecimalNumberSymbols.with(
                                 '-',
                                 '+',
