@@ -39,7 +39,8 @@ public enum ParserReporterCondition {
     },
 
     /**
-     * The {@link ParserReporter} should only be triggered when the {@link TextCursor} is not empty.
+     * The {@link ParserReporter} should only be triggered when a previous {@link Parser} returns no {@link ParserToken}
+     * and the {@link TextCursor} is not empty.
      */
     NOT_EMPTY {
         @Override
