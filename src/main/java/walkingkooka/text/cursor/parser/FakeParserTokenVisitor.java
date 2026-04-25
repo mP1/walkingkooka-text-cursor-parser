@@ -22,6 +22,35 @@ import walkingkooka.visit.Visiting;
 
 public class FakeParserTokenVisitor extends ParserTokenVisitor implements Fake {
 
+    public FakeParserTokenVisitor() {
+        super();
+    }
+
+    @Override
+    protected void visit(final BigDecimalParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visit(final BigIntegerParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visit(final CharacterParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visit(final DoubleParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void visit(final DoubleQuotedParserToken token) {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     protected void visit(final LocalDateParserToken token) {
         throw new UnsupportedOperationException();
