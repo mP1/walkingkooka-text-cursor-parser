@@ -59,6 +59,17 @@ public final class ParserTokens implements PublicStaticHelper {
     }
 
     /**
+     * {@see DecimalParserToken}
+     */
+    public static DecimalParserToken decimal(final BigDecimal value,
+                                             final String text) {
+        return DecimalParserToken.with(
+            value,
+            text
+        );
+    }
+
+    /**
      * {@see DoubleParserToken}
      */
     public static DoubleParserToken doubleParserToken(final double value, final String text) {

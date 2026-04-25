@@ -94,6 +94,13 @@ public final class Parsers implements PublicStaticHelper {
     }
 
     /**
+     * {@see DecimalParser}
+     */
+    public static <C extends ParserContext> Parser<C> decimal() {
+        return DecimalParser.instance();
+    }
+
+    /**
      * {@see DoubleParser}
      */
     public static <C extends ParserContext> Parser<C> doubleParser() {

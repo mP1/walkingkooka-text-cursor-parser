@@ -57,6 +57,10 @@ public abstract class ParserTokenVisitor extends Visitor<ParserToken> {
         // nop
     }
 
+    protected void visit(final DecimalParserToken token) {
+        // nop
+    }
+
     protected void visit(final DoubleParserToken token) {
         // nop
     }
