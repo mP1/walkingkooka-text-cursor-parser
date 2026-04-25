@@ -23,7 +23,6 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.MathContext;
 import java.util.Optional;
 
@@ -64,10 +63,10 @@ final class BigDecimalParser<C extends ParserContext> extends NonEmptyParser<C>
     private final static int FINISH = EXPONENT_DIGIT * 2;
 
     /**
-     * Reads character by character until a non digit is found, using a {@link BigInteger} to hold the value.
+     * Reads character by character until a non digit is found, using a {@link BigDecimal} to hold the value.
      * Basically a cut down version of {@link DoubleParser#tryParse(TextCursor, ParserContext, TextCursorSavePoint)},
      * but with the NAN and INFINITY modes cut out and a {@link BigDecimal} instead of double.
-     * Concepts such as negative zero which are not supported by bigdecimal natively end up being plain zero.
+     * Concepts such as negative zero which are not supported by {@link BigDecimal} natively end up being plain zero.
      */
     @Override
     Optional<ParserToken> tryParse(final TextCursor cursor,
