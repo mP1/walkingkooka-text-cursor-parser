@@ -50,7 +50,6 @@ public class TestGwtTest extends GWTTestCase {
                         DateTimeContexts.fake(),
                         DecimalNumberContexts.basic(
                             DecimalNumberContext.DEFAULT_NUMBER_DIGIT_COUNT,
-                            false, // false == canNumbersHaveGroupSeparator
                             DecimalNumberSymbols.with(
                                 '-',
                                 '+',
