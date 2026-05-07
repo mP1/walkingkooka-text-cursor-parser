@@ -17,9 +17,9 @@
 
 package walkingkooka.text.cursor.parser;
 
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 
-public abstract class ValueParserTokenTestCase<T extends ParserToken & Value<V>, V> extends ParserTokenTestCase<T> {
+public abstract class ValueParserTokenTestCase<T extends ParserToken & HasValue<V>, V> extends ParserTokenTestCase<T> {
 
     ValueParserTokenTestCase() {
         super();

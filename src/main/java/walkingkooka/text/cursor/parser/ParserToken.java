@@ -18,7 +18,7 @@
 package walkingkooka.text.cursor.parser;
 
 import walkingkooka.CanBeEmpty;
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.HasText;
@@ -67,12 +67,12 @@ public interface ParserToken extends CanBeEmpty,
     }
 
     /**
-     * Returns true for leaf {@link ParserToken}. A leaf must implement {@link Value}
+     * Returns true for leaf {@link ParserToken}. A leaf must implement {@link HasValue}
      */
     boolean isLeaf();
 
     /**
-     * Returns true for parent {@link ParserToken} which will also implement {@link Value} which returns a {@link List} of child {@link ParserToken}
+     * Returns true for parent {@link ParserToken} which will also implement {@link HasValue} which returns a {@link List} of child {@link ParserToken}
      */
     boolean isParent();
 
@@ -102,7 +102,7 @@ public interface ParserToken extends CanBeEmpty,
     default List<ParserToken> children() {
         return this.isLeaf() ?
             Lists.empty() :
-            ((Value<List<ParserToken>>) this).value();
+            ((HasValue<List<ParserToken>>) this).value();
     }
 
     /**
@@ -305,7 +305,7 @@ public interface ParserToken extends CanBeEmpty,
         final CharSequence quotedText = CharSequences.quoteAndEscape(this.text());
 
         if (this.isLeaf()) {
-            final Object value = ((Value<?>) this).value();
+            final Object value = ((HasValue<?>) this).value();
 
             final CharSequence toString;
 
