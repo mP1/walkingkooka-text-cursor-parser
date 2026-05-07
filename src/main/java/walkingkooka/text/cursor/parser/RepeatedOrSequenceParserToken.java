@@ -16,7 +16,7 @@
  */
 package walkingkooka.text.cursor.parser;
 
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 import walkingkooka.collect.list.Lists;
 
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.Objects;
  */
 abstract public class RepeatedOrSequenceParserToken extends ValueParserToken<List<ParserToken>>
     implements ParserToken,
-    Value<List<ParserToken>> {
+    HasValue<List<ParserToken>> {
 
     /**
      * Private ctor to limit subclassing.

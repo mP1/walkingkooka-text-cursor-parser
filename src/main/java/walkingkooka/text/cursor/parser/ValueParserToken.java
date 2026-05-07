@@ -17,12 +17,12 @@
 
 package walkingkooka.text.cursor.parser;
 
-import walkingkooka.Value;
+import walkingkooka.HasValue;
 
 /**
  * Represents a result of a parser attempt to consume a {@link walkingkooka.text.cursor.TextCursor}
  */
-abstract class ValueParserToken<V> implements ParserToken, Value<V> {
+abstract class ValueParserToken<V> implements ParserToken, HasValue<V> {
 
     /**
      * Package private ctor to limit subclassing.

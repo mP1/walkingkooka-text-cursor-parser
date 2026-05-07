@@ -17,11 +17,12 @@
 
 package walkingkooka.text.cursor.parser;
 
+import com.sun.jdi.Value;
 import org.junit.jupiter.api.Test;
 import walkingkooka.CanBeEmptyTesting;
+import walkingkooka.HasValue;
 import walkingkooka.HashCodeEqualsDefinedTesting2;
 import walkingkooka.ToStringTesting;
-import walkingkooka.Value;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.predicate.Predicates;
 import walkingkooka.reflect.BeanPropertiesTesting;
@@ -82,7 +83,7 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
         for (; ; ) {
             final T token = this.createToken();
             if (token.isLeaf()) {
-                final Object value = ((Value<?>) token).value();
+                final Object value = ((HasValue<?>) token).value();
                 assertFalse(
                     value instanceof Collection,
                     () -> token + " value must not be a Collection but was " + value.getClass() + "=" + value
@@ -90,7 +91,7 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
                 break;
             }
             if (token.isParent()) {
-                final Object value = ((Value<?>) token).value();
+                final Object value = ((HasValue<?>) token).value();
                 assertTrue(
                     value instanceof Collection,
                     () -> token + " value must be a Collection but was " + value.getClass() + "=" + value
@@ -217,7 +218,7 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
             );
         } else {
             this.checkEquals(
-                ((Value<List<ParserToken>>) token).value(),
+                ((HasValue<List<ParserToken>>) token).value(),
                 token.children(),
                 token + " children"
             );
