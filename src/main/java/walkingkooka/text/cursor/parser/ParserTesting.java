@@ -24,6 +24,7 @@ import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.MathTesting;
 import walkingkooka.text.CharSequences;
+import walkingkooka.text.TextPrinting;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
@@ -159,7 +160,12 @@ public interface ParserTesting extends TreePrintableTesting,
     default void checkEquals(final List<ParserToken> expected,
                              final List<ParserToken> actual,
                              final Supplier<String> message) {
-        final Function<ParserToken, String> mapper = (t) -> t.treeToString(INDENTATION, EOL);
+        final Function<ParserToken, String> mapper = (t) -> t.treeToString(
+            TextPrinting.with(
+                INDENTATION,
+                EOL
+            )
+        );
         this.checkEquals(
             expected.stream().map(mapper).collect(Collectors.joining()),
             actual.stream().map(mapper).collect(Collectors.joining()),
