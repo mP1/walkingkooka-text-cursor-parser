@@ -19,28 +19,27 @@ package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
-import walkingkooka.datetime.DateTimeContext;
+import walkingkooka.datetime.DateTimeContextTesting;
 import walkingkooka.datetime.DateTimeContexts;
-import walkingkooka.datetime.DateTimeSymbols;
 import walkingkooka.math.DecimalNumberContext;
 import walkingkooka.math.DecimalNumberContextDelegator;
 import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
+import walkingkooka.math.HasMathContextTesting;
 import walkingkooka.reflect.ClassTesting2;
 import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.cursor.TextCursor;
 
 import java.math.MathContext;
-import java.text.DateFormatSymbols;
-import java.time.LocalDateTime;
-import java.util.Locale;
 import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicParserContextTest implements ClassTesting2<BasicParserContext>,
     ParserContextTesting<BasicParserContext>,
-    DecimalNumberContextDelegator {
+    DecimalNumberContextDelegator,
+    DateTimeContextTesting,
+    HasMathContextTesting {
 
     private final static boolean IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED = false;
 
@@ -67,9 +66,6 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     private final static char PERCENT = '%';
     private final static char PERMILL = '\u2030';
     private final static char PLUS = '+';
-
-    private final static Locale LOCALE = Locale.ENGLISH;
-    private final static MathContext MATH_CONTEXT = MathContext.DECIMAL32;
 
     @Test
     public void testWithNullInvalidCharacterExceptionFactoryFails() {
@@ -140,21 +136,8 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
             IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED,
             INVALID_CHARACTER_EXCEPTION_FACTORY,
             VALUE_SEPARATOR,
-            this.dateTimeContext(),
+            DATE_TIME_CONTEXT,
             this.decimalNumberContext()
-        );
-    }
-
-    private DateTimeContext dateTimeContext() {
-        final Locale locale = Locale.ENGLISH;
-        return DateTimeContexts.basic(
-            DateTimeSymbols.fromDateFormatSymbols(
-                new DateFormatSymbols(locale)
-            ),
-            locale,
-            1900,
-            50,
-            LocalDateTime::now
         );
     }
 
@@ -200,7 +183,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
         this.toStringAndCheck(
             this.createContext(),
             "canNumbersHaveGroupSeparator: false " +
-                this.dateTimeContext() +
+                DATE_TIME_CONTEXT +
                 " " +
                 this.decimalNumberContext()
         );
