@@ -25,9 +25,7 @@ import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public interface ParserReporterTesting<R extends ParserReporter<C>, C extends ParserContext>
@@ -35,18 +33,39 @@ public interface ParserReporterTesting<R extends ParserReporter<C>, C extends Pa
     TypeNameTesting<R> {
 
     @Test
-    default void testNullTextCursorFails() {
-        assertThrows(NullPointerException.class, () -> this.report(null, this.createContext(), Parsers.fake()));
+    default void testReportWithNullTextCursorFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.report(
+                null,
+                this.createContext(),
+                Parsers.fake()
+            )
+        );
     }
 
     @Test
-    default void testNullContextFails() {
-        assertThrows(NullPointerException.class, () -> this.report(TextCursors.fake(), null, Parsers.fake()));
+    default void testReportWithNullContextFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.report(
+                TextCursors.fake(),
+                null,
+                Parsers.fake()
+            )
+        );
     }
 
     @Test
-    default void testNullParserFails() {
-        assertThrows(NullPointerException.class, () -> this.report(TextCursors.fake(), this.createContext(), null));
+    default void testReportWithNullParserFails() {
+        assertThrows(
+            NullPointerException.class,
+            () -> this.report(
+                TextCursors.fake(),
+                this.createContext(),
+                null
+            )
+        );
     }
 
     R createParserReporter();
@@ -56,27 +75,48 @@ public interface ParserReporterTesting<R extends ParserReporter<C>, C extends Pa
     default void reportAndCheck(final String text,
                                 final Parser<C> parser,
                                 final String messageContains) {
-        this.reportAndCheck(text, this.createContext(), parser, messageContains);
+        this.reportAndCheck(
+            text,
+            this.createContext(),
+            parser,
+            messageContains
+        );
     }
 
     default void reportAndCheck(final String text,
                                 final C context,
                                 final Parser<C> parser,
                                 final String messageContains) {
-        this.reportAndCheck(TextCursors.charSequence(text), context, parser, messageContains);
+        this.reportAndCheck(
+            TextCursors.charSequence(text),
+            context,
+            parser,
+            messageContains
+        );
     }
 
     default void reportAndCheck(final TextCursor cursor,
                                 final Parser<C> parser,
                                 final String messageContains) {
-        this.reportAndCheck(cursor, this.createContext(), parser, messageContains);
+        this.reportAndCheck(
+            cursor,
+            this.createContext(),
+            parser,
+            messageContains
+        );
     }
 
     default void reportAndCheck(final TextCursor cursor,
                                 final C context,
                                 final Parser<C> parser,
                                 final String messageContains) {
-        this.reportAndCheck(this.createParserReporter(), cursor, context, parser, messageContains);
+        this.reportAndCheck(
+            this.createParserReporter(),
+            cursor,
+            context,
+            parser,
+            messageContains
+        );
     }
 
     default void reportAndCheck(final ParserReporter<C> reporter,
@@ -84,7 +124,11 @@ public interface ParserReporterTesting<R extends ParserReporter<C>, C extends Pa
                                 final C context,
                                 final Parser<C> parser,
                                 final String messageContains) {
-        assertFalse(CharSequences.isNullOrEmpty(messageContains), "messageContains must not be null or empty");
+        this.checkEquals(
+            false,
+            CharSequences.isNullOrEmpty(messageContains),
+            "messageContains must not be null or empty"
+        );
 
         final TextCursorSavePoint save = cursor.save();
         try {
@@ -98,7 +142,8 @@ public interface ParserReporterTesting<R extends ParserReporter<C>, C extends Pa
         } catch (final RuntimeException expected) {
             save.restore();
             final String message = expected.getMessage();
-            assertTrue(
+            this.checkEquals(
+                true,
                 message.contains(messageContains),
                 () -> "report message: " + CharSequences.quoteAndEscape(message) + " missing contains: " + CharSequences.quoteAndEscape(messageContains)
             );
@@ -108,17 +153,26 @@ public interface ParserReporterTesting<R extends ParserReporter<C>, C extends Pa
     default void report(final TextCursor cursor,
                         final C context,
                         final Parser<C> parser) {
-        this.report(this.createParserReporter(), cursor, context, parser);
+        this.report(
+            this.createParserReporter(),
+            cursor,
+            context,
+            parser
+        );
     }
 
     default void report(final ParserReporter<C> reporter,
                         final TextCursor cursor,
                         final C context,
                         final Parser<C> parser) {
-        reporter.report(cursor, context, parser);
+        reporter.report(
+            cursor,
+            context,
+            parser
+        );
     }
 
-    // TypeNameTesting .........................................................................................
+    // TypeNameTesting .................................................................................................
 
     @Override
     default String typeNamePrefix() {
