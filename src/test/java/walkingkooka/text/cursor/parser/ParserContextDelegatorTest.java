@@ -29,7 +29,7 @@ import java.text.DateFormatSymbols;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-public final class ParserContextDelegatorTest implements ParserContextTesting<TestParserContextDelegator>,
+public final class ParserContextDelegatorTest implements ParserContextTesting2<TestParserContextDelegator>,
     DecimalNumberContextDelegator {
 
     @Override
