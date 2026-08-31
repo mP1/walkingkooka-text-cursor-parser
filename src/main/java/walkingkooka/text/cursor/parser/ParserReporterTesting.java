@@ -17,113 +17,20 @@
 
 package walkingkooka.text.cursor.parser;
 
-import org.junit.jupiter.api.Test;
-import walkingkooka.ToStringTesting;
-import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
-import walkingkooka.text.cursor.TextCursors;
+import walkingkooka.text.printer.TreePrintableTesting;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public interface ParserReporterTesting<R extends ParserReporter<C>, C extends ParserContext>
-    extends ToStringTesting<R>,
-    TypeNameTesting<R> {
+public interface ParserReporterTesting extends TreePrintableTesting {
 
-    @Test
-    default void testReportWithNullTextCursorFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.report(
-                null,
-                this.createContext(),
-                Parsers.fake()
-            )
-        );
-    }
-
-    @Test
-    default void testReportWithNullContextFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.report(
-                TextCursors.fake(),
-                null,
-                Parsers.fake()
-            )
-        );
-    }
-
-    @Test
-    default void testReportWithNullParserFails() {
-        assertThrows(
-            NullPointerException.class,
-            () -> this.report(
-                TextCursors.fake(),
-                this.createContext(),
-                null
-            )
-        );
-    }
-
-    R createParserReporter();
-
-    C createContext();
-
-    default void reportAndCheck(final String text,
-                                final Parser<C> parser,
-                                final String messageContains) {
-        this.reportAndCheck(
-            text,
-            this.createContext(),
-            parser,
-            messageContains
-        );
-    }
-
-    default void reportAndCheck(final String text,
-                                final C context,
-                                final Parser<C> parser,
-                                final String messageContains) {
-        this.reportAndCheck(
-            TextCursors.charSequence(text),
-            context,
-            parser,
-            messageContains
-        );
-    }
-
-    default void reportAndCheck(final TextCursor cursor,
-                                final Parser<C> parser,
-                                final String messageContains) {
-        this.reportAndCheck(
-            cursor,
-            this.createContext(),
-            parser,
-            messageContains
-        );
-    }
-
-    default void reportAndCheck(final TextCursor cursor,
-                                final C context,
-                                final Parser<C> parser,
-                                final String messageContains) {
-        this.reportAndCheck(
-            this.createParserReporter(),
-            cursor,
-            context,
-            parser,
-            messageContains
-        );
-    }
-
-    default void reportAndCheck(final ParserReporter<C> reporter,
-                                final TextCursor cursor,
-                                final C context,
-                                final Parser<C> parser,
-                                final String messageContains) {
+    default <C extends ParserContext> void reportAndCheck(final ParserReporter<C> reporter,
+                                                          final TextCursor cursor,
+                                                          final C context,
+                                                          final Parser<C> parser,
+                                                          final String messageContains) {
         this.checkEquals(
             false,
             CharSequences.isNullOrEmpty(messageContains),
@@ -150,37 +57,15 @@ public interface ParserReporterTesting<R extends ParserReporter<C>, C extends Pa
         }
     }
 
-    default void report(final TextCursor cursor,
-                        final C context,
-                        final Parser<C> parser) {
-        this.report(
-            this.createParserReporter(),
-            cursor,
-            context,
-            parser
-        );
-    }
 
-    default void report(final ParserReporter<C> reporter,
-                        final TextCursor cursor,
-                        final C context,
-                        final Parser<C> parser) {
+    default <C extends ParserContext> void report(final ParserReporter<C> reporter,
+                                                  final TextCursor cursor,
+                                                  final C context,
+                                                  final Parser<C> parser) {
         reporter.report(
             cursor,
             context,
             parser
         );
-    }
-
-    // TypeNameTesting .................................................................................................
-
-    @Override
-    default String typeNamePrefix() {
-        return "";
-    }
-
-    @Override
-    default String typeNameSuffix() {
-        return ParserReporter.class.getSimpleName();
     }
 }
