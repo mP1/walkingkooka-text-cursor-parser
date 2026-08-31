@@ -36,7 +36,7 @@ import java.util.function.BiFunction;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class BasicParserContextTest implements ClassTesting2<BasicParserContext>,
-    ParserContextTesting<BasicParserContext>,
+    ParserContextTesting2<BasicParserContext>,
     DecimalNumberContextDelegator,
     DateTimeContextTesting,
     HasMathContextTesting {
