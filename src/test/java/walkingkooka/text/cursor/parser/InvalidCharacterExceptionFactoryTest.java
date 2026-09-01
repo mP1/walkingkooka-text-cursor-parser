@@ -22,9 +22,9 @@ import walkingkooka.InvalidCharacterException;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
-import walkingkooka.util.BiFunctionTesting;
+import walkingkooka.util.BiFunctionTesting2;
 
-public final class InvalidCharacterExceptionFactoryTest implements BiFunctionTesting<InvalidCharacterExceptionFactory, Parser<?>, TextCursor, InvalidCharacterException> {
+public final class InvalidCharacterExceptionFactoryTest implements BiFunctionTesting2<InvalidCharacterExceptionFactory, Parser<?>, TextCursor, InvalidCharacterException> {
 
     @Test
     public void testPositionApply() {
