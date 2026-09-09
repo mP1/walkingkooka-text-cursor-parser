@@ -91,6 +91,11 @@ public final class ParserContextDelegatorTest implements ParserContextTesting2<T
     }
 
     @Override
+    public void testTestNaming() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
     public void testTypeNaming() {
         throw new UnsupportedOperationException();
     }
