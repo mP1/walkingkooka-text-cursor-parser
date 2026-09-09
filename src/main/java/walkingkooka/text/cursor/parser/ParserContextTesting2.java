@@ -25,7 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * Mixing testing interface for {@link ParserContext}
  */
-public interface ParserContextTesting2<C extends ParserContext> extends DecimalNumberContextTesting2<C> {
+public interface ParserContextTesting2<C extends ParserContext> extends ParserContextTesting,
+    DecimalNumberContextTesting2<C> {
 
     @Test
     default void testInvalidCharacterExceptionWithNullParserFails() {
