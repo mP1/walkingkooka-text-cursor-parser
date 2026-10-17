@@ -24,12 +24,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A parser that implements a only returns a token if the first matches and the second fails.
+ * A {@link Parser} that only returns a token if the first {@link Parser} matches and the second {@link Parser} fails.
  */
 final class AndNotParser<C extends ParserContext> extends ParserSetToString<C>
     implements RequiredParser<C> {
 
-    static <T extends ParserToken, C extends ParserContext> AndNotParser<C> with(final Parser<C> left, final Parser<C> right) {
+    static <T extends ParserToken, C extends ParserContext> AndNotParser<C> with(final Parser<C> left,
+                                                                                 final Parser<C> right) {
         Objects.requireNonNull(left, "left");
         Objects.requireNonNull(right, "right");
 
@@ -51,7 +52,8 @@ final class AndNotParser<C extends ParserContext> extends ParserSetToString<C>
     }
 
     @Override
-    public Optional<ParserToken> parse(final TextCursor cursor, final C context) {
+    public Optional<ParserToken> parse(final TextCursor cursor,
+                                       final C context) {
         final TextCursorSavePoint save = cursor.save();
 
         Optional<ParserToken> leftResult = this.left.parse(cursor, context);
