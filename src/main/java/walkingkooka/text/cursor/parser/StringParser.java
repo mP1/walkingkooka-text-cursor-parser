@@ -127,15 +127,28 @@ final class StringParser<C extends ParserContext> extends NonEmptyParser<C>
 
         printer.indent();
         {
-            printer.println(
-                CharSequences.quoteAndEscape(this.string)
-            );
+            final String toString = this.toString();
+            final String string = CharSequences.quoteAndEscape(this.string)
+                .toString();
 
-            final CaseSensitivity caseSensitivity = this.caseSensitivity;
-            if (caseSensitivity == CaseSensitivity.INSENSITIVE) {
-                printer.println(
-                    caseSensitivity.toString()
-                );
+            final boolean different = false == toString.equals(string);
+
+            if (different) {
+                printer.println(toString);
+                printer.indent();
+            }
+            {
+                printer.println(string);
+
+                final CaseSensitivity caseSensitivity = this.caseSensitivity;
+                if (caseSensitivity == CaseSensitivity.INSENSITIVE) {
+                    printer.println(
+                        caseSensitivity.toString()
+                    );
+                }
+            }
+            if (different) {
+                printer.outdent();
             }
         }
         printer.outdent();

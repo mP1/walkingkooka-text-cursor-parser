@@ -283,12 +283,13 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
         this.treePrintAndCheck(
             this.createParser(),
             "AlternativesParser\n" +
-                "  0\n" +
-                "    StringParser\n" +
-                "      \"abc\"\n" +
-                "  1\n" +
-                "    StringParser\n" +
-                "      \"xyz\"\n"
+                "  \"abc\" | \"xyz\"\n" +
+                "    0\n" +
+                "      StringParser\n" +
+                "        \"abc\"\n" +
+                "    1\n" +
+                "      StringParser\n" +
+                "        \"xyz\"\n"
         );
     }
 

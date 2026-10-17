@@ -599,13 +599,14 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
         this.treePrintAndCheck(
             this.createParser(),
             "RepeatingParser\n" +
-                "  min\n" +
-                "    3\n" +
-                "  max\n" +
-                "    4\n" +
-                "  parser\n" +
-                "    StringParser\n" +
-                "      \"abc\"\n"
+                "  {\"abc\"}{3,4}\n" +
+                "    min\n" +
+                "      3\n" +
+                "    max\n" +
+                "      4\n" +
+                "    parser\n" +
+                "      StringParser\n" +
+                "        \"abc\"\n"
         );
     }
 
