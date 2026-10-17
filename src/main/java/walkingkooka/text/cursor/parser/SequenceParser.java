@@ -19,6 +19,8 @@ package walkingkooka.text.cursor.parser;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
 import java.util.Objects;
@@ -29,7 +31,8 @@ import java.util.stream.Collectors;
  * A {@link Parser} that requires all parsers are matched in order returning all tokens within a {@link SequenceParserToken}
  */
 final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
-    implements RequiredParser<C> {
+    implements RequiredParser<C>,
+    TreePrintable {
 
     /**
      * Factory method only called by {@link Parser#or(Parser)}
@@ -179,5 +182,34 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
         final SequenceParser<?> otherSequenceParser = (SequenceParser<?>) other;
 
         return this.parsers.equals(otherSequenceParser.parsers);
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            int i = 0;
+            for (final Parser<C> parser : this.parsers) {
+                printer.println(
+                    String.valueOf(i)
+                );
+                printer.indent();
+                {
+                    TreePrintable.printTreeOrToString(
+                        parser,
+                        printer
+                    );
+                    printer.lineStart();
+                }
+                printer.outdent();
+
+                i++;
+            }
+        }
+        printer.outdent();
     }
 }
