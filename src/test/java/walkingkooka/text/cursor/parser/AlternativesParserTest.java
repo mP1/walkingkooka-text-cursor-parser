@@ -284,9 +284,11 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
             this.createParser(),
             "AlternativesParser\n" +
                 "  0\n" +
-                "    \"abc\" (walkingkooka.text.cursor.parser.StringParser)\n" +
+                "    StringParser\n" +
+                "      \"abc\"\n" +
                 "  1\n" +
-                "    \"xyz\" (walkingkooka.text.cursor.parser.StringParser)\n"
+                "    StringParser\n" +
+                "      \"xyz\"\n"
         );
     }
 

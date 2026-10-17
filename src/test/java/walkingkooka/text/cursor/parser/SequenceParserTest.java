@@ -428,9 +428,11 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
             this.createParser(),
             "SequenceParser\n" +
                 "  0\n" +
-                "    \"abc\" (walkingkooka.text.cursor.parser.StringParser)\n" +
+                "    StringParser\n" +
+                "      \"abc\"\n" +
                 "  1\n" +
-                "    \"xyz\" (walkingkooka.text.cursor.parser.StringParser)\n" +
+                "    StringParser\n" +
+                "      \"xyz\"\n" +
                 "  2\n" +
                 "    RepeatingParser\n" +
                 "      min\n" +
@@ -438,7 +440,8 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
                 "      max\n" +
                 "        1\n" +
                 "      parser\n" +
-                "        \"123\" (walkingkooka.text.cursor.parser.StringParser)\n"
+                "        StringParser\n" +
+                "          \"123\"\n"
         );
     }
 

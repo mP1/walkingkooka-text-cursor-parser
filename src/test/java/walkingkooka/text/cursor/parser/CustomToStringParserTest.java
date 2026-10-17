@@ -204,7 +204,8 @@ public final class CustomToStringParserTest extends ParserWrapperTestCase<Custom
             this.createParser(),
             "CustomToStringParser\n" +
                 "  !!abc!!\n" +
-                "    \"abc\" (walkingkooka.text.cursor.parser.StringParser)\n"
+                "    StringParser\n" +
+                "      \"abc\"\n"
         );
     }
 

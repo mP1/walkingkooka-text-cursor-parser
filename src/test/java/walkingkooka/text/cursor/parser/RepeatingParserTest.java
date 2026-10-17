@@ -604,7 +604,8 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
                 "  max\n" +
                 "    4\n" +
                 "  parser\n" +
-                "    \"abc\" (walkingkooka.text.cursor.parser.StringParser)\n"
+                "    StringParser\n" +
+                "      \"abc\"\n"
         );
     }
 

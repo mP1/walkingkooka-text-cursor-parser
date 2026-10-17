@@ -123,7 +123,8 @@ public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<An
         this.treePrintAndCheck(
             this.createParser(),
             "AndEmptyTextCursorParser\n" +
-                "  \"abc\" (walkingkooka.text.cursor.parser.StringParser)\n"
+                "  StringParser\n" +
+                "    \"abc\"\n"
         );
     }
 
