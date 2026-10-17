@@ -420,6 +420,28 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "SequenceParser\n" +
+                "  0\n" +
+                "    \"abc\" (walkingkooka.text.cursor.parser.StringParser)\n" +
+                "  1\n" +
+                "    \"xyz\" (walkingkooka.text.cursor.parser.StringParser)\n" +
+                "  2\n" +
+                "    RepeatingParser\n" +
+                "      min\n" +
+                "        0\n" +
+                "      max\n" +
+                "        1\n" +
+                "      parser\n" +
+                "        \"123\" (walkingkooka.text.cursor.parser.StringParser)\n"
+        );
+    }
+
     // Class............................................................................................................
 
     @Override
