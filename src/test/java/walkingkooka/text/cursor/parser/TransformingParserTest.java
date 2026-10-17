@@ -200,6 +200,20 @@ public class TransformingParserTest extends ParserWrapperTestCase<TransformingPa
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "TransformingParser\n" +
+                "  parser\n" +
+                "    digit{1,10} (walkingkooka.text.cursor.parser.CharPredicateStringParser)\n" +
+                "  transformer\n" +
+                "    Lambda\n"
+        );
+    }
+
     // Class............................................................................................................
 
     @Override
