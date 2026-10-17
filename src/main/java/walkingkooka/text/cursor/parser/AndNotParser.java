@@ -19,6 +19,8 @@ package walkingkooka.text.cursor.parser;
 
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -27,7 +29,8 @@ import java.util.Optional;
  * A {@link Parser} that only returns a token if the first {@link Parser} matches and the second {@link Parser} fails.
  */
 final class AndNotParser<C extends ParserContext> extends ParserSetToString<C>
-    implements RequiredParser<C> {
+    implements RequiredParser<C>,
+    TreePrintable {
 
     static <T extends ParserToken, C extends ParserContext> AndNotParser<C> with(final Parser<C> left,
                                                                                  final Parser<C> right) {
@@ -106,5 +109,37 @@ final class AndNotParser<C extends ParserContext> extends ParserSetToString<C>
 
         return this.left.equals(otherAndNotParser.left) &&
             this.right.equals(otherAndNotParser.right);
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+        printer.indent();
+        {
+            printer.println("and");
+            printer.indent();
+            {
+                TreePrintable.printTreeOrToString(
+                    this.left,
+                    printer
+                );
+                printer.lineStart();
+            }
+            printer.outdent();
+
+            printer.println("not");
+            printer.indent();
+            {
+                TreePrintable.printTreeOrToString(
+                    this.right,
+                    printer
+                );
+                printer.lineStart();
+            }
+            printer.outdent();
+        }
+        printer.outdent();
     }
 }
