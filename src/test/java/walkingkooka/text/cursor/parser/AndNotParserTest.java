@@ -39,6 +39,11 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
         );
     }
 
+    private final static ParserToken LEFT_TOKEN = ParserTokens.string(
+        LEFT,
+        LEFT
+    );
+
     @Test
     public void testWithNullLeftFails() {
         assertThrows(
@@ -87,40 +92,44 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
     @Test
     public void testParseLeftMatchRightFail() {
         this.parseAndCheck(LEFT,
-            this.leftToken(),
-            LEFT);
-    }
-
-    private StringParserToken leftToken() {
-        return ParserTokens.string(LEFT, LEFT);
+            LEFT_TOKEN,
+            LEFT
+        );
     }
 
     @Test
     public void testParseLeftMatchRightMissing() {
         this.parseAndCheck(
             this.createParser(
-                this.LEFT_PARSER,
+                LEFT_PARSER,
                 Parsers.never()
             ),
             LEFT,
-            this.leftToken(),
+            LEFT_TOKEN,
             LEFT
         );
     }
 
     @Test
     public void testParseLeftMatchRightMatch() {
-        this.parseFailAndCheck(this.createParser(string(LEFT), string(LEFT)),
-            LEFT);
+        this.parseFailAndCheck(
+            this.createParser(
+                string(LEFT),
+                string(LEFT)
+            ),
+            LEFT
+        );
     }
 
     @Test
     public void testParseLeftMatchRightFail2() {
         final String after = "123";
-        this.parseAndCheck(LEFT + after,
-            this.leftToken(),
+        this.parseAndCheck(
+            LEFT + after,
+            LEFT_TOKEN,
             LEFT,
-            after);
+            after
+        );
     }
 
     @Test
@@ -149,7 +158,10 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
 
     private AndNotParser<ParserContext> createParser(final Parser<ParserContext> left,
                                                      final Parser<ParserContext> right) {
-        return AndNotParser.with(left, right);
+        return AndNotParser.with(
+            left,
+            right
+        );
     }
 
     // TreePrintable....................................................................................................
