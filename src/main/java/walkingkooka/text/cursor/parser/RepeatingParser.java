@@ -19,6 +19,8 @@ package walkingkooka.text.cursor.parser;
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
 import java.util.Objects;
@@ -27,7 +29,8 @@ import java.util.Optional;
 /**
  * A {@link Parser} that only matches one or more tokens matched by a different provided {@link Parser}.
  */
-final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
+final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C>
+    implements TreePrintable {
 
     static <C extends ParserContext> Parser<C> with(final int minCount,
                                                     final int maxCount,
@@ -284,5 +287,46 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C> {
 
         return this.minCount == otherRepeatingParser.minCount &&
             this.maxCount == otherRepeatingParser.maxCount;
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            printer.println("min");
+            printer.indent();
+            {
+                printer.println(
+                    String.valueOf(this.minCount)
+                );
+            }
+            printer.outdent();
+
+            printer.println("max");
+            printer.indent();
+            {
+                printer.println(
+                    String.valueOf(this.maxCount)
+                );
+            }
+            printer.outdent();
+
+            printer.println("parser");
+            printer.indent();
+            {
+                TreePrintable.printTreeOrToString(
+                    this.parser,
+                    printer
+                );
+
+                printer.lineStart();
+            }
+            printer.outdent();
+        }
+        printer.outdent();
     }
 }

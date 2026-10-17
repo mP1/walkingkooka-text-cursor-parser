@@ -592,6 +592,22 @@ public class RepeatingParserTest extends NonEmptyParserTestCase<RepeatingParser<
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "RepeatingParser\n" +
+                "  min\n" +
+                "    3\n" +
+                "  max\n" +
+                "    4\n" +
+                "  parser\n" +
+                "    \"abc\" (walkingkooka.text.cursor.parser.StringParser)\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
