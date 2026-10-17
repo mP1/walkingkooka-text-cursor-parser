@@ -27,7 +27,6 @@ import walkingkooka.math.DecimalNumberContexts;
 import walkingkooka.math.DecimalNumberSymbols;
 import walkingkooka.math.HasMathContextTesting;
 import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
 import walkingkooka.text.cursor.TextCursor;
 
 import java.math.MathContext;
@@ -194,11 +193,6 @@ public final class ParserContextBasicTest implements ClassTesting2<ParserContext
     @Override
     public Class<ParserContextBasic> type() {
         return ParserContextBasic.class;
-    }
-
-    @Override
-    public JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 
     @Override
