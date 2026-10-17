@@ -153,16 +153,6 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
     // class............................................................................................................
 
     @Override
-    public void testAllConstructorsVisibility() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public void testIfClassIsFinalIfAllConstructorsArePrivate() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
     public Class<AndNotParser<ParserContext>> type() {
         return Cast.to(AndNotParser.class);
     }
