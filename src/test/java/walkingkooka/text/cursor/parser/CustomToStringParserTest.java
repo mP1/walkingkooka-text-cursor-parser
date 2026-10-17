@@ -196,6 +196,18 @@ public final class CustomToStringParserTest extends ParserWrapperTestCase<Custom
         this.toStringAndCheck(this.createParser(), CUSTOM_TO_STRING);
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "CustomToStringParser\n" +
+                "  !!abc!!\n" +
+                "    \"abc\" (walkingkooka.text.cursor.parser.StringParser)\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
