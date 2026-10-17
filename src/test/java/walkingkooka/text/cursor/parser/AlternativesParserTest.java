@@ -276,6 +276,20 @@ public class AlternativesParserTest extends ParserTestCase<AlternativesParser<Pa
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "AlternativesParser\n" +
+                "  0\n" +
+                "    \"abc\" (walkingkooka.text.cursor.parser.StringParser)\n" +
+                "  1\n" +
+                "    \"xyz\" (walkingkooka.text.cursor.parser.StringParser)\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override

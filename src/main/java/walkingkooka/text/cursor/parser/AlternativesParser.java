@@ -18,6 +18,8 @@ package walkingkooka.text.cursor.parser;
 
 import walkingkooka.collect.list.Lists;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.List;
 import java.util.Objects;
@@ -27,7 +29,8 @@ import java.util.stream.Collectors;
 /**
  * A {@link Parser} that tries all parsers until one is matched and then ignores the remaining parsers.
  */
-final class AlternativesParser<C extends ParserContext> extends ParserSetToString<C> implements RequiredParser<C> {
+final class AlternativesParser<C extends ParserContext> extends ParserSetToString<C> implements RequiredParser<C>,
+    TreePrintable {
 
     /**
      * Factory that creates a {@link Parser} possibly simplifying things flattening any given {@link AlternativesParser}
@@ -186,4 +189,33 @@ final class AlternativesParser<C extends ParserContext> extends ParserSetToStrin
     }
 
     boolean customToString;
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            int i = 0;
+            for (final Parser<C> parser : this.parsers) {
+                printer.println(
+                    String.valueOf(i)
+                );
+                printer.indent();
+                {
+                    TreePrintable.printTreeOrToString(
+                        parser,
+                        printer
+                    );
+                    printer.lineStart();
+                }
+                printer.outdent();
+
+                i++;
+            }
+        }
+        printer.outdent();
+    }
 }
