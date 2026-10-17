@@ -19,6 +19,8 @@ package walkingkooka.text.cursor.parser;
 
 import walkingkooka.Cast;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -30,7 +32,8 @@ import java.util.Optional;
  * Note if the given {@link Parser} is also a {@link ReportingParser}, the wrapped {@link Parser} will be wrapped instead,
  * ignoring that {@link ParserReporterCondition} and {@link ParserReporter}.
  */
-final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
+final class ReportingParser<C extends ParserContext> extends ParserWrapper<C>
+    implements TreePrintable {
 
     /**
      * Static factory
@@ -118,5 +121,34 @@ final class ReportingParser<C extends ParserContext> extends ParserWrapper<C> {
         final ReportingParser<?> otherReportingParser = other.cast();
         return this.condition.equals(otherReportingParser.condition) &&
             this.reporter.equals(otherReportingParser.reporter);
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            printer.println("condition");
+            printer.indent();
+            {
+                printer.println(this.condition.toString());
+            }
+            printer.outdent();
+
+            printer.println("reporter");
+            printer.indent();
+            {
+                TreePrintable.printTreeOrToString(
+                    this.reporter,
+                    printer
+                );
+                printer.lineStart();
+            }
+            printer.outdent();
+        }
+        printer.outdent();
     }
 }
