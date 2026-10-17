@@ -45,6 +45,7 @@ public class TestGwtTest extends GWTTestCase {
             Parsers.bigInteger(10)
                 .parse(TextCursors.charSequence(text),
                     ParserContexts.basic(
+                        false, // false == canNumbersHaveGroupSeparator
                         InvalidCharacterExceptionFactory.POSITION,
                         ',', // valueSeparator
                         DateTimeContexts.fake(),
