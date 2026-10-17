@@ -28,13 +28,24 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
     private final static String LEFT = "left";
     private final static String RIGHT = "right";
 
+    private final static Parser<ParserContext> LEFT_PARSER = string(LEFT);
+
+    private final static Parser<ParserContext> RIGHT_PARSER = string(RIGHT);
+
+    private static Parser<ParserContext> string(final String string) {
+        return Parsers.string(
+            string,
+            CaseSensitivity.SENSITIVE
+        );
+    }
+
     @Test
     public void testWithNullLeftFails() {
         assertThrows(
             NullPointerException.class,
             () -> this.createParser(
                 null,
-                this.right()
+                RIGHT_PARSER
             )
         );
     }
@@ -44,7 +55,7 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
         assertThrows(
             NullPointerException.class,
             () -> this.createParser(
-                this.left(),
+                LEFT_PARSER,
                 null
             )
         );
@@ -88,7 +99,7 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
     public void testParseLeftMatchRightMissing() {
         this.parseAndCheck(
             this.createParser(
-                this.left(),
+                this.LEFT_PARSER,
                 Parsers.never()
             ),
             LEFT,
@@ -116,13 +127,13 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
     public void testSetToString() {
         this.checkEquals(
             new AndNotParser<>(
-                left(),
-                right(),
+                LEFT_PARSER,
+                RIGHT_PARSER,
                 "Hello"
             ),
             new AndNotParser<>(
-                left(),
-                right(),
+                LEFT_PARSER,
+                RIGHT_PARSER,
                 "Old"
             ).setToString("Hello")
         );
@@ -130,24 +141,15 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
 
     @Override
     public AndNotParser<ParserContext> createParser() {
-        return this.createParser(this.left(), this.right());
+        return this.createParser(
+            LEFT_PARSER,
+            RIGHT_PARSER
+        );
     }
 
     private AndNotParser<ParserContext> createParser(final Parser<ParserContext> left,
                                                      final Parser<ParserContext> right) {
         return AndNotParser.with(left, right);
-    }
-
-    private Parser<ParserContext> left() {
-        return string(LEFT);
-    }
-
-    private Parser<ParserContext> right() {
-        return string(RIGHT);
-    }
-
-    private Parser<ParserContext> string(final String string) {
-        return Parsers.string(string, CaseSensitivity.SENSITIVE);
     }
 
     // TreePrintable....................................................................................................
