@@ -22,6 +22,7 @@ import walkingkooka.datetime.DateTimeContext;
 import java.time.OffsetTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -31,7 +32,7 @@ final class DateTimeFormatterParserOffsetTime<C extends ParserContext> extends D
 
     static <C extends ParserContext> DateTimeFormatterParserOffsetTime<C> with(final Function<DateTimeContext, DateTimeFormatter> formatter) {
         return new DateTimeFormatterParserOffsetTime<>(
-            check(formatter),
+            Objects.requireNonNull(formatter, "formatter"),
             formatter.toString()
         );
     }
