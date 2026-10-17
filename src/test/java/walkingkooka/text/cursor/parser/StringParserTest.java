@@ -176,6 +176,17 @@ public class StringParserTest extends NonEmptyParserTestCase<StringParser<Parser
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "StringParser\n" +
+                "  \"abcd\"\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override

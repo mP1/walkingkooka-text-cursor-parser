@@ -20,6 +20,8 @@ import walkingkooka.text.CaseSensitivity;
 import walkingkooka.text.CharSequences;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -28,7 +30,8 @@ import java.util.Optional;
  * A {@link Parser} that only matches the given {@link String} which must not be null or empty.
  */
 final class StringParser<C extends ParserContext> extends NonEmptyParser<C>
-    implements RequiredParser<C> {
+    implements RequiredParser<C>,
+    TreePrintable {
 
     static <C extends ParserContext> StringParser<C> with(final String string, final CaseSensitivity caseSensitivity) {
         CharSequences.failIfNullOrEmpty(string, "string");
@@ -114,5 +117,27 @@ final class StringParser<C extends ParserContext> extends NonEmptyParser<C>
 
         return this.string.equals(otherStringParser.string) &&
             this.caseSensitivity == otherStringParser.caseSensitivity;
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            printer.println(
+                CharSequences.quoteAndEscape(this.string)
+            );
+
+            final CaseSensitivity caseSensitivity = this.caseSensitivity;
+            if (caseSensitivity == CaseSensitivity.INSENSITIVE) {
+                printer.println(
+                    caseSensitivity.toString()
+                );
+            }
+        }
+        printer.outdent();
     }
 }

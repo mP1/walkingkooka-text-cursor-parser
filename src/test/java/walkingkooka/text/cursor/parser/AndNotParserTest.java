@@ -172,9 +172,11 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
             this.createParser(),
             "AndNotParser\n" +
                 "  and\n" +
-                "    \"left\" (walkingkooka.text.cursor.parser.StringParser)\n" +
+                "    StringParser\n" +
+                "      \"left\"\n" +
                 "  not\n" +
-                "    \"right\" (walkingkooka.text.cursor.parser.StringParser)\n"
+                "    StringParser\n" +
+                "      \"right\"\n"
         );
     }
 
