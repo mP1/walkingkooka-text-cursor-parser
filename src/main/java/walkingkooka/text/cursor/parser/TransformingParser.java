@@ -47,7 +47,7 @@ final class TransformingParser<C extends ParserContext> extends ParserWrapper<C>
         this.transformer = transformer;
     }
 
-    // Parser..........................................................................................................
+    // Parser...........................................................................................................
 
     @Override
     public Optional<ParserToken> parse(final TextCursor cursor, final C context) {
@@ -61,7 +61,7 @@ final class TransformingParser<C extends ParserContext> extends ParserWrapper<C>
      */
     private final BiFunction<ParserToken, C, ParserToken> transformer;
 
-    // ParserSetToString..........................................................................................................
+    // ParserSetToString................................................................................................
 
     @Override
     TransformingParser<C> replaceToString(final String toString) {
