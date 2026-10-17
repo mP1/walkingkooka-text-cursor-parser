@@ -171,12 +171,13 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
         this.treePrintAndCheck(
             this.createParser(),
             "AndNotParser\n" +
-                "  and\n" +
-                "    StringParser\n" +
-                "      \"left\"\n" +
-                "  not\n" +
-                "    StringParser\n" +
-                "      \"right\"\n"
+                "  \"left\" - \"right\"\n" +
+                "    and\n" +
+                "      StringParser\n" +
+                "        \"left\"\n" +
+                "    not\n" +
+                "      StringParser\n" +
+                "        \"right\"\n"
         );
     }
 

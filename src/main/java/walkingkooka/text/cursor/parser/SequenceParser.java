@@ -192,23 +192,28 @@ final class SequenceParser<C extends ParserContext> extends NonEmptyParser<C>
 
         printer.indent();
         {
-            int i = 0;
-            for (final Parser<C> parser : this.parsers) {
-                printer.println(
-                    String.valueOf(i)
-                );
-                printer.indent();
-                {
-                    TreePrintable.printTreeOrToString(
-                        parser,
-                        printer
+            printer.println(this.toString);
+            printer.indent();
+            {
+                int i = 0;
+                for (final Parser<C> parser : this.parsers) {
+                    printer.println(
+                        String.valueOf(i)
                     );
-                    printer.lineStart();
-                }
-                printer.outdent();
+                    printer.indent();
+                    {
+                        TreePrintable.printTreeOrToString(
+                            parser,
+                            printer
+                        );
+                        printer.lineStart();
+                    }
+                    printer.outdent();
 
-                i++;
+                    i++;
+                }
             }
+            printer.outdent();
         }
         printer.outdent();
     }

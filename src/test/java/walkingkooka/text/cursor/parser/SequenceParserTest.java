@@ -427,21 +427,23 @@ public final class SequenceParserTest extends NonEmptyParserTestCase<SequencePar
         this.treePrintAndCheck(
             this.createParser(),
             "SequenceParser\n" +
-                "  0\n" +
-                "    StringParser\n" +
-                "      \"abc\"\n" +
-                "  1\n" +
-                "    StringParser\n" +
-                "      \"xyz\"\n" +
-                "  2\n" +
-                "    RepeatingParser\n" +
-                "      min\n" +
-                "        0\n" +
-                "      max\n" +
-                "        1\n" +
-                "      parser\n" +
-                "        StringParser\n" +
-                "          \"123\"\n"
+                "  \"abc\", \"xyz\", [\"123\"]\n" +
+                "    0\n" +
+                "      StringParser\n" +
+                "        \"abc\"\n" +
+                "    1\n" +
+                "      StringParser\n" +
+                "        \"xyz\"\n" +
+                "    2\n" +
+                "      RepeatingParser\n" +
+                "        [\"123\"]\n" +
+                "          min\n" +
+                "            0\n" +
+                "          max\n" +
+                "            1\n" +
+                "          parser\n" +
+                "            StringParser\n" +
+                "              \"123\"\n"
         );
     }
 

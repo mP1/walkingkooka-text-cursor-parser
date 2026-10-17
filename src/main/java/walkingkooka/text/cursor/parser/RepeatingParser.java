@@ -297,33 +297,38 @@ final class RepeatingParser<C extends ParserContext> extends NonEmptyParser<C>
 
         printer.indent();
         {
-            printer.println("min");
+            printer.println(this.toString);
             printer.indent();
             {
-                printer.println(
-                    String.valueOf(this.minCount)
-                );
-            }
-            printer.outdent();
+                printer.println("min");
+                printer.indent();
+                {
+                    printer.println(
+                        String.valueOf(this.minCount)
+                    );
+                }
+                printer.outdent();
 
-            printer.println("max");
-            printer.indent();
-            {
-                printer.println(
-                    String.valueOf(this.maxCount)
-                );
-            }
-            printer.outdent();
+                printer.println("max");
+                printer.indent();
+                {
+                    printer.println(
+                        String.valueOf(this.maxCount)
+                    );
+                }
+                printer.outdent();
 
-            printer.println("parser");
-            printer.indent();
-            {
-                TreePrintable.printTreeOrToString(
-                    this.parser,
-                    printer
-                );
+                printer.println("parser");
+                printer.indent();
+                {
+                    TreePrintable.printTreeOrToString(
+                        this.parser,
+                        printer
+                    );
 
-                printer.lineStart();
+                    printer.lineStart();
+                }
+                printer.outdent();
             }
             printer.outdent();
         }

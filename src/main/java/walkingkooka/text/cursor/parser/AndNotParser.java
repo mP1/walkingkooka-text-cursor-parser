@@ -118,25 +118,30 @@ final class AndNotParser<C extends ParserContext> extends ParserSetToString<C>
         printer.println(this.getClass().getSimpleName());
         printer.indent();
         {
-            printer.println("and");
+            printer.println(this.toString);
             printer.indent();
             {
-                TreePrintable.printTreeOrToString(
-                    this.left,
-                    printer
-                );
-                printer.lineStart();
-            }
-            printer.outdent();
+                printer.println("and");
+                printer.indent();
+                {
+                    TreePrintable.printTreeOrToString(
+                        this.left,
+                        printer
+                    );
+                    printer.lineStart();
+                }
+                printer.outdent();
 
-            printer.println("not");
-            printer.indent();
-            {
-                TreePrintable.printTreeOrToString(
-                    this.right,
-                    printer
-                );
-                printer.lineStart();
+                printer.println("not");
+                printer.indent();
+                {
+                    TreePrintable.printTreeOrToString(
+                        this.right,
+                        printer
+                    );
+                    printer.lineStart();
+                }
+                printer.outdent();
             }
             printer.outdent();
         }
