@@ -27,7 +27,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalAccessor;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -42,10 +41,6 @@ import java.util.function.Function;
  */
 abstract class DateTimeFormatterParser<C extends ParserContext> extends NonEmptyParser<C>
     implements RequiredParser<C> {
-
-    static Function<DateTimeContext, DateTimeFormatter> check(final Function<DateTimeContext, DateTimeFormatter> formatter) {
-        return Objects.requireNonNull(formatter, "formatter");
-    }
 
     /**
      * Package private to limit subclassing.
