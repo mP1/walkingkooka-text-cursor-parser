@@ -35,8 +35,8 @@ import java.util.function.BiFunction;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public final class BasicParserContextTest implements ClassTesting2<BasicParserContext>,
-    ParserContextTesting2<BasicParserContext>,
+public final class ParserContextBasicTest implements ClassTesting2<ParserContextBasic>,
+    ParserContextTesting2<ParserContextBasic>,
     DecimalNumberContextDelegator,
     DateTimeContextTesting,
     HasMathContextTesting {
@@ -71,7 +71,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     public void testWithNullInvalidCharacterExceptionFactoryFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicParserContext.with(
+            () -> ParserContextBasic.with(
                 IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED,
                 null,
                 VALUE_SEPARATOR,
@@ -85,7 +85,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     public void testWithNullDateTimeContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicParserContext.with(
+            () -> ParserContextBasic.with(
                 IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED,
                 INVALID_CHARACTER_EXCEPTION_FACTORY,
                 VALUE_SEPARATOR,
@@ -99,7 +99,7 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     public void testWithNullDecimalNumberContextFails() {
         assertThrows(
             NullPointerException.class,
-            () -> BasicParserContext.with(
+            () -> ParserContextBasic.with(
                 IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED,
                 INVALID_CHARACTER_EXCEPTION_FACTORY,
                 VALUE_SEPARATOR,
@@ -131,8 +131,8 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     }
 
     @Override
-    public BasicParserContext createContext() {
-        return BasicParserContext.with(
+    public ParserContextBasic createContext() {
+        return ParserContextBasic.with(
             IS_GROUP_SEPARATOR_WITHIN_NUMBERS_SUPPORTED,
             INVALID_CHARACTER_EXCEPTION_FACTORY,
             VALUE_SEPARATOR,
@@ -192,12 +192,17 @@ public final class BasicParserContextTest implements ClassTesting2<BasicParserCo
     // class............................................................................................................
 
     @Override
-    public Class<BasicParserContext> type() {
-        return BasicParserContext.class;
+    public Class<ParserContextBasic> type() {
+        return ParserContextBasic.class;
     }
 
     @Override
     public JavaVisibility typeVisibility() {
         return JavaVisibility.PACKAGE_PRIVATE;
+    }
+
+    @Override
+    public void testTypeNaming() {
+        throw new UnsupportedOperationException();
     }
 }
