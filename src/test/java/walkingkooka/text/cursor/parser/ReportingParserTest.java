@@ -247,6 +247,20 @@ public final class ReportingParserTest extends ParserWrapperTestCase<ReportingPa
         );
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "ReportingParser\n" +
+                "  condition\n" +
+                "    ALWAYS\n" +
+                "  reporter\n" +
+                "    Fail (walkingkooka.text.cursor.parser.BasicParserReporter)\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
