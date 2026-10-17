@@ -21,8 +21,7 @@ import walkingkooka.Cast;
 import walkingkooka.InvalidCharacterException;
 import walkingkooka.ToStringTesting;
 import walkingkooka.collect.list.Lists;
-import walkingkooka.reflect.ClassTesting2;
-import walkingkooka.reflect.JavaVisibility;
+import walkingkooka.reflect.PackagePrivateClassTesting;
 import walkingkooka.reflect.TypeNameTesting;
 import walkingkooka.text.cursor.TextCursor;
 
@@ -31,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * Base for numerous parsers in this package.
  */
-public abstract class ParserTestCase<P extends Parser<ParserContext>> implements ClassTesting2<P>,
+public abstract class ParserTestCase<P extends Parser<ParserContext>> implements PackagePrivateClassTesting<P>,
     ParserTesting2<P, ParserContext>,
     ToStringTesting<P>,
     TypeNameTesting<P> {
@@ -108,12 +107,5 @@ public abstract class ParserTestCase<P extends Parser<ParserContext>> implements
     @Override
     public final String typeNameSuffix() {
         return Parser.class.getSimpleName();
-    }
-
-    // ClassTestCase ........................................................................
-
-    @Override
-    public final JavaVisibility typeVisibility() {
-        return JavaVisibility.PACKAGE_PRIVATE;
     }
 }
