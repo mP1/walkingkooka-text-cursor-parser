@@ -21,7 +21,7 @@ import walkingkooka.visit.Visiting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-public final class DoubleParserTokenTest extends ValueParserTokenTestCase<DoubleParserToken, Double> {
+public strictfp final class DoubleParserTokenTest extends ValueParserTokenTestCase<DoubleParserToken, Double> {
 
     @Test
     public void testAccept() {
