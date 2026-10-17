@@ -150,6 +150,20 @@ public final class AndNotParserTest extends ParserTestCase<AndNotParser<ParserCo
         return Parsers.string(string, CaseSensitivity.SENSITIVE);
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "AndNotParser\n" +
+                "  and\n" +
+                "    \"left\" (walkingkooka.text.cursor.parser.StringParser)\n" +
+                "  not\n" +
+                "    \"right\" (walkingkooka.text.cursor.parser.StringParser)\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override
