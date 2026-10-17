@@ -116,6 +116,17 @@ public final class AndEmptyTextCursorParserTest extends ParserWrapperTestCase<An
         this.toStringAndCheck(this.createParser(), WRAPPED.toString());
     }
 
+    // TreePrintable....................................................................................................
+
+    @Test
+    public void testTreePrintable() {
+        this.treePrintAndCheck(
+            this.createParser(),
+            "AndEmptyTextCursorParser\n" +
+                "  \"abc\" (walkingkooka.text.cursor.parser.StringParser)\n"
+        );
+    }
+
     // class............................................................................................................
 
     @Override

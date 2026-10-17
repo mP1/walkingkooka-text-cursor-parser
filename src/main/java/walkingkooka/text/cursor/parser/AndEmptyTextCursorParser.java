@@ -19,6 +19,8 @@ package walkingkooka.text.cursor.parser;
 
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -27,7 +29,8 @@ import java.util.Optional;
  * Decorates another {@link Parser} adding a post condition that the {@link ParserToken} is only returned if
  * the {@link TextCursor} is also empty.
  */
-final class AndEmptyTextCursorParser<C extends ParserContext> extends ParserWrapper<C> {
+final class AndEmptyTextCursorParser<C extends ParserContext> extends ParserWrapper<C>
+    implements TreePrintable {
 
     static <C extends ParserContext> AndEmptyTextCursorParser<C> with(final Parser<C> parser) {
         Objects.requireNonNull(parser, "parser");
@@ -82,5 +85,22 @@ final class AndEmptyTextCursorParser<C extends ParserContext> extends ParserWrap
     @Override //
     boolean equalsParserWrapper(final ParserWrapper<?> other) {
         return true; // no new properties
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            TreePrintable.printTreeOrToString(
+                this.parser,
+                printer
+            );
+            printer.lineStart();
+        }
+        printer.outdent();
     }
 }
