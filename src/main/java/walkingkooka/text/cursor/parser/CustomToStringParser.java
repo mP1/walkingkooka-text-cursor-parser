@@ -18,6 +18,8 @@ package walkingkooka.text.cursor.parser;
 
 import walkingkooka.text.Whitespace;
 import walkingkooka.text.cursor.TextCursor;
+import walkingkooka.text.printer.IndentingPrinter;
+import walkingkooka.text.printer.TreePrintable;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -25,7 +27,8 @@ import java.util.Optional;
 /**
  * Wraps another {@link Parser} replacing or ignoring its {@link #toString()} with the provided {@link String}.
  */
-final class CustomToStringParser<C extends ParserContext> extends ParserWrapper<C> {
+final class CustomToStringParser<C extends ParserContext> extends ParserWrapper<C>
+    implements TreePrintable {
 
     static <C extends ParserContext> Parser<C> wrap(final Parser<C> parser,
                                                     final String toString) {
@@ -85,5 +88,27 @@ final class CustomToStringParser<C extends ParserContext> extends ParserWrapper<
     @Override //
     boolean equalsParserWrapper(final ParserWrapper<?> other) {
         return true; // no new properties
+    }
+
+    // TreePrintable....................................................................................................
+
+    @Override
+    public void printTree(final IndentingPrinter printer) {
+        printer.println(this.getClass().getSimpleName());
+
+        printer.indent();
+        {
+            printer.println(this.toString);
+            printer.indent();
+            {
+                TreePrintable.printTreeOrToString(
+                    this.parser,
+                    printer
+                );
+                printer.lineStart();
+            }
+            printer.outdent();
+        }
+        printer.outdent();
     }
 }
