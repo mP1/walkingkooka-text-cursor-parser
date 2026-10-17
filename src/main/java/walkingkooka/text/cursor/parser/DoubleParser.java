@@ -79,10 +79,16 @@ final class DoubleParser<C extends ParserContext> extends NonEmptyParser<C>
     /**
      * Reads character by character until a non digit is found, using a {@link BigInteger} to hold the value.
      */
+    // strictfp required because CI tests fail due to double imprecision
+    //   DoubleParserTest.testParseNumberDecimalFractionEExponent4:531->parseAndCheck2:853 text:
+    //  ~ ==> expected: <walkingkooka.text.cursor.parser.DoubleParserToken
+    //    Double "-128.5E-67" -1.285E-65
+    // > but was: <walkingkooka.text.cursor.parser.DoubleParserToken
+    //   Double "-128.5E-67" -1.2849999999999999E-65
     @Override
-    Optional<ParserToken> tryParse(final TextCursor cursor,
-                                   final C context,
-                                   final TextCursorSavePoint save) {
+    strictfp Optional<ParserToken> tryParse(final TextCursor cursor,
+                                            final C context,
+                                            final TextCursorSavePoint save) {
         final char decimalSeparator = context.decimalSeparator();
         final char negativeSign = context.negativeSign();
         final char positiveSign = context.positiveSign();
