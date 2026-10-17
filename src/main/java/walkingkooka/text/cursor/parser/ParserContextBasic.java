@@ -31,14 +31,14 @@ import java.util.function.BiFunction;
 /**
  * An adaptor for {@link DecimalNumberContext} to {@link ParserContext}.
  */
-final class BasicParserContext implements ParserContext,
+final class ParserContextBasic implements ParserContext,
     DateTimeContextDelegator,
     DecimalNumberContextDelegator {
 
     /**
-     * Creates a new {@link BasicParserContext}.
+     * Creates a new {@link ParserContextBasic}.
      */
-    static BasicParserContext with(final boolean canNumbersHaveGroupSeparator,
+    static ParserContextBasic with(final boolean canNumbersHaveGroupSeparator,
                                    final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
                                    final char valueSeparator,
                                    final DateTimeContext dateTimeContext,
@@ -47,7 +47,7 @@ final class BasicParserContext implements ParserContext,
         Objects.requireNonNull(dateTimeContext, "dateTimeContext");
         Objects.requireNonNull(decimalNumberContext, "decimalNumberContext");
 
-        return new BasicParserContext(
+        return new ParserContextBasic(
             canNumbersHaveGroupSeparator,
             invalidCharacterExceptionFactory,
             valueSeparator,
@@ -59,7 +59,7 @@ final class BasicParserContext implements ParserContext,
     /**
      * Private ctor use factory
      */
-    private BasicParserContext(final boolean canNumbersHaveGroupSeparator,
+    private ParserContextBasic(final boolean canNumbersHaveGroupSeparator,
                                final BiFunction<Parser<?>, TextCursor, InvalidCharacterException> invalidCharacterExceptionFactory,
                                final char valueSeparator,
                                final DateTimeContext dateTimeContext,
