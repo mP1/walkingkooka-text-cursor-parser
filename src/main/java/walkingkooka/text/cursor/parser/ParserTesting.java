@@ -163,7 +163,7 @@ public interface ParserTesting extends TreePrintableTesting,
         final Function<ParserToken, String> mapper = (t) -> t.treeToString(
             TextPrinting.with(
                 INDENTATION,
-                EOL
+                LINE_ENDING
             )
         );
         this.checkEquals(
