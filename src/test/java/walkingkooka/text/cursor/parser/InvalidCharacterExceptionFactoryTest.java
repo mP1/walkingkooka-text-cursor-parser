@@ -19,12 +19,14 @@ package walkingkooka.text.cursor.parser;
 
 import org.junit.jupiter.api.Test;
 import walkingkooka.InvalidCharacterException;
+import walkingkooka.reflect.PublicClassTesting;
 import walkingkooka.text.cursor.TextCursor;
 import walkingkooka.text.cursor.TextCursorSavePoint;
 import walkingkooka.text.cursor.TextCursors;
 import walkingkooka.util.BiFunctionTesting2;
 
-public final class InvalidCharacterExceptionFactoryTest implements BiFunctionTesting2<InvalidCharacterExceptionFactory, Parser<?>, TextCursor, InvalidCharacterException> {
+public final class InvalidCharacterExceptionFactoryTest implements BiFunctionTesting2<InvalidCharacterExceptionFactory, Parser<?>, TextCursor, InvalidCharacterException>,
+    PublicClassTesting<InvalidCharacterExceptionFactory> {
 
     @Test
     public void testPositionApply() {

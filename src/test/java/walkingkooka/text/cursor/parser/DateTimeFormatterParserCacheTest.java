@@ -24,7 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public final class DateTimeFormatterParserCacheTest extends DateTimeFormatterParserTestCase<DateTimeFormatterParserCache>
-    implements ToStringTesting<DateTimeFormatterParserCache> {
+    implements ToStringTesting {
 
     @Test
     public void testToString() {

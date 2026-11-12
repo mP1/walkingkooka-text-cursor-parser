@@ -32,7 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public abstract class ParserTestCase<P extends Parser<ParserContext>> implements PackagePrivateClassTesting<P>,
     ParserTesting2<P, ParserContext>,
-    ToStringTesting<P>,
+    ToStringTesting,
     TypeNameTesting<P> {
 
     ParserTestCase() {
