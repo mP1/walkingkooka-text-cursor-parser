@@ -25,7 +25,7 @@ import walkingkooka.test.Testing;
  * Mixing testing interface for {@link BinaryOperatorTransformer}
  */
 public interface BinaryOperatorTransformerTesting<T extends BinaryOperatorTransformer> extends Testing,
-    ToStringTesting<T>,
+    ToStringTesting,
     TypeNameTesting<T> {
 
     @Test

@@ -61,7 +61,7 @@ public interface ParserTokenTesting<T extends ParserToken> extends BeanPropertie
     HashCodeEqualsDefinedTesting2<T>,
     HasTextTesting,
     TreePrintableTesting,
-    ToStringTesting<T>,
+    ToStringTesting,
     TypeNameTesting<T> {
 
     @Test

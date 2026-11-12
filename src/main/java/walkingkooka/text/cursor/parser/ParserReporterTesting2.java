@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface ParserReporterTesting2<R extends ParserReporter<C>, C extends ParserContext>
     extends ParserReporterTesting,
-    ToStringTesting<R>,
+    ToStringTesting,
     TypeNameTesting<R> {
 
     @Test
