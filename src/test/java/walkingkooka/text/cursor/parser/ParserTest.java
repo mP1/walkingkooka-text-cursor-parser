@@ -212,16 +212,6 @@ public final class ParserTest implements ClassTesting<Parser<ParserContext>>,
             );
     }
 
-    @Override
-    public Class<? extends RuntimeException> parseStringFailedExpected(final Class<? extends RuntimeException> cause) {
-        return cause;
-    }
-
-    @Override
-    public RuntimeException parseStringFailedExpected(final RuntimeException cause) {
-        return cause;
-    }
-
     // and..............................................................................................................
 
     @Test
